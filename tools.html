@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arsenal | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/tools.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Filter tabs ── */
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center; margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 0.4rem 1rem;
+      border: 1px solid rgba(201,168,76,0.2); border-radius: 2px;
+      background: transparent; color: var(--text-muted); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.5);
+      color: var(--gold2);
+    }
+
+    /* ── Tool grid ── */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .tool-card {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      position: relative; overflow: hidden;
+      transition: all 0.3s;
+      text-decoration: none; display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .tool-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .tool-card:hover {
+      border-color: rgba(201,168,76,0.38);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 16px rgba(201,168,76,0.06);
+    }
+    .tool-card:hover::before { opacity: 1; }
+    .tool-card.hidden { display: none; }
+
+    .tool-icon { font-size: 1.8rem; }
+    .tool-name {
+      font-family: 'Cinzel', serif; font-size: 0.92rem; font-weight: 700;
+      color: var(--gold2); letter-spacing: 0.02em;
+    }
+    .tool-desc {
+      font-size: 0.85rem; color: var(--text-muted); line-height: 1.75; flex: 1;
+    }
+    .tool-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.25rem; }
+    .tool-tag {
+      font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.15rem 0.55rem;
+      border-radius: 2px; border: 1px solid rgba(201,168,76,0.18);
+      color: var(--text-muted); background: rgba(201,168,76,0.04);
+    }
+    .tool-link {
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.1em;
+      color: var(--gold); opacity: 0.5; margin-top: 0.25rem;
+      transition: opacity 0.2s;
+    }
+    .tool-card:hover .tool-link { opacity: 1; }
+
+    /* Custom tool badge */
+    .tool-card.custom-tool { border-color: rgba(122,31,46,0.3); }
+    .tool-card.custom-tool::after {
+      content: '✦ Custom';
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.6;
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.65;
+      text-align: center; margin: 2.5rem 0 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::before, .section-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2));
+    }
+    .section-label::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.2), transparent);
+    }
+
+    @media (max-width: 768px) {
+      .tool-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .tool-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html" class="active">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Sorcerer's Arsenal ✦</div>
+    <h1 class="page-title">Tools</h1>
+    <p class="page-subtitle">Dark Arts instruments forged for Red Team operations</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">⚔️</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Filter bar -->
+    <div class="filter-bar fade-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="ad">Active Directory</button>
+      <button class="filter-btn" data-filter="enum">Enumeration</button>
+      <button class="filter-btn" data-filter="exploit">Exploitation</button>
+      <button class="filter-btn" data-filter="c2">C2 & Post-Exploit</button>
+      <button class="filter-btn" data-filter="custom">Custom</button>
+    </div>
+
+    <!-- AD & Kerberos -->
+    <div class="section-label fade-up">⚡ Active Directory & Kerberos</div>
+    <div class="tool-grid fade-up">
+
+      <a href="https://github.com/SpecterOps/BloodHound" target="_blank" class="tool-card" data-tags="ad">
+        <div class="tool-icon">🐕</div>
+        <div class="tool-name">BloodHound CE</div>
+        <div class="tool-desc">Graph-based AD attack path finder. Maps privilege escalation routes through the domain.</div>
+        <div class="tool-tags"><span class="tool-tag">AD</span><span class="tool-tag">Graph</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/GhostPack/Rubeus" target="_blank" class="tool-card" data-tags="ad">
+        <div class="tool-icon">🎟️</div>
+        <div class="tool-name">Rubeus</div>
+        <div class="tool-desc">Kerberos abuse Swiss Army knife - AS-REP Roasting, Kerberoasting, Pass-the-Ticket, S4U abuse.</div>
+        <div class="tool-tags"><span class="tool-tag">Kerberos</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/fortra/impacket" target="_blank" class="tool-card" data-tags="ad exploit">
+        <div class="tool-icon">📦</div>
+        <div class="tool-name">Impacket</div>
+        <div class="tool-desc">Python collection of network protocols. secretsdump, psexec, wmiexec, GetNPUsers, DCSync and more.</div>
+        <div class="tool-tags"><span class="tool-tag">AD</span><span class="tool-tag">Exploit</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/ly4k/Certipy" target="_blank" class="tool-card" data-tags="ad">
+        <div class="tool-icon">📜</div>
+        <div class="tool-name">Certipy</div>
+        <div class="tool-desc">AD Certificate Services (ADCS) attack framework. ESC1–ESC13 enumeration and exploitation.</div>
+        <div class="tool-tags"><span class="tool-tag">ADCS</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/dirkjanm/PKINITtools" target="_blank" class="tool-card" data-tags="ad">
+        <div class="tool-icon">🔐</div>
+        <div class="tool-name">PKINITtools</div>
+        <div class="tool-desc">Tools for Kerberos PKINIT abuse - UnPAC-the-hash, Shadow Credentials attacks.</div>
+        <div class="tool-tags"><span class="tool-tag">Kerberos</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/PowerShellMafia/PowerSploit" target="_blank" class="tool-card" data-tags="ad enum">
+        <div class="tool-icon">🐚</div>
+        <div class="tool-name">PowerView</div>
+        <div class="tool-desc">PowerShell AD recon tool. Enumerate users, groups, ACLs, GPOs, trusts and more without RSAT.</div>
+        <div class="tool-tags"><span class="tool-tag">AD</span><span class="tool-tag">Enum</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+    </div>
+
+    <!-- Enumeration -->
+    <div class="section-label fade-up">🔍 Enumeration & Scanning</div>
+    <div class="tool-grid fade-up">
+
+      <a href="https://github.com/Pennyw0rth/NetExec" target="_blank" class="tool-card" data-tags="enum ad">
+        <div class="tool-icon">🕸️</div>
+        <div class="tool-name">NetExec (nxc)</div>
+        <div class="tool-desc">Network execution tool for SMB/LDAP/MSSQL/FTP. Enumerate, spray, and dump credentials at scale.</div>
+        <div class="tool-tags"><span class="tool-tag">Enum</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://nmap.org" target="_blank" class="tool-card" data-tags="enum">
+        <div class="tool-icon">🗺️</div>
+        <div class="tool-name">Nmap</div>
+        <div class="tool-desc">Network mapper - port scanning, service detection, OS fingerprinting, and NSE scripting engine.</div>
+        <div class="tool-tags"><span class="tool-tag">Network</span><span class="tool-tag">Enum</span></div>
+        <div class="tool-link">nmap.org →</div>
+      </a>
+
+      <a href="https://github.com/ropnop/kerbrute" target="_blank" class="tool-card" data-tags="enum ad">
+        <div class="tool-icon">🔑</div>
+        <div class="tool-name">Kerbrute</div>
+        <div class="tool-desc">Fast Kerberos-based user enumeration and password spraying - without triggering traditional lockouts.</div>
+        <div class="tool-tags"><span class="tool-tag">Kerberos</span><span class="tool-tag">Enum</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/lkarlslund/Adalanche" target="_blank" class="tool-card" data-tags="enum ad">
+        <div class="tool-icon">🕵️</div>
+        <div class="tool-name">Adalanche</div>
+        <div class="tool-desc">AD attack path visualizer - alternative to BloodHound with real-time analysis and browser UI.</div>
+        <div class="tool-tags"><span class="tool-tag">AD</span><span class="tool-tag">Enum</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+    </div>
+
+    <!-- Exploitation -->
+    <div class="section-label fade-up">💥 Exploitation</div>
+    <div class="tool-grid fade-up">
+
+      <a href="https://www.metasploit.com" target="_blank" class="tool-card" data-tags="exploit">
+        <div class="tool-icon">🔫</div>
+        <div class="tool-name">Metasploit</div>
+        <div class="tool-desc">The world's most used penetration testing framework - exploit modules, payloads, auxiliary, post.</div>
+        <div class="tool-tags"><span class="tool-tag">Exploit</span><span class="tool-tag">Framework</span></div>
+        <div class="tool-link">metasploit.com →</div>
+      </a>
+
+      <a href="https://github.com/byt3bl33d3r/CrackMapExec" target="_blank" class="tool-card" data-tags="exploit ad">
+        <div class="tool-icon">🗡️</div>
+        <div class="tool-name">CrackMapExec</div>
+        <div class="tool-desc">SMB/LDAP/MSSQL post-exploitation and lateral movement - predecessor to NetExec.</div>
+        <div class="tool-tags"><span class="tool-tag">Exploit</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/gentilkiwi/mimikatz" target="_blank" class="tool-card" data-tags="exploit ad c2">
+        <div class="tool-icon">🐱</div>
+        <div class="tool-name">Mimikatz</div>
+        <div class="tool-desc">Extract plaintexts passwords, hashes, PINs, Kerberos tickets from Windows memory. Classic must-have.</div>
+        <div class="tool-tags"><span class="tool-tag">Cred Dump</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+    </div>
+
+    <!-- C2 & Post-Exploit -->
+    <div class="section-label fade-up">🏰 C2 & Post-Exploitation</div>
+    <div class="tool-grid fade-up">
+
+      <a href="https://www.cobaltstrike.com" target="_blank" class="tool-card" data-tags="c2">
+        <div class="tool-icon">⚡</div>
+        <div class="tool-name">Cobalt Strike</div>
+        <div class="tool-desc">Commercial adversary simulation platform. Beacons, malleable C2 profiles, and team server for red ops.</div>
+        <div class="tool-tags"><span class="tool-tag">C2</span><span class="tool-tag">Red Team</span></div>
+        <div class="tool-link">cobaltstrike.com →</div>
+      </a>
+
+      <a href="https://github.com/BC-SECURITY/Empire" target="_blank" class="tool-card" data-tags="c2">
+        <div class="tool-icon">👑</div>
+        <div class="tool-name">Empire</div>
+        <div class="tool-desc">Post-exploitation framework with PowerShell, Python, and C# agents. Full C2 with stager generation.</div>
+        <div class="tool-tags"><span class="tool-tag">C2</span><span class="tool-tag">Post-Exploit</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/HavocFramework/Havoc" target="_blank" class="tool-card" data-tags="c2">
+        <div class="tool-icon">👹</div>
+        <div class="tool-name">Havoc</div>
+        <div class="tool-desc">Modern C2 framework with Demon agent - evasion-focused with sleep obfuscation and OPSEC features.</div>
+        <div class="tool-tags"><span class="tool-tag">C2</span><span class="tool-tag">Evasion</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+      <a href="https://github.com/BishopFox/sliver" target="_blank" class="tool-card" data-tags="c2">
+        <div class="tool-icon">🐍</div>
+        <div class="tool-name">Sliver C2</div>
+        <div class="tool-desc">Open-source C2 framework by Bishop Fox. Written in Go - supports mTLS, HTTP/S, DNS, WireGuard. Beacon & session modes with Armory extensions for AD attacks.</div>
+        <div class="tool-tags"><span class="tool-tag">C2</span><span class="tool-tag">Red Team</span><span class="tool-tag">Open Source</span></div>
+        <div class="tool-link">github.com →</div>
+      </a>
+
+    </div>
+
+    <!-- Custom Tools -->
+    <div class="section-label fade-up">🪄 Custom Spells (My Tools)</div>
+    <div class="tool-grid fade-up">
+
+      <a href="https://github.com/Sabastiaz/ADPhantom" target="_blank" class="tool-card custom-tool" data-tags="custom enum ad">
+        <div class="tool-icon">🖤</div>
+        <div class="tool-name">ADPhantom</div>
+        <div class="tool-desc">ADPhantom A powerful interactive shell for NetExec. Automates AD enumeration, credential attacks, and report generation for red team engagements.</div>
+        <div class="tool-tags"><span class="tool-tag">Custom</span><span class="tool-tag">NetExec</span><span class="tool-tag">AD</span></div>
+        <div class="tool-link">github.com/sabastiaz →</div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center; margin-top:3.5rem;" class="fade-up">
+      <a href="skills.html" class="btn-magic">View Mastered Spells →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4">Mischief Managed.</span>
+</footer>
+
+<script src="stars.js"></script>
+<script>
+  // Filter logic
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.tool-card');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(card => {
+        const tags = card.dataset.tags || '';
+        card.classList.toggle('hidden', f !== 'all' && !tags.includes(f));
+      });
+    });
+  });
+</script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Spell Not Found | Sabastiaz</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta property="og:title" content="404 - Spell Not Found | Sabastiaz" />
+  <meta property="og:description" content="This page doesn't exist - the scroll you seek may have been moved or never written." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-rune {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.6;
+      margin-bottom: 1rem;
+    }
+    .error-code {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(5rem, 18vw, 10rem);
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.15;
+      line-height: 1;
+      letter-spacing: 0.1em;
+      margin-bottom: 0;
+    }
+    .error-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--gold2);
+      margin: 1rem 0 0.75rem;
+    }
+    .error-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .error-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.6rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .error-btn-primary {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+    }
+    .error-btn-primary:hover {
+      background: rgba(201,168,76,0.2);
+      border-color: var(--gold);
+    }
+    .error-btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.15);
+      color: var(--text-muted);
+    }
+    .error-btn-ghost:hover {
+      border-color: rgba(201,168,76,0.35);
+      color: var(--text);
+    }
+    .error-symbol {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="error-page">
+  <div class="error-symbol">🔮</div>
+  <div class="error-rune">✦ The Restricted Section ✦</div>
+  <div class="error-code">404</div>
+  <div class="error-title">Spell Not Found</div>
+  <p class="error-desc">
+    The scroll you seek has vanished into the void - or perhaps it never existed in this realm.
+    The Dark Arts have consumed it.
+  </p>
+  <div class="error-actions">
+    <a href="index.html" class="error-btn error-btn-primary">Return to the Tower</a>
+    <a href="writings.html" class="error-btn error-btn-ghost">Browse the Tomes</a>
+  </div>
+</div>
+
+<script src="stars.js"></script>
+<script>
+  const hamburger = document.querySelector('.nav-hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+  }
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

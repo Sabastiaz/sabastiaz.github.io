@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Journey Through Certified Penetration Testing Specialist (CPTS) 100% | Sabastiaz</title>
+<meta content="My Journey Through Certified Penetration Testing Specialist (CPTS) 100% - Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="My Journey Through Certified Penetration Testing Specialist (CPTS) 100% | Sabastiaz" property="og:title"/>
+<meta content="My Journey Through Certified Penetration Testing Specialist (CPTS) 100% - Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/thumb/cpts.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/cpts.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-en">EN</span><span class="post-tag tag-cert">Certification</span></div>
+<div class="post-meta-row">
+<span>August 2, 2025</span><span class="dot">✦</span><span>8 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="en">My Journey Through Certified Penetration Testing Specialist (CPTS) 100%</span><span class="lb" lang="th">ผ่าน CPTS คะแนนเต็ม 14/14 ใน 10 วัน</span></h1>
+</div>
+<div class="post-body lb" lang="en">
+<p><strong>After 10 days</strong> of hands-on hacking, AD exploitation, pivoting, persistence, and countless cups of coffee I’m proud to say</p>
+<p>I passed the <strong>Certified Penetration Testing Specialist (CPTS)</strong> exam <br/>by <strong>Hack The Box</strong> with a <strong>perfect score: 14 out of 14 flags</strong>.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*2jPoVGEg47xHJryPl6aZvg.png"/>
+</figure>
+<p>This isn’t your average certification. CPTS simulates a real-world red team engagement: initial access, lateral movement, Active Directory abuse, post-exploitation, and professional report writing - all in a full-blown lab environment.</p>
+<p>Here’s a breakdown of how I prepared, what tools I used, what mindset helped me survive the 10-day battle, and tips if you’re planning to take the challenge.</p>
+<h2>Preparation Strategy</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*7asZYkvO0aYXEjOw"/>
+<figcaption>Picture from my friend</figcaption>
+</figure>
+<p>After passing the OSCP, I felt proud but deep inside, there was still something I needed to prove to myself. It wasn’t just about the next certification or adding another badge to my profile. It was about testing my limits, facing new challenges, and seeing how much I’ve grown since my OSCP journey.</p>
+<p>That’s why, without hesitation, I signed up for the <strong>CPTS (Certified Penetration Testing Specialist)</strong> exam. I didn’t overthink it I just clicked “Register.” It felt like a gut decision, but one that came from a place of determination. I wanted to see how I would perform under different conditions and against a different kind of lab environment, especially one focused more on Active Directory and Red Teaming techniques.</p>
+<h3>Labs Practiced</h3>
+<p>Rather than spreading myself thin across many platforms, I dedicated my focus solely to <strong>HTB Labs</strong>, which are aligned with the CPTS exam. These were the most useful:</p>
+<ul>
+<li><strong>Dante</strong></li>
+<li><strong>Forest</strong> (<strong>Beginner AD</strong>)</li>
+<li><strong>Vintage (AD Tricky)</strong></li>
+<li><strong>Blackfield (Optinal)</strong></li>
+<li><strong>Hack The Box Seasons (Reward)</strong></li>
+<li><strong>ETC.</strong></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*N2OiNdmWWHj0AHhp.gif"/>
+</figure>
+<h3>Learning Materials:</h3>
+<ul>
+<li><strong>HTB Academy:</strong> Completed all CPTS-specific modules</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gAW6ne2EaWGBpseAQV0eEw.png"/>
+</figure>
+<ul>
+<li><strong>HTB Labs:</strong> Focused heavily on AD labs and misconfigurations</li>
+<li><strong>Other platforms:</strong> TryHackMe for warmups, HackTheBox Pro Labs (optional)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*rdimLZlQy1-MbhjBlMOEEw.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*Vz13hr7ntFqmuGWfB3dTJQ.png"/>
+</figure>
+<h3>Skills Focus:</h3>
+<ul>
+<li>AD enumeration and exploitation (<a href="https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart" rel="noopener" target="_blank"><strong>BloodHound</strong></a>, <a href="https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound.html" rel="noopener" target="_blank"><strong>SharpHound</strong></a>)</li>
+<li>Kerberoasting, AS-REP roasting</li>
+<li>Abuse of misconfigured service accounts</li>
+<li>Pivoting with <a href="https://github.com/nicocha30/ligolo-ng" rel="noopener" target="_blank"><strong>Ligolo</strong></a>, and <a href="https://www.kali.org/tools/proxychains-ng/" rel="noopener" target="_blank"><strong>proxychains</strong></a></li>
+<li>Manual report writing in professional format from Hack the box</li>
+</ul>
+<h2>2. Budget</h2>
+<p>To make it clear for others considering the CPTS, here’s a breakdown of the cost:</p>
+<ul>
+<li><strong>CPTS Voucher: 210$</strong></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*MteZQeTHHbltF_X1LQyqog.png"/>
+<figcaption>Voucher CPTS 2 attempts</figcaption>
+</figure>
+<ul>
+<li><strong>HTB Academy </strong><a href="https://academy.hackthebox.com/billing/monthly-billing#" rel="noopener" target="_blank"><strong>Monthly billing</strong></a></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*J5edeeLvHIucsl0XdxziAQ.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*hflYRyUcMNG1RHZ9rEiMQQ.png"/>
+</figure>
+<p><strong>Total Estimated Cost:</strong> ~ 316$ = 10,500 Bath</p>
+<p>This may vary based on your pace and resources, but I managed to complete the certification within this budget range.</p>
+<h2>3. My Penetration Tester Job-Role Path</h2>
+<p>Here is a simplified view of my attack methodology:</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gAW6ne2EaWGBpseAQV0eEw.png"/>
+<figcaption>Penetration Tester Path</figcaption>
+</figure>
+<h2>Key Takeaways:</h2>
+<ul>
+<li>Penetration testing processes and methodologies</li>
+<li>Information gathering &amp; reconnaissance techniques</li>
+<li>Attacking Windows &amp; Linux targets</li>
+<li>Active Directory penetration testing</li>
+<li>Web application penetration testing</li>
+<li>Manual &amp; automated exploitation</li>
+<li>Vulnerability assessment</li>
+<li>Pivoting &amp; lateral Movement</li>
+<li>Post-exploitation enumeration</li>
+<li>Windows &amp; Linux privilege escalation</li>
+<li>Vulnerability/Risk communication and reporting</li>
+</ul>
+<blockquote><strong><em>If you’ve finished the course, you’re good to go - it’s more than enough to pass the exam!</em></strong></blockquote>
+<h2><strong>Certification</strong> Steps</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gJgMtnYxiB2Z5gucrVhEQg.png"/>
+<figcaption>Complete the Penetration Tester job-role path 100%</figcaption>
+</figure>
+<ol>
+<li><strong>Complete the Penetration Tester job-role path 100%</strong></li>
+<li><strong>Get an exam voucher</strong></li>
+<li><strong>Enter the exam</strong></li>
+<li><strong>Start Pen-testing</strong></li>
+<li><strong>Upload your report</strong></li>
+<li><strong>Obtain your results</strong></li>
+</ol>
+<h2><strong>4. Exam Date</strong></h2>
+<p>The candidate will have to perform blackbox web, external and internal penetration testing activities against a real-world Active Directory network hosted in HTB’s infrastructure and accessible via VPN (using Pwnbox or their own local VM). Upon starting the examination process, a letter of engagement will be provided that will clearly state all engagement details, requirements, objectives, and scope. All a candidate needs to perform the required penetration testing activities is a stable internet connection and VPN software. HTB Certified Penetration Testing Specialist is the most up-to-date and applicable certification for Penetration Testers that focuses on both penetration testing and professionally communicating findings.</p>
+<p><strong>CPTS Exam Schedule</strong></p>
+<ul>
+<li><strong>Day 1:</strong> Captured 7 out of 14 flags</li>
+<li><strong>Day 2:</strong> Captured 9 out of 14 flags</li>
+<li><strong>Day 3:</strong> Captured 12 out of 14 flags</li>
+<li><strong>Day 4:</strong> Captured all 14 flags (14/14)</li>
+<li><strong>Day 5:</strong> Report writing</li>
+<li><strong>Day 6:</strong> Finalizing and submitting report</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*4lg4kLzg4gu-ATI5.gif"/>
+<figcaption>My Feelings When I Got Stuck on Flag 1, 9, and 13</figcaption>
+</figure>
+<h2>5. Reporting Process</h2>
+<p>CPTS puts a strong emphasis on <strong>professional reporting</strong>. After completing the technical part of the exam, I spent time creating a thorough and clear report that included:</p>
+<ul>
+<li><strong>Executive Summary </strong>A non-technical overview for stakeholders</li>
+<li><strong>Technical Findings</strong> Each vulnerability with CWE/CVSS ratings</li>
+<li><strong>Proof of Concept </strong>Step-by-step walkthrough of the attacks</li>
+<li><strong>Screenshots and Evidence</strong> Solid documentation</li>
+<li><strong>Remediation Recommendations</strong> Actionable suggestions</li>
+</ul>
+<p>Using templates and tips from HTB helped me keep the report clean and readable.</p>
+<h2>Final Thoughts</h2>
+<p>Completing the CPTS exam with 100% was a rewarding and challenging experience. It pushed me to think critically, stay organized, and demonstrate real-world skills in a simulated enterprise environment. If you’re preparing for CPTS:</p>
+<ul>
+<li>Stick to HTB labs and align them with the exam path</li>
+<li>Practice strong documentation from day one</li>
+<li>Learn to use tools efficiently instead of relying on automation</li>
+</ul>
+<p><strong>Good luck, and feel free to reach out if you need tips on specific sections!</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*E0RT4fQdEQPw9R31is_cQA.png"/>
+<figcaption>My Certified</figcaption>
+</figure>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+<p><strong>Connect with me:</strong> <br/><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank">LinkedIn</a> <br/><a href="https://app.hackthebox.com/users/190672" rel="noopener" target="_blank">HTB</a></p>
+</div>
+<div class="post-body lb" lang="th">
+<p><strong>หลังจาก 10 วัน</strong> ของการแฮก การ exploit AD การ pivot การ persist และกาแฟนับไม่ถ้วน ผมภูมิใจที่จะบอกว่า</p>
+<p>ผ่าน <strong>Certified Penetration Testing Specialist (CPTS)</strong> จาก <strong>Hack The Box</strong> ด้วยคะแนนเต็ม <strong>14 จาก 14 flags</strong></p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*2jPoVGEg47xHJryPl6aZvg.png"/></figure>
+<p>ไม่ใช่ cert ธรรมดา CPTS จำลอง real-world red team engagement: initial access, lateral movement, Active Directory abuse, post-exploitation และการเขียนรายงานอย่างมืออาชีพ - ทั้งหมดในสภาพแวดล้อม lab จริง</p>
+<p>ต่อไปนี้คือสรุปวิธีเตรียม tool ที่ใช้ mindset ที่ช่วยให้รอดจาก 10 วันนั้น และ tips สำหรับคนที่จะสอบ</p>
+<h2>แผนการเตรียมตัว</h2>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*7asZYkvO0aYXEjOw"/>
+<figcaption>Picture from my friend</figcaption></figure>
+<p>หลังจากผ่าน OSCP แล้วรู้สึกภูมิใจ แต่ข้างในยังมีสิ่งที่ต้องพิสูจน์กับตัวเอง ไม่ใช่แค่ cert ถัดไปหรือ badge ใหม่ แต่คือการทดสอบขีดจำกัดของตัวเองและดูว่าเติบโตขึ้นแค่ไหนนับตั้งแต่ journey OSCP</p>
+<p>นั่นจึงเป็นเหตุผลที่ลงทะเบียน <strong>CPTS</strong> ทันที ไม่คิดมาก - แค่กด "Register" ไปเลย ตัดสินใจด้วยสัญชาตญาณ แต่มาจากความมุ่งมั่น อยากดูว่าตัวเองจะทำได้แค่ไหนในสภาพแวดล้อมที่โฟกัสเรื่อง Active Directory และ Red Teaming มากกว่า</p>
+<h3>Labs ที่ฝึก</h3>
+<p>แทนที่จะกระจายไปหลาย platform ผมโฟกัสเฉพาะ <strong>HTB Labs</strong> ที่สอดคล้องกับ CPTS:</p>
+<ul>
+<li><strong>Dante</strong></li>
+<li><strong>Forest</strong> (<strong>Beginner AD</strong>)</li>
+<li><strong>Vintage (AD Tricky)</strong></li>
+<li><strong>Blackfield (Optional)</strong></li>
+<li><strong>Hack The Box Seasons (Reward)</strong></li>
+<li><strong>ฯลฯ</strong></li>
+</ul>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*N2OiNdmWWHj0AHhp.gif"/></figure>
+<h3>สื่อการเรียนรู้:</h3>
+<ul><li><strong>HTB Academy:</strong> ทำ module CPTS ทุกอันจนครบ</li></ul>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gAW6ne2EaWGBpseAQV0eEw.png"/></figure>
+<ul>
+<li><strong>HTB Labs:</strong> โฟกัส AD labs และ misconfiguration หนักๆ</li>
+<li><strong>Platform อื่น:</strong> TryHackMe สำหรับวอร์มอัพ, HackTheBox Pro Labs (optional)</li>
+</ul>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*rdimLZlQy1-MbhjBlMOEEw.png"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*Vz13hr7ntFqmuGWfB3dTJQ.png"/></figure>
+<h3>ทักษะที่โฟกัส:</h3>
+<ul>
+<li>AD enumeration และ exploitation (<a href="https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart" rel="noopener" target="_blank"><strong>BloodHound</strong></a>, <a href="https://bloodhound.readthedocs.io/en/latest/data-collection/sharphound.html" rel="noopener" target="_blank"><strong>SharpHound</strong></a>)</li>
+<li>Kerberoasting, AS-REP roasting</li>
+<li>Abuse of misconfigured service accounts</li>
+<li>Pivoting ด้วย <a href="https://github.com/nicocha30/ligolo-ng" rel="noopener" target="_blank"><strong>Ligolo</strong></a> และ <a href="https://www.kali.org/tools/proxychains-ng/" rel="noopener" target="_blank"><strong>proxychains</strong></a></li>
+<li>เขียน report แบบมืออาชีพตาม format ของ Hack The Box</li>
+</ul>
+<h2>2. งบประมาณ</h2>
+<p>เพื่อความชัดเจนสำหรับคนที่กำลังพิจารณา CPTS:</p>
+<ul><li><strong>CPTS Voucher: 210$</strong></li></ul>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*MteZQeTHHbltF_X1LQyqog.png"/>
+<figcaption>Voucher CPTS 2 attempts</figcaption></figure>
+<ul><li><strong>HTB Academy </strong><a href="https://academy.hackthebox.com/billing/monthly-billing#" rel="noopener" target="_blank"><strong>Monthly billing</strong></a></li></ul>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*J5edeeLvHIucsl0XdxziAQ.png"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*hflYRyUcMNG1RHZ9rEiMQQ.png"/></figure>
+<p><strong>ค่าใช้จ่ายรวมโดยประมาณ:</strong> ~316$ = 10,500 บาท</p>
+<h2>3. Penetration Tester Job-Role Path ของผม</h2>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gAW6ne2EaWGBpseAQV0eEw.png"/>
+<figcaption>Penetration Tester Path</figcaption></figure>
+<h2>สิ่งที่ได้เรียนรู้:</h2>
+<ul>
+<li>กระบวนการและ methodology ของ Penetration testing</li>
+<li>เทคนิค Information gathering &amp; reconnaissance</li>
+<li>โจมตี Windows &amp; Linux targets</li>
+<li>Active Directory penetration testing</li>
+<li>Web application penetration testing</li>
+<li>Manual &amp; automated exploitation</li>
+<li>Vulnerability assessment</li>
+<li>Pivoting &amp; lateral movement</li>
+<li>Post-exploitation enumeration</li>
+<li>Windows &amp; Linux privilege escalation</li>
+<li>การสื่อสารและรายงาน vulnerability/risk</li>
+</ul>
+<blockquote><strong><em>ถ้าทำ course จบแล้วก็พร้อมสอบได้เลย - เพียงพอมากกว่าพอ!</em></strong></blockquote>
+<h2><strong>ขั้นตอนการ Certification</strong></h2>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gJgMtnYxiB2Z5gucrVhEQg.png"/>
+<figcaption>Complete the Penetration Tester job-role path 100%</figcaption></figure>
+<ol>
+<li><strong>ทำ Penetration Tester job-role path ให้ครบ 100%</strong></li>
+<li><strong>ซื้อ exam voucher</strong></li>
+<li><strong>เข้าสอบ</strong></li>
+<li><strong>เริ่ม Pen-test</strong></li>
+<li><strong>อัปโหลด report</strong></li>
+<li><strong>รอผลสอบ</strong></li>
+</ol>
+<h2><strong>4. วันสอบ</strong></h2>
+<p>ผู้สมัครจะต้องทำ blackbox web, external และ internal penetration testing กับ Active Directory network ใน infrastructure ของ HTB ผ่าน VPN (ใช้ Pwnbox หรือ VM ของตัวเอง) เมื่อเริ่มสอบจะได้รับ engagement letter ระบุรายละเอียด requirements objectives และ scope ครบถ้วน สิ่งที่ต้องการเพียงอินเทอร์เน็ตที่เสถียรและ VPN software</p>
+<p><strong>ตารางสอบ CPTS ของผม</strong></p>
+<ul>
+<li><strong>วันที่ 1:</strong> จับได้ 7 จาก 14 flags</li>
+<li><strong>วันที่ 2:</strong> จับได้ 9 จาก 14 flags</li>
+<li><strong>วันที่ 3:</strong> จับได้ 12 จาก 14 flags</li>
+<li><strong>วันที่ 4:</strong> จับได้ครบ 14 flags (14/14)</li>
+<li><strong>วันที่ 5:</strong> เขียน report</li>
+<li><strong>วันที่ 6:</strong> ตรวจสอบและ submit report</li>
+</ul>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*4lg4kLzg4gu-ATI5.gif"/>
+<figcaption>ความรู้สึกตอนติดอยู่กับ Flag 1, 9, และ 13</figcaption></figure>
+<h2>5. กระบวนการ Reporting</h2>
+<p>CPTS เน้นเรื่อง <strong>professional reporting</strong> มาก หลังทำ technical part เสร็จก็ใช้เวลาสร้าง report ที่ละเอียดและชัดเจน ซึ่งประกอบด้วย:</p>
+<ul>
+<li><strong>Executive Summary</strong> - สรุปภาพรวมสำหรับ non-technical stakeholders</li>
+<li><strong>Technical Findings</strong> - แต่ละช่องโหว่พร้อม CWE/CVSS ratings</li>
+<li><strong>Proof of Concept</strong> - walkthrough step-by-step ของการโจมตี</li>
+<li><strong>Screenshots and Evidence</strong> - documentation ที่ครบถ้วน</li>
+<li><strong>Remediation Recommendations</strong> - คำแนะนำที่นำไปปฏิบัติได้จริง</li>
+</ul>
+<p>ใช้ template และ tips จาก HTB ช่วยให้ report อ่านง่ายและสะอาด</p>
+<h2>สรุป</h2>
+<p>การผ่าน CPTS ด้วยคะแนน 100% เป็นประสบการณ์ที่ท้าทายและคุ้มค่ามาก ทำให้ต้องคิดเชิงวิเคราะห์ มีความเป็นระเบียบ และแสดงทักษะ real-world ในสภาพแวดล้อม enterprise จำลอง สำหรับคนที่กำลังเตรียม CPTS:</p>
+<ul>
+<li>ยึด HTB labs และ align กับ exam path</li>
+<li>ฝึก documentation ตั้งแต่วันแรก</li>
+<li>เรียนใช้ tool อย่างมีประสิทธิภาพ ไม่พึ่ง automation อย่างเดียว</li>
+</ul>
+<p><strong>โชคดีนะครับ ถ้ามีคำถามเรื่อง section ไหนเป็นพิเศษก็ทักมาได้เลย!</strong></p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*E0RT4fQdEQPw9R31is_cQA.png"/>
+<figcaption>My Certified</figcaption></figure>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+<p><strong>ติดต่อได้ที่:</strong><br/><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank">LinkedIn</a><br/><a href="https://app.hackthebox.com/users/190672" rel="noopener" target="_blank">HTB</a></p>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="osep.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">Passed OffSec Experienced Penetration Tester (OSEP) with secret.txt</span></a>
+<a class="post-navlink next" href="oscp.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">My OSCP Journey: Triple Attempts</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

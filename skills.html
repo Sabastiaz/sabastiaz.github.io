@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spells | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/skills.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Category section ── */
+    .cert-section {
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── Cert cards grid ── */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.14);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--maroon), var(--gold));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(201,168,76,0.38);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.4), 0 0 16px rgba(201,168,76,0.07);
+    }
+
+    .cert-card:hover::before { opacity: 1; }
+
+    /* In-progress / coming-soon states */
+    .cert-card.in-progress {
+      border-color: rgba(201,168,76,0.22);
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--surface),
+        var(--surface) 6px,
+        rgba(201,168,76,0.02) 6px,
+        rgba(201,168,76,0.02) 12px
+      );
+    }
+
+    .cert-card.coming-soon {
+      opacity: 0.55;
+    }
+
+    .cert-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .cert-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .cert-status {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .status-active {
+      background: rgba(93,186,106,0.12);
+      border: 1px solid rgba(93,186,106,0.25);
+      color: #5dba6a;
+    }
+
+    .status-progress {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.28);
+      color: var(--gold2);
+    }
+
+    .status-soon {
+      background: rgba(100,100,120,0.15);
+      border: 1px solid rgba(100,100,120,0.25);
+      color: var(--text-muted);
+    }
+
+    .cert-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .cert-issuer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .cert-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.4;
+    }
+
+    .cert-date {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      opacity: 0.75;
+    }
+
+    .cert-id {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.03);
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+      border: 1px solid rgba(255,255,255,0.06);
+      word-break: break-all;
+    }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      height: 4px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 0.2rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--maroon), var(--gold));
+      border-radius: 2px;
+      animation: glow-bar 2s ease-in-out infinite;
+    }
+
+    @keyframes glow-bar {
+      0%,100% { box-shadow: 0 0 4px rgba(201,168,76,0.4); }
+      50%      { box-shadow: 0 0 10px rgba(201,168,76,0.7); }
+    }
+
+    .progress-label {
+      font-family: 'Cinzel', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-top: 0.2rem;
+    }
+
+    /* ── HTB Labs (track list) ── */
+    .track-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .track-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .track-item:hover { border-color: rgba(201,168,76,0.3); }
+
+    .track-seal {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 5px rgba(201,168,76,0.5);
+      flex-shrink: 0;
+    }
+
+    .track-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .track-date {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      font-style: italic;
+    }
+
+    /* ── Stats bar ── */
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .stat-pill {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.14);
+      border-radius: 4px;
+      padding: 0.85rem 1.4rem;
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .stat-pill-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(201,168,76,0.4);
+      display: block;
+    }
+
+    .stat-pill-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .cert-grid  { grid-template-columns: 1fr; }
+      .track-list { grid-template-columns: 1fr; }
+      .stats-row  { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html" class="active">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Spellbook ✦</div>
+    <h1 class="page-title">Mastered Incantations</h1>
+    <p class="page-subtitle">Ancient orders, seals, and certifications of dark mastery</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🪄</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Stats row -->
+    <div class="stats-row fade-up">
+      <div class="stat-pill">
+        <span class="stat-pill-num">19</span>
+        <div class="stat-pill-label">Seals Earned</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-num">1</span>
+        <div class="stat-pill-label">In Progress</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-num">5</span>
+        <div class="stat-pill-label">Lab Tracks</div>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-pill-num">4+</span>
+        <div class="stat-pill-label">Years of Dark Arts</div>
+      </div>
+    </div>
+
+    <!-- ── I. Offensive Security ── -->
+    <div class="cert-section fade-up">
+      <div class="section-rune">Chapter I</div>
+      <div class="section-title">Offensive Security</div>
+      <div class="section-hdivider"></div>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">OffSec Experienced Penetration Tester (OSEP)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">OffSec</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Aug 2025</span>
+          </div>
+          <div class="cert-id">ID: 158156733</div><img src="pic/osep.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">OffSec Certified Professional (OSCP)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">OffSec</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Oct 2024</span>
+          </div>
+          <div class="cert-id">ID: 119488898</div><img src="pic/oscp.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">HTB Certified Penetration Testing Specialist (CPTS)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Hack The Box</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Apr 2025</span>
+          </div>
+          <div class="cert-id">ID: HTBCERT-43AC847A36</div><img src="pic/cpts.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Red Team Operator (CRTO)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Zero-Point Security</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Oct 2025</span>
+          </div><img src="pic/Zero-Point Security - Red Team Operator - 2025-10-05.png" alt="">
+        </div>
+        
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">HTB Certified Active Directory Pentesting Expert (CAPE)</div>
+            <span class="cert-status status-active">Active</span>
+            </div>
+            <div class="cert-meta">
+            <span class="cert-issuer">Hack The Box</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Mar 2026</span>
+            </div>
+            <div class="cert-id">ID: HTBCERT-4461DBC502</div><img src="pic/HTBCAPE.png" alt="">
+          </div>
+        
+
+        <div class="cert-card coming-soon">
+          <div class="cert-header">
+            <div class="cert-name">OffSec Certified Web Expert (OSWE)</div>
+            <span class="cert-status status-soon">Coming Soon</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">OffSec</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── II. Advanced AD & Red Team ── -->
+    <div class="cert-section fade-up">
+      <div class="section-rune">Chapter II</div>
+      <div class="section-title">Advanced Active Directory &amp; Red Team</div>
+      <div class="section-hdivider"></div>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Certified Active Directory Pentesting eXpert (C-ADPenX)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-date">Jan 2026</span>
+          </div>
+          <div class="cert-id">ID: 10906292</div><img src="pic/cadpenx.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Certified Active Directory Red Team Specialist (AD-RTS)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-date">Oct 2025</span>
+          </div>
+          <div class="cert-id">ID: 68e3f42ed091e15695ed0236</div><img src="pic/ADTS.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Certified Red Team Analyst (CRTA)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-date">Mar 2025</span>
+          </div>
+          <div class="cert-id">ID: 135747812</div><img src="pic/crta.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Red Team Infrastructure Developer (CRT-ID)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-date">Aug 2025</span>
+          </div>
+          <div class="cert-id">ID: 688ed6617c217ee6bfba1873</div><img src="pic/crid.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Certified Red Team Specialist V2 (CRTS V2)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-date">Mar 2026</span>
+          </div>
+          <div class="cert-id">ID: 69a1b4bff598fb51b7189acd</div><img src="pic/crtsv2.png" alt="">
+        </div>
+       
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Extreme Red Team Mailservice</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-date">Mar 2026</span>
+          </div>
+          <div class="cert-id">ID: abb3911c-01d8-4bf5-90ca-0841f57d9618</div><img src="pic/ertl.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── III. HTB Lab Tracks ── -->
+    <div class="cert-section fade-up">
+      <div class="section-rune">Chapter III</div>
+      <div class="section-title">Red Team Operator Tracks - Hack The Box</div>
+      <div class="section-hdivider"></div>
+      <div class="track-list">
+        <div class="track-item">
+          <div class="track-seal"></div>
+          <span class="track-name">Cybernetics</span>
+          <span class="track-date">Sep 2025</span>
+        </div>
+        <div class="track-item">
+          <div class="track-seal"></div>
+          <span class="track-name">Zephyr</span>
+          <span class="track-date">Sep 2025</span>
+        </div>
+        <div class="track-item">
+          <div class="track-seal"></div>
+          <span class="track-name">RastaLabs</span>
+          <span class="track-date">Dec 2024</span>
+        </div>
+        <div class="track-item">
+          <div class="track-seal"></div>
+          <span class="track-name">Dante</span>
+          <span class="track-date">Nov 2024</span>
+        </div>
+        <div class="track-item">
+          <div class="track-seal"></div>
+          <span class="track-name">HTB P.O.O.</span>
+          <span class="track-date">Nov 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── IV. Enterprise & Foundational ── -->
+    <div class="cert-section fade-up">
+      <div class="section-rune">Chapter IV</div>
+      <div class="section-title">Enterprise &amp; Foundational</div>
+      <div class="section-hdivider"></div>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Tenable.VM Specialist Certification</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Tenable</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Apr 2025 - Apr 2027</span>
+          </div>
+          <div class="cert-id">ID: 139072268</div><img src="pic/tenablecert.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Junior Penetration Tester Certified (PT1)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">TryHackMe</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Jul 2025 - Jul 2028</span>
+            </div>
+          <div class="cert-id">ID: 6871e3caef0b0fe36e65eac6</div><img src="pic/PT1.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Certified Ethical Hacker (CEH)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">EC-Council</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">May 2022</span>
+          </div>
+          <div class="cert-id">ID: ECC6497135280</div><img src="pic/ceh.png" alt="">
+        
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:1rem;" class="fade-up">
+      <a href="tools.html" class="btn-magic">View Arsenal →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

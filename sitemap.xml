@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Root pages -->
+  <url><loc>https://sabastiaz.github.io/</loc><priority>1.0</priority></url>
+  <url><loc>https://sabastiaz.github.io/about.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/skills.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/tools.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/writings.html</loc><priority>0.9</priority></url>
+  <url><loc>https://sabastiaz.github.io/honor.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/wowza.html</loc><priority>0.6</priority></url>
+  <url><loc>https://sabastiaz.github.io/event.html</loc><priority>0.6</priority></url>
+  <url><loc>https://sabastiaz.github.io/changelog.html</loc><priority>0.5</priority></url>
+  <url><loc>https://sabastiaz.github.io/contact.html</loc><priority>0.7</priority></url>
+
+  <!-- Blog posts -->
+  <url><loc>https://sabastiaz.github.io/blog/osep.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/cpts.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/oscp.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/crta.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/tenable-vm.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/mssql-domain.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/mailservice-en.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/guardian-summit.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/achievement-2025.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/oscp-guide-th.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/ctf-fun-th.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/keng-th.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/secplayground-2024.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/thailand-top-talent.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/hackloween-2025.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/dark-web-monitoring.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/rustpotato.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/brain-body-recover.html</loc><priority>0.7</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/cape.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/sliver-c2.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/godpotato.html</loc><priority>0.8</priority></url>
+  <url><loc>https://sabastiaz.github.io/blog/impostor-syndrome-th.html</loc><priority>0.7</priority></url>
+
+</urlset>

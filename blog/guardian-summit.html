@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tenable Guardian Summit 2025 | Sabastiaz</title>
+<meta content="Tenable Guardian Summit 2025 - Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="Tenable Guardian Summit 2025 | Sabastiaz" property="og:title"/>
+<meta content="Tenable Guardian Summit 2025 - Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/summit2025.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/guardian-summit.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-en">EN</span><span class="post-tag tag-life">Life</span></div>
+<div class="post-meta-row">
+<span>October 10, 2025</span><span class="dot">✦</span><span>4 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="en">Tenable Guardian Summit 2025</span><span class="lb" lang="th">Tenable Guardian Summit 2025 - มาเลเซีย</span></h1>
+</div>
+<div class="post-body lb" lang="en">
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*-rdnrgkwQ6hkP8FjhDTAjg.jpeg"/>
+</figure>
+<p><strong>Hi everyone, I’m back!</strong><br/>I had the exciting opportunity to attend the <strong>Tenable Guardian Summit</strong>. I’ve been looking forward to joining this event for <strong>2 years</strong>, so it was really exciting haha! I’m proud to say I was the <strong>Tenable Guardian from Thailand</strong> at the summit, which brought together many Guardians from across the <strong>APJ region</strong>.</p>
+<p>Before I share more, I’d like to say <strong>thank you for all the support</strong> that made this possible:</p>
+<ul>
+<li><strong>First</strong>, huge thanks to <strong>Tenable (the vendor)</strong> for supporting everything in Malaysia, including <strong>2 nights at the hotel</strong> and <strong>dinner</strong>.</li>
+<li><strong>And finally</strong>, big thanks to <strong>my customer, Bigfish Enterprise Limited</strong>, for supporting my <strong>flight for Guardian Summit</strong>.</li>
+</ul>
+<p>I really appreciate it it meant a lot to me!</p>
+<blockquote><strong><em>Before I talk about everything in this meeting, I want to tell everyone what I had to go through to get here.</em></strong></blockquote>
+<p><strong>First</strong> : You must be tenable partner and Level partner from tenable must be <strong>Gold level</strong> later <br/><strong>Second</strong> : You must be pass all certificate in Tenable University (Partner Only) <br/><strong>Final</strong> : You must be pass Tenable Specialist Certified or Tenable Expert Certified so If you would like deep details you can read from my blog :</p>
+<a href="https://sabastiaz.medium.com/i-passed-the-tenable-vulnerability-management-specialist-exam-on-my-first-attempt-fff53a0dcd79" rel="noopener" target="_blank"><strong>I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt!</strong><br/><em>Hey everyone! <br/>Welcome to My Blog super excited to share that I’ve officially passed the Tenable Vulnerability…</em>sabastiaz.medium.com</a><a href="https://sabastiaz.medium.com/i-passed-the-tenable-vulnerability-management-specialist-exam-on-my-first-attempt-fff53a0dcd79" rel="noopener" target="_blank"></a><p>So When you completed on 3 step that is already to go meeting Guardian Summit</p>
+<h2>Tenable Guardian Summit</h2>
+<p>Tenable Guardian summit 2025 is set at Aloft Kuala Lumpur Sentral, Malaysia</p>
+<p><strong>Calendar of this summit</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DWkzUy1ZrM0TXGNMQq32TQ.png"/>
+</figure>
+<h2>July 21 First Day</h2>
+<p>My flight arrived at Don Mueang Airport at 8:50 AM, and I landed in Malaysia at 11:50 AM (GMT+8). When I arrived in Malaysia, I got stuck at immigration for 2 hours because I forgot to fill out the Arrival Card - hahaha. After I finally passed immigration, I went to get a taxi from the airport. The ride to the Aloft Hotel took about 45 minutes.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*nJIaXHlE_OTLtwkTMuIPZg@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*n0p9nbp0NGvN0bGeUPKsNQ@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*uf5SBjMRygPmC-eBdSfiQQ@2x.jpeg"/>
+<figcaption>RoofTop Aloft Hotel</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/400/1*OtOwKVUgqGJxA78SGnbkDQ@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/1000/1*zYgYlnlL0oZKrX_hasUN6w@2x.jpeg"/>
+</figure>
+<h2>July 22 - Second Day</h2>
+<p>Today was the first full day of the Tenable event at Aloft Hotel. <br/>The sessions started at 8:30 AM with the Opening Remarks by Rob and Eli. After that, Eli Neumann presented <em>“</em><strong><em>From Blind Spots to Insights: CTEM</em></strong><em>”</em> (9:00–9:30), followed by Talib Yousry on the <strong><em>Tenable Assure Program</em></strong> (9:30–10:00).<br/>After a short break, Vishal Pukale shared insights on <strong><em>Exposure Management / Tenable One / Vulcan</em></strong> (11:00–12:30). Lunch was from 12:30 to 13:30, then the <strong>MSSP Update</strong> session also by Vishal Pukale (13:30–14:15).</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DoZfPphS6zxCaYgECv5kiQ.jpeg"/>
+<figcaption>Event Logo</figcaption>
+</figure>
+<p>In the afternoon, Swapnil Phandnis and Kenneth Teo discussed the <em>A</em><strong><em>I Update</em></strong> (14:15–15:00). After another break, Wing Churn spoke about <strong><em>Cloud Security</em></strong> (15:30–16:00).</p>
+<p>The day ended with a <strong>Networking Dinner</strong> at the Sky Lounge, where I had the chance to connect with other professionals.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*YOUCTHiSwXGMka9iGOeD3Q.jpeg"/>
+</figure>
+<h2><strong>July 23 - Third Day</strong></h2>
+<p>The second day of the Tenable event started at 9:00 AM with Kaori Iwashita’s session on <strong><em>Vulnerability Management</em></strong>. After that, Lool Kah Hou presented <strong><em>Security Center</em></strong> (10:00–10:30) and <strong><em>Tenable Enclave Security</em></strong> (10:30–11:00).</p>
+<p>After the morning break, Kenneth Teo spoke on <strong><em>Identity Exposure</em></strong> (11:30–12:30). Then we had lunch from 12:30–13:30.</p>
+<p>In the afternoon, Rickie Lim presented <strong><em>Tenable Patch Management (TPM)</em></strong> (13:30–14:30), followed by Karunan Velayutham on <strong><em>OT Security</em> </strong>(14:30–15:30). Finally, Jason Merrick closed the day with a session on <strong><em>Vision &amp; Strategy</em></strong> (15:30–16:00).</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*Rt9QGA3LIN8FudPh51-XNQ.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*v98AlgMaNdU11swnU-c1DQ.jpeg"/>
+</figure>
+<p>After the conference, at around 4:30 PM, I went to visit the <strong>Petronas Twin Towers</strong> in Kuala Lumpur. I spent some time walking around, enjoying the city view and the natural scenery nearby. It was a relaxing way to end the day after a full schedule of learning.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/400/1*XxAHriLQj_fv7f2Wt2CI2A@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/200/1*ZN84iX76JSsIsv669OaPVw@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*p9HsZ0dkVGh0xXjTrAKI7g@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*ef7B7gTcsbsBG3al-ZnWwg@2x.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*thN0Jr6szwp6CzV42XnHKA@2x.jpeg"/>
+</figure>
+<h2>July 24 - Last Day</h2>
+<p>On my last day in Malaysia, I checked out of the hotel and headed to the airport for my flight back to Thailand. Unfortunately, my flight was delayed by 1 hour, so I had to wait longer at the airport. Even though the return was a bit delayed, the overall trip was a great experience with lots of learning and memorable moments.</p>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+<h2><strong>See you Soon Tenable APJ Guardian Summit 2026</strong></h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*bLiHvEwO94-YumXbw6RULw.png"/>
+</figure>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+</div>
+<div class="post-body lb" lang="th">
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*-rdnrgkwQ6hkP8FjhDTAjg.jpeg"/></figure>
+<p><strong>สวัสดีทุกคน กลับมาอีกแล้ว!</strong><br/>ผมมีโอกาสได้เข้าร่วม <strong>Tenable Guardian Summit</strong> ซึ่งรอมา <strong>2 ปีแล้ว</strong> ตื่นเต้นมากเลย! ผมภูมิใจที่ได้เป็น <strong>Tenable Guardian จากประเทศไทย</strong> ในงานที่รวม Guardian จากทั่ว <strong>APJ region</strong></p>
+<p>ขอขอบคุณทุกคนที่สนับสนุนก่อนนะครับ:</p>
+<ul>
+<li><strong>ขอบคุณ Tenable (vendor)</strong> ที่ support ทุกอย่างในมาเลเซีย รวมถึง <strong>พักโรงแรม 2 คืน</strong> และ <strong>อาหารเย็น</strong></li>
+<li><strong>ขอบคุณลูกค้าของผม Bigfish Enterprise Limited</strong> ที่ support <strong>ค่าตั๋วเครื่องบิน</strong></li>
+</ul>
+<p>ขอบคุณมากครับ ซาบซึ้งใจมาก!</p>
+<blockquote><strong><em>ก่อนจะเล่าเรื่องในงาน ขอเล่าก่อนว่าต้องผ่านอะไรมาบ้างถึงจะมาได้</em></strong></blockquote>
+<p><strong>ข้อแรก</strong>: ต้องเป็น Tenable partner และมี partner level ระดับ <strong>Gold</strong><br/><strong>ข้อสอง</strong>: ต้องผ่าน certificate ทุกใบใน Tenable University (สำหรับ Partner เท่านั้น)<br/><strong>ข้อสุดท้าย</strong>: ต้องผ่าน Tenable Specialist Certified หรือ Tenable Expert Certified สามารถอ่านรายละเอียดได้ใน Blog ของผม:</p>
+<a href="https://sabastiaz.medium.com/i-passed-the-tenable-vulnerability-management-specialist-exam-on-my-first-attempt-fff53a0dcd79" rel="noopener" target="_blank"><strong>I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt!</strong><br/><em>Hey everyone! <br/>Welcome to My Blog super excited to share that I've officially passed the Tenable Vulnerability…</em>sabastiaz.medium.com</a><a href="https://sabastiaz.medium.com/i-passed-the-tenable-vulnerability-management-specialist-exam-on-my-first-attempt-fff53a0dcd79" rel="noopener" target="_blank"></a>
+<p>เมื่อทำครบ 3 ขั้นตอนนั้นแล้วก็พร้อมไปร่วม Guardian Summit ได้เลย</p>
+<h2>Tenable Guardian Summit</h2>
+<p>Tenable Guardian Summit 2025 จัดที่ Aloft Kuala Lumpur Sentral ประเทศมาเลเซีย</p>
+<p><strong>ตารางงาน</strong></p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DWkzUy1ZrM0TXGNMQq32TQ.png"/></figure>
+<h2>21 กรกฎาคม - วันแรก</h2>
+<p>เที่ยวบินออกจากดอนเมืองตี 8:50 น. ลงถึงมาเลเซียตี 11:50 น. (GMT+8) พอถึงมาเลเซียก็ติดด่านตรวจคนเข้าเมืองอยู่ถึง 2 ชั่วโมง เพราะลืมกรอก Arrival Card - ฮ่าๆ หลังจากผ่านด่านแล้วก็นั่งแท็กซี่จากสนามบิน ใช้เวลาประมาณ 45 นาทีถึงโรงแรม Aloft</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*nJIaXHlE_OTLtwkTMuIPZg@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*n0p9nbp0NGvN0bGeUPKsNQ@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*uf5SBjMRygPmC-eBdSfiQQ@2x.jpeg"/>
+<figcaption>RoofTop Aloft Hotel</figcaption></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/400/1*OtOwKVUgqGJxA78SGnbkDQ@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/1000/1*zYgYlnlL0oZKrX_hasUN6w@2x.jpeg"/></figure>
+<h2>22 กรกฎาคม - วันที่สอง</h2>
+<p>วันแรกของงาน Tenable ที่โรงแรม Aloft เริ่มตี 8:30 น. ด้วย Opening Remarks โดย Rob และ Eli ต่อด้วย Eli Neumann นำเสนอเรื่อง "<em><strong>From Blind Spots to Insights: CTEM</strong></em>" (9:00–9:30 น.) และ Talib Yousry พูดถึง <strong><em>Tenable Assure Program</em></strong> (9:30–10:00 น.)<br/>หลังพัก Vishal Pukale ให้ข้อมูลเรื่อง <strong><em>Exposure Management / Tenable One / Vulcan</em></strong> (11:00–12:30 น.) พักกลางวัน 12:30–13:30 น. แล้ว Vishal Pukale กลับมาอีกครั้งในหัวข้อ <strong>MSSP Update</strong> (13:30–14:15 น.)</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DoZfPphS6zxCaYgECv5kiQ.jpeg"/>
+<figcaption>Event Logo</figcaption></figure>
+<p>ช่วงบ่าย Swapnil Phandnis และ Kenneth Teo คุยเรื่อง <strong><em>AI Update</em></strong> (14:15–15:00 น.) และ Wing Churn นำเสนอเรื่อง <strong><em>Cloud Security</em></strong> (15:30–16:00 น.)</p>
+<p>ปิดวันด้วย <strong>Networking Dinner</strong> ที่ Sky Lounge ได้พูดคุยกับผู้คนในวงการมากมาย</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*YOUCTHiSwXGMka9iGOeD3Q.jpeg"/></figure>
+<h2><strong>23 กรกฎาคม - วันที่สาม</strong></h2>
+<p>วันที่สองของงานเริ่มตี 9:00 น. Kaori Iwashita พูดเรื่อง <strong><em>Vulnerability Management</em></strong> ต่อด้วย Lool Kah Hou นำเสนอ <strong><em>Security Center</em></strong> (10:00–10:30 น.) และ <strong><em>Tenable Enclave Security</em></strong> (10:30–11:00 น.)</p>
+<p>หลังพักเช้า Kenneth Teo พูดเรื่อง <strong><em>Identity Exposure</em></strong> (11:30–12:30 น.) พักกลางวัน 12:30–13:30 น.</p>
+<p>ช่วงบ่าย Rickie Lim นำเสนอ <strong><em>Tenable Patch Management (TPM)</em></strong> (13:30–14:30 น.) ตามด้วย Karunan Velayutham เรื่อง <strong><em>OT Security</em></strong> (14:30–15:30 น.) และ Jason Merrick ปิดด้วย <strong><em>Vision &amp; Strategy</em></strong> (15:30–16:00 น.)</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*Rt9QGA3LIN8FudPh51-XNQ.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*v98AlgMaNdU11swnU-c1DQ.jpeg"/></figure>
+<p>หลังงานเสร็จประมาณ 4 โมงครึ่ง ไปเที่ยว <strong>ตึกแฝดปิโตรนาส</strong> ใน KL เดินเล่นชมวิวเมืองและธรรมชาติโดยรอบ เป็นการปิดวันที่ดีหลังจากวันเต็มๆ ของการเรียนรู้</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/400/1*XxAHriLQj_fv7f2Wt2CI2A@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/200/1*ZN84iX76JSsIsv669OaPVw@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*p9HsZ0dkVGh0xXjTrAKI7g@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*ef7B7gTcsbsBG3al-ZnWwg@2x.jpeg"/></figure>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/1*thN0Jr6szwp6CzV42XnHKA@2x.jpeg"/></figure>
+<h2>24 กรกฎาคม - วันสุดท้าย</h2>
+<p>วันสุดท้ายในมาเลเซีย เช็คเอาท์จากโรงแรมและไปสนามบินเพื่อบินกลับไทย น่าเสียดายที่เที่ยวบินดีเลย์ 1 ชั่วโมง ต้องรอที่สนามบินนานหน่อย แต่โดยรวมการเดินทางครั้งนี้ยอดเยี่ยมมาก ได้เรียนรู้และมีความทรงจำดีๆ มากมาย</p>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+<h2><strong>แล้วพบกันใหม่ Tenable APJ Guardian Summit 2026</strong></h2>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*bLiHvEwO94-YumXbw6RULw.png"/></figure>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="mailservice-en.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">Mail Service Lab: Extreme Red Team LAB Review</span></a>
+<a class="post-navlink next" href="achievement-2025.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">Achievement 2025</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

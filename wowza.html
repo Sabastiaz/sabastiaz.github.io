@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wowza Group | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/wowza.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Hero banner ── */
+    .wowza-banner {
+      background: linear-gradient(135deg, rgba(122,31,46,0.18) 0%, rgba(201,168,76,0.06) 100%);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-bottom: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wowza-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
+    }
+
+    .wowza-mascot {
+      display: block;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,105,180,0.4);
+      box-shadow: 0 0 30px rgba(255,20,147,0.35);
+      transition: transform 0.4s;
+    }
+
+    .wowza-mascot:hover { transform: scale(1.05) rotate(-2deg); }
+
+    .wowza-logo {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      background: linear-gradient(135deg, #fff8e7 0%, var(--gold2) 50%, var(--candle) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 18px rgba(201,168,76,0.4));
+      margin-bottom: 0.4rem;
+    }
+
+    .wowza-tagline {
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .wowza-desc {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 2;
+      max-width: 680px;
+      margin: 0 auto 1.75rem;
+    }
+
+    .wowza-team-img {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto 1.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.25);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      transition: transform 0.4s;
+    }
+
+    .wowza-team-img:hover { transform: scale(1.02); }
+
+    .wowza-fb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(24,119,242,0.1);
+      border: 1px solid rgba(24,119,242,0.25);
+      color: #7aadff;
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 4px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.25s;
+    }
+
+    .wowza-fb:hover {
+      background: rgba(24,119,242,0.18);
+      border-color: rgba(24,119,242,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ── Focus pillars ── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .pillar-card {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .pillar-card:hover {
+      border-color: rgba(201,168,76,0.38);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35), 0 0 14px rgba(201,168,76,0.07);
+    }
+
+    .pillar-icon { font-size: 1.8rem; }
+
+    .pillar-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* ── Members ── */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .member-card {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      transition: all 0.25s;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--maroon), var(--gold));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .member-card:hover {
+      border-color: rgba(201,168,76,0.38);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .member-card:hover::before { opacity: 1; }
+
+    /* Founder card special style */
+    .member-card.founder {
+      background: linear-gradient(135deg, #1e1810, #231d12);
+      border-color: rgba(201,168,76,0.25);
+    }
+
+    .member-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .member-card.founder .member-avatar {
+      background: rgba(201,168,76,0.15);
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 0 12px rgba(201,168,76,0.2);
+    }
+
+    .member-info { flex: 1; min-width: 0; }
+
+    .member-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .member-card.founder .member-name { color: var(--gold2); }
+
+    .member-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .member-link-icon {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      opacity: 0.4;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .member-card:hover .member-link-icon {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    /* ── Stats row ── */
+    .wowza-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .wstat {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      padding: 0.85rem 1.4rem;
+      flex: 1;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .wstat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(201,168,76,0.4);
+      display: block;
+    }
+
+    .wstat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .pillars-grid  { grid-template-columns: repeat(2, 1fr); }
+      .members-grid  { grid-template-columns: 1fr; }
+      .wowza-stats   { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html" class="active">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Secret Order ✦</div>
+    <h1 class="page-title">Wowza</h1>
+    <p class="page-subtitle">A cybersecurity community forged in darkness &amp; light</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🔥</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── Banner ── -->
+    <div class="wowza-banner fade-up">
+      <img class="wowza-mascot" src="pic/wowza_logo.png" alt="Wowza Group mascot logo" loading="lazy">
+      <div class="wowza-logo">✦ WOWZA ✦</div>
+      <div class="wowza-tagline">Blue Team · Red Team · Community</div>
+      <img class="wowza-team-img" src="pic/wowza4k.png" alt="Wowza Group team" loading="lazy">
+
+      <p class="wowza-desc">
+        A cybersecurity community founded to foster growth in both Blue Team and Red Team disciplines,
+        emphasizing practical skill development through hands-on training and collaborative learning environments.
+      </p>
+      <a href="https://www.facebook.com/profile.php?id=61588076235430" class="wowza-fb" target="_blank" rel="noopener">
+        📘 &nbsp; Follow on Facebook
+      </a>
+    </div>
+
+    <!-- ── Stats ── -->
+    <div class="wowza-stats fade-up">
+      <div class="wstat">
+        <span class="wstat-num">9</span>
+        <div class="wstat-label">Members</div>
+      </div>
+      <div class="wstat">
+        <span class="wstat-num">2</span>
+        <div class="wstat-label">Disciplines</div>
+      </div>
+      <div class="wstat">
+        <span class="wstat-num">🔴</span>
+        <div class="wstat-label">Red Team</div>
+      </div>
+      <div class="wstat">
+        <span class="wstat-num">🔵</span>
+        <div class="wstat-label">Blue Team</div>
+      </div>
+    </div>
+
+    <!-- ── Core focus ── -->
+    <div style="margin-bottom:3.5rem;" class="fade-up">
+      <div class="section-rune">The Order's Purpose</div>
+      <div class="section-title">Core Focus Areas</div>
+      <div class="section-hdivider"></div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🧪</div>
+          <div class="pillar-label">Hands-on Learning Initiatives</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🤝</div>
+          <div class="pillar-label">Technical Collaboration</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">⚔️</div>
+          <div class="pillar-label">Practical Security Development</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🏰</div>
+          <div class="pillar-label">Labs &amp; Research Projects</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📡</div>
+          <div class="pillar-label">Community-Driven Knowledge Sharing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Members ── -->
+    <div class="fade-up">
+      <div class="section-rune">The Circle of Sorcerers</div>
+      <div class="section-title">Member Directory</div>
+      <div class="section-hdivider"></div>
+      <div class="members-grid">
+
+        <a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" class="member-card founder" target="_blank" rel="noopener">
+          <div class="member-avatar">🧙</div>
+          <div class="member-info">
+            <div class="member-name">Sabastiaz</div>
+            <div class="member-role">Founder · Red Team Operator</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <a href="https://chickenloner.github.io/" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">🐔</div>
+          <div class="member-info">
+            <div class="member-name">Chicken</div>
+            <div class="member-role">Blue Team Specialist</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <a href="https://chairattoraya.medium.com/about" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">⚡</div>
+          <div class="member-info">
+            <div class="member-name">Kyokito</div>
+            <div class="member-role">XSS Master</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <a href="https://itthidejaramsri.pythonanywhere.com/" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">🎩</div>
+          <div class="member-info">
+            <div class="member-name">Professorx777</div>
+            <div class="member-role">AI Specialist</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <a href="https://netorika.medium.com/" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">🗡️</div>
+          <div class="member-info">
+            <div class="member-name">Natsuiro</div>
+            <div class="member-role">No.1 Aseans</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <a href="https://www.facebook.com/jockky.chanthavong" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">🗡️</div>
+          <div class="member-info">
+            <div class="member-name">Jockky</div>
+            <div class="member-role">Mobile Master</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <a href="https://waris-damkham.netlify.app/" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">🛡️</div>
+          <div class="member-info">
+            <div class="member-name">Waris</div>
+            <div class="member-role">AI Expert</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+        
+        <a href="https://www.linkedin.com/in/prawee-lertprasertphan/" class="member-card" target="_blank" rel="noopener">
+          <div class="member-avatar">❓</div>
+          <div class="member-info">
+            <div class="member-name">BigPud</div>
+            <div class="member-role">Secret</div>
+          </div>
+          <span class="member-link-icon">→</span>
+        </a>
+
+        <div class="member-card" style="cursor:default;">
+          <div class="member-avatar">🌑</div>
+          <div class="member-info">
+            <div class="member-name">???</div>
+            <div class="member-role">Classified - identity sealed</div>
+          </div>
+          <span class="member-link-icon">🔒</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:3.5rem;" class="fade-up">
+      <a href="contact.html" class="btn-magic">Send Owl Post →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

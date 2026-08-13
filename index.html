@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabastiaz | Red Team Sorcerer</title>
+  <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 2rem 4rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -60%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(122,31,46,0.18) 0%, rgba(201,168,76,0.06) 40%, transparent 70%);
+      pointer-events: none;
+      animation: breathe 6s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%,100% { transform: translate(-50%,-60%) scale(1); opacity: 0.8; }
+      50%      { transform: translate(-50%,-60%) scale(1.12); opacity: 1; }
+    }
+    .candles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .candle { position: absolute; display: flex; flex-direction: column; align-items: center; animation: candleFloat linear infinite; }
+    .candle-flame {
+      width: 6px; height: 10px;
+      background: radial-gradient(ellipse at 50% 80%, #ffcd7a, #ff9d3d, transparent);
+      border-radius: 50% 50% 30% 30%;
+      box-shadow: 0 0 8px #ff9d3d, 0 0 20px rgba(255,157,61,0.4);
+      animation: flameFlicker 0.8s ease-in-out infinite alternate;
+    }
+    .candle-body { width: 5px; background: linear-gradient(180deg, #e8dcc8, #b8a88a); border-radius: 1px; }
+    @keyframes candleFloat {
+      0%   { transform: translateY(110vh) rotate(-2deg); opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(2deg); opacity: 0; }
+    }
+    @keyframes flameFlicker {
+      0%   { transform: scaleX(1) scaleY(1); }
+      100% { transform: scaleX(0.85) scaleY(1.1); }
+    }
+    .hero-inner { position: relative; z-index: 2; text-align: center; max-width: 900px; }
+    .hero-school {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.65; margin-bottom: 1.5rem;
+    }
+    .hero-crest {
+      font-size: 5rem; display: block; margin-bottom: 0.75rem;
+      filter: drop-shadow(0 0 24px rgba(201,168,76,0.55));
+      animation: float 5s ease-in-out infinite;
+    }
+    .hero-name {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      font-weight: 900; letter-spacing: 0.06em; line-height: 1.15; margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #fffbf0 0%, var(--gold2) 45%, var(--candle) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(201,168,76,0.3));
+    }
+    .hero-alias { font-family: 'Crimson Text', serif; font-style: italic; font-size: 1.3rem; color: var(--text-muted); margin-bottom: 0.4rem; letter-spacing: 0.05em; }
+    .hero-alias em { color: var(--gold2); font-style: normal; }
+    .hero-roles { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin: 1.4rem 0; }
+    .role-badge {
+      font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; border-radius: 2px; border: 1px solid rgba(201,168,76,0.22);
+      color: var(--text-muted); background: rgba(201,168,76,0.05);
+    }
+    .role-badge.primary { background: rgba(122,31,46,0.2); border-color: rgba(201,168,76,0.35); color: var(--gold2); }
+    .hero-tagline { font-size: 1.1rem; font-style: italic; color: var(--text-dim); max-width: 580px; margin: 0 auto 2rem; line-height: 2; }
+    .ornament { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 1.5rem 0; }
+    .ornament-line { flex: 1; max-width: 130px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .ornament-line.r { background: linear-gradient(90deg, var(--gold), transparent); }
+    .ornament-sym { color: var(--gold); font-size: 1rem; opacity: 0.7; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); opacity: 0.45; animation: fadeUpDown 2.5s ease-in-out infinite;
+    }
+    .scroll-hint-arrow { width: 1px; height: 28px; background: linear-gradient(180deg, var(--gold), transparent); }
+    @keyframes fadeUpDown {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.45; }
+      50%      { transform: translateX(-50%) translateY(6px); opacity: 0.7; }
+    }
+    .stats-bar { position: relative; z-index: 1; padding: 3rem 2rem; border-top: 1px solid rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.08); }
+    .stats-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: center; flex-wrap: wrap; }
+    .stat-item { flex: 1; min-width: 140px; text-align: center; padding: 1rem 1.5rem; position: relative; }
+    .stat-item:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px; background: rgba(201,168,76,0.12); }
+    .stat-num { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 16px rgba(201,168,76,0.4); display: block; line-height: 1; margin-bottom: 0.4rem; }
+    .stat-lbl { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+    .grimoire-section { background: var(--surface); position: relative; z-index: 1; padding: 5rem 2rem; }
+    .grimoire-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .grimoire-header { text-align: center; margin-bottom: 3.5rem; }
+    .grimoire-label { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 0.5rem; }
+    .grimoire-title { font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; color: var(--gold2); text-shadow: 0 0 20px rgba(201,168,76,0.25); }
+    .chapters { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .chapter-card {
+      background: var(--surface2); border: 1px solid rgba(201,168,76,0.13); border-radius: 4px;
+      padding: 1.75rem 1.6rem; text-decoration: none; display: flex; flex-direction: column;
+      gap: 0.65rem; position: relative; overflow: hidden; transition: all 0.3s;
+    }
+    .chapter-card::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.05), transparent);
+      transition: left 0.5s ease; pointer-events: none;
+    }
+    .chapter-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon)); opacity: 0; transition: opacity 0.3s;
+    }
+    .chapter-card:hover { border-color: rgba(201,168,76,0.38); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 22px rgba(201,168,76,0.07); }
+    .chapter-card:hover::before { left: 140%; }
+    .chapter-card:hover::after  { opacity: 1; }
+    .chapter-num { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--gold); opacity: 0.5; text-transform: uppercase; }
+    .chapter-icon { font-size: 2rem; }
+    .chapter-title { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 700; color: var(--text); line-height: 1.4; }
+    .chapter-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; flex: 1; }
+    .chapter-arrow { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold); opacity: 0.5; margin-top: 0.25rem; transition: opacity 0.2s, letter-spacing 0.2s; }
+    .chapter-card:hover .chapter-arrow { opacity: 1; letter-spacing: 0.18em; }
+    .quote-section { position: relative; z-index: 1; padding: 5rem 2rem; text-align: center; background: var(--surface); }
+    .quote-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .big-quote { font-family: 'Crimson Text', serif; font-size: clamp(1.3rem, 3vw, 1.9rem); font-style: italic; color: var(--text-dim); line-height: 1.9; max-width: 720px; margin: 0 auto 1.5rem; position: relative; }
+    .big-quote::before { content: '\201C'; position: absolute; top: -1rem; left: -1.5rem; font-size: 5rem; color: var(--gold); opacity: 0.12; font-family: 'Cinzel', serif; line-height: 1; }
+    .big-quote span { color: var(--gold2); font-style: normal; }
+    .quote-attr { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); opacity: 0.6; }
+    /* ── Hero profile image slideshow ── */
+    .hero-profile-slideshow {
+      max-width: 320px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      margin: 1rem auto 0;
+      position: relative;
+      filter: drop-shadow(0 0 16px rgba(201,168,76,0.25));
+    }
+    .hero-profile-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-profile-img.active { opacity: 1; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .hero { padding: 5rem 1.25rem 3rem; }
+      .hero-glow { width: 340px; height: 340px; }
+      .hero-roles { gap: 0.4rem; }
+      .role-badge { font-size: 0.58rem; padding: 0.25rem 0.7rem; }
+      .hero-tagline { font-size: 0.95rem; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas a { width: 100%; max-width: 280px; text-align: center; }
+      .hero-profile-slideshow { max-width: 240px; }
+
+      .stats-inner { gap: 0; }
+      .stat-item { min-width: 90px; padding: 0.75rem 0.6rem; }
+      .stat-item:not(:last-child)::after { display: none; }
+      .stat-num { font-size: 1.6rem; }
+      .stat-lbl { font-size: 0.55rem; }
+
+      .chapters { grid-template-columns: 1fr 1fr; }
+      .grimoire-section { padding: 3rem 1rem; }
+      .quote-section { padding: 3rem 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .chapters { grid-template-columns: 1fr; }
+      .stat-item { min-width: 70px; }
+    }
+
+    /* ── Cert Marquee ── */
+    .cert-marquee-section {
+      position: relative; z-index: 1;
+      padding: 3rem 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .cert-marquee-section::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .cert-marquee-label {
+      text-align: center; margin-bottom: 1.5rem;
+      font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.6;
+    }
+    .marquee-wrapper {
+      position: relative; width: 100%;
+    }
+    .marquee-wrapper::before, .marquee-wrapper::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+    }
+    .marquee-wrapper::before {
+      left: 0; background: linear-gradient(90deg, var(--surface), transparent);
+    }
+    .marquee-wrapper::after {
+      right: 0; background: linear-gradient(90deg, transparent, var(--surface));
+    }
+    .marquee-track {
+      display: flex; width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      flex-shrink: 0; height: 70px; margin: 0 1.5rem;
+      opacity: 0.75;
+      transition: opacity 0.3s, filter 0.3s, transform 0.3s;
+      object-fit: contain;
+    }
+    .marquee-item:hover {
+      opacity: 1; filter: drop-shadow(0 0 12px rgba(201,168,76,0.4));
+      transform: scale(1.12);
+    }
+    @keyframes marqueeScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (max-width: 768px) {
+      .marquee-item { height: 50px; margin: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<div class="candles" id="candles"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+   
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-school">Hogweird School of Witchcraft &amp; Red Team Operations</div>
+    <span class="hero-crest">🦅</span>
+    <h1 class="hero-name" id="hero-name">Ratthapong Sommanus</h1>
+    <p class="hero-alias">known in the wizarding world as <em>Sabastiaz</em></p>
+    <div class="hero-roles">
+      <span class="role-badge primary">Founder of Wowza </span>
+      <span class="role-badge">Penetration Tester</span>
+      <span class="role-badge">Tenable Guardian of Thailand</span>
+      
+    </div>
+    <div class="hero-profile-slideshow">
+      <img src="pic/Sabastiaz_Sly.png" alt="Sabastiaz" class="hero-profile-img active">
+      <img src="pic/gryp.png" alt="Sabastiaz" class="hero-profile-img">
+      <img src="pic/huff.png" alt="Sabastiaz" class="hero-profile-img">
+      <img src="pic/reven.png" alt="Sabastiaz" class="hero-profile-img">
+    </div>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <span class="ornament-sym">⚡</span>
+      <div class="ornament-line r"></div>
+    </div>
+    <p class="hero-tagline">
+      Master of the Dark Arts of Active Directory conjuring attack chains,
+      hexing enterprise vulnerabilities, and translating ancient risk scrolls
+      for the Council of Executive Stakeholders.
+    </p>
+    <div class="hero-ctas">
+      <a href="about.html" class="btn-magic">About Me</a>
+      <a href="contact.html" class="btn-outline">Send Owl Post</a>
+    </div>
+  </div>
+  
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><span class="stat-num">19</span><div class="stat-lbl">Certifications</div></div>
+    <div class="stat-item"><span class="stat-num">22</span><div class="stat-lbl">Published Tomes</div></div>
+    <div class="stat-item"><span class="stat-num">9</span><div class="stat-lbl">Wowza Members</div></div>
+    <div class="stat-item"><span class="stat-num">3</span><div class="stat-lbl">Honours &amp; Awards</div></div>
+    <div class="stat-item"><span class="stat-num">1</span><div class="stat-lbl">CVE Discovered</div></div>
+  </div>
+</div>
+
+<div class="grimoire-section">
+  <div class="grimoire-header fade-up">
+    <div class="grimoire-label">✦ The Grand Grimoire ✦</div>
+    <div class="grimoire-title">Choose Your Chapter</div>
+  </div>
+  <div class="chapters fade-up">
+    <a href="about.html" class="chapter-card">
+      <div class="chapter-num">Chapter I</div>
+      <div class="chapter-icon">📖</div>
+      <div class="chapter-title">The Wizard's Chronicle</div>
+      <div class="chapter-desc">Identity, expertise, attack methodology, certifications, and the full case study of domain compromise.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="skills.html" class="chapter-card">
+      <div class="chapter-num">Chapter II</div>
+      <div class="chapter-icon">🪄</div>
+      <div class="chapter-title">Mastered Incantations</div>
+      <div class="chapter-desc">19 certifications across Offensive Security, Active Directory, Red Team tracks, and enterprise disciplines.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="tools.html" class="chapter-card">
+      <div class="chapter-num">Chapter III</div>
+      <div class="chapter-icon">🔮</div>
+      <div class="chapter-title">The Prophecy Chamber</div>
+      <div class="chapter-desc">Current focus areas, ongoing dark arts research, and the Marauder's Terminal.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="writings.html" class="chapter-card">
+      <div class="chapter-num">Chapter IV</div>
+      <div class="chapter-icon">📚</div>
+      <div class="chapter-title">The Restricted Section</div>
+      <div class="chapter-desc">22 published scrolls, hosted here - OSCP, OSEP, CPTS, CAPE journeys, lab reviews, CTF write-ups, and philosophical writings.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="honor.html" class="chapter-card">
+      <div class="chapter-num">Chapter V</div>
+      <div class="chapter-icon">🏆</div>
+      <div class="chapter-title">Hall of Honours</div>
+      <div class="chapter-desc">Tenable Guardian of Thailand, Outstanding Technical Impact Award, and CVE-2025-48878 discovery.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="wowza.html" class="chapter-card">
+      <div class="chapter-num">Chapter VI</div>
+      <div class="chapter-icon">🔥</div>
+      <div class="chapter-title">The Secret Order</div>
+      <div class="chapter-desc">Wowza Group - a cybersecurity community forged in both Blue and Red Team disciplines.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="event.html" class="chapter-card">
+      <div class="chapter-num">Chapter VII</div>
+      <div class="chapter-icon">🏟️</div>
+      <div class="chapter-title">Great Hall Gatherings</div>
+      <div class="chapter-desc">Summits, meetups, and wizarding security gatherings attended across the realm.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="contact.html" class="chapter-card">
+      <div class="chapter-num">Chapter VIII</div>
+      <div class="chapter-icon">🦉</div>
+      <div class="chapter-title">The Owlery</div>
+      <div class="chapter-desc">Dispatch an owl for red team engagements, AD assessments, collaboration, or conference speaking.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+    <a href="changelog.html" class="chapter-card">
+      <div class="chapter-num">Chapter IX</div>
+      <div class="chapter-icon">📜</div>
+      <div class="chapter-title">The Marauder's Map Updates</div>
+      <div class="chapter-desc">A living record of every enchantment, revision, and new scroll added to this realm.</div>
+      <div class="chapter-arrow">Open →</div>
+    </a>
+  </div>
+</div>
+
+<div class="quote-section fade-up">
+  <p class="big-quote">
+    "I never trust <span>anyone</span> who's more excited about
+    success than about doing the thing they want to be <span>successful</span> at."
+  </p>
+  <div class="quote-attr">- Albus Sabastiaz · Applied to Offensive Security</div>
+</div>
+
+<div class="cert-marquee-section">
+  <div class="cert-marquee-label">✦ Mastered Incantations ✦</div>
+  <div class="marquee-wrapper">
+    <div class="marquee-track" id="marquee-track">
+      <img class="marquee-item" src="pic/448aacd7-d7f5-42a7-9f23-ea7a0e426a1c.png" alt="OSEP" />
+      <img class="marquee-item" src="pic/a23a230d-6069-4150-8790-d02ad4a46f11.png" alt="OSCP" />
+      <img class="marquee-item" src="pic/Zero-Point Security - Red Team Operator - 2025-10-05.png" alt="CRTO" />
+      <img class="marquee-item" src="pic/CAPE.png" alt="CAPE" />
+      <img class="marquee-item" src="pic/hack-the-box-certified-penetration-testing-specialist-htb-cpts.png" alt="CPTS" />
+      <img class="marquee-item" src="pic/0275233b-704f-4ff5-9f2a-ae7cfcb4a463.png" alt="CRTA - Certified Red Team Analyst" />
+      <img class="marquee-item" src="pic/cc562c23-9203-4fda-bc9a-b262c4e1414f.png" alt="CRTS V2 - Certified Red Team Specialist" />
+      <img class="marquee-item" src="pic/abb3911c-01d8-4bf5-90ca-0841f57d9618.png" alt="Extreme Red Team Mailservice" />
+      <img class="marquee-item" src="pic/CEH_2E345519D3F7.png" alt="CEH - Certified Ethical Hacker" />
+      <img class="marquee-item" src="pic/cert-stamp-c-adpenx.png" alt="C-ADPenX - Certified Active Directory Pentesting eXpert" />
+      <img class="marquee-item" src="pic/c39facd3-aea3-432b-972b-0c1e160390cc.png" alt="Tenable Vulnerability Management Specialist" />
+      <img class="marquee-item" src="pic/blob.png" alt="TryHackMe PT1 Certified" />
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.35rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script>
+  // Seamless infinite marquee
+  (function () {
+    const track = document.getElementById('marquee-track');
+    if (!track) return;
+    // Wait for images to load so widths are correct
+    window.addEventListener('load', function () {
+      // Clone all items to fill the gap
+      const items = track.innerHTML;
+      track.innerHTML = items + items + items;
+      const totalW = track.scrollWidth / 3;
+      let pos = 0;
+      let speed = 0.6; // px per frame
+      let paused = false;
+      track.addEventListener('mouseenter', function () { paused = true; });
+      track.addEventListener('mouseleave', function () { paused = false; });
+      function step() {
+        if (!paused) {
+          pos -= speed;
+          if (Math.abs(pos) >= totalW) pos += totalW;
+          track.style.transform = 'translateX(' + pos + 'px)';
+        }
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  })();
+</script>
+<script>
+  (function () {
+    const container = document.getElementById('candles');
+    if (!container) return;
+    for (let i = 0; i < 12; i++) {
+      const c = document.createElement('div');
+      c.className = 'candle';
+      const bodyH = 20 + Math.random() * 30;
+      c.innerHTML = '<div class="candle-flame"></div><div class="candle-body" style="height:' + bodyH + 'px"></div>';
+      c.style.left = (5 + Math.random() * 90) + '%';
+      c.style.animationDuration = (18 + Math.random() * 22) + 's';
+      c.style.animationDelay = -(Math.random() * 30) + 's';
+      c.style.opacity = (0.35 + Math.random() * 0.45).toString();
+      container.appendChild(c);
+    }
+  })();
+</script>
+<script src="notif.js"></script>
+
+<script>
+(function(){
+  var slides = document.querySelectorAll('.hero-profile-slideshow .hero-profile-img');
+  if (!slides.length) return;
+  var i = 0;
+  setInterval(function(){
+    slides[i].classList.remove('active');
+    i = (i + 1) % slides.length;
+    slides[i].classList.add('active');
+  }, 4500);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+<script>
+(function(){
+  var RUNES = "ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ";
+  var target = document.getElementById('hero-name');
+  if (!target) return;
+  var realText = target.textContent;
+
+  function TextScramble(el) {
+    this.el = el;
+    this.frame = 0;
+    this.frameRequest = null;
+  }
+  TextScramble.prototype.setText = function(newText) {
+    var self = this;
+    var oldText = this.el.textContent;
+    var length = Math.max(oldText.length, newText.length);
+    var queue = [];
+    for (var i = 0; i < length; i++) {
+      var from = oldText[i] || '';
+      var to = newText[i] || '';
+      var start = Math.floor(Math.random() * 20);
+      var end = start + Math.floor(Math.random() * 20) + 10;
+      queue.push({ from: from, to: to, start: start, end: end, char: '' });
+    }
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    return new Promise(function(resolve){
+      function update() {
+        var output = '';
+        var complete = 0;
+        for (var i = 0; i < queue.length; i++) {
+          var q = queue[i];
+          if (self.frame >= q.end) {
+            complete++;
+            output += q.to;
+          } else if (self.frame >= q.start) {
+            if (!q.char || Math.random() < 0.3) {
+              q.char = RUNES[Math.floor(Math.random() * RUNES.length)];
+            }
+            output += q.char;
+          } else {
+            output += q.from;
+          }
+        }
+        self.el.textContent = output;
+        if (complete === queue.length) {
+          resolve();
+        } else {
+          self.frameRequest = requestAnimationFrame(update);
+          self.frame++;
+        }
+      }
+      update();
+    });
+  };
+
+  var fx = new TextScramble(target);
+
+  function playScramble() {
+    var scrambled = realText.split('').map(function(){ return RUNES[Math.floor(Math.random()*RUNES.length)]; }).join('');
+    return fx.setText(scrambled).then(function(){
+      return new Promise(function(r){ setTimeout(r, 300); });
+    }).then(function(){
+      return fx.setText(realText);
+    });
+  }
+
+  function loop() {
+    playScramble().then(function(){
+      setTimeout(loop, 4000);
+    });
+  }
+
+  setTimeout(loop, 500);
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

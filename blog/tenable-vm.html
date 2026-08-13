@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt! | Sabastiaz</title>
+<meta content="I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt! - Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt! | Sabastiaz" property="og:title"/>
+<meta content="I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt! - Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/thumb/tenablecert.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/tenable-vm.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-en">EN</span><span class="post-tag tag-cert">Certification</span></div>
+<div class="post-meta-row">
+<span>April 9, 2025</span><span class="dot">✦</span><span>5 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="en">I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt!</span><span class="lb" lang="th">ผ่าน Tenable Vulnerability Management Specialist - ครั้งแรก!</span></h1>
+</div>
+<div class="post-body lb" lang="en">
+<p><strong>Hey everyone! <br/></strong>Welcome to My Blog super excited to share that I’ve officially passed the <strong>Tenable Vulnerability Management Specialist</strong> certification - and I did it on my <strong>first attempt</strong>! 🙌</p>
+<p>It was a mix of written and practical exams, and honestly, it tested both knowledge and real-world skills. In this post, I’ll break down everything you need to know - what the exam covers, how I prepared, tips for passing, and of course, my personal experience.</p>
+<ol>
+<li><strong>About the certification</strong></li>
+<li><strong>What the exam covers</strong></li>
+<li><strong>My preparation steps</strong></li>
+<li><strong>Tips for passing</strong></li>
+<li><strong>Final thoughts</strong></li>
+</ol>
+<p><strong>Let’s dive in!</strong></p>
+<h2>Before we dive into the steps to pass the exam…</h2>
+<p>I just want to take a moment to say a big thank you to everyone who supported me throughout this journey!</p>
+<ul>
+<li><strong>Firstly</strong>, a huge thanks to <strong>My parents</strong> for supporting me with the exam budget.</li>
+<li><strong>Secondly</strong>, I really appreciate My company <a href="https://www.bigfish.co.th/" rel="noopener" target="_blank"><strong>Bigfish</strong></a> for also helping cover the exam cost.</li>
+<li><strong>Thirdly</strong>, big thanks to my friends <a href="https://www.linkedin.com/in/rickylim88/" rel="noopener" target="_blank"><strong>Rickie Lim</strong></a> and my vendor <a href="https://www.tenable.com/" rel="noopener" target="_blank"><strong>Tenable</strong></a> for their constant encouragement and observation while I prepared for the exam.</li>
+</ul>
+<p><strong>I couldn’t have done it without all of you!</strong></p>
+<h2><strong>1. About the certification</strong></h2>
+<h2>What is Tenable?</h2>
+<p>If you’re in cybersecurity, you’ve probably heard of <strong>Nessus</strong> - one of the most well-known tools for <strong>vulnerability assessment</strong>. <br/>But not everyone realizes that <strong>Nessus is actually part of Tenable</strong>.</p>
+<p><strong>Tenable</strong> is the company behind Nessus, and they offer much more than just that. Their platform includes solutions for:</p>
+<p><strong>Exposure Management which includes</strong></p>
+<ul>
+<li><strong>Vulnerability Management</strong></li>
+<li><strong>Cloud Security</strong></li>
+<li><strong>Identity Exposure</strong></li>
+<li><strong>Operational Technology (OT) Security</strong></li>
+</ul>
+<p>So if you’re using Nessus, you’re already working with a piece of the Tenable ecosystem!<br/>Ref: <a href="https://www.tenable.com/" rel="noopener" target="_blank">https://www.tenable.com/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*erUtPVSxcfNaMH18Y1elDw.png"/>
+<figcaption>Tenable Solutions</figcaption>
+</figure>
+<p>The full name of the exam is <strong>Tenable Vulnerability Management Specialist Certified</strong>. Yeah, it sounds a bit long - but don’t worry, it’s not as scary as it sounds</p>
+<p>If you’re thinking about taking the exam, <strong>Tenable has a bunch of training courses available (</strong><a href="https://www.tenable.com/education" rel="noopener" target="_blank">https://www.tenable.com/education</a><strong>) </strong>on their website. <br/>I definitely recommend going through them before the test. <br/>They cover everything from the basics of how to use the platform to more advanced stuff like analyzing and managing vulnerabilities.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*tHH40-8TzCuUA3LzwIBW8w.png"/>
+</figure>
+<p><strong>My Exam Tier </strong><br/><strong>Specialist Tier</strong>: Premium courses focus on product deployment, configuration and operational usage. In addition to lectures, you can participate in a hands-on lab with exercises for practical application. <br/>These courses are recommended if you are seeking Specialist certification. <br/>You can also earn a certificate of attendance for completing these courses.</p>
+<h3>Steps for Certification</h3>
+<ol>
+<li><a href="https://www.tenable.com/buy/certification" rel="noopener" target="_blank">Purchase</a>, register and pass the written qualification exam.</li>
+<li><a href="https://www.tenable.com/buy/certification" rel="noopener" target="_blank">Purchase</a>, register and pass the practical exam.</li>
+<li>Receive digital credentials via email and share them on your resume or social media.</li>
+</ol>
+<h2>Exam And Certification Details</h2>
+<p>Tenable Vulnerability Management, Tenable Security Center, Tenable OT Security Certification</p>
+<blockquote>You need a <strong>minimum score of 80% </strong>to pass each exam.</blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DYJR9psjaFwsyXHiWwV7Eg.png"/>
+</figure>
+<blockquote><strong>You must pass the written exam before scheduling the practical exam</strong></blockquote>
+<p>The <strong>Tenable Vulnerability Management Specialist</strong> exam is split into <strong>two parts</strong>:</p>
+<ol>
+<li><strong>Written Exam</strong> - This part includes multiple-choice questions that test your theoretical knowledge of the Tenable platform, vulnerability management concepts, asset scanning, prioritization, and reporting.</li>
+<li><strong>Practical Exam</strong> - In this round, you’ll actually use the Tenable platform to complete tasks like running scans, analyzing vulnerabilities, and working with dashboards. It’s hands-on and meant to show that you can apply what you’ve learned in a real environment.</li>
+</ol>
+<p>Both parts are taken through the <strong>Guardian Browser</strong>, which is a secure, private browser used only for exams. You’ll need to download it before the exam. Once opened, it locks down your environment to ensure exam integrity - so no copy-paste, screenshots, or switching tabs.</p>
+<h2><strong>2. What the exam covers</strong></h2>
+<ul>
+<li>Host Discovery Scans</li>
+<li>Vulnerability Assessment</li>
+<li>Compliance Assessment</li>
+<li>Vulnerability Analysis</li>
+<li>Dashboards and Reports</li>
+<li>Installation</li>
+<li>Tenable Core</li>
+<li>Installing Nessus® and Nessus® Network Monitor</li>
+<li>Configuration</li>
+<li>Access Control</li>
+</ul>
+<p>Ref : <a href="https://www.tenable.com/education/courses/vulnerability-management-specialist" rel="noopener" target="_blank">https://www.tenable.com/education/courses/vulnerability-management-specialist</a></p>
+<h2><strong>3. My preparation steps</strong></h2>
+<h3><strong>Written</strong></h3>
+<p>Personally, I started learning from the official Tenable docs here: <a href="https://docs.tenable.com/vulnerability-management" rel="noopener" target="_blank">https://docs.tenable.com/vulnerability-management</a> Course Tenable Vulnerability Management Specialist On-Demand (Partner Only) <br/>It’s super helpful - lots of clear explanations, screenshots, and real use cases. If you’re new to the platform or just want to get more confident before the exam, this is a great place to start.</p>
+<h3><strong>Practical</strong></h3>
+<p>The <strong>practical exam</strong> is where you get hands-on with Tenable’s platform. In this section, you’ll be asked to complete tasks like:</p>
+<ul>
+<li>Configuring and running vulnerability scans</li>
+<li>Analyzing scan results and identifying vulnerabilities</li>
+<li>Prioritizing vulnerabilities based on risk</li>
+<li>Using dashboards and reports to recommend remediation steps</li>
+</ul>
+<h2>4. Tips for Passing</h2>
+<ul>
+<li><strong>Don’t skip the official docs and courses</strong> - they cover everything you need</li>
+<li><strong>Use the platform</strong> hands-on! Understanding how it <em>actually works</em> is key</li>
+<li><strong>Take notes</strong> while learning - especially about scan types, filters, and asset tagging</li>
+<li><strong>Stay calm during the test</strong> - questions are not tricky if you’ve practiced enough</li>
+<li><strong>However</strong>, you must pass the written exam before scheduling the practical exam</li>
+</ul>
+<h2>Exam Date</h2>
+<h3><strong>[Passed] Written Exam March 20 2025 10.10 PM.</strong></h3>
+<p>For the <strong>written exam</strong>, the total time allowed was <strong>2 hours</strong>, and I used the <strong>full duration</strong> to complete it. It wasn’t too difficult, but it definitely required focus and a solid understanding of the Tenable platform.</p>
+<p>The questions covered key areas like vulnerability scanning, asset management, reporting, and risk prioritization. If you’ve studied the materials and practiced enough, you’ll be able to manage your time and finish within the limit.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gcrfGS-HJjbg5JBUXgq8Qg.png"/>
+<figcaption>Tenable Vulnerability Management Specialist Written Exam Result</figcaption>
+</figure>
+<h3>[Passed] Practical Exam April 3 2025 10.00 PM.</h3>
+<p>The practical part was hands-on, using the actual Tenable platform to complete real-world tasks like running scans, analyzing vulnerabilities, and working with reports and dashboards. It was a great way to apply everything I had studied.</p>
+<p>Make sure you’re comfortable navigating the platform before the exam - practice really helps!</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*_njGBBa2YPshosokktazHg.png"/>
+<figcaption>Tenable Vulnerability Management Specialist Practical Exam Result</figcaption>
+</figure>
+<h2>Certification Completion</h2>
+<p>Once you <strong>pass both the Written and Practical exams</strong>, you’ll officially receive your <strong>Tenable Vulnerability Management Specialist certification</strong>!</p>
+<p>Tenable will send you a digital certificate and badge to showcase your achievement - perfect for adding to your LinkedIn, resume, or sharing with your team.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*jfqbpd3uTe5LgPRgHJPj7g.png"/>
+</figure>
+<h2>5. Final thoughts</h2>
+<p>Passing this certification gave me more confidence in using Tenable professionally. It’s also a great add-on to your resume if you’re in the cybersecurity field.</p>
+<p>Again, huge thanks to everyone who supported me - my parents, my company, friends, and my vendor! 🙏<br/> If you’re planning to take this exam, go for it! It’s totally worth the effort.</p>
+<h2><strong>Reference:</strong></h2>
+<p><strong>My Company</strong>: <a href="https://www.bigfish.co.th/" rel="noopener" target="_blank">Bigfish Enterprise Limited</a><br/><strong>My Friend</strong>: <a href="https://www.linkedin.com/in/rickylim88/" rel="noopener" target="_blank">Rickie Lim</a><br/><strong>My Self</strong>: <a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank">Ratthapong Sommanus </a><br/><strong>My Vendor</strong>: <a href="https://www.tenable.com/" rel="noopener" target="_blank">Tenable</a></p>
+</div>
+<div class="post-body lb" lang="th">
+<p><strong>สวัสดีทุกคน!<br/></strong>ยินดีต้อนรับสู่ Blog ของผม ตื่นเต้นมากที่จะแชร์ว่าผ่าน <strong>Tenable Vulnerability Management Specialist</strong> certification มาได้ - และทำได้ตั้งแต่ <strong>ครั้งแรก</strong>!</p>
+<p>เป็นการสอบที่มีทั้งส่วน written และ practical และมันทดสอบทั้งความรู้และทักษะในโลกจริงจริงๆ ใน Blog นี้จะสรุปทุกอย่างที่ต้องรู้ - เนื้อหาที่ออกสอบ วิธีเตรียม tips และประสบการณ์ส่วนตัว</p>
+<ol>
+<li><strong>เกี่ยวกับ certification</strong></li>
+<li><strong>เนื้อหาที่ออกสอบ</strong></li>
+<li><strong>ขั้นตอนการเตรียมตัวของผม</strong></li>
+<li><strong>Tips สำหรับการผ่าน</strong></li>
+<li><strong>สรุปท้าย</strong></li>
+</ol>
+<p><strong>เริ่มกันเลย!</strong></p>
+<h2>ก่อนอื่นขอขอบคุณ...</h2>
+<p>ขอขอบคุณทุกคนที่สนับสนุนตลอด journey นี้!</p>
+<ul>
+<li><strong>อันดับแรก</strong> ขอบคุณ <strong>พ่อแม่ผม</strong> ที่ support งบค่าสอบ</li>
+<li><strong>อันดับสอง</strong> ขอบคุณบริษัท <a href="https://www.bigfish.co.th/" rel="noopener" target="_blank"><strong>Bigfish</strong></a> ที่ช่วย support ค่าสอบด้วย</li>
+<li><strong>อันดับสาม</strong> ขอบคุณเพื่อน <a href="https://www.linkedin.com/in/rickylim88/" rel="noopener" target="_blank"><strong>Rickie Lim</strong></a> และ vendor <a href="https://www.tenable.com/" rel="noopener" target="_blank"><strong>Tenable</strong></a> ที่ให้กำลังใจและคอยดูแลระหว่างเตรียมสอบ</li>
+</ul>
+<p><strong>ขาดพวกคุณคนไหนไม่ได้เลย!</strong></p>
+<h2><strong>1. เกี่ยวกับ certification</strong></h2>
+<h2>Tenable คืออะไร?</h2>
+<p>ถ้าอยู่ในวงการ cybersecurity คงเคยได้ยินชื่อ <strong>Nessus</strong> - หนึ่งใน tool ที่ดังที่สุดสำหรับ <strong>vulnerability assessment</strong><br/>แต่ไม่ใช่ทุกคนจะรู้ว่า <strong>Nessus เป็นส่วนหนึ่งของ Tenable</strong></p>
+<p><strong>Tenable</strong> คือบริษัทที่อยู่เบื้องหลัง Nessus และมี solution มากกว่านั้น platform ของพวกเขาครอบคลุม:</p>
+<p><strong>Exposure Management ซึ่งรวมถึง</strong></p>
+<ul>
+<li><strong>Vulnerability Management</strong></li>
+<li><strong>Cloud Security</strong></li>
+<li><strong>Identity Exposure</strong></li>
+<li><strong>Operational Technology (OT) Security</strong></li>
+</ul>
+<p>ถ้าใช้ Nessus อยู่ก็เป็นส่วนหนึ่งของ ecosystem Tenable แล้ว!<br/>Ref: <a href="https://www.tenable.com/" rel="noopener" target="_blank">https://www.tenable.com/</a></p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*erUtPVSxcfNaMH18Y1elDw.png"/>
+<figcaption>Tenable Solutions</figcaption></figure>
+<p>ชื่อเต็มของการสอบคือ <strong>Tenable Vulnerability Management Specialist Certified</strong> ชื่อยาวหน่อยแต่ไม่ต้องกลัว ไม่ได้น่ากลัวอย่างที่คิด</p>
+<p>Tenable มีหลักสูตร training มากมาย (<a href="https://www.tenable.com/education" rel="noopener" target="_blank">https://www.tenable.com/education</a>) แนะนำให้ดูก่อนสอบ ครอบคลุมตั้งแต่การใช้ platform พื้นฐานจนถึงการวิเคราะห์และจัดการ vulnerability ขั้นสูง</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*tHH40-8TzCuUA3LzwIBW8w.png"/></figure>
+<p><strong>Tier ที่ผมสอบ</strong><br/><strong>Specialist Tier</strong>: หลักสูตร Premium เน้น product deployment, configuration และการใช้งาน นอกจาก lecture ยังมี hands-on lab พร้อม exercise แนะนำสำหรับคนที่ต้องการ Specialist certification</p>
+<h3>ขั้นตอนการ Certification</h3>
+<ol>
+<li><a href="https://www.tenable.com/buy/certification" rel="noopener" target="_blank">ซื้อ</a> ลงทะเบียน และผ่าน written qualification exam</li>
+<li><a href="https://www.tenable.com/buy/certification" rel="noopener" target="_blank">ซื้อ</a> ลงทะเบียน และผ่าน practical exam</li>
+<li>รับ digital credentials ทางอีเมลและแชร์บน resume หรือ social media</li>
+</ol>
+<h2>รายละเอียดการสอบและ Certification</h2>
+<p>Tenable Vulnerability Management, Tenable Security Center, Tenable OT Security Certification</p>
+<blockquote>ต้องได้คะแนน <strong>อย่างน้อย 80%</strong> จึงจะผ่าน</blockquote>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DYJR9psjaFwsyXHiWwV7Eg.png"/></figure>
+<blockquote><strong>ต้องผ่าน written exam ก่อนถึงจะ schedule practical exam ได้</strong></blockquote>
+<p>การสอบ <strong>Tenable Vulnerability Management Specialist</strong> แบ่งเป็น <strong>2 ส่วน</strong>:</p>
+<ol>
+<li><strong>Written Exam</strong> - ข้อสอบ multiple choice ทดสอบความรู้เชิงทฤษฎีเกี่ยวกับ platform Tenable, vulnerability management, asset scanning, prioritization และ reporting</li>
+<li><strong>Practical Exam</strong> - ใช้ platform Tenable จริงๆ เพื่อทำงาน เช่น รัน scan วิเคราะห์ vulnerability และใช้ dashboard แสดงว่าใช้ความรู้จากการเรียนได้จริง</li>
+</ol>
+<p>ทั้งสองส่วนสอบผ่าน <strong>Guardian Browser</strong> ซึ่งเป็น browser ที่ปลอดภัยและใช้เฉพาะการสอบ ต้องดาวน์โหลดก่อนสอบ เมื่อเปิดแล้วจะล็อคสภาพแวดล้อมเพื่อความสมบูรณ์ของการสอบ - ไม่สามารถ copy-paste, screenshot หรือสลับ tab ได้</p>
+<h2><strong>2. เนื้อหาที่ออกสอบ</strong></h2>
+<ul>
+<li>Host Discovery Scans</li>
+<li>Vulnerability Assessment</li>
+<li>Compliance Assessment</li>
+<li>Vulnerability Analysis</li>
+<li>Dashboards and Reports</li>
+<li>Installation</li>
+<li>Tenable Core</li>
+<li>Installing Nessus® and Nessus® Network Monitor</li>
+<li>Configuration</li>
+<li>Access Control</li>
+</ul>
+<p>Ref: <a href="https://www.tenable.com/education/courses/vulnerability-management-specialist" rel="noopener" target="_blank">https://www.tenable.com/education/courses/vulnerability-management-specialist</a></p>
+<h2><strong>3. ขั้นตอนการเตรียมของผม</strong></h2>
+<h3><strong>Written</strong></h3>
+<p>ผมเริ่มจากเรียนใน official Tenable docs: <a href="https://docs.tenable.com/vulnerability-management" rel="noopener" target="_blank">https://docs.tenable.com/vulnerability-management</a> และ Course Tenable Vulnerability Management Specialist On-Demand (Partner Only) มีประโยชน์มาก คำอธิบายชัดเจน มี screenshot และ use case จริง เหมาะมากสำหรับคนที่เพิ่งเริ่มใช้ platform</p>
+<h3><strong>Practical</strong></h3>
+<p><strong>practical exam</strong> เป็น hands-on กับ platform Tenable จริง ในส่วนนี้จะถูกให้ทำงานต่างๆ เช่น:</p>
+<ul>
+<li>Configure และรัน vulnerability scan</li>
+<li>วิเคราะห์ผล scan และระบุ vulnerability</li>
+<li>Prioritize vulnerability ตาม risk</li>
+<li>ใช้ dashboard และ report เพื่อแนะนำ remediation</li>
+</ul>
+<h2>4. Tips สำหรับการผ่าน</h2>
+<ul>
+<li><strong>อย่าข้าม official docs และหลักสูตร</strong> - ครอบคลุมทุกอย่างที่ต้องใช้</li>
+<li><strong>ใช้ platform จริง</strong> - การเข้าใจว่ามัน <em>ทำงานอย่างไรจริงๆ</em> คือกุญแจสำคัญ</li>
+<li><strong>จดโน้ต</strong>ระหว่างเรียน - โดยเฉพาะประเภท scan, filter และ asset tagging</li>
+<li><strong>ใจเย็นระหว่างสอบ</strong> - คำถามไม่ tricky ถ้าฝึกมาพอ</li>
+<li><strong>อย่าลืม</strong>ว่าต้องผ่าน written exam ก่อนถึงจะสอบ practical ได้</li>
+</ul>
+<h2>วันสอบ</h2>
+<h3><strong>[ผ่าน] Written Exam 20 มีนาคม 2568 เวลา 22:10 น.</strong></h3>
+<p>สำหรับ <strong>written exam</strong> มีเวลา <strong>2 ชั่วโมง</strong> และผมใช้เต็ม 2 ชั่วโมง ไม่ยากเกินไปแต่ต้องใจจดใจจ่อและเข้าใจ platform Tenable ดีพอสมควร</p>
+<p>คำถามครอบคลุมเรื่อง vulnerability scanning, asset management, reporting และ risk prioritization ถ้าศึกษามาดีก็จัดการเวลาและทำเสร็จในเวลาที่กำหนดได้</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*gcrfGS-HJjbg5JBUXgq8Qg.png"/>
+<figcaption>Tenable Vulnerability Management Specialist Written Exam Result</figcaption></figure>
+<h3>[ผ่าน] Practical Exam 3 เมษายน 2568 เวลา 22:00 น.</h3>
+<p>ส่วน practical เป็น hands-on ใช้ platform Tenable จริงในการทำงานต่างๆ เช่น รัน scan วิเคราะห์ vulnerability และใช้ report กับ dashboard เป็นวิธีที่ดีมากในการนำสิ่งที่เรียนมาใช้จริง</p>
+<p>ต้องมั่นใจว่าคุ้นเคยกับการ navigate platform ก่อนสอบ - ฝึกไว้ช่วยได้มาก!</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*_njGBBa2YPshosokktazHg.png"/>
+<figcaption>Tenable Vulnerability Management Specialist Practical Exam Result</figcaption></figure>
+<h2>Certification สำเร็จ</h2>
+<p>เมื่อ <strong>ผ่านทั้ง Written และ Practical exam</strong> ก็จะได้รับ <strong>Tenable Vulnerability Management Specialist certification</strong> อย่างเป็นทางการ!</p>
+<p>Tenable จะส่ง digital certificate และ badge ให้ - เอาไปลงใน LinkedIn, resume หรือแชร์กับทีมได้เลย</p>
+<figure><img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*jfqbpd3uTe5LgPRgHJPj7g.png"/></figure>
+<h2>5. สรุปท้าย</h2>
+<p>การผ่าน certification นี้ทำให้มั่นใจในการใช้ Tenable อย่างมืออาชีพมากขึ้น และยังเป็น resume booster ที่ดีสำหรับคนในวงการ cybersecurity</p>
+<p>ขอบคุณทุกคนอีกครั้ง - พ่อแม่ บริษัท เพื่อน และ vendor! 🙏<br/>ถ้ากำลังจะสอบ - ลุยเลย! คุ้มค่าทุกความพยายาม</p>
+<h2><strong>อ้างอิง:</strong></h2>
+<p><strong>บริษัทของผม</strong>: <a href="https://www.bigfish.co.th/" rel="noopener" target="_blank">Bigfish Enterprise Limited</a><br/><strong>เพื่อนของผม</strong>: <a href="https://www.linkedin.com/in/rickylim88/" rel="noopener" target="_blank">Rickie Lim</a><br/><strong>ตัวผมเอง</strong>: <a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank">Ratthapong Sommanus</a><br/><strong>Vendor</strong>: <a href="https://www.tenable.com/" rel="noopener" target="_blank">Tenable</a></p>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="crta.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">CRTA Exam: One Night Miracle</span></a>
+<a class="post-navlink next" href="mssql-domain.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">From MSSQL to Domain Compromise: A Practical Attack Path in Active Directory (HTB Signed)</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

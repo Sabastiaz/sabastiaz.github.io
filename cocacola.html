@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Coca Cola | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/cocacola.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Main layout ── */
+    .coffee-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ── Intro card ── */
+    .coffee-intro {
+      background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .coffee-intro::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
+    }
+
+    .coffee-icon {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 16px rgba(201,168,76,0.4));
+    }
+
+    .coffee-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold2);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+      text-shadow: 0 0 14px rgba(201,168,76,0.3);
+    }
+
+    .coffee-desc {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 2;
+      margin-bottom: 0.85rem;
+    }
+
+    .coffee-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .coffee-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem auto;
+    }
+
+    .coffee-thanks {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+    }
+
+    /* ── QR / payment card ── */
+    .payment-card {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.16);
+      border-radius: 4px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      transition: border-color 0.25s;
+    }
+
+    .payment-card:hover {
+      border-color: rgba(201,168,76,0.38);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3), 0 0 18px rgba(201,168,76,0.07);
+    }
+
+    .payment-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .payment-label::before,
+    .payment-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3));
+    }
+
+    .payment-label::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+    }
+
+    /* QR placeholder box */
+    .qr-box {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.25rem;
+      border: 2px dashed rgba(201,168,76,0.25);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(201,168,76,0.03);
+      overflow: hidden;
+    }
+
+    /* When a real QR image is dropped in */
+    .qr-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .qr-placeholder-icon { font-size: 2.5rem; opacity: 0.35; }
+
+    .qr-placeholder-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .payment-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .payment-detail {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--gold2);
+      margin-top: 0.25rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Support perks ── */
+    .perks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .perk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      padding: 0.85rem 1.1rem;
+    }
+
+    .perk-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+    .perk-text {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .perk-text strong {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold2);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Cauldron ✦</div>
+    <h1 class="page-title">Buy a Coca Cola</h1>
+    <p class="page-subtitle">Support the sorcerer's ongoing research &amp; dark arts</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🥤</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="coffee-wrapper">
+
+      <!-- ── Intro ── -->
+      <div class="coffee-intro fade-up">
+        <span class="coffee-icon">🥤</span>
+        <div class="coffee-heading">Buy the Wizard a Coca Cola</div>
+        <p class="coffee-desc">
+          If you find value in my research, technical write-ups,
+          or cybersecurity contributions, you may support my ongoing work.
+        </p>
+        <p class="coffee-sub">
+          Your support helps sustain independent research, lab development,
+          and community knowledge sharing.
+        </p>
+        <div class="coffee-divider"></div>
+        <div class="coffee-thanks">Thank you for being part of the journey.</div>
+      </div>
+
+      <!-- ── QR / PromptPay ── -->
+      <div class="payment-card fade-up">
+        <div class="payment-label">PromptPay · QR Code</div>
+
+        <!-- ── QR Image placeholder ──
+             วาง QR ของจริงได้โดยแทนที่ทั้ง div.qr-box ด้วย:
+             <div class="qr-box"><img src="qr.png" alt="PromptPay QR" /></div>
+        ── -->
+        <div class="qr-box">
+          <div class="qr-placeholder-icon">📱</div>
+          <div class="qr-placeholder-text">QR Code</div>
+        </div>
+
+        <div class="payment-name">PromptPay</div>
+        <div class="payment-detail">Ratthapong Sommanus</div>
+      </div>
+
+      <!-- ── What support goes to ── -->
+      <div class="fade-up">
+        <div class="section-rune">Where Your Potion Flows</div>
+        <div class="section-title">Your Support Fuels</div>
+        <div class="section-hdivider"></div>
+
+        <div class="perks-list">
+          <div class="perk-item">
+            <span class="perk-icon">🏰</span>
+            <div class="perk-text">
+              <strong>Lab Development</strong>
+              Building and maintaining enterprise Active Directory labs for realistic attack simulation research.
+            </div>
+          </div>
+          <div class="perk-item">
+            <span class="perk-icon">📜</span>
+            <div class="perk-text">
+              <strong>Independent Research</strong>
+              Funding vulnerability research, security tooling, and technical write-ups published for the community.
+            </div>
+          </div>
+          <div class="perk-item">
+            <span class="perk-icon">🤝</span>
+            <div class="perk-text">
+              <strong>Community Knowledge Sharing</strong>
+              Sustaining the Wowza Group community and producing educational content for aspiring security practitioners.
+            </div>
+          </div>
+          <div class="perk-item">
+            <span class="perk-icon">🎟️</span>
+            <div class="perk-text">
+              <strong>Certification & Training</strong>
+              Supporting continued learning, new certifications, and advanced lab subscriptions.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:3rem;" class="fade-up">
+        <a href="writings.html" class="btn-magic">Read the Tomes →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

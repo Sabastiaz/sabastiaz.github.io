@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tomes | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/writings.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Filter tabs ── */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 3px;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: rgba(201,168,76,0.1);
+      border-color: rgba(201,168,76,0.45);
+      color: var(--gold);
+    }
+
+    /* ── Tomes grid ── */
+    .tomes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .tome-card {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .tome-card::before,
+    .tome-card::after {
+      content: '✦';
+      position: absolute;
+      font-size: 0.5rem;
+      color: var(--gold);
+      opacity: 0.2;
+    }
+    .tome-card::before { top: 7px;  left:  9px; }
+    .tome-card::after  { bottom: 7px; right: 9px; }
+
+    .tome-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.5), 0 0 18px rgba(201,168,76,0.07);
+    }
+
+    /* ── Thumbnail (disabled for now - markup kept intact below, re-enable by removing this display:none) ── */
+    .tome-thumb {
+      margin: -1.6rem -1.6rem 0.4rem;
+      height: 140px;
+      overflow: hidden;
+      background: var(--surface2);
+    }
+    .tome-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(0.9);
+      transition: transform 0.4s, filter 0.3s;
+    }
+    .tome-card:hover .tome-thumb img {
+      transform: scale(1.06);
+      filter: brightness(0.95) saturate(1);
+    }
+    .tome-thumb-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(122,31,46,0.12));
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+
+    /* Hidden state for filter */
+    .tome-card.hidden { display: none; }
+
+    /* ── Card top row ── */
+    .tome-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tome-platform {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .tome-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .tag-en {
+      color: #6bc5d2;
+      background: rgba(107,197,210,0.1);
+      border: 1px solid rgba(107,197,210,0.22);
+    }
+
+    .tag-th {
+      color: #c39bd3;
+      background: rgba(195,155,211,0.1);
+      border: 1px solid rgba(195,155,211,0.22);
+    }
+
+    .tag-cert {
+      color: var(--gold2);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.22);
+    }
+
+    .tag-lab {
+      color: #5dba6a;
+      background: rgba(93,186,106,0.1);
+      border: 1px solid rgba(93,186,106,0.22);
+    }
+
+    .tag-pentest {
+      color: #e07b5a;
+      background: rgba(224,123,90,0.1);
+      border: 1px solid rgba(224,123,90,0.22);
+    }
+
+    .tag-life {
+      color: #a89bc2;
+      background: rgba(168,155,194,0.1);
+      border: 1px solid rgba(168,155,194,0.22);
+    }
+
+    .tag-ctf {
+      color: #63d4af;
+      background: rgba(99,212,175,0.1);
+      border: 1px solid rgba(99,212,175,0.22);
+    }
+
+    /* ── Title & desc ── */
+    .tome-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .tome-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      flex: 1;
+    }
+
+    .tome-arrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      align-self: flex-end;
+      transition: letter-spacing 0.2s;
+    }
+
+    .tome-card:hover .tome-arrow { letter-spacing: 0.2em; }
+
+    /* ── Stats summary ── */
+    .tomes-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .tomes-stat {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      padding: 0.7rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tomes-stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .tomes-stat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .tomes-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html" class="active">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Restricted Section ✦</div>
+    <h1 class="page-title">Published Tomes</h1>
+    <p class="page-subtitle">Forbidden scrolls shared with the wizarding world</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">📚</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Stats -->
+    <div class="tomes-stats fade-up">
+      <div class="tomes-stat">
+        <span class="tomes-stat-num">22</span>
+        <div class="tomes-stat-label">Total Scrolls</div>
+      </div>
+      <div class="tomes-stat">
+        <span class="tomes-stat-num">22</span>
+        <div class="tomes-stat-label">🏠 Hosted Here</div>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar fade-up">
+      <button class="filter-btn active" data-filter="all">All Scrolls</button>
+      <button class="filter-btn" data-filter="cert">Certification</button>
+      <button class="filter-btn" data-filter="lab">Lab &amp; Pentest</button>
+      <button class="filter-btn" data-filter="ctf">CTF</button>
+      <button class="filter-btn" data-filter="life">Life &amp; Journey</button>
+      <button class="filter-btn" data-filter="en">English</button>
+      <button class="filter-btn" data-filter="th">Thai</button>
+    </div>
+
+    <!-- Tomes grid -->
+    <div class="tomes-grid">
+
+      <!-- 1 -->
+      <a href="blog/osep.html"
+         class="tome-card"
+         data-tags="cert en">
+        <div class="tome-thumb"><img src="pic/thumb/osep.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-cert">Certification</span>
+        </div>
+        <div class="tome-title">Passed OffSec Experienced Penetration Tester (OSEP) with secret.txt</div>
+        <div class="tome-desc">The journey, struggles, and victory of passing one of OffSec's most demanding exams - OSEP.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 2 -->
+      <a href="blog/cpts.html"
+         class="tome-card"
+         data-tags="cert en">
+        <div class="tome-thumb"><img src="pic/thumb/cpts.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-cert">Certification</span>
+        </div>
+        <div class="tome-title">My Journey Through CPTS 100%</div>
+        <div class="tome-desc">A full account of completing the Hack The Box Certified Penetration Testing Specialist path with 100% completion.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 3 -->
+      <a href="blog/oscp.html"
+         class="tome-card"
+         data-tags="cert en">
+        <div class="tome-thumb"><img src="pic/thumb/oscp.jpg" alt="My OSCP Journey - Triple Attempts" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-cert">Certification</span>
+        </div>
+        <div class="tome-title">My OSCP Journey - Triple Attempts</div>
+        <div class="tome-desc">An honest chronicle of three OSCP attempts - what went wrong, what was learned, and how victory was finally achieved.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 4 -->
+      <a href="blog/crta.html"
+         class="tome-card"
+         data-tags="cert en">
+        <div class="tome-thumb"><img src="pic/thumb/crta.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-cert">Certification</span>
+        </div>
+        <div class="tome-title">CRTA Exam: One Night Miracle</div>
+        <div class="tome-desc">How a single relentless night led to passing the Certified Red Team Analyst examination - a tale of grit and focus.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 5 -->
+      <a href="blog/tenable-vm.html"
+         class="tome-card"
+         data-tags="cert en">
+        <div class="tome-thumb"><img src="pic/thumb/tenablecert.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-cert">Certification</span>
+        </div>
+        <div class="tome-title">I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt!</div>
+        <div class="tome-desc">First-attempt success on the Tenable.VM Specialist exam - strategy, preparation, and key takeaways.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 6 -->
+      <a href="blog/mssql-domain.html"
+         class="tome-card"
+         data-tags="lab pentest en">
+        <div class="tome-thumb"><img src="pic/thumb/mssql-domain.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-pentest">Pentest</span>
+        </div>
+        <div class="tome-title">From MSSQL to Domain Compromise: A Practical Attack Path in Active Directory (HTB Signed)</div>
+        <div class="tome-desc">A practical walkthrough of chaining MSSQL vulnerabilities into full Active Directory domain compromise on Hack The Box.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 7 -->
+      <a href="blog/mailservice-en.html"
+         class="tome-card"
+         data-tags="lab en">
+        <div class="tome-thumb"><img src="pic/thumb/ertl.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-lab">Lab Review</span>
+        </div>
+        <div class="tome-title">Mail Service Lab: Extreme Red Team LAB Review</div>
+        <div class="tome-desc">A detailed expedition log through the Mailservice dungeon within the Extreme Red Team Laboratories - mapping attack paths and cataloguing key learnings.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 8 -->
+      <a href="blog/guardian-summit.html"
+         class="tome-card"
+         data-tags="life en">
+        <div class="tome-thumb"><img src="pic/thumb/summit2025.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-life">Experience</span>
+        </div>
+        <div class="tome-title">First Time at the Tenable Guardian Summit 2025</div>
+        <div class="tome-desc">Reflections from attending the Tenable Guardian Summit 2025 - insights, networking, and the experience of the industry gathering.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 9 -->
+      <a href="blog/achievement-2025.html"
+         class="tome-card"
+         data-tags="life en">
+        <div class="tome-thumb"><img src="pic/thumb/achievement-2025.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-life">Journey</span>
+        </div>
+        <div class="tome-title">Achievement 2025</div>
+        <div class="tome-desc">A year-in-review scroll chronicling the certifications earned, labs conquered, and milestones reached throughout 2025.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 11 (TH) -->
+      <a href="blog/oscp-guide-th.html"
+         class="tome-card"
+         data-tags="cert th">
+        <div class="tome-thumb"><img src="pic/thumb/oscp-guide.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-cert">Certification</span>
+        </div>
+        <div class="tome-title">เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล</div>
+        <div class="tome-desc">คู่มือเตรียมสอบ OSCP ฉบับครบถ้วน - แนวทางการเรียน, การลงแล็บ, และเทคนิคในห้องสอบ</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 12 (TH) -->
+      <a href="blog/ctf-fun-th.html"
+         class="tome-card"
+         data-tags="life th">
+        <div class="tome-thumb"><img src="pic/thumb/ctf-fun.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-life">Philosophy</span>
+        </div>
+        <div class="tome-title">ความยากที่พอดี คือความสนุกของ CTF</div>
+        <div class="tome-desc">ว่าด้วยความสนุกของการแก้โจทย์ CTF และมุมมองต่อความท้าทายในโลกของ Offensive Security</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 13 (TH) -->
+      <a href="blog/keng-th.html"
+         class="tome-card"
+         data-tags="life th">
+        <div class="tome-thumb"><img src="pic/thumb/keng.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-life">Philosophy</span>
+        </div>
+        <div class="tome-title">เมื่อคำว่า "เก่ง" ไม่ได้หมายถึงคนที่ไม่เคยพลาด แต่คือคนที่ลุกขึ้นมาได้เสมอ</div>
+        <div class="tome-desc">บทความเชิงปรัชญาว่าด้วยความหมายที่แท้จริงของความสามารถ และพลังของการลุกขึ้นหลังล้มเหลว</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+      <!-- 14 (EN) -->
+      <a href="blog/secplayground-2024.html"
+         class="tome-card"
+         data-tags="en ctf pentest">
+        <div class="tome-thumb"><img src="pic/thumb/ctfhalf.jpg" alt="Secplayground Half Year CTF Event 2024 - Forensic File Hunt (Medium)" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-ctf">CTF</span>
+        </div>
+        <div class="tome-title">Secplayground Half Year CTF Event 2024 - Forensic File Hunt (Medium)</div>
+        <div class="tome-desc">Write-up for the Forensic File Hunt challenge at Secplayground's Half Year CTF Event 2024, walking through the investigation steps and findings.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 15 (TH) -->
+      <a href="blog/thailand-top-talent.html"
+         class="tome-card"
+         data-tags="th ctf">
+        <div class="tome-thumb"><img src="pic/thumb/tctt2025.jpg" alt="แก้โจทย์ Thailand Top Talent 2025 หมวด Network ด้วย ChatGPT {OPEN}" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-ctf">CTF</span>
+        </div>
+        <div class="tome-title">แก้โจทย์ Thailand Top Talent 2025 หมวด Network ด้วย ChatGPT {OPEN}</div>
+        <div class="tome-desc">บันทึกการแก้โจทย์ Network Challenge ในการแข่งขัน Thailand Top Talent 2025 โดยใช้ ChatGPT ช่วยวิเคราะห์</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 16 (EN) -->
+      <a href="blog/hackloween-2025.html"
+         class="tome-card"
+         data-tags="en ctf pentest">
+        <div class="tome-thumb"><img src="pic/thumb/halo2025.jpg" alt="Sec Playground Hackloween 2025: Anabelle&#x27;s Secret" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-ctf">CTF</span>
+        </div>
+        <div class="tome-title">Sec Playground Hackloween 2025: Anabelle's Secret</div>
+        <div class="tome-desc">Write-up for the Anabelle's Secret challenge at Sec Playground's Hackloween 2025 CTF - uncovering the mystery one flag at a time.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 17 (EN) -->
+      <a href="blog/dark-web-monitoring.html"
+         class="tome-card"
+         data-tags="en ctf pentest">
+        <div class="tome-thumb"><img src="pic/thumb/hackscam.jpg" alt="[WRITE UP] Scenario 2 Part 2: Dark Web Monitoring" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-ctf">CTF</span>
+          <span class="tome-tag tag-pentest">OSINT</span>
+        </div>
+        <div class="tome-title">[WRITE UP] Scenario 2 Part 2: Dark Web Monitoring</div>
+        <div class="tome-desc">Hack the Scammer scenario write-up covering dark web monitoring techniques, OSINT investigation, and threat actor tracking methodology.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 18 (TH/EN) -->
+      <a href="blog/rustpotato.html"
+         class="tome-card"
+         data-tags="en th pentest lab">
+        <div class="tome-thumb"><img src="pic/thumb/rustpotato-1.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-pentest">Red Team</span>
+          <span class="tome-tag tag-lab">PrivEsc</span>
+        </div>
+        <div class="tome-title">🥔 RustPotato - Privilege Escalation via SeImpersonate</div>
+        <div class="tome-desc">Rust implementation ของ GodPotato - ใช้ abuse SeImpersonatePrivilege ผ่าน DCOM/RPC เพื่อยกระดับสิทธิ์ขึ้นเป็น NT AUTHORITY\SYSTEM พร้อม built-in reverse shell และ Indirect NTAPI</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 19 (TH) -->
+      <div class="tome-card"
+         data-tags="life th"
+         style="opacity:0.55;cursor:default;pointer-events:none;">
+        <div class="tome-thumb"><img src="pic/thumb/singapore.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">Sabastiaz.github.io</span>
+          <span class="tome-tag tag-life">Travel</span>
+        </div>
+        <div class="tome-title">Singapore Seven Day (ฉบับโม้ไปเรื่อย)</div>
+        <div class="tome-desc">ผมอยากมาเล่า (มาโม้) ประสบการณ์ไป Singapore เป็นเวลา 7 วัน ว่าไปทำอะไรมาบ้าง แอบสปอยมีไปงาน Black Hat Asia and DefCon SG1 ด้วยนะ</div>
+        <div class="tome-arrow">Coming Soon</div>
+      </div>
+
+      <!-- 20 (TH) -->
+      <a href="blog/brain-body-recover.html"
+         class="tome-card"
+         data-tags="life th">
+        <div class="tome-thumb"><img src="pic/thumb/brain-body-3.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-life">Life</span>
+          <span class="tome-tag tag-life">Reflection</span>
+        </div>
+        <div class="tome-title">เมื่อสมองยังไหว แต่ร่างกายเริ่มทวงคืน</div>
+        <div class="tome-desc">ว่าด้วยการฟื้นตัว ความสมดุล และความจริงที่มองข้ามมาหลายปี - เมื่อความสามารถยังอยู่ แต่ร่างกายเริ่มส่งสัญญาณ</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 21 (EN) -->
+      <a href="blog/cape.html"
+         class="tome-card"
+         data-tags="en cert pentest">
+        <div class="tome-thumb"><img src="https://cdn-images-1.medium.com/v2/resize:fit:800/1*RHMnmtHppZ5rN8wbc9xjpA.png" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-cert">Certification</span>
+          <span class="tome-tag tag-pentest">Red Team</span>
+        </div>
+        <div class="tome-title">My Journey Through HTB Certified Active Directory Pentesting Expert (CAPE)</div>
+        <div class="tome-desc">10/10 flags on the first attempt. A deep dive into CAPE - the most AD-focused exam I've taken - covering preparation, methodology, Kerberos, ACL abuse, BloodHound analysis, and reporting.</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 22 (TH) -->
+      <a href="blog/sliver-c2.html"
+         class="tome-card"
+         data-tags="th pentest lab">
+        <div class="tome-thumb"><img src="pic/thumb/sliver-1-startup.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-pentest">Red Team</span>
+          <span class="tome-tag tag-lab">Tool</span>
+        </div>
+        <div class="tome-title">Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team</div>
+        <div class="tome-desc">เรียนรู้ Sliver C2 ตั้งแต่ศูนย์ - ติดตั้ง สร้าง Listener สร้าง Implant ควบคุม Session และเปรียบเทียบกับ Metasploit พร้อมตัวอย่างจริงจาก HTB Lab</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 23 (TH) -->
+      <a href="blog/godpotato.html"
+         class="tome-card"
+         data-tags="th pentest lab">
+        <div class="tome-thumb"><img src="pic/thumb/Godpotato.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-pentest">Red Team</span>
+          <span class="tome-tag tag-lab">PrivEsc</span>
+        </div>
+        <div class="tome-title">🥔 GodPotato - รายงานเชิงเทคนิค (Windows PrivEsc)</div>
+        <div class="tome-desc">วิเคราะห์เจาะลึก GodPotato - เครื่องมือ Privilege Escalation ที่ใช้ช่องโหว่ RPCSS OXID Resolution ยกระดับสิทธิ์เป็น NT AUTHORITY\SYSTEM พร้อม Attack Flow, Detection และ Defense</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+      <!-- 25 (TH) -->
+      <a href="blog/impostor-syndrome-th.html"
+         class="tome-card"
+         data-tags="life th">
+        <div class="tome-thumb"><img src="pic/thumb/impostor-mountain.jpg" alt="" loading="lazy"></div>
+        <div class="tome-meta">
+          <span class="tome-platform">🏠 Hosted Here</span>
+          <span class="tome-tag tag-life">Life</span>
+          <span class="tome-tag tag-life">Reflection</span>
+        </div>
+        <div class="tome-title">ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก</div>
+        <div class="tome-desc">บทความสะท้อนเรื่อง impostor syndrome - ทำไมความสำเร็จ ใบเซอร์ และคำชม ยังลบความรู้สึกว่าตัวเองไม่เก่งไปไม่ได้ และวิธีมองหลักฐานของการเติบโตที่แท้จริง</div>
+        <div class="tome-arrow">Read Scroll →</div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center; margin-top: 3rem;" class="fade-up">
+      <a href="contact.html" class="btn-magic">Send Owl Post →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script>
+  /* ── Filter logic ── */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.tome-card').forEach(card => {
+        if (filter === 'all') {
+          card.classList.remove('hidden');
+        } else {
+          const tags = card.dataset.tags || '';
+          card.classList.toggle('hidden', !tags.includes(filter));
+        }
+      });
+    });
+  });
+</script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

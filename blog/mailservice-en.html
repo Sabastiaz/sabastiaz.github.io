@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mail Service Lab: Extreme Red Team LAB Review | Sabastiaz</title>
+<meta content="Mail Service Lab: Extreme Red Team LAB Review - Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="Mail Service Lab: Extreme Red Team LAB Review | Sabastiaz" property="og:title"/>
+<meta content="Mail Service Lab: Extreme Red Team LAB Review - Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/ertl.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/mailservice-en.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-en">EN</span><span class="post-tag tag-lab">Lab</span><span class="post-tag tag-pentest">Red Team</span></div>
+<div class="post-meta-row">
+<span>March 14, 2026</span><span class="dot">✦</span><span>7 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="en">Mail Service Lab: Extreme Red Team LAB Review</span><span class="lb" lang="th">รีวิว Mailservice Lab ของ Extreme Red Team Laboratories</span></h1>
+</div>
+<div class="post-body lb" lang="en">
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*QHtpfPe1jBaEewEp54kkSw.png"/>
+</figure>
+<blockquote><strong>Do You Have What It Takes to Be an Extreme Red Teamer?</strong></blockquote>
+<p><strong>Hello everyone</strong>,</p>
+<p>Today I’ll be reviewing the <strong>Mailservice Lab</strong> from <strong>Extreme Red Team Laboratories (ERTL)</strong> a lab that truly challenges your mindset as an internal Red Teamer.</p>
+<blockquote>“<strong>Do you have what it takes to be an Extreme Red Teamer?</strong>”<em><br/> - Extreme Red Team Laboratories</em></blockquote>
+<h2>What is Extreme Red Team Laboratories (ERTL)?</h2>
+<p>Before diving into the lab, let’s talk about ERTL.</p>
+<p><strong>Extreme Red Team Laboratories (ERTL)</strong> is a specialized training provider focused on advanced Offensive Security labs. Their mission is to deliver highly realistic environments that help cybersecurity professionals sharpen their skills and prepare for real-world threats.</p>
+<p>Their labs cover a wide range of domains:</p>
+<ul>
+<li>Linux exploitation</li>
+<li>Windows environments</li>
+<li>Active Directory attack chains</li>
+<li>Cloud attacks (AWS, Azure, GCP)</li>
+<li>Advanced Red Team operations</li>
+</ul>
+<p>More information:<br/> <a href="https://extremeredlab.0x29a.it/#who-we-are" rel="noopener" target="_blank">https://extremeredlab.0x29a.it/#who-we-are</a></p>
+<h2>How I Discovered ERTL</h2>
+<p>Honestly, I didn’t know about ERTL at first.</p>
+<p>It was introduced to me by <strong>Jockky</strong>, the 4th Founder of Wowza.<br/> He recommended it and that was enough to make me curious.</p>
+<p>After browsing their platform, I found two main categories:</p>
+<h3>Active Directory Chains</h3>
+<p>Focused on AD-based attack paths (with some additional integrated solutions).<br/> <a href="https://extremeredlab.0x29a.it/chains" rel="noopener" target="_blank">https://extremeredlab.0x29a.it/chains</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*UQT78b0OWnFFRNg5WM636A.png"/>
+</figure>
+<h3>Red Team Labs</h3>
+<p>Focused on cloud attack scenarios (AWS, Azure, GCP).<br/> <a href="https://extremeredlab.0x29a.it/redteamlabs" rel="noopener" target="_blank">https://extremeredlab.0x29a.it/redteamlabs</a></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*-xzSYkGtIKcvPYYEfAw05g.png"/>
+</figure>
+<p>You already know which one I chose.</p>
+<p>Active Directory, of course.</p>
+<h2>Choosing the Mailservice Lab</h2>
+<p>Inside the <strong>Active Directory Chains</strong> category, there are multiple labs available, each with its own description.</p>
+<p>One of them is <strong>Mailservice</strong>, and its description feels almost like a cyberpunk story.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*9ZypCGeBMVTDpWJka__S_A.png"/>
+</figure>
+<p>It talks about a distorted digital world where:</p>
+<ul>
+<li>Email headers lie</li>
+<li>Messages manipulate the truth</li>
+<li>Inboxes become traps</li>
+</ul>
+<p>And behind the scenes, there is a hidden service capable of manipulating identities - allowing someone to change their <strong>name, appearance, and digital identity</strong> to move through systems unnoticed.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*v83GamWwWpyXmZZuLrlkVA.png"/>
+</figure>
+<p>At the time, <strong>Jockky was already cooking hard in this lab</strong>, so I decided to jump in and join him.</p>
+<h2>How to Access the Lab</h2>
+<p>The onboarding process is straightforward:</p>
+<ul>
+<li>Go to the <strong>Lab Access</strong> page.</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*jYiVdZ2rgmw8dF-kHXF-tg.png"/>
+</figure>
+<ul>
+<li>Choose your desired lab.</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*AztGTeibgtyk4ScNP95bfw.png"/>
+</figure>
+<ul>
+<li>Join the official Discord server (link at the bottom of the website).</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*jYiVdZ2rgmw8dF-kHXF-tg.png"/>
+</figure>
+<ul>
+<li>Navigate to the specific lab channel (e.g., <code>mailservice-lab-instructions</code>).</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*IkS8GGTKqTCsaG5BHNDoyA.png"/>
+</figure>
+<ul>
+<li>Follow the connection instructions.</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*O9Tx1r2CXv56MbQmeWqNgw.png"/>
+</figure>
+<ul>
+<li>Request VPN access via the <code>ask-vpn-for-labs</code> channel using the command:</li>
+</ul>
+<pre><code>!getvpn</code></pre>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*IhilNPYiK4vl8umjXG2mjQ.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*Mjk423KUQqVs5UzUdCurfg.png"/>
+</figure>
+<ol>
+<li>You will receive an <code>.ovpn</code> file (OpenVPN configuration).</li>
+<li>Connect and begin.</li>
+</ol>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*UQT78b0OWnFFRNg5WM636A.png"/>
+</figure>
+<p>Important rule stated clearly:</p>
+<blockquote><strong><em>NO BRUTEFORCE IN LAB PLEASE - IT’S A RED TEAM LAB NOT LAMER LAB</em></strong></blockquote>
+<p>That line alone tells you what kind of mindset this lab demands.</p>
+<h2>Scope &amp; Starting Point</h2>
+<p>After connecting via VPN, you receive a jump machine and target information.</p>
+<p>In my case, the primary target domain was:</p>
+<pre><code>10.0.5.5</code></pre>
+<h2>Attack Overview</h2>
+<p>Since the lab owners do not allow public write-ups, I will only describe the <strong>high-level overview</strong>.</p>
+<p>The environment includes both <strong>Linux and Windows systems</strong>.</p>
+<p>The provided <strong>Jump Machine is a Linux host</strong>, which plays a critical role in the attack process. It is mainly used for:</p>
+<ul>
+<li>Uploading or transferring files into the environment</li>
+<li>Staging tools inside the internal network</li>
+<li>Pivoting to other machines within the network</li>
+</ul>
+<p>The attack chain usually begins from an <strong>external perspective</strong>, then gradually expands through <strong>lateral movement</strong> across multiple machines.</p>
+<p>Normally, in an <strong>Active Directory attack scenario</strong>, the primary objective is to compromise the <strong>Domain Controller</strong>, since it represents the central authority of the domain.</p>
+<p>However, this lab takes a slightly different approach.</p>
+<p>Although the domain environment is still important, the <strong>real objective is not simply gaining domain dominance.</strong></p>
+<p>You don’t necessarily need to become the “king of the domain.”</p>
+<p>Instead, the real goal is to <strong>extract sensitive information from the environment (the flag).</strong></p>
+<p>This design makes the lab feel closer to <strong>real-world red team operations</strong>, where the mission is not always to own the entire domain, but to achieve the <strong>mission objective</strong>.</p>
+<p>And that mission is simple:</p>
+<p><strong>Exfiltrate critical data from the target network.</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*he0mE2dfJ8PqaeBESh1JsQ.png"/>
+</figure>
+<h2>Knowledge Required</h2>
+<h2>CVE Exploitation</h2>
+<p>You should be able to identify vulnerable versions of services and search for available exploits using sources such as:</p>
+<ul>
+<li>Exploit-DB GitHub and Metasploit modules</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*NrF-fvSbhXoSi-Pf7KzjPA.png"/>
+</figure>
+<h2>Linux Knowledge</h2>
+<p>Basic to intermediate Linux knowledge is required.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*bhqu7OFOYIkfsz2w.jpg"/>
+</figure>
+<p>You should be comfortable using commands and navigating the system.</p>
+<p>For example:</p>
+<pre><code>rm -rf *</code></pre>
+<p>(You can try practicing that command… it’s a very “powerful” one 😄)</p>
+<h2>Active Directory Knowledge</h2>
+<p>You should understand tools such as <a href="https://bloodhound.specterops.io/get-started/introduction" rel="noopener" target="_blank"><strong>BloodHound</strong></a>, which helps reveal hidden and often unintended relationships within Active Directory.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ifprIhobkh1ek_hP.png"/>
+</figure>
+<p>It helps identify possible attack paths and determine <strong>where to move next</strong>.</p>
+<h2>Pivoting</h2>
+<p>Since the lab involves <strong>multiple network segments</strong>, pivoting is required.</p>
+<p>Recommended tools include:</p>
+<p><a href="https://github.com/nicocha30/ligolo-ng" rel="noopener" target="_blank"><strong>Ligolo-ng</strong></a></p>
+<p>It has evolved significantly and now includes a GUI version:</p>
+<pre><code>ligolo-mp</code></pre>
+<p>If you prefer something classic, <strong>Chisel</strong> is also a good option.</p>
+<h2>DACL Abuse</h2>
+<p>Understanding <strong>DACL permissions</strong> is important for controlling access rights.</p>
+<p>Examples include:</p>
+<ul>
+<li>AddMember</li>
+<li>ForceChangePassword</li>
+<li>Targeted Kerberoasting</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*7AKgTXjfe_riQsO7.png"/>
+</figure>
+<h2>NetExec</h2>
+<p>One of the most powerful tools available.</p>
+<p>You will see it mentioned in many blogs because it can perform many tasks, such as:</p>
+<ul>
+<li>Host discovery</li>
+<li>User enumeration</li>
+<li>Share enumeration</li>
+<li>LSA dumps</li>
+<li>SAM extraction</li>
+<li>Secrets dumping</li>
+<li>And more</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*2d3qlio4nkfjg1pO"/>
+</figure>
+<h2>Getting the Certificate</h2>
+<p>After successfully retrieving the <strong>flag</strong>, you can contact the <strong>ERTL staff via Discord</strong> and provide the flag.</p>
+<p>They will ask you to:</p>
+<ol>
+<li>Submit your report</li>
+<li>Pay the certification fee (if you want the certificate)</li>
+</ol>
+<p>The certificate costs <strong>25 €</strong>. Which is roughly <strong>960 THB</strong>.</p>
+<p>You can purchase from staff (staff sent link to you )</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*OKCmslKkkH0-Fyni9yH0cw.png"/>
+<figcaption>Mailservice</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*0Iy4-OcMCe1enoTAxnypbA.png"/>
+</figure>
+<p>After payment, you will receive the <strong>certificate via email</strong>.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*WQ5aBj125URAQ-3nKqq3PA.png"/>
+</figure>
+<p>Of course, purchasing the certificate is optional - but if you want something cool to flex, it’s worth it.</p>
+<p>(And apparently I might be the <strong>first person in Thailand to complete it… since I seem to be the only one playing it.</strong>)</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*i7XlvetHnov9xRP9-c3N4A.png"/>
+<figcaption>MailService Lab Certificate</figcaption>
+</figure>
+<h2>Final Thoughts</h2>
+<p>Mailservice is fun but expect rabbit holes.</p>
+<p>It will test:</p>
+<ul>
+<li>Your discipline</li>
+<li>Your pivoting ability</li>
+<li>Your AD knowledge</li>
+<li>Your operational patience</li>
+</ul>
+<p>If you are serious about improving as an internal Red Teamer especially in Active Directory environments this lab is worth your time.</p>
+<p>So the real question remains:</p>
+<blockquote><strong>Do you have what it takes to be an Extreme Red Teamer?</strong></blockquote>
+<blockquote><strong><em>Profile : Sabastiaz</em></strong></blockquote>
+<blockquote><strong><em>Facebook: </em></strong><a href="https://www.facebook.com/sabastian.fhantomhive" rel="noopener" target="_blank">https://www.facebook.com/sabastian.fhantomhive</a> <strong><em><br/>Medium</em></strong><em> : </em><a href="https://medium.com/@sabastiaz" rel="noopener" target="_blank"><em>https://medium.com/@sabastiaz</em></a><em><br/></em><strong><em>Linkedin: </em></strong><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank"><em>https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/</em></a></blockquote>
+</div>
+<div class="post-body lb" lang="th">
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*PlfEoKmbym6B_Jjc.png"/>
+</figure>
+<p>สวัสดีครับผู้อ่านทุกท่านวันนี้ผมจะมารีวิว Cert Mailservice Lab ของ Extreme Red Team Laboratories</p>
+<blockquote>Do you have what it takes to be an Extreme Red Teamer?</blockquote>
+<p>คำคม By Extreme Red Team Laboratories</p>
+<p><strong>เกริ่นก่อนว่า</strong> Extreme Red Team Laboratories (ERTL) คืออะไร Extreme Red Team Laboratories เป็นบริษัทชั้นนำในการพัฒนาห้องปฏิบัติการฝึกอบรมขั้นสูงสำหรับ Offensive Security ภารกิจของเราคือการจัดหาสภาพแวดล้อมที่สมจริงให้กับผู้เชี่ยวชาญด้านความปลอดภัยทางไซเบอร์ เพื่อฝึกฝนทักษะและเตรียมพร้อมรับมือกับภัยคุกคามในโลกแห่งความเป็นจริง ห้องปฏิบัติการของเราครอบคลุมหัวข้อที่หลากหลาย ตั้งแต่ความปลอดภัยทางไซเบอร์ขั้นพื้นฐานไปจนถึงสภาพแวดล้อมคลาวด์ที่ซับซ้อน รวมถึงการโจมตีบน Linux, Windows, Active Directory และแพลตฟอร์มคลาวด์หลักๆ (Google Cloud, AWS, Azure)</p>
+<blockquote>ข้อมูลเพิ่มเติม : <a href="https://extremeredlab.0x29a.it/#who-we-are" rel="noopener" target="_blank">https://extremeredlab.0x29a.it/#who-we-are</a></blockquote>
+<p>มาเข้าเรื่องกันผมไปรู้จักได้ไงหนะหรอลำพังตอนแรกไม่รู้จักเลยน้อง Jockky Founder คนที่ 4 ของ wowza แนะนำมา</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*v83GamWwWpyXmZZuLrlkVA.png"/>
+<figcaption>แบบนี้เรียกแนะนำไหม</figcaption>
+</figure>
+<p>เลยไปลองดูว่ามันมีหัวข้อไรบ้างมันมี 2 หมวดใหญ่ๆ นั่นคือ Active Directory Chains and Red Team Lab <br/>ตามชื่อเลย</p>
+<h2>หมวดในการเข้าเล่น</h2>
+<ul>
+<li><strong>Active Directory Chains</strong> (AD Chain มี solution อื่นผสมนิดหน่อย )<br/><a href="https://extremeredlab.0x29a.it/chains" rel="noopener" target="_blank">https://extremeredlab.0x29a.it/chains</a></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*UQT78b0OWnFFRNg5WM636A.png"/>
+</figure>
+<ul>
+<li><strong>Red Team Labs</strong> (อันนี้จะเป็นแนวโจมตี Cloud ต่าง AWS Azure GCP)<br/><a href="https://extremeredlab.0x29a.it/redteamlabs" rel="noopener" target="_blank">https://extremeredlab.0x29a.it/redteamlabs</a></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*-xzSYkGtIKcvPYYEfAw05g.png"/>
+</figure>
+<p>เห็นแล้วไม่ต้องบอกกว่ารู้ว่านี่เลือกหมวดไหน Active Directory สิครับ รออะไร</p>
+<p>โดยของ <strong>Active Directory Chains</strong> ก็จะแบ่งออกไปอีกว่า Labs อันไหน แต่ละแลปก็จะมี Description ของแต่ละอัน</p>
+<ul>
+<li><strong>Mailservice</strong></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*9ZypCGeBMVTDpWJka__S_A.png"/>
+</figure>
+<p>Step into a world like no other a distorted digital landscape where the usual rules of cyberspace no longer apply. Here, email services are a chaotic mess: headers lie, messages twist the truth, and inboxes become traps. Clarity is an illusion, and every clue you find leads deeper into deception. But something darker stirs behind the scenes. Beneath the surface runs a hellish service hidden, twisted, powerful. If you can uncover it, understand it, control it… it will grant you the ability to change your face, your name, your digital wardrobe. You’ll become whoever you need to be - slipping through systems unnoticed, bypassing barriers, vanishing into the data fog. Can you unravel the chaos, penetrate the corrupted core of the network, and reach your goal? Or will you lose yourself in the maze of mirrors another faceless shadow in a game of masks? This isn’t just a lab. It’s a test of wit, deception, and digital survival</p>
+<ul>
+<li><strong>Calipendula</strong></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*G2G9WYY9_0z3u6HKnwVEDg.png"/>
+</figure>
+<p>In this lab, you won’t just face vulnerabilities - you’ll walk a hidden path, where someone is pulling strings behind the scenes. Their actions are subtle, but their presence is undeniable. Something - or someone - is at work. To move forward, you’ll have to pass through the clouds: ambiguity, noise, and deliberate misdirection. Nothing will be clear. Every step will demand sharp instincts, patience, and a willingness to get lost before you find your way. But beyond the fog lies their partner - elusive, essential, and waiting. If you can find them, earn their trust - or take control - you’ll gain the strength to turn the tide. Together, you may just overpower the enemy who watches, anticipates, and thrives in the uncertainty. Will you uncover the hidden alliance? Or will you vanish into the mist, just another ghost in the system?</p>
+<ul>
+<li><strong>Ifixcentcen</strong></li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*rmwJyUL4fHzztwUVrrW90g.png"/>
+</figure>
+<p>As you step into this lab, you’ll find yourself caught in a strange echo - a revival of characters from distant times: mischievous actresses from the ’80s, and extraterrestrials who once toyed with them in neon-lit dreams. But nostalgia quickly curdles into nightmare. Lurking within this bizarre forest of memories and illusions is a multi-headed hound - a monstrous entity born of code, chaos, and forgotten signals. It’s waiting for you. Not just to find it… but to survive it. Once it sinks its teeth into your mind, it doesn’t let go. And yet, the only way out… is through. Will you find the strength - and the madness - to tame the beast, mount it, and ride it through the tangled forest of the Dark Triangle? Or will you become just another echo, swallowed by its growl?</p>
+<p>หลังจากเลือกดู lab ไปสักพักก็ตัดสินใจเอา <strong>Mailservice</strong> มาเนื่องจาก Jockky กำลัง Cooking อย่างเมามันส์ เรามันตัวกากเลยไปแจมเล่นกับน้องด้วย พักตรงนี้แปป ไปพูดการเข้าเล่นก่อนว่าทำไง</p>
+<h2>วิธีการเข้าใช้งาน</h2>
+<p>เข้าไปที่หน้า <strong>“Lab Access”</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*4i7GLSH_DzSOJggZceRDtA.png"/>
+</figure>
+<p>จะเจอวิธีการเข้าใช้ของแต่ละแลป เลือกให้ตรงกับ Lab ตัวเอง แต่จริงๆ จะเลือกอันไหนก็ได้แล้วค่อยไปเลือกข้างในอีกที</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*AztGTeibgtyk4ScNP95bfw.png"/>
+</figure>
+<p>เลื่อนลงมาหา Lab ที่ตัวเองจะเล่น จำวิธีไว้ แล้วมา Join Discord ที่อยู่ล่างสุดของ website</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*jYiVdZ2rgmw8dF-kHXF-tg.png"/>
+</figure>
+<p>จากนั้นเราก็ได้เข้าไปใน Discord ของ Extreme Red Team Laboratories</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*IkS8GGTKqTCsaG5BHNDoyA.png"/>
+</figure>
+<p>เริ่มต้นเราจะอยู่ใน Welcome ก่อน หลังจากนั้นก็อ่านวิธีการต่างๆ ผ่าน ห้องต่างๆ หลังจากนั้นให้เลื่อนหาห้องที่เราจะเล่น ตั้งนั้นผมจึงเลือก Mailservice</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*O9Tx1r2CXv56MbQmeWqNgw.png"/>
+</figure>
+<p>กดเข้าไปที่ mailservice-lab-instructions channel จะเจอกับวิธีการในการเข้าใช้และรายละเอียดของ Lab นั้นๆ โดยเรื่มต้นจะมีเครื่อง Jump Machine มาให้</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*IhilNPYiK4vl8umjXG2mjQ.png"/>
+</figure>
+<blockquote><em>**</em> NO BRUTEFORCE IN LAB PLEASE</blockquote>
+<blockquote>IT’S A RED TEAM LAB NOT LAMER LAB <em>** **</em></blockquote>
+<p>หลังจากนั้นเราก็ไปขอ vpn ที่ chanel ask-vpn-for-labs channel แล้วพิมพ์ Command !getvpn ลงในช่องแชทนั้น</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*LqqcttIg5VxXGb-86ukHOA.png"/>
+</figure>
+<p>แอดมินก็จะทำการส่ง VPN Access มาให้เรา เป็นไฟล์ .ovpn หรือก็คือไฟล์ openvpn ยังไงหละ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*Mjk423KUQqVs5UzUdCurfg.png"/>
+</figure>
+<p>หลังจากนั้นเราก็ Acccess เข้าใช้งานปกติได้เลย <br/>แล้วเราก็จะกลับมาต่อหลังจากที่เรา VPN เรียบร้อยแล้วดราก็มาดู Scope ของเราว่า IP เป็นชุดไหน</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*UQT78b0OWnFFRNg5WM636A.png"/>
+</figure>
+<p>จากภาพ Target ของเราคือ 10.0.5.5 หรือ Domain นั่นเอง</p>
+<p>จากนั้นจะรออะไรก็ลุยสิครับ</p>
+<p><strong>หลังจากนี้จะเป็นแค่รายละเอียดภาพรวมของ Lab นี้เนื่องจากทางเจ้าของไม่อนุญาติให้เปิดเผย write up จะขอพูดกว้างๆแทน</strong></p>
+<h2>Scope</h2>
+<p>Target : <strong>10.0.5.5</strong><br/>JumpMachine <strong>10.0.5.200</strong></p>
+<h2>Attack</h2>
+<p>ระบบภายใน Lab นี้มีทั้ง <strong>Linux และ Windows</strong> โดยเครื่อง <strong>Jump Machine ที่ให้มาจะเป็น Linux</strong> ซึ่งถือว่าเป็นหัวใจสำคัญของการทำงานใน Lab นี้เลย เพราะเครื่องนี้ถูกใช้เป็นจุดหลักในการทำหลายอย่าง เช่น</p>
+<ul>
+<li>การ <strong>Upload</strong> หรือ <strong>Transfer</strong> ไฟล์เข้าไปในระบบ</li>
+<li>การวาง <strong>Tools</strong> สำหรับใช้งานภายใน <strong>Network</strong></li>
+<li>การทำ <strong>Pivot</strong> ไปยังเครื่องอื่นภายในเครือข่าย</li>
+</ul>
+<p>ลักษณะของ Attack Chain ใน Lab นี้โดยรวมจะเริ่มจาก <strong>มุมมองภายนอก (External)</strong> แล้วค่อย ๆ ขยายการเข้าถึงผ่านการ <strong>Lateral Movement</strong> ไปยังเครื่องอื่น ๆ ภายในระบบ</p>
+<p>โดยปกติแล้ว ในการโจมตี <strong>Active Directory Environment</strong> เป้าหมายหลักมักจะอยู่ที่ <strong>Domain Controller</strong> เพราะถือเป็นหัวใจของระบบทั้งหมด</p>
+<p>แต่ Lab นี้มีความแตกต่างเล็กน้อย</p>
+<p>ถึงแม้ว่า Domain จะยังคงมีบทบาทสำคัญ แต่ <strong>เป้าหมายที่แท้จริงของ Lab นี้ไม่ใช่แค่การยึด Domain ได้เท่านั้น (ไม่จำเป็นต้องเป็นใหญ่ในใต้หล้า)</strong></p>
+<p>แต่คือการ <strong>นำข้อมูลสำคัญออกมาจากระบบให้ได้ (flag)</strong></p>
+<p>แนวคิดนี้ทำให้ Lab นี้ให้ความรู้สึกใกล้เคียงกับ <strong>Real Red Team Operation</strong> มากขึ้น เพราะในสถานการณ์จริง เป้าหมายของการโจมตีไม่ได้อยู่ที่การครอบครอง Domain เสมอไป</p>
+<p>แต่คือการทำ <strong>Mission Objective ให้สำเร็จ</strong><br/>นั่นก็คือการ <strong>ดึงข้อมูลสำคัญออกจากเครือข่ายของเป้าหมายให้ได้</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*he0mE2dfJ8PqaeBESh1JsQ.png"/>
+</figure>
+<h2>Knowledge</h2>
+<ul>
+<li>การหา CVE Exploit เพื่อใช้ในการโจมตี<br/>เช่นเจอ version ของระบบนี้เอาไปค้นหา CVE Exploit ในไหนบ้างหละ <br/>exploit-db บ้างหละ github บ้าง หรือจะใช้ Metasploit Module (เน้นง่ายและไว)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*NrF-fvSbhXoSi-Pf7KzjPA.png"/>
+</figure>
+<ul>
+<li>การใช้งาน Linux ขั้นพื้นฐานถึงปานกลางพอรู้คำสั่งต่าง ๆ<br/>เช่น<strong> rm -rf *</strong> (เอาไปลองฝึกได้ command ดี)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*bhqu7OFOYIkfsz2w.jpg"/>
+</figure>
+<ul>
+<li>ความรู้ด้าน <strong>Active Directory </strong><br/>เช่น การใช้ <a href="https://bloodhound.specterops.io/get-started/introduction" rel="noopener" target="_blank">Bloodhound </a>คุ้ยขยะดู reveal hidden and often unintended relationships และหาจุดไปต่อ (ไปต่อหรือพอแต่นี้)</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ZfMNYVU7oRscZNmg.jpg"/>
+<figcaption>ไม่ใช่อันนี้</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ifprIhobkh1ek_hP.png"/>
+<figcaption>อันนี้ต่างหาก</figcaption>
+</figure>
+<ul>
+<li>Pivot เนื่องจากเป็นการโจมตีหลาย Network จึงต้องมีการทำ Pivot แนะนำ <a href="https://github.com/nicocha30/ligolo-ng" rel="noopener" target="_blank">Ligolo</a> เนื่องจากเดี๋ยวนี้พัฒนาไปไกลแล้วมีแบบ gui ด้วย (ligolo-mp) แต่ถ้าไม่ถนัดไป <a href="https://github.com/jpillora/chisel" rel="noopener" target="_blank">Chisel</a> รุ่นบุกเบิก</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*1gwhEoPy62sm-aub.jpg"/>
+</figure>
+<ul>
+<li>DACL ไว้สำหรับการ control สิทธิ์ต่างๆ สิทธิ์ที่อนุญาตและไม่อนุญาต <br/>เช่น Addmember Forcechangepassword Targeted Kerberoasting</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*7AKgTXjfe_riQsO7.png"/>
+</figure>
+<ul>
+<li><a href="https://www.netexec.wiki/" rel="noopener" target="_blank">Netexec</a> (ของดีที่สุดแล้ว) เขียนลงแทบจะทุก Blog ว่าของมันดี ทำได้ทุกอย่างไม่ว่าจะเช็ค host, user, shares, lsa, sam, secret and etc..</li>
+</ul>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*2d3qlio4nkfjg1pO"/>
+</figure>
+<h2>ขั้นตอนรับ Certificate</h2>
+<p>หลังจากเราได้ flag แล้วให้เราทักหา ERTL Staff พร้อมแปะค่า flag ที่ได้ ทาง Discord และ ERTL Staff จะแจ้งให้เราส่ง report และจ่ายตัง กรณีหากต้องการใบเซอร์ที่เอาไว้ขิงคนอื่นๆ (คนแรกของไทย เพราะเล่นอยู่คนเดียว) ทาง staff จะเป็นคนส่ง link ให้เรา ราคาจะอยู่ที่ 25 € ตีเป็นเงินไทยก็ 900 กว่าบาท</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*OKCmslKkkH0-Fyni9yH0cw.png"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*0Iy4-OcMCe1enoTAxnypbA.png"/>
+</figure>
+<p>หลังจากชำระเงินเสร็จก็รอ cert เท่ห์ใน email ได้เลย หรือจะไม่จ่ายก็ได้นะแต่จะไม่ได้เซอร์เอาไว้ขิงนะ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*WQ5aBj125URAQ-3nKqq3PA.png"/>
+<figcaption>Email ยืนยันว่าได้ cert แแล้ว</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*i7XlvetHnov9xRP9-c3N4A.png"/>
+<figcaption>ใบเซอร์ที่ว่ามันสวยใช่ไหมละ หนูน้อยหมวกแดง</figcaption>
+</figure>
+<h2>สุดท้ายแแต่ไม่ท้ายสุด</h2>
+<p>แลปนี้ค่อนข้างสนุก แต่ Rabbit Hole เยอะไปหน่อย ความรู้ที่แปะไว้ข้างต้นสามารถใช้ได้เต็มที่เลยเป็นแลปที่เหมาะกับ <strong>มือไม่ใหม่ </strong>แต่อยากจะลองทำ Lab ด้าน Active Directory ซึ่งมันคุ้มค่าที่คุณคู่ควร</p>
+<p>สุดท้ายสำหรับวันนี้ก็จบลงไปแล้วขอบคุณที่อ่านมาถึงตรงนี้ครับ ไว้เจอกัน blog หน้า อาจจะไม่มีไรมาก Blog นี้แค่มารีวิวเฉยๆ</p>
+<p>ใครมีไรสอบถามก็ทักมาคุยกันได้นะครับ พิกัดด้านล่างครับ</p>
+<blockquote><strong><em>Profile : Sabastiaz</em></strong></blockquote>
+<blockquote><strong><em>Facebook: </em></strong><a href="https://www.facebook.com/sabastian.fhantomhive" rel="noopener" target="_blank">https://www.facebook.com/sabastian.fhantomhive</a> <strong><em><br/>Medium</em></strong><em> : </em><a href="https://medium.com/@sabastiaz" rel="noopener" target="_blank"><em>https://medium.com/@sabastiaz</em></a><em><br/></em><strong><em>Linkedin: </em></strong><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank"><em>https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/</em></a></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/1*5aaRgIPOI140nYYXGbdXCw.png"/>
+</figure>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="mssql-domain.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">From MSSQL to Domain Compromise: A Practical Attack Path in Active Directory (HTB Signed)</span></a>
+<a class="post-navlink next" href="guardian-summit.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">Tenable Guardian Summit 2025</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hall of Honours | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/honor.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+   .award-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.trophy-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.trophy-title {
+  padding-right: 70px;
+}
+
+.trophy-photo {
+  width: 100%;
+  height: 160px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+
+.trophy-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.92);
+  transition: transform 0.4s;
+}
+
+.trophy-card:hover .trophy-photo img {
+  transform: scale(1.04);
+}
+    /* ── Trophy cards ── */
+    .trophy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .trophy-card {
+      background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 4px;
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* gold shimmer top border */
+    .trophy-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+    }
+
+    /* corner ornament */
+    .trophy-card::after {
+      content: '✦';
+      position: absolute;
+      bottom: 8px; right: 10px;
+      font-size: 0.5rem;
+      color: var(--gold);
+      opacity: 0.2;
+    }
+
+    .trophy-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 30px rgba(201,168,76,0.1);
+    }
+
+    .trophy-icon {
+      font-size: 3rem;
+      filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .trophy-card:nth-child(2) .trophy-icon { animation-delay: 1.3s; }
+    .trophy-card:nth-child(3) .trophy-icon { animation-delay: 2.6s; }
+
+    .trophy-issuer {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .trophy-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold2);
+      line-height: 1.45;
+      text-shadow: 0 0 14px rgba(201,168,76,0.2);
+    }
+
+    .trophy-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .trophy-desc {
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.9;
+      border-left: 2px solid rgba(201,168,76,0.2);
+      padding-left: 0.85rem;
+    }
+
+    .trophy-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .trophy-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.65rem;
+      border-radius: 2px;
+    }
+
+    .badge-award {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold2);
+    }
+
+    .badge-cve {
+      background: rgba(201,58,58,0.1);
+      border: 1px solid rgba(201,58,58,0.28);
+      color: #e07b7b;
+    }
+
+    .badge-region {
+      background: rgba(107,197,210,0.1);
+      border: 1px solid rgba(107,197,210,0.22);
+      color: #6bc5d2;
+    }
+
+    /* ── CVE highlight ── */
+    .cve-box {
+      background: rgba(201,58,58,0.06);
+      border: 1px solid rgba(201,58,58,0.18);
+      border-radius: 3px;
+      padding: 0.75rem 1rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .cve-id {
+      font-size: 0.95rem;
+      color: #e07b7b;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .cve-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      line-height: 1.6;
+    }
+
+    /* ── Banner quote ── */
+    .honor-banner {
+      background: linear-gradient(135deg, rgba(122,31,46,0.15), rgba(201,168,76,0.08));
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 4px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .honor-banner::before,
+    .honor-banner::after {
+      content: '⚡';
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      font-size: 1rem;
+      opacity: 0.2;
+    }
+    .honor-banner::before { left: 1.5rem; }
+    .honor-banner::after  { right: 1.5rem; }
+
+    .banner-quote {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.9;
+    }
+
+    .banner-quote span { color: var(--gold2); }
+
+    @media (max-width: 768px) {
+      .trophy-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html" class="active">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Trophy Room ✦</div>
+    <h1 class="page-title">Hall of Honours</h1>
+    <p class="page-subtitle">Awards, recognitions &amp; vulnerability discoveries</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🏆</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="honor-banner fade-up">
+      <div class="banner-quote">
+        "Recognition bestowed upon those who sharpen their craft,<br/>
+        elevate their capabilities, and <span>leave a mark upon the realm</span>."
+      </div>
+    </div>
+
+    <div class="trophy-grid fade-up">
+<!-- Tenable Guardian Thailand -->
+<div class="trophy-card">
+  <div class="trophy-icon">🛡️</div>
+  <div class="trophy-issuer">Tenable</div>
+
+  <div class="trophy-title">
+    Tenable Guardian of Thailand
+  </div>
+
+  <div class="trophy-desc">
+    Selected as the Thailand representative of the Tenable Guardian program in recognition of exceptional technical expertise, customer success, community contributions, and leadership in Exposure Management and Vulnerability Management.
+  </div>
+
+  <div class="trophy-photo"><img src="pic/tenable-guardian.jpeg" alt="Receiving the Tenable Guardian of Thailand award" loading="lazy"></div>
+
+  <div class="trophy-meta">
+    <span class="trophy-badge badge-award">
+      Award
+    </span>
+
+    <span class="trophy-badge badge-region">
+      Thailand
+    </span>
+  </div>
+</div>
+
+<!-- Outstanding Technical Impact Award -->
+<div class="trophy-card">
+  <div class="trophy-icon">🏆</div>
+  <div class="trophy-issuer">Tenable</div>
+
+  <div class="trophy-title">
+    Outstanding Technical Impact Award
+  </div>
+
+  <div class="trophy-desc">
+    Awarded for delivering exceptional technical outcomes, driving successful customer engagements, and creating measurable cybersecurity impact across Thailand through innovative security solutions and expertise.
+  </div>
+
+  <div class="trophy-photo"><img src="pic/outstanding-impact.jpg" alt="Outstanding Technical Impact Award medal" loading="lazy"></div>
+
+  <div class="trophy-meta">
+    <span class="trophy-badge badge-award">Award</span>
+    <span class="trophy-badge badge-region">Thailand</span>
+  </div>
+</div>
+
+<!-- Emerging Partner Award -->
+<div class="trophy-card">
+  <div class="trophy-icon">🚀</div>
+  <div class="trophy-issuer">Tenable</div>
+
+  <div class="trophy-title">
+    Emerging Partner Award
+  </div>
+
+  <div class="trophy-desc">
+    Recognized for outstanding growth, business development, and commitment to delivering Tenable solutions, contributing significantly to customer success and market expansion.
+  </div>
+
+  <div class="trophy-meta">
+    <span class="trophy-badge badge-award">Award</span>
+    <span class="trophy-badge badge-region">APAC</span>
+  </div>
+</div>
+
+      <!-- Tenable VPR MCP Server -->
+      <div class="trophy-card">
+        <div class="trophy-icon">🔌</div>
+        <div class="trophy-issuer">Tenable Exchange</div>
+
+        <div class="trophy-title">
+          tenable-vpr-mcp
+        </div>
+
+        <div class="trophy-subtitle">
+          <a href="https://github.com/Sabastiaz/tenable-vpr-mcp" target="_blank" rel="noopener">GitHub</a> · <a href="https://exchange.tenable.com/mcp-servers/tenable-vpr-mcp/" target="_blank" rel="noopener">Tenable Exchange</a>
+        </div>
+
+        <div class="trophy-desc">
+          Built and published an open-source, read-only MCP server connecting Tenable.io / Tenable One to VPR re-prioritization comparisons, CISA KEV + EPSS exploitation cross-checks, and pentest re-test scan-delta reporting.
+        </div>
+
+        <div class="trophy-meta">
+          <span class="trophy-badge badge-award">Open Source</span>
+          <span class="trophy-badge badge-region">MCP Server</span>
+        </div>
+      </div>
+
+      <!-- ── CVE ── -->
+      <div class="trophy-card">
+        <div class="trophy-icon">🔬</div>
+        <div class="trophy-issuer">CVE Program · Security Research</div>
+        <div class="trophy-title">Vulnerability Discovery</div>
+        <div class="cve-box">
+          <div class="cve-id">CVE-2025-48878</div>
+          <div class="cve-desc">
+            Combodo iTop vulnerable to IDOR with ModuleInstallation object<br/>
+            <span style="color:var(--text-muted);font-style:italic;">Insecure Direct Object Reference (IDOR)</span>
+          </div>
+        </div>
+        <div class="trophy-desc">
+          Responsible disclosure of an IDOR vulnerability in Combodo iTop affecting the ModuleInstallation object.
+        </div>
+        <div class="trophy-meta">
+          <span class="trophy-badge badge-cve">CVE · 2025</span>
+          <span class="trophy-badge badge-award">Security Research</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:3.5rem;" class="fade-up">
+      <a href="contact.html" class="btn-magic">Send Owl Post →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

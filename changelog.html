@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Changelog | Sabastiaz</title>
+<meta content="Latest updates - new blog posts, new certifications, and site changes by Sabastiaz." name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="Changelog | Sabastiaz" property="og:title"/>
+<meta content="Latest updates - new blog posts, certifications, and more." property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" property="og:image"/>
+<link href="style.css" rel="stylesheet"/>
+<link href="favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<style>
+    /* ── Page header ── */
+    .cl-header {
+      margin-bottom: 3rem;
+    }
+    .cl-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      opacity: 0.7;
+    }
+    .cl-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 0.6rem;
+    }
+    .cl-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Stats row ── */
+    .cl-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .cl-stat {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 0.7rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 90px;
+    }
+    .cl-stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .cl-stat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── Filter tabs ── */
+    .cl-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .cl-filter {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 3px;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cl-filter:hover, .cl-filter.active {
+      background: rgba(201,168,76,0.1);
+      border-color: rgba(201,168,76,0.45);
+      color: var(--gold);
+    }
+
+    /* ── Year group ── */
+    .cl-year-group { margin-bottom: 2.5rem; }
+    .cl-year-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      opacity: 0.5;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    /* ── Timeline ── */
+    .cl-timeline {
+      position: relative;
+      padding-left: 1.6rem;
+    }
+    .cl-timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.3), rgba(201,168,76,0.03));
+    }
+
+    /* ── Entry ── */
+    .cl-entry {
+      position: relative;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .cl-entry.hidden { display: none; }
+
+    /* dot */
+    .cl-dot {
+      position: absolute;
+      left: -1.6rem;
+      top: 0.55rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.4);
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+    .cl-entry[data-type="cert"] .cl-dot   { background: rgba(201,168,76,0.5); border-color: var(--gold); }
+    .cl-entry[data-type="tome"] .cl-dot   { background: rgba(107,197,210,0.5); border-color: #6bc5d2; }
+    .cl-entry[data-type="update"] .cl-dot { background: rgba(168,155,194,0.5); border-color: #a89bc2; }
+
+    /* card */
+    .cl-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .cl-card:hover {
+      border-color: rgba(201,168,76,0.35);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    a.cl-card-nolink {
+      pointer-events: none;
+      cursor: default;
+    }
+    a.cl-card-nolink:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(201,168,76,0.1);
+    }
+
+    .cl-card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .cl-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.5rem;
+      border-radius: 2px;
+    }
+    .badge-cert   { color: var(--gold2); background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); }
+    .badge-tome   { color: #6bc5d2;      background: rgba(107,197,210,0.1); border: 1px solid rgba(107,197,210,0.3); }
+    .badge-update { color: #a89bc2;      background: rgba(168,155,194,0.1); border: 1px solid rgba(168,155,194,0.3); }
+
+    .cl-date {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+    .cl-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 0.25rem;
+    }
+    .cl-card-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .cl-card-link-hint {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      color: var(--gold);
+      margin-top: 0.4rem;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .cl-card:hover .cl-card-link-hint { opacity: 1; }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="skills.html">Spells</a></li>
+<li><a href="tools.html">Arsenal</a></li>
+<li><a href="writings.html">Tomes</a></li>
+<li><a href="honor.html">Honours</a></li>
+<li><a href="wowza.html">Wowza</a></li>
+<li><a href="event.html">Events</a></li>
+<li><a class="active" href="changelog.html">Updates</a></li>
+<li><a href="contact.html">Owl Post</a></li>
+<li><a href="cocacola.html">🥤</a></li>
+</ul>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<div class="cl-header fade-up">
+<div class="cl-eyebrow">✦ What's New</div>
+<h1 class="cl-title">Changelog</h1>
+<p class="cl-subtitle">New blog posts, certifications earned, and site updates - in chronological order.</p>
+</div>
+<!-- Stats -->
+<div class="cl-stats fade-up">
+<div class="cl-stat">
+<span class="cl-stat-num" id="stat-total">0</span>
+<span class="cl-stat-label">Total Entries</span>
+</div>
+<div class="cl-stat">
+<span class="cl-stat-num" id="stat-cert">0</span>
+<span class="cl-stat-label">New Certs</span>
+</div>
+<div class="cl-stat">
+<span class="cl-stat-num" id="stat-tome">0</span>
+<span class="cl-stat-label">New Blogs</span>
+</div>
+<div class="cl-stat">
+<span class="cl-stat-num" id="stat-update">0</span>
+<span class="cl-stat-label">Coming Soon</span>
+</div>
+</div>
+<!-- Filters -->
+<div class="cl-filters fade-up">
+<button class="cl-filter active" data-filter="all">All</button>
+<button class="cl-filter" data-filter="cert">🏆 Certification</button>
+<button class="cl-filter" data-filter="tome">📜 Blog Post</button>
+<button class="cl-filter" data-filter="update">🔧 Coming Soon</button>
+</div>
+<!-- ════════════════════════ 2026 ════════════════════════ -->
+<div class="cl-year-group fade-up">
+<div class="cl-year-label">✦ 2026</div>
+<div class="cl-timeline">
+<div class="cl-entry" data-date="2026-08-13" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="honor.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Award</span>
+<span class="cl-date">Aug 2026</span>
+</div>
+<div class="cl-card-title">tenable-vpr-mcp - Published on Tenable Exchange</div>
+<div class="cl-card-desc">Built and published an open-source, read-only MCP server for Tenable.io / Tenable One - VPR re-prioritization comparisons, CISA KEV + EPSS cross-checks, and pentest re-test scan-delta reporting.</div>
+<div class="cl-card-link-hint">View in Hall of Honours →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-07-20" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/impostor-syndrome-th.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Jul 2026</span>
+</div>
+<div class="cl-card-title">ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก</div>
+<div class="cl-card-desc">บทความสะท้อนเรื่อง impostor syndrome - ทำไมความสำเร็จและคำชมยังลบความรู้สึกว่าตัวเองไม่เก่งไปไม่ได้ และวิธีมองหลักฐานของการเติบโตที่แท้จริง</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-07-18" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/godpotato.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Jul 2026</span>
+</div>
+<div class="cl-card-title">GodPotato - รายงานเชิงเทคนิค (Windows PrivEsc)</div>
+<div class="cl-card-desc">วิเคราะห์เจาะลึกเครื่องมือ GodPotato - RPCSS OXID Resolution abuse, Attack Flow, Detection Sigma Rule และ Defense measures สำหรับ Windows Privilege Escalation</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-06-27" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/sliver-c2.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Jun 2026</span>
+</div>
+<div class="cl-card-title">Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team</div>
+<div class="cl-card-desc">เรียนรู้ Sliver C2 ตั้งแต่ศูนย์ - ติดตั้ง สร้าง Listener สร้าง Implant ควบคุม Session และเปรียบเทียบกับ Metasploit พร้อมตัวอย่างจริงจาก HTB Lab</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-06-18" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/brain-body-recover.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Jun 2026</span>
+</div>
+<div class="cl-card-title">เมื่อสมองยังไหว แต่ร่างกายเริ่มทวงคืน</div>
+<div class="cl-card-desc">ว่าด้วยการฟื้นตัว ความสมดุล และความจริงที่มองข้ามมาหลายปี - เมื่อความสามารถยังอยู่ แต่ร่างกายเริ่มส่งสัญญาณ</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+
+<!-- ════════════════════════ Coming Soon ════════════════════════ -->
+<div class="cl-entry" data-date="2026-05-01" data-type="update">
+<span class="cl-dot"></span>
+<a class="cl-card" href="">
+<div class="cl-card-top">
+<span class="cl-badge badge-update">Coming Soon</span>
+<span class="cl-date">May 2026</span>
+</div>
+<div class="cl-card-title">Singapore Seven Days (ฉบับโม้ไปเรื่อย)</div>
+<div class="cl-card-desc">สวัสดีทุกท่านแขกไปใครมา กลับมาพบกันอีกแล้วครับ รอบนี้ไม่ได้มาแบบวิชาการนะครับผมอยากมาเล่า (มาโม้) ประสบการณ์ไป Singapore เป็นเวลา 7 วัน สปอยมีไปงาน Black Hat Asia and DefCon SG1 ด้วยนะ ยาวนิดนึงนะ</div>
+<div class="cl-card-link-hint">Coming Soon →</div>
+</a>
+</div>
+<!-- ════════════════════════ Coming Soon ════════════════════════ -->
+<div class="cl-entry" data-date="2026-05-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/rustpotato.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">May 2026</span>
+</div>
+<div class="cl-card-title">🥔 RustPotato - Privilege Escalation via SeImpersonate</div>
+<div class="cl-card-desc">RustPotato เป็น Rust implementation ของ GodPotato ซึ่งเป็น Privilege Escalation tool ที่ใช้การ abuse DCOM และ RPC เพื่อ leverage SeImpersonatePrivilege และยกระดับสิทธิ์ขึ้นเป็น NT AUTHORITY\SYSTEM บน Windows</div>
+<div class="cl-card-link-hint">Read blog post→</div>
+</a>
+</div>
+
+<div class="cl-entry" data-date="2026-05-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/cape.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">May 2026</span>
+</div>
+<div class="cl-card-title">HTB Certified Active Directory Pentesting Expert (CAPE)</div>
+<div class="cl-card-desc">Passed CAPE with a perfect score - 10 out of 10 flags on the first attempt.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+
+<div class="cl-entry" data-date="2026-05-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/cape.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">May 2026</span>
+</div>
+<div class="cl-card-title">My Journey Through HTB Certified Active Directory Pentesting Expert (CAPE)</div>
+<div class="cl-card-desc">Full write-up: preparation, methodology, Kerberos &amp; ACL abuse, BloodHound analysis, budget, and pro tips.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+
+<div class="cl-entry" data-date="2026-03-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/mailservice-en.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Mar 2026</span>
+</div>
+<div class="cl-card-title">Mail Service Lab: Extreme Red Team LAB Review</div>
+<div class="cl-card-desc">English review of the Mailservice Lab from Extreme Red Team Laboratories.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-02-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/achievement-2025.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Feb 2026</span>
+</div>
+<div class="cl-card-title">Achievement 2025</div>
+<div class="cl-card-desc">A look back at everything accomplished in 2025 - certifications, milestones, and lessons learned.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-02-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/mssql-domain.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Feb 2026</span>
+</div>
+<div class="cl-card-title">From MSSQL to Domain Compromise: A Practical Attack Path in Active Directory (HTB Signed)</div>
+<div class="cl-card-desc">Step-by-step walkthrough of chaining MSSQL exploitation into full domain compromise on HTB Signed machine.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2026-02-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/ctf-fun-th.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Feb 2026</span>
+</div>
+<div class="cl-card-title">ความยากที่พอดี คือความสนุกของ CTF</div>
+<div class="cl-card-desc">บทความว่าด้วยความสนุกของการแก้โจทย์ CTF และมุมมองต่อความท้าทายในโลก Offensive Security</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+</div>
+</div>
+<!-- ════════════════════════ 2025 ════════════════════════ -->
+<div class="cl-year-group fade-up">
+<div class="cl-year-label">✦ 2025</div>
+<div class="cl-timeline">
+<div class="cl-entry" data-date="2025-12-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/dark-web-monitoring.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Dec 2025</span>
+</div>
+<div class="cl-card-title">[WRITE UP] Scenario 2 Part 2: Dark Web Monitoring</div>
+<div class="cl-card-desc">Hack the Scammer CTF - OSINT &amp; dark web monitoring write-up covering threat actor investigation methodology.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-12-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/keng-th.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Dec 2025</span>
+</div>
+<div class="cl-card-title">เมื่อคำว่า "เก่ง" ไม่ได้หมายถึงคนที่ไม่เคยพลาด แต่คือคนที่ลุกขึ้นมาได้เสมอ</div>
+<div class="cl-card-desc">บทความเชิงปรัชญาว่าด้วยความหมายที่แท้จริงของ "ความเก่ง" และพลังของการลุกขึ้นหลังล้มเหลว</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-11-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/hackloween-2025.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Nov 2025</span>
+</div>
+<div class="cl-card-title">Sec Playground Hackloween 2025: Anabelle's Secret</div>
+<div class="cl-card-desc">CTF write-up for the Anabelle's Secret challenge - forensics, OSINT, and flag hunting.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-10-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/guardian-summit.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">Oct 2025</span>
+</div>
+<div class="cl-card-title">Tenable Guardian - Thailand</div>
+<div class="cl-card-desc">Selected as Tenable Guardian representing Thailand at the Tenable Guardian Summit 2025.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-10-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/guardian-summit.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Oct 2025</span>
+</div>
+<div class="cl-card-title">Tenable Guardian Summit 2025</div>
+<div class="cl-card-desc">My experience attending the Tenable Guardian Summit 2025 as Guardian of Thailand.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-09-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/thailand-top-talent.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Sep 2025</span>
+</div>
+<div class="cl-card-title">แก้โจทย์ Thailand Top Talent 2025 หมวด Network ด้วย ChatGPT {OPEN}</div>
+<div class="cl-card-desc">บันทึกการแก้โจทย์ Network Challenge ในการแข่งขัน Thailand Top Talent 2025</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-08-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/osep.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">Aug 2025</span>
+</div>
+<div class="cl-card-title">OffSec Experienced Penetration Tester (OSEP)</div>
+<div class="cl-card-desc">Passed OSEP on the first attempt - captured secret.txt at 5:00 AM on day two of the exam.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-08-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/osep.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Aug 2025</span>
+</div>
+<div class="cl-card-title">Passed OffSec Experienced Penetration Tester (OSEP) with secret.txt</div>
+<div class="cl-card-desc">Full write-up of 3 months preparation, exam strategy, and the 47-hour journey to capturing secret.txt.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-08-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/cpts.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">Aug 2025</span>
+</div>
+<div class="cl-card-title">HTB Certified Penetration Testing Specialist (CPTS) - 100%</div>
+<div class="cl-card-desc">Completed CPTS with a perfect score across all modules and exam objectives.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-08-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/cpts.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Aug 2025</span>
+</div>
+<div class="cl-card-title">My Journey Through Certified Penetration Testing Specialist (CPTS) 100%</div>
+<div class="cl-card-desc">10 days of hands-on hacking, AD exploitation, pivoting, and persistence - the full CPTS story.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-08-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/oscp-guide-th.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Aug 2025</span>
+</div>
+<div class="cl-card-title">เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล</div>
+<div class="cl-card-desc">คู่มือภาษาไทยสำหรับการเตรียมสอบ OSCP จากประสบการณ์จริง 3 attempts</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-04-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/tenable-vm.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">Apr 2025</span>
+</div>
+<div class="cl-card-title">Tenable Vulnerability Management Specialist</div>
+<div class="cl-card-desc">Passed the Tenable VM Specialist exam on the first attempt.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-04-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/tenable-vm.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Apr 2025</span>
+</div>
+<div class="cl-card-title">I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt!</div>
+<div class="cl-card-desc">Study approach, exam tips, and thoughts on the Tenable VM Specialist certification path.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-03-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/crta.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">Mar 2025</span>
+</div>
+<div class="cl-card-title">Certified Red Team Analyst (CRTA)</div>
+<div class="cl-card-desc">Passed CRTA in one night - from zero to compromise in a single focused session.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2025-03-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/crta.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Mar 2025</span>
+</div>
+<div class="cl-card-title">CRTA Exam: One Night Miracle</div>
+<div class="cl-card-desc">How I prepared for and passed the CRTA certification in a single overnight exam session.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+</div>
+</div>
+<!-- ════════════════════════ 2024 ════════════════════════ -->
+<div class="cl-year-group fade-up">
+<div class="cl-year-label">✦ 2024</div>
+<div class="cl-timeline">
+<div class="cl-entry" data-date="2024-11-01" data-type="cert">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/oscp.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-cert">New Cert</span>
+<span class="cl-date">Nov 2024</span>
+</div>
+<div class="cl-card-title">Offensive Security Certified Professional (OSCP)</div>
+<div class="cl-card-desc">Passed OSCP after three attempts - the certification that changed everything.</div>
+<div class="cl-card-link-hint">Read blog post →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2024-11-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/oscp.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Nov 2024</span>
+</div>
+<div class="cl-card-title">My OSCP Journey: Triple Attempts</div>
+<div class="cl-card-desc">The honest story of failing twice and coming back stronger - what changed between attempt 2 and attempt 3.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+<div class="cl-entry" data-date="2024-07-01" data-type="tome">
+<span class="cl-dot"></span>
+<a class="cl-card" href="blog/secplayground-2024.html">
+<div class="cl-card-top">
+<span class="cl-badge badge-tome">New Blog</span>
+<span class="cl-date">Jul 2024</span>
+</div>
+<div class="cl-card-title">Secplayground Half Year CTF Event 2024 - Forensic File Hunt (Medium)</div>
+<div class="cl-card-desc">Write-up for the Forensic File Hunt challenge at Secplayground's Half Year CTF 2024.</div>
+<div class="cl-card-link-hint">Read →</div>
+</a>
+</div>
+</div>
+</div>
+<div class="fade-up" style="text-align:center; margin-top: 3rem;">
+<a class="btn-magic" href="writings.html">Browse All Tomes →</a>
+</div>
+</div>
+</div>
+<footer>
+<span class="footer-wand">🪄</span>
+  ✦   SABASTIAZ   ·   Ratthapong Sommanus   ·   Red Team Sorcerer   ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+<script src="stars.js"></script>
+<script>
+  /* nav hamburger */
+  const ham = document.getElementById('nav-hamburger');
+  const ul  = document.querySelector('.nav-links');
+  if (ham) ham.addEventListener('click', () => {
+    const open = ham.getAttribute('aria-expanded') === 'true';
+    ham.setAttribute('aria-expanded', String(!open));
+    ul.classList.toggle('open', !open);
+  });
+
+  /* ── Compute stats ── */
+  const entries = document.querySelectorAll('.cl-entry');
+  let counts = { cert: 0, tome: 0, update: 0 };
+  entries.forEach(e => {
+    const t = e.dataset.type;
+    if (counts[t] !== undefined) counts[t]++;
+  });
+  document.getElementById('stat-total').textContent  = entries.length;
+  document.getElementById('stat-cert').textContent   = counts.cert;
+  document.getElementById('stat-tome').textContent   = counts.tome;
+  document.getElementById('stat-update').textContent = counts.update;
+
+  /* ── Filter logic ── */
+  document.querySelectorAll('.cl-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cl-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.cl-entry').forEach(entry => {
+        entry.classList.toggle('hidden', filter !== 'all' && entry.dataset.type !== filter);
+      });
+      /* hide empty year groups */
+      document.querySelectorAll('.cl-year-group').forEach(group => {
+        const visible = group.querySelectorAll('.cl-entry:not(.hidden)').length > 0;
+        group.style.display = visible ? '' : 'none';
+      });
+    });
+  });
+</script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

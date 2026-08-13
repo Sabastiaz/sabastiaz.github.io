@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/event.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Event card ── */
+    .event-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .event-card {
+      background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
+    }
+
+    .event-card:hover {
+      border-color: rgba(201,168,76,0.42);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 24px rgba(201,168,76,0.08);
+    }
+
+    /* Banner image area */
+    .event-banner {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #1a1008 0%, #2a1a0e 50%, #1a1008 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .event-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+
+    /* Fallback banner design */
+    .event-banner-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(122,31,46,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.1) 0%, transparent 60%),
+        linear-gradient(135deg, #1a1008, #2a1a0e);
+    }
+
+    .banner-htb-logo {
+      font-size: 3.5rem;
+      filter: drop-shadow(0 0 18px rgba(201,168,76,0.5));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .banner-org {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    /* Grid lines overlay on banner */
+    .event-banner-fallback::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(201,168,76,0.03) 30px, rgba(201,168,76,0.03) 31px),
+        repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(201,168,76,0.03) 30px, rgba(201,168,76,0.03) 31px);
+      pointer-events: none;
+    }
+
+    /* ── Event body ── */
+    .event-body {
+      padding: 1.75rem 2rem 2rem;
+    }
+
+    .event-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .event-org-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.22);
+      color: var(--gold2);
+      padding: 0.2rem 0.65rem;
+      border-radius: 2px;
+    }
+
+    .event-location-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      background: rgba(107,197,210,0.08);
+      border: 1px solid rgba(107,197,210,0.2);
+      color: #6bc5d2;
+      padding: 0.2rem 0.65rem;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .event-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .event-title span {
+      color: var(--gold2);
+      font-style: italic;
+    }
+
+    .event-desc {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      border-left: 2px solid rgba(201,168,76,0.2);
+      padding-left: 0.85rem;
+    }
+
+    .event-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold2);
+      text-decoration: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 4px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.25s;
+    }
+
+    .event-link:hover {
+      background: rgba(201,168,76,0.14);
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(201,168,76,0.1);
+    }
+
+    /* ── CTF section ── */
+    .section-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 2.5rem 0 1.5rem;
+    }
+    .section-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25)); }
+    .section-divider-line.r { background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent); }
+    .section-divider-label {
+      font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.7; white-space: nowrap;
+    }
+
+    .ctf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .ctf-card {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 1.4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .ctf-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .ctf-card.rank-1::before { background: linear-gradient(90deg, transparent, #ffd700, transparent); }
+    .ctf-card.rank-2::before { background: linear-gradient(90deg, transparent, #c0c0c0, transparent); }
+    .ctf-card.rank-other::before { background: linear-gradient(90deg, transparent, var(--maroon), transparent); }
+    .ctf-card:hover {
+      border-color: rgba(201,168,76,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .ctf-rank {
+      font-size: 2rem; margin-bottom: 0.5rem; display: block;
+      filter: drop-shadow(0 0 8px rgba(255,215,0,0.4));
+    }
+    .ctf-name {
+      font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700;
+      color: var(--text); line-height: 1.4; margin-bottom: 0.4rem;
+    }
+    .ctf-place {
+      font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em;
+    }
+    .ctf-place.gold  { color: #ffd700; }
+    .ctf-place.silver { color: #c0c0c0; }
+    .ctf-place.bronze { color: var(--gold2); }
+
+    /* ── Empty / coming soon placeholder ── */
+    .more-coming {
+      background: var(--surface);
+      border: 1px dashed rgba(201,168,76,0.15);
+      border-radius: 4px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .more-coming-icon {
+      font-size: 2rem;
+      opacity: 0.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .more-coming-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html" class="active">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Great Hall Gatherings ✦</div>
+    <h1 class="page-title">Events</h1>
+    <p class="page-subtitle">Summits, meetups &amp; wizarding gatherings attended</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🏟️</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="event-grid">
+
+      <!-- ── Event: Tenable APJ Guardian Summit 2026 ── -->
+      <div class="event-card fade-up">
+        <div class="event-banner">
+          <div class="event-banner-fallback">
+            <span class="banner-htb-logo">🛡️</span>
+            <span class="banner-org">Tenable</span>
+          </div>
+        </div>
+
+        <div class="event-body">
+          <div class="event-meta-row">
+            <span class="event-org-badge">Tenable</span>
+            <span class="event-location-badge">📍 Asia Pacific & Japan</span>
+          </div>
+
+          <div class="event-title">
+            Tenable APJ Guardian Summit <span>2026</span>
+          </div>
+
+          <div class="event-desc">
+            Returning for another year - the Tenable Guardian community across Asia Pacific and Japan
+            gathers once more to share insights on exposure management, vulnerability intelligence,
+            and the evolving cyber risk landscape.
+          </div>
+
+          <div style="margin-top:0.5rem;">
+            <img src="pic/tenable.png" alt="Tenable Guardian" style="height:40px; opacity:0.85; filter: brightness(1.1);" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Event 1: HTB Meetup ── -->
+      <div class="event-card fade-up">
+        <div class="event-banner">
+          <img src="pic/htb.jpg" alt="HTB Meetup 0x01 - Not The Hidden Skillz" />
+        </div>
+
+        <div class="event-body">
+          <div class="event-meta-row">
+            <span class="event-org-badge">Hack The Box</span>
+            <span class="event-location-badge">📍 Warsaw, Poland</span>
+          </div>
+
+          <div class="event-title">
+            Hack The Box Meetup:<br/>
+            <span>'Not The Hidden Skillz'</span> - 0x01
+          </div>
+
+          <div class="event-desc">
+            A community gathering for cybersecurity enthusiasts and Hack The Box practitioners -
+            a night of knowledge sharing, networking, and celebrating the craft of offensive security.
+          </div>
+
+          <a href="https://www.meetup.com/hack-the-box-meetup-warsaw-pl/" class="event-link" target="_blank" rel="noopener">
+            🔗 &nbsp; View Event on Meetup
+          </a>
+          
+        </div>
+      </div>
+      
+
+      <!-- ── Event 2: Tenable APJ Guardian Summit 2025 ── -->
+      <div class="event-card fade-up">
+        <div class="event-banner">
+          <img src="pic/summit2025.png" alt="Tenable APJ Guardian Summit 2025" />
+        </div>
+
+        <div class="event-body">
+          <div class="event-meta-row">
+            <span class="event-org-badge">Tenable</span>
+            <span class="event-location-badge">📍 Asia Pacific & Japan</span>
+          </div>
+
+          <div class="event-title">
+            Tenable APJ Guardian Summit <span>2025</span>
+          </div>
+
+          <div class="event-desc">
+            An exclusive summit for Tenable Guardians across Asia Pacific and Japan - bringing together
+            security leaders, top practitioners, and vulnerability management experts to shape the future
+            of cyber exposure and risk intelligence.
+          </div>
+
+          <div style="margin-top:0.5rem;">
+            <img src="pic/tenable.png" alt="Tenable Guardian" style="height:40px; opacity:0.85; filter: brightness(1.1);" />
+          </div>
+           <a href="https://sabastiaz.medium.com/tenable-guardian-summit-2025-272114a2e251" class="event-link" target="_blank" rel="noopener">
+            🔗 &nbsp; Review 
+          </a>
+        </div>
+      </div>
+
+    
+      <!-- ── Event 3: DEF CON SG 1 ── -->
+      <div class="event-card fade-up">
+        <div class="event-banner">
+          <img src="pic/Defcon.png" alt="DEF CON Singapore" />
+        </div>
+
+        <div class="event-body">
+          <div class="event-meta-row">
+            <span class="event-org-badge">DEF CON</span>
+            <span class="event-location-badge">📍 Singapore</span>
+          </div>
+
+          <div class="event-title">
+            DEF CON Singapore  <span>2026</span>
+          </div>
+
+          <div class="event-desc">
+            
+          </div>
+
+         
+          
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── CTF Competitions ── -->
+      <div class="section-divider fade-up">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label">⚔ CTF Competitions</div>
+        <div class="section-divider-line r"></div>
+      </div>
+
+      <div class="ctf-grid fade-up">
+
+        <div class="ctf-card rank-1">
+          <span class="ctf-rank">🥇</span>
+          <div class="ctf-name">Hackloween CTF 2025</div>
+          <div class="ctf-place gold">1st Place</div>
+        </div>
+
+        <div class="ctf-card rank-2">
+          <span class="ctf-rank">🥈</span>
+          <div class="ctf-name">Bloody Xmas 2024 CTF</div>
+          <div class="ctf-place silver">2nd Place</div>
+        </div>
+
+        <div class="ctf-card rank-2">
+          <span class="ctf-rank">🥈</span>
+          <div class="ctf-name">Hackloween CTF 2024</div>
+          <div class="ctf-place silver">2nd Place</div>
+        </div>
+
+        <div class="ctf-card rank-other">
+          <span class="ctf-rank">🏅</span>
+          <div class="ctf-name">Holmes CTF 2025</div>
+          <div class="ctf-place bronze">28th Place</div>
+        </div>
+
+        <div class="ctf-card rank-other">
+          <span class="ctf-rank">🏅</span>
+          <div class="ctf-name">Thailand Cyber Top Talent 2025</div>
+          <div class="ctf-place bronze">14th Place</div>
+
+      </div>
+
+       <div class="ctf-card rank-other">
+          <span class="ctf-rank">🏅</span>
+          <div class="ctf-name">Range Village DEFCON SG 1 Active Directory Lab CTF</div>
+          <div class="ctf-place bronze">16th Place</div>
+        </div>
+
+        <div class="ctf-card rank-other">
+          <span class="ctf-rank">🏅</span>
+          <div class="ctf-name">Tenable APJ Guardian Summit 2026 CTF</div>
+          <div class="ctf-place bronze">10th Place</div>
+        </div>
+      <!-- ── More coming ── -->
+      <div class="more-coming fade-up">
+        <div class="more-coming-icon">✦</div>
+        <div class="more-coming-text">More gatherings shall be announced</div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:3.5rem;" class="fade-up">
+      <a href="contact.html" class="btn-magic">Send Owl Post →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

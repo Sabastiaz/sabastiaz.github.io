@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My OSCP Journey: Triple Attempts | Sabastiaz</title>
+<meta content="My OSCP Journey: Triple Attempts - Sabastiaz Red Team Sorcerer" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="My OSCP Journey: Triple Attempts | Sabastiaz" property="og:title"/>
+<meta content="My OSCP Journey: Triple Attempts - Sabastiaz Red Team Sorcerer" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/thumb/oscp.jpg" property="og:image"/>
+<meta content="https://sabastiaz.github.io/pic/thumb/oscp.jpg" name="twitter:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/oscp.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+
+  .toc-toggle{position:fixed;top:6rem;left:1.25rem;z-index:850;width:2.4rem;height:2.4rem;border-radius:50%;background:rgba(12,10,8,.85);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:border-color .2s}
+  .toc-toggle:hover{border-color:var(--gold)}
+  .toc-panel{position:fixed;top:9.5rem;left:1.25rem;z-index:849;width:240px;max-height:60vh;overflow-y:auto;background:rgba(12,10,8,.95);border:1px solid rgba(201,168,76,.25);border-radius:6px;padding:1rem;display:none;backdrop-filter:blur(6px)}
+  .toc-panel.open{display:block}
+  .toc-panel-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:.6rem}
+  .toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem}
+  .toc-list a{font-size:.78rem;color:var(--text-muted);text-decoration:none;line-height:1.4;transition:color .15s;display:block}
+  .toc-list a:hover{color:var(--gold)}
+  @media (max-width:1100px){.toc-toggle,.toc-panel{display:none}}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<button class="toc-toggle" id="toc-toggle" aria-label="Table of contents">📜</button>
+<div class="toc-panel" id="toc-panel">
+  <div class="toc-panel-label">✦ Table of Contents ✦</div>
+  <ul class="toc-list" id="toc-list"></ul>
+</div>
+
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-en">EN</span><span class="post-tag tag-cert">Certification</span></div>
+<div class="post-meta-row">
+<span>November 11, 2024</span><span class="dot">✦</span><span>9 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="en">My OSCP Journey: Triple Attempts</span><span class="lb" lang="th">เส้นทาง OSCP ของผม: สามครั้ง</span></h1>
+</div>
+<div class="post-body lb" lang="en">
+<p>Hello everyone reading this blog. I'm "Sabastiaz" (my pen name).<br/>Today I'm going to share my OSCP exam journey. It might be a long one, so let's get started.</p>
+<blockquote><em>Before reading my OSCP journey, let me briefly introduce what OSCP is.<br/>OSCP, formerly known as Offensive Security Certified Professional and now called OffSec Certified Professional (code PEN-200), is an exam that penetration testers desperately want to conquer. It's notoriously difficult and highly coveted - including by me.</em></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ZHaeJ1yK_n5l4QIA.png"/>
+<figcaption>Badge OSCP</figcaption>
+</figure>
+<p><strong>With that brief intro out of the way, feel free to dive into my OSCP Journey.</strong></p>
+<p><strong>Let's Gooooo</strong><br/>Going back two years, I had passed the CEH (<a href="https://www.eccouncil.org/train-certify/certified-ethical-hacker-ceh/" rel="noopener" target="_blank">Certified Ethical Hacker</a>) and realized it wasn't enough, so I started looking for other certifications. While searching, I happened to notice there was going to be a Cybersec Asia 2024 event with booths from many companies including NCSA, M.Tech, Offsec, Crest, Tenable, WatchTowr and many more.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*9U3eo79wE_UwS2Lx.jpeg"/>
+<figcaption>Details of various Booths</figcaption>
+</figure>
+<p>As an OffSec fan, I headed straight for the booth - only to stop dead in my tracks when I ran into my idol, P'Nop, CEO of Mayaseven, one of Thailand's leading pentesting firms. I had followed his work for a long time. After meeting him, I worked up the courage to introduce myself. P'Nop kindly helped negotiate a discount on the OSCP exam with Leon (I was excited and my English was shaky at the time), and I got Leon's contact for registration and the discount.</p>
+<blockquote>Below is the penetration tester roadmap shared by Mayaseven on their page - helpful for anyone interested:</blockquote>
+<a href="https://www.facebook.com/share/p/17wUSuppbB/" rel="noopener" target="_blank"><strong>Life at Mayaseven</strong><br/><em>For those interested in becoming a penetration tester but don't know where to start...</em>www.facebook.com</a>
+<h2>Cybersec Asia x Thailand International Cyber Week 2024</h2>
+<p>It was an amazing event with countless vendors - easy to lose track of time wandering around. The event also featured The OSCP Jumpstart organized by SecureD, with a team of impressively credentialed professionals.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*QE8gFYlQ8TYT99Us"/>
+<figcaption>The OSCP Jumpstart: Mini Hands-On Training (OFFSEC)</figcaption>
+</figure>
+<p>The OSCP Jumpstart was a Mini Hands-On Lab applying techniques useful for the exam.</p>
+<p>After attending the Jumpstart, my motivation to take the exam was ignited and I started drafting a rough exam schedule.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*8l-5gZxU-hkW0gSO.gif"/>
+</figure>
+<p><strong>At this point, I have to thank my company for covering the exam cost - it's very expensive at $2,599 (nearly 90,000 baht).</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*em1TA2e_ZR6ff1qU.gif"/>
+</figure>
+<p>Here are the course details:</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*jD3-g897H4RFbaQR.png"/>
+</figure>
+<p>I chose the <strong>Learn One</strong> course for its 1-year access and 2 exam attempts - perfect for working professionals. Two attempts is clearly the better value.</p>
+<blockquote><a href="https://www.offsec.com/pricing/individual/" rel="noopener" target="_blank"><em>https://www.offsec.com/pricing/individual/</em></a></blockquote>
+<h2>Exam Structure</h2>
+<p><strong>60 points</strong> - 3 independent targets, 20 points each (10 for initial access + 10 for privilege escalation)<br/><strong>40 points</strong> - Active Directory set (2 clients + 1 domain controller, full chain required, no partial points)<br/>Passing score: 70 points or higher</p>
+<h2>Passing Scenarios</h2>
+<ul>
+<li>40 pt AD + 3 local.txt flags</li>
+<li>40 pt AD + 2 local.txt flags + 1 proof.txt flag</li>
+<li>40 pt AD + 2 local.txt flags + bonus points</li>
+<li>3 fully completed non-AD machines + bonus points</li>
+</ul>
+<p>After November 1st, bonus points were removed. For the updated AD scoring: 10 pts machine #1, 10 pts machine #2, 20 pts machine #3.</p>
+<blockquote><a href="https://help.offsec.com/hc/en-us/articles/29865898402836-OSCP-Exam-Changes" rel="noopener" target="_blank"><em>https://help.offsec.com/hc/en-us/articles/29865898402836-OSCP-Exam-Changes</em></a></blockquote>
+<p>And then came my first course start day...</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*xTUv0z3o-_l38jIj.gif"/>
+</figure>
+<h2>June 13, 2023 (Day One - The Beginning)</h2>
+<p>I started the course full of excitement. But that enthusiasm quickly faded due to work obligations and plain laziness - there wasn't much to do beyond the single lab provided in the system.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*zxwM8pQDUFAMKCE3.gif"/>
+<figcaption>Just seeing the lab was enough to make me faint</figcaption>
+</figure>
+<p>Time passed until the first scheduled exam date.</p>
+<p><strong>First Attempt</strong><br/>Would I pass? Of course not - I hadn't finished half the labs and hadn't completed even 5 lessons. But I'd already booked the date with one year and two attempts to go.</p>
+<h2>December 09, 2023 (First Attempt): Failed</h2>
+<p>I scheduled for 10 AM - my optimal time. The proctoring process required identity verification and equipment checks. My first attempt immediately threw me the notorious "Nightmare" machine. It lived up to its reputation - I failed as expected.</p>
+<blockquote><em>Passing score is 70 points or higher.<br/>My first result was a fail. I held onto the OffSec motto:</em><strong><em> TRY HARDER</em></strong><em> - keep fighting.</em></blockquote>
+<p>So I went back to prepare for round two.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*KKCTD2CKd2xGKVWw.gif"/>
+</figure>
+<p>While preparing for the second attempt, I registered for <strong>BlackHat Asia 2024</strong> in Singapore.</p>
+<h2>BlackHat ASIA 2024</h2>
+<p>It brought together security professionals from around the world for 4 days full of sessions, activities, and partner booths - I'll cover it in another blog post.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*QAqaRkhLskowFkiH.png"/>
+</figure>
+<p>At this event I got to know P'Tun "<strong>Clinton</strong>" (Facebook: Clinton Yimprasert, c1inton's Diary), also the owner of IC21 Tech Co., Ltd. We exchanged contacts for follow-up. Back home I practiced on Hack the Box but didn't focus enough, losing passion from the first failure.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*5leExVqwMPoWtxLZ.gif"/>
+</figure>
+<p>Between attempts there was also HITB x PHDays, held in Thailand and free to attend - I wasn't going to miss that.</p>
+<h2>HITB x PHDays</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*6s9wdC7F9v1tufDv"/>
+</figure>
+<p>This was a packed educational event - see the AGENDA for details.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ZXc2pZv2qnM_BfgW.png"/>
+</figure>
+<p>I enjoyed every session. At this event I also met a great friend, Kim (Chairat Kimmie) aka <strong>"kyokito"</strong>, who holds numerous CVEs and was one of the people who helped me pass by offering encouragement and advice. I also can't fail to mention P'Ta (Pichaya Morimoto) aka <strong>"longcat"</strong>, Lead Penetration Tester at Siam Thanat Hack (STH), Thailand's leading pentest firm. He tutored me and provided detailed exam guidance.</p>
+<blockquote><a href="https://www.facebook.com/siamthanathack.co.ltd" rel="noopener" target="_blank"><em>https://www.facebook.com/siamthanathack.co.ltd</em></a></blockquote>
+<p>P'Ta is also the Thailand Top Talent 2023 champion. Absolutely incredible.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*DN4Yx-_vxsFwVSFC.png"/>
+<figcaption>Web Hacking like a Cat V.1</figcaption>
+</figure>
+<p>It took 4-6 months before my second attempt, using the last exam from the Learn One course.</p>
+<p><strong>Second Attempt</strong></p>
+<h2>June 09, 2024 (Second Attempt)</h2>
+<p>Scheduled for 10 AM again, arrived 15 minutes early to verify everything. This round gave me another tough exam set. I managed to complete the Standalone machines and earned 10 bonus points, though getting them was hard.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*pHp5UqvPN5V0_E9L.gif"/>
+</figure>
+<h2>June 11 2024 (Result round 2): Failed</h2>
+<p>When results came out: failed again. I crashed harder than ever before, thinking there was no way I wouldn't pass this time. I had been overconfident. I later realized the exam only counts points when you have a proper shell - not a webshell. One of my targets only gave me a webshell, making that machine worth 0 points.</p>
+<p>After processing this, I had a serious conversation with my father, received support from family and my girlfriend, and planned my preparation much more seriously this time.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*JqRBzfgSNVD8zR9o.gif"/>
+</figure>
+<h2>June - October 2024 (Preparation OSCP Round 3)</h2>
+<p>After two failures I found the TJNull and IPPSEC lists for exam preparation:</p>
+<blockquote><strong><em>TJ Null</em></strong><em><br/></em><a href="https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview" rel="noopener" target="_blank"><em>https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview</em></a></blockquote>
+<blockquote><strong><em>IPPSEC</em></strong><em><br/></em><a href="https://www.youtube.com/ippsec" rel="noopener" target="_blank"><em>https://www.youtube.com/ippsec</em></a><em><br/></em><a href="https://ippsec.rocks/?#" rel="noopener" target="_blank"><em>https://ippsec.rocks/?#</em></a><em> (search and link to YouTube for HTB retired machines)</em></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*EwnrdilE-p0i1V6_.png"/>
+<figcaption>TJ Null list for practice</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*55LxrztQSLYLDeuE.png"/>
+<figcaption>IPPSEC Search page</figcaption>
+</figure>
+<p>I followed the TJNull list and watched IPPSEC videos intensively, practicing labs every day. When laziness crept in, I reminded myself of past failures - that fired me right back up.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*fbf4yVyQDw_90nr8.gif"/>
+<figcaption>That fired-up feeling when thinking about past failures</figcaption>
+</figure>
+<p>I also practiced with HackTheBox Seasons 5 and 6, which had very fun challenges.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*4frSXcJkHWnFEtiw.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*iYe4b1I9Hm4zCvbQ.jpeg"/>
+</figure>
+<p>A few months before the exam I discovered the OffSec Exam HTB Lists:</p>
+<blockquote><strong><em>OffSec Exam HTB Lists</em></strong><em><br/></em><a href="https://0xdf.gitlab.io/cheatsheets/offsec#oscp-pen-200" rel="noopener" target="_blank"><em>https://0xdf.gitlab.io/cheatsheets/offsec#oscp-pen-200</em></a></blockquote>
+<p>This gave additional machines to practice. But I still felt it wasn't enough, so I asked P'Ta to tutor me the week before the exam - he generously agreed, for which I'm extremely grateful.</p>
+<h2>13 October 2024 (Tutoring Session - 1 Week Before Exam)</h2>
+<p>P'Ta tutored me with numerous tricks, highlighting where the exam commonly trips up candidates, covering every detail imaginable.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*qfK5ivBjmSDsQ7uf.gif"/>
+</figure>
+<h2>16 October 2024</h2>
+<p>This could be called a pre-exam blessing. My friend Kim happened to be ordained as a monk on the day of my exam, so he sent good wishes for my success and gave me extra advice.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*doWPrsO_lqrAckXe.gif"/>
+</figure>
+<p><strong>Third Attempt</strong><br/>My third and final attempt began.</p>
+<h2>18 October 2024 (Third Attempt): Passed</h2>
+<p>This round I'll write as a timeline - I managed myself much more systematically.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*lmON0vUY2yzupTnE.gif"/>
+</figure>
+<blockquote><strong><em>Proctoring Tool Manual</em></strong><em><br/></em><a href="https://help.offsec.com/hc/en-us/articles/360050299352-Proctoring-Tool-Manual" rel="noopener" target="_blank"><em>https://help.offsec.com/hc/en-us/articles/360050299352-Proctoring-Tool-Manual</em></a></blockquote>
+<p><strong>My time allocation plan:</strong><br/>First 8 hours: complete AD for 40 points<br/>Next 12 hours: complete Standalone for 60 points<br/>Last 4 hours: review details and write Report</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*9ZsV-am4jSLZCp2s.gif"/>
+</figure>
+<p><strong>Timeline</strong><br/>07:00 Wake up and refresh<br/>08:00 Breakfast, exam preparation<br/>09:00 Called family for good luck blessings<br/>09:45 Logged into Proctor system for identity verification<br/>10:05 Exam started (slightly delayed due to a system glitch)<br/>10:20 Started VPN and verified machine readiness<br/>10:25 Checked exam targets and started the exam timer</p>
+<p><strong>Active Directory (1 Domain Controller and 2 Clients)</strong><br/>10:30 Began Recon and Enum, AD machines only<br/>11:00 Found entry point for first AD machine<br/>12:00 Got user flag AD machine 1 (<strong>0 points</strong>)<br/>12:30 Got Administrator flag AD machine 1 (<strong>0 points</strong>)<br/>12:45 Got information for AD machine 2 (<strong>0 points</strong>)<br/>13:00 Accessed AD machine 2 (<strong>0 points</strong>)<br/>13:30 Lunch break<br/>14:00 Back to working on AD machine 2 (<strong>0 points</strong>)<br/>14:30 Got user flag AD machine 2 (<strong>0 points</strong>)<br/>14:45 Got Administrator flag machine 2 (<strong>0 points</strong>)<br/>14:50 Accessed final AD machine (Domain Controller)<br/>15:00 Got Administrator flag of Domain Controller (<strong>40 points</strong>)</p>
+<p>At this point I had <strong>40 points</strong>. Took a short break, stopped the AD timer, and started the Standalone timer.</p>
+<p><strong>Standalone (3 Machines)</strong><br/>16:00 Began Recon and Enum on machine 1<br/>16:20 After Recon/Enum, found the same machine I couldn't solve last round<br/>16:30 Switched to Recon/Enum on other machines<br/>18:00 Found entry to machine 2 after falling into a rabbit hole<br/>18:30 Dinner break - delicious food cooked by my aunt, giving me renewed energy<br/>19:30 Recon and Enum machines 2 and 3<br/>20:30 Got enumeration data, preparing entry<br/>20:50 Found entry to machine 2<br/>21:00 Came back to machine 1 - remembered the mantra <strong>Enum is Key</strong> and re-enumerated more thoroughly<br/>22:00 After thorough enumeration, finally found the entry<br/>22:30 Got user flag machine 1 (<strong>50 points</strong>)<br/>22:45 Privilege Escalation machine 1<br/>23:00 Got root flag machine 1 (<strong>60 points</strong>)<br/>23:15 Accessed machine 2<br/>23:30 Got user flag machine 2 (<strong>70 points</strong>)<br/>At this point I could have stopped - already at passing score - but the fighter's spirit pushed me forward.<br/>00:00 Got root flag machine 2 (<strong>80 points</strong>)</p>
+<p><strong>After midnight I couldn't find entry to machine 3. The exam ended with 80 points.</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*VQaQj9b5MTj5xwEX.gif"/>
+</figure>
+<h2>19 October 2024 (Submit Report)</h2>
+<p>Today was all about writing the report. I used the official OffSec template, downloadable here:</p>
+<blockquote><a href="https://help.offsec.com/hc/en-us/articles/360046787731-PEN-200-Reporting-Requirements" rel="noopener" target="_blank"><em>https://help.offsec.com/hc/en-us/articles/360046787731-PEN-200-Reporting-Requirements</em></a></blockquote>
+<p>For report content, I captured every step in the template with explanations - the more detail the better. I had been taking screenshots after finishing each machine during the exam, which made this much easier. I wrote from 12:30 PM and submitted at 23:30. Then came the anxious wait - OffSec states "10 Business Days," but my email arrived after just 4 days.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*eEFOYutjtmRn-o3f.png"/>
+<figcaption>The page everyone waits for</figcaption>
+</figure>
+<p>After the email arrived, I claimed my certification through the OffSec link provided.</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*JDKvHnpn9wqQAtGp.png"/>
+<figcaption>Offsec Certified Professional</figcaption>
+</figure>
+<p>And that's the end of my OSCP Journey. I hope you enjoyed it. Most importantly, thank you to everyone who helped me reach this point. Without everyone's support and encouragement, I could not have done it.</p>
+<p><strong>#Tools used for Recon: Rustscan and Nmap (must-haves)<br/></strong><a href="https://github.com/RustScan/RustScan" rel="noopener" target="_blank"><strong>https://github.com/RustScan/RustScan</strong></a></p>
+<h2>TRY HARDER</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*eQN090kydNXRyFw8.png"/>
+</figure>
+<p><strong>Next year's goal: OSEP / </strong><a href="https://www.offsec.com/courses/pen-300/" rel="noopener" target="_blank"><strong>PEN-300: Advanced Penetration Testing Certification</strong></a></p>
+<h2>Reference</h2>
+<blockquote><strong><em>Blog author profile<br/></em></strong><em>Linkedin: </em><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank"><em>https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/</em></a><em><br/>Hack The Box: </em><a href="https://app.hackthebox.com/users/190672" rel="noopener" target="_blank"><em>https://app.hackthebox.com/users/190672</em></a></blockquote>
+<blockquote><strong><em>Bigfish Enterprise Limited (author's workplace)<br/></em></strong><a href="https://www.bigfish.co.th/" rel="noopener" target="_blank"><em>https://www.bigfish.co.th/</em></a><em><br/></em><a href="https://www.youtube.com/@bigfishthailand" rel="noopener" target="_blank"><em>https://www.youtube.com/@bigfishthailand</em></a><em> (Subscribe!)</em></blockquote>
+<blockquote><strong><em>Mayaseven - </em></strong><a href="https://web.facebook.com/LifeAtMayaseven" rel="noopener" target="_blank"><em>https://web.facebook.com/LifeAtMayaseven</em></a></blockquote>
+<blockquote><strong><em>Siam Thanat Hack - </em></strong><a href="https://web.facebook.com/siamthanathack.co.ltd" rel="noopener" target="_blank"><em>https://web.facebook.com/siamthanathack.co.ltd</em></a></blockquote>
+<p>To everyone about to take the exam - never give up, keep fighting. Effort is never wasted. "<strong>TRY HARDER</strong>"</p>
+<p>See you in the next blog.</p>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+</div>
+<div class="post-body lb" lang="th">
+<p>สวัสดีทุกท่านที่เข้ามาอ่านใน Blog นี้ ผม “Sabastiaz” (นามแฝงของผมเอง)<br/>วันนี้ผมจะมาเล่าการเดินทางการสอบ OSCP ของผม อาจจะยาวหน่อยนะ<br/>มาเริ่มกันเลยครับ</p>
+<blockquote><em>ก่อนจะไปเริ่มอ่าน OSCP journey ของผม ขอเกริ่นก่อนว่า OSCP คืออะไร<br/>OSCP ชื่อเดิมคือ Offensive Security Certified Professional และชื่อใหม่คือ<br/>OffSec Certified Professional รหัส PEN 200<br/>OSCP เป็นข้อสอบที่เหล่านักทดสอบเจาะระบบต้องการที่จะพิชิตมันซึ่งกว่าจะได้มาเลือดตาแทบกระเด็นและยังถือเป็นข้อสอบที่ใครหลายๆคนต้องการมันมาไว้ในครอบครองซึ่งรวมถึงผมด้วยเช่นกัน</em></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ZHaeJ1yK_n5l4QIA.png"/>
+<figcaption>Badge OSCP</figcaption>
+</figure>
+<p><strong>เกริ่นพอประมาณ เชิญอ่านนิยาย OSCP Journey ของผมได้เลย</strong></p>
+<p><strong>Let’s Gooooo</strong><br/>ต้องขอย้อนไปเมื่อ 2 ปีที่ผ่านมาผมได้สอบ CEH (<a href="https://www.eccouncil.org/train-certify/certified-ethical-hacker-ceh/" rel="noopener" target="_blank">Certified Ethical Hacker</a>) และก็ได้มาคิดว่าตัว CEH ที่มีมันยังไม่เพียงพอเลยได้หา Certified ตัวอื่น ๆ เพื่อที่จะสอบเพิ่มเติม บังเอิญว่าในระหว่างหานั้นผมได้บังเอิญไปเห็นว่าจะมีงาน Cybersec Asia 2024 ซึ่งมี Booth ของบริษัทต่างๆ มากมาย อาทิ NCSA, M.Tech, Offsec, Crest, Tenable, WatchTowr และอื่น ๆ อีกมากมาย</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*9U3eo79wE_UwS2Lx.jpeg"/>
+<figcaption>รายละเอียด Booths ต่างๆ</figcaption>
+</figure>
+<p>ดังนั้นสาวก Offsec แบบเราก็มุ่งไปที่ Booth เลย แต่ต้องชะงักเมื่อดันไปเจอไอดอล<br/>อย่างพี่นพ CEO Mayaseven เจ้าของบริษัท Pentest ชั้นนำของประเทศไทยอยู่ที่ Booth ซึ่งผมได้ติดตามพี่นพมาอย่างยาวนานและผลงานต่างๆของพี่เขาเป็นที่แพร่หลายแถมทีมงานยังโหดระดับประเทศแต่ถึงอย่างนั้นก็มีการให้ความรู้ผ่านเพจและอัปเดตข่าวสารต่างๆ และ live สดที่ เพจ “Life at Mayasen” แถมยังมีแนวทางการเป็นนักเจาะระบบให้ไว้ในเพจอีกด้วย</p>
+<blockquote>ด้านล่างคือแนวทางสำหรับคนที่อยากจะทำงานเป็นนักทดสอบเจาะระบบที่ทาง Mayaseven ให้ไว้ที่เพจ ผมแปะเผื่อคนที่อ่านสนใจสามารถเข้าไปตามอ่านที่ลิ้งค์ด้านล่างได้เลยครับ</blockquote>
+<a href="https://www.facebook.com/share/p/17wUSuppbB/" rel="noopener" target="_blank"><strong>Life at Mayaseven</strong><br/><em>ขอรีรันอีกครั้งนะครับ สำหรับท่านใดที่สนใจอยากทำงานเป็นนักทดสอบเจาะระบบ (Pentester) แต่ไม่รู้จะเริ่มศึกษาอะไร…</em>www.facebook.com</a><a href="https://www.facebook.com/share/p/17wUSuppbB/" rel="noopener" target="_blank"></a><p>ซึ่งหลังจากเจอกับพี่นพผมก็ทำใจดีสู้เสือได้เดินเข้าไปทักทายโดยบังเอิญว่าหลังจากพูดคุยกับพี่นพเรื่องการสอบ OSCP ซึ่งพี่นพก็ได้ช่วยคุยกับทาง Leon ในเรื่องของส่วนลดการสอบ OSCP (เนื่องจากตอนนั้นตื่นเต้น + สกิลภาษาอ่อน) เลยได้ Contract ของ Leon มาเพื่อติดต่อการสมัครสอบ และ ส่วนลดสำหรับการสอบ</p>
+<h2>Cybersec Asia x Thailand International Cyber Week 2024</h2>
+<p>เป็นงานที่สุดยอดมากมี vendors มากมายเต็มไปหมด เดินเพลินเลย และในงานยังมี The OSCP Jump start ที่จัดโดยบริษัท SecureD พร้อมทั้งทีมงานคุณภาพซึ่งแต่ละคนมีโปรไฟล์ไม่ธรรมดากันทั้งนั้นเลยยย</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*QE8gFYlQ8TYT99Us"/>
+<figcaption>The OSCP Jumpstart : Mini Hands-On Training (OFFSEC)</figcaption>
+</figure>
+<p>ซึ่ง The OSCP Jumpstart เป็น Mini Hands-On Lab เพื่อนำวามรู้และเทคนิคไปใช้สำหรับการสอบได้อีกด้วย</p>
+<p>หลังจากเข้า Jumpstart ก็เริ่มมีไฟในการสอบขึ้นมาเลยได้วางแผนกำหนดการในการสอบคร่าวๆ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*8l-5gZxU-hkW0gSO.gif"/>
+</figure>
+<p><strong>ถึงตรงนี้ต้องขอบคุณทางบริษัทที่ออกค่าสอบให้กับเด็กน้อยตาดำๆคนนี้ ซึ่งราคาสอบแพงมาก 2599$ (เกือบ 90,000)</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*em1TA2e_ZR6ff1qU.gif"/>
+</figure>
+<p>รายละเอียดคอร์สสำหรับการสอบมีดังนี้</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*jD3-g897H4RFbaQR.png"/>
+</figure>
+<p>ผมได้เลือกคอร์ส <strong>Learn one</strong> เนื่องจากเป็นคอร์ส 1 ปี และสอบได้ 2 รอบ ซึ่งเหมาะกับวัยทำงาน (พูดสะดูแก่เลย) ผมจึงได้ตกลงกับบริษัทเพื่อที่จะทำการซื้อคอร์สและผมก็ได้ทำการเลือก Learn One เนื่องจากสอบ 2 ครั้งคุ้มเห็นๆ</p>
+<blockquote><a href="https://www.offsec.com/pricing/individual/" rel="noopener" target="_blank"><em>https://www.offsec.com/pricing/individual/</em></a></blockquote>
+<h2>รายละเอียดของการสอบ</h2>
+<p>รายละเอียดของการสอบเป็นดังนี้<br/><strong>Exam Structure</strong><br/><strong>60 points</strong><br/>3 independent targets<br/>3-step targets (low and high privileges)<br/>20 points per machine<br/>10 points for low-privilege<br/>10 points for privilege escalation<br/><strong>40 points</strong><br/>2 clients<br/>1 domain controller<br/>Active Directory set<br/>Points are awarded only for the full exploit chain of the domain<br/>No partial points will be awarded<br/>เกณฑ์การผ่านคือ 70 คะแนนขึ้นไป</p>
+<h2>Scenario ที่สามารถผ่านได้มีดังนี้</h2>
+<ul>
+<li>40 pt AD + 3 local.txt flags</li>
+<li>40 pt AD + 2 local.txt flags + 1 proof.txt flag</li>
+<li>40 pt AD + 2 local.txt flags + bonus points</li>
+<li>40 pt AD + 1 proof.txt + 1 local.txt + bonus points</li>
+<li>3 fully completed non-AD machines + bonus points</li>
+</ul>
+<p>แต่หลังจากวันที่ 1 November ไปแล้ว Bonus point จะถูกตัดออก และ AD จะเปลี่ยนการนับคะแนน ตามรายละเอียดด้านล่าง</p>
+<p>In particular:</p>
+<ul>
+<li>For the Active Directory exam set, learners will be provided with a username and password, simulating a breach scenario;</li>
+<li>Learners may then accumulate points for machines 1, 2 and 3 of the Active Directory exam set - 40 points in total</li>
+<li>10 points for machine #1</li>
+<li>10 points for machine #2</li>
+<li>20 points for machine #3;</li>
+<li>Removal of 10 bonus points.</li>
+</ul>
+<blockquote><a href="https://help.offsec.com/hc/en-us/articles/29865898402836-OSCP-Exam-Changes" rel="noopener" target="_blank"><em>https://help.offsec.com/hc/en-us/articles/29865898402836-OSCP-Exam-Changes</em></a></blockquote>
+<p>และแล้วก็ถึงวันเริ่มคอร์สครั้งแรกของผม…..</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*xTUv0z3o-_l38jIj.gif"/>
+</figure>
+<h2>June 13, 2023 (วันแรกของจุดเริ่มต้น)</h2>
+<p>เริ่มการลงคอร์สครั้งแรกตื่นเต้นสุดๆ แต่ความตื่นเต้นนี้ก็ได้จบลงเนื่องจากงานเอยความขี้เกียจเอยทำให้เราขี้เกียจนั่นเอง (ไม่ค่อยมีอะไรนอกจาก ทำแลป ที่ระบบมีให้ เพียง Lab เดียว )</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*zxwM8pQDUFAMKCE3.gif"/>
+<figcaption>แค่เห็น Lab ก็เป็นลมแล้ว</figcaption>
+</figure>
+<p>และแล้วเวลาก็ได้ผ่านมาจนถึงกำหนดการสอบรอบที่ 1</p>
+<p>F<strong>irst Attempt</strong><br/>และแล้วก็มาถึงวันสอบครั้งแรกถามว่าจะรอดไหมนั่นหรอ จะเอาอะไรไปรอดทำ Lab ได้ไม่ถึงครึ่งและบทเรียนไม่ถึง 5 บท แต่ทำไงได้ในเมื่อเราจองวันสอบไปแล้ว เพราะมีเวลาแค่ 1 ปี กับการสอบ 2 ครั้ง</p>
+<h2>December 09, 2023 (First Attempt) : Failed</h2>
+<p>ผมเลือกลงสอบ 10 โมง ซึ่งเป็นเวลาที่ดีที่สุดสำหรับผม เมื่อเวลาใกล้ถึง 10 โมง<br/>เราจะต้องดำเนินการเจรจากับ Proctored เพื่อที่ยืนยันตัวตนตรวจความพร้อมของเครื่องสอบ และการเชื่อมต่อ</p>
+<p>การสอบของผมสอบครั้งแรกก็เจอดีกับเครื่อง Nigthmare ที่ใครต่างเล่าขานกันว่ายากมากกกใช่ครับผมเจอในการสอบครั้งแรก แล้วก็ตามนั้นเลยครับ failed ไปตามระเบียบ</p>
+<blockquote><em>เกณฑ์ในการผ่านคือ 70 คะแนนขึ้นไป<br/>ซึ่งผลรอบแรกของผมก็ไม่ผ่าน ไม่เป็นไรผมยึดคติของ <br/></em><strong><em>Offsec : TRY HARDER</em></strong><em> สู้ต่อไป</em></blockquote>
+<p>และผมก็กลับไปตรียมตัวอีกรอบไว้เจอกันใหม่รอบสอง</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*KKCTD2CKd2xGKVWw.gif"/>
+</figure>
+<p>ในระหว่างการเตรียมตัวสอบรอบที่สอง ผมได้ลงทะเบียนงาน <strong>BlackHat Asia 2024</strong> ไว้ที่มีการจัดงานที่ประเทศสิงคโปร์</p>
+<h2>BlackHat ASIA 2024</h2>
+<p>เป็นงานที่รวมยอดมนุษย์จากทุกมุมโลกมาอยู่ที่งานนี้กัน งานจัดทั้งหมด 4 วัน<br/>ซึ่งต้องบอกว่า มี sessions เยอะมากๆ มีกิจกรรมในงานตลอดมีของขาย มี Boots Partners ต่างๆ มากมาย<br/>ไว้ค่อยลงรายละเอียดอีก Blog นึงละกันนะ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*QAqaRkhLskowFkiH.png"/>
+</figure>
+<p>ซึ่งงานนี้ก็ทำให้ผมได้รู้จักกับพี่คนนึง ซึ่งผมเองก็ติดตามเค้าอยู่ใน facebook เห็นชื่อเสียงต่างๆ ของพี่เขา พี่คนนั้นก็คือ พี่ตั้น “<strong>Clinton”</strong> นั้นเอง facebook ต่างๆ ของพี่เขาไปติดตามกันได้ Facebook : Clinton Yimprasert, c1inton’s Diary และยังเป็นเจ้าของบริษัท IC21 Tech Co., Ltd. อีกด้วยย เก่งสุดๆ และขอคำปรึกษาในการสอบ OSCP จากพี่เขาและก็แลก Contract กันไว้ติดต่อหลังกลับจากประเทศสิงคโปร์ หลังจากกลับจากประเทศสิงคโปร์ ผมก็กลับมาฝึกปรือฝีมือกับ Hack the box ยังผิดหวังไม่พอ เลยไม่ได้ Focus กับการสอบมากเท่าไหร่บวกกับเริ่มหมด Passion เพราะท้อจากการสอบครั้งแรก</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*5leExVqwMPoWtxLZ.gif"/>
+</figure>
+<p>มีเรื่องราวระหว่างทางก่อนสอบรอบสอง หลังจากกลับจากประเทศสิงคโปร์ ก็ได้มีงานของ Hack in the box ซึ่งคืองาน HITB x PHDays จัดที่ไทยด้วยแล้วที่สำคัญเข้าฟรีสายฟรีแบบเรามีหรือจะพลาดก็ไปสิครับ</p>
+<h2>HITB x PHDays</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*6s9wdC7F9v1tufDv"/>
+</figure>
+<p>งานนี้จะเป็นงานให้ความรู้รายละเอียดตาม AGENDA</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*ZXc2pZv2qnM_BfgW.png"/>
+</figure>
+<p>ส่วนตัวผู้เขียนชอบทุก Sessions และงานนี้เองที่ผมได้พบกับเพื่อนสุดตึง เพื่อนคิม (Chairat Kimmie) หรือ <strong>“kyokito”</strong> นั่นเองงงง ผู้ครอบครอง CVE มากมาย คนที่มีส่วนช่วยให้ผ่านการสอบ, ช่วยพูดปลุกใจ และอีกคนที่ไม่พูดถึงไม่ได้ผู้ที่มีส่วนช่วยในการผ่านครั้งนี้ ทั้งติวและให้ Guide สำหรับการทำข้อสอบ OSCP คือตัวตึง Thailand พี่ตะ (Pichaya Morimoto) หรือ ฉายาที่ทุกคนรู้จักอย่าง <strong>“longcat”</strong> Lead Penetration Tester ของ STH Siam Thanat Hack บริษัท Pentest ชั้นนำของประเทศไทย ในเพจ <strong>siamthanathack</strong> มีอัปเดตข่าวสารต่างๆ มากมายสามารถกดติดตามที่ลิงค์ด้านล่างเลย</p>
+<blockquote><a href="https://www.facebook.com/siamthanathack.co.ltd" rel="noopener" target="_blank"><em>https://www.facebook.com/siamthanathack.co.ltd</em></a></blockquote>
+<p>และยังเป็นแชมป์ Thailand Top Talent 2023 สุดยอดไปเลยครับผม</p>
+<p>เจ้าของเพจ สอนแฮกเว็บแบบแมวๆ รอสอนแฮกเว็บแบบแมวๆ v2 ครับ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*DN4Yx-_vxsFwVSFC.png"/>
+<figcaption>สอนแฮกเว็บแบบแมวๆ V.1</figcaption>
+</figure>
+<p>กว่าจะสอบรอบที่สอง กินเวลาไป 4–6 เดือนเลยทีเดียว ซึ่งตอนนี้เหลือการสอบของ course ครั้งสุดท้ายแล้ว (Learn One 2 Exam attempts)</p>
+<p>S<strong>econd Attempt</strong><br/>รอบสองของผมก็ได้เริ่มต้นขึ้น</p>
+<h2>June 09, 2024 (Second Attempt)</h2>
+<p>ผมเลือกลงสอบด้วยเวลาเดิมคือ 10 โมง แต่เราต้องเข้าก่อน 15 นาที เพื่อตรวจสอบข้อมูลต่างๆ ให้เรียบร้อย รอบนี้เจอข้อสอบที่ทำให้นี่ถึงกับต้องกุมขมับอีกรอบ<br/>แต่ยังดีรอบนี้ทำ Standalone ได้อยู่ บวกกับมีคะแนน Bonus Point 10 คะแนน ซึ่งกว่าจะได้มาลากเลือดมากๆ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*pHp5UqvPN5V0_E9L.gif"/>
+</figure>
+<h2>June 11 2024 (Result round 2) : Failed</h2>
+<p>เมื่อประกาศผลมาแล้วรู้ว่าไม่ผ่านเลยดิ่งหนักสุดเท่าที่เคยดิ่งมาเนื่องจากคิดว่ารอบนี้ยังไงก็ต้องผ่านแต่มันไม่เป็นแบบที่คิด คาดหวังมากเลยผิดหวังมากบวกกับมั่นใจเกินไปทำให้ประมาท เลยกลับไปตั้งสติ และรู้ทีหลังมาว่าเวลาที่ข้อสอบจะนับคะแนนก็ต่อเมื่อ target อยู่ในรูป shell ไม่ใช่ แบบ webshell (get flag จากหน้าเว็บ) ซึ่งเราดันมีข้อนึงที่ไม่ได้ทำเลยทำให้คะแนนเป็น 0 ใน Machine นั้นเลย โอเคหลังจากทำใจกับการประกาศผลแล้วก็มาคิดทบทวนแบบจริงจังบวกกับรอบนี้ได้คุยกับคุณพ่อเพื่อปรับความดิ่งของตัวเองลงและก็ได้มีกำลังใจจากครอบครัวและคุณแฟนที่คอยเป็นกำลังใจใหและคอยผลักดันให้สู้ต่อ รอบนี้เลยได้วางแผนแบบจริงจัง</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*JqRBzfgSNVD8zR9o.gif"/>
+</figure>
+<h2>June - October 2024 (Preparation OSCP Round 3 )</h2>
+<p>หลังจากที่ Failed ไปทั้งสองรอบเลยไปหาข้อมูลว่ามีวิธีการเตรียมตัวยังไงเลยได้ไปเจอกับ List ของ TJNull และ IPPSEC ไว้สำหรับเตรียมตัวสอบในรอบนี้ แปะลิ้งค์ให้ด้านล่างนะ</p>
+<blockquote><strong><em>TJ Null</em></strong><em><br/></em><a href="https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview" rel="noopener" target="_blank"><em>https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview</em></a></blockquote>
+<blockquote><strong><em>IPPSEC</em></strong><em><br/></em><a href="https://www.youtube.com/ippsec" rel="noopener" target="_blank"><em>https://www.youtube.com/ippsec</em></a><em><br/></em><a href="https://ippsec.rocks/?#" rel="noopener" target="_blank"><em>https://ippsec.rocks/?#</em></a><em> (สำหรับ Search เพื่อลิ้งค์ไปยัง Youtube สำหรับ Machine ของ Hack the Box Retried Machine )</em></blockquote>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*EwnrdilE-p0i1V6_.png"/>
+<figcaption>List TJ null สำหรับการฝึก</figcaption>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*55LxrztQSLYLDeuE.png"/>
+<figcaption>หน้า IPPSEC Search</figcaption>
+</figure>
+<p>ผมได้ฝึกตาม List ของ TJ Null และดู video ของ IPPSEC อย่างเข้มข้นพยายามทำ Lab ให้ได้ทุกวันหากวันไหนขี้เกียจก็จะนึกถึงการที่ไม่ผ่านในรอบที่แล้วๆ มา เลยทำให้ฮึดขึ้นมา</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*fbf4yVyQDw_90nr8.gif"/>
+<figcaption>ความรู้สึกฮึดเมื่อนึกถึงการที่จะไม่ผ่าน</figcaption>
+</figure>
+<p>และได้ฝึก Hack the box Season อีกด้วยก็ได้ฝึกเพิ่มขึ้นไปอีก ส่วนตัวเล่นของล่าสุด 5 และ 6 ซึ่งโจทย์ค่อนข้างสนุกมากๆ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*4frSXcJkHWnFEtiw.jpeg"/>
+</figure>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*iYe4b1I9Hm4zCvbQ.jpeg"/>
+</figure>
+<p>และไม่กี่เดือนก่อนสอบผมก็ได้ไปเห็นคนแชร์ OffSec Exam HTB Lists แปะลิ้งค์ให้ด้านล่างนะ</p>
+<blockquote><strong><em>OffSec Exam HTB Lists</em></strong><em><br/></em><a href="https://0xdf.gitlab.io/cheatsheets/offsec#oscp-pen-200" rel="noopener" target="_blank"><em>https://0xdf.gitlab.io/cheatsheets/offsec#oscp-pen-200</em></a></blockquote>
+<p>ซึ่งได้เครื่องอื่นเพิ่มเติมมาฝึกอีกต่างหากแต่ก็คิดว่าไม่เพียงพอที่จะผ่าน<br/>เลยได้ทำการขอให้พี่ตะ มาช่วยติวในวันก่อนที่จะสอบ 1 อาทิตย์ซึ่งพี่ตะก็ยินดีที่จะช่วยติวให้ซึ่งถือเป็นพระคุณสำหรับผมสุดๆ</p>
+<h2>13 October 2024 (วันติวก่อนสอบ 1 อาทิตย์)</h2>
+<p>พี่ตะก็ทำการติวให้โดยมี Trick ต่างๆ มากมายพร้อมทั้งแนะนำจุดที่ข้อสอบมักทำให้ผู้สอบตกได้ ซึ่งพี่ตะก็ยังช่วย Guide รายละเอียดต่างๆ ยิบย่อยให้ด้วยย</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*qfK5ivBjmSDsQ7uf.gif"/>
+</figure>
+<h2>16 October 2024</h2>
+<p>อาจจะเรียกว่าเป็นการได้พรก่อนสอบก็ได้นะ บังเอิญเพื่อนคิมจะบวชในวันที่ผมสอบพอดี เพื่อนเลยได้ทำการอวยพรให้ผ่านการสอบในครั้งนี้และก็ยังให้คำแนะนำมาด้วย</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*doWPrsO_lqrAckXe.gif"/>
+</figure>
+<p>T<strong>hird Attempt</strong><br/>รอบที่ 3 ของผมก็ได้เริ่มต้นขึ้นซึ่งเป็นการสอบรอบสุดท้ายแล้ว</p>
+<h2>18 October 2024 (Third Attempt) : Passed</h2>
+<p>รอบนี้จะเขียนแบบเป็นเวลา Timeline เนื่องจากสอบรอบนี้ได้จัดการตัวเองให้เป็นระบบระเบียบมากขึ้น</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*lmON0vUY2yzupTnE.gif"/>
+</figure>
+<blockquote><strong><em>วิธีใช้งาน Proctor Tools</em></strong><em><br/></em><a href="https://help.offsec.com/hc/en-us/articles/360050299352-Proctoring-Tool-Manual" rel="noopener" target="_blank"><em>https://help.offsec.com/hc/en-us/articles/360050299352-Proctoring-Tool-Manual</em></a></blockquote>
+<p><strong>ในการสอบครั้งนี้ผมมีการตั้งจับเวลาเพื่อวางแผนในการสอบครั้งนี้<br/></strong>ผมแบ่งการจับเวลาคือ<br/>8 ชั่วโมงแรกเก็บ AD ให้ครบเพื่อให้ได้ 40 point<br/>12 ชั่วโมงเพื่อเก็บ Standalone เพื่อให้ได้คะแนน 60 point<br/>4 ชั่วโมงสุดท้ายสำหรับตรวจเช็ครายละเอียดต่างเพื่อใช้ทำ Report</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*9ZsV-am4jSLZCp2s.gif"/>
+</figure>
+<p><strong>Timeline</strong><br/>07.00 ตื่นนอนและก็ทำร่างกายให้สดชื่น<br/>08.00 กินข้าวเช้าเตรียมตัวสำหรับการสอบ<br/>09.00 โทรไปขอพรจากครอบครัวเพื่อเสริมความเป็นสิริมงคล<br/>09.45 เข้าระบบ Proctor เพื่อยืนยันตัวตนและเตรียมสอบ<br/>10.05 เข้าสอบ (ได้สอบช้าเพราะเครื่องหลอนเลยเสียเวลาไป)<br/>10.20 เริ่มการ VPN และเช็คความพร้อมของเครื่องตามคำแนะนำ Proctor<br/>10.25 ตรวจเช็ค Targets ของการสอบ และจับเวลาในการทำข้อสอบ</p>
+<p><strong>Active Directory (1 Domain Controller and 2 Clients )<br/></strong>10.30 เริ่มการ Recon และ Enum Targets โดยทำเฉพาะแค่เครื่อง AD อย่างเดียว<br/>11.00 เจอทางเข้าสำหรับ AD เครื่องแรก<br/>12.00 Get user flag AD เครื่องแรก (<strong>0 point</strong>)<br/>12.30 Get Administrator flag AD เครื่องแรก (<strong>0 point</strong>)<br/>12.45 ได้ข้อมูลสำหรับ AD เครื่องที่ 2 (<strong>0 point</strong>)<br/>13.00 เข้า AD เครื่องที่ 2 (<strong>0 point</strong>)<br/>13.30 พักทานข้าว<br/>14.00 ลุยต่อกับ AD เครื่องที่ 2 (<strong>0 point</strong>)<br/>14.30 Get user flag AD เครื่องสอง (<strong>0 point</strong>)<br/>14.45 Get Administrator flag เครื่องสอง (<strong>0 point</strong>)<br/>14.50 เข้า AD เครื่องสุดท้าย (Domain Controller)<br/>15.00 Get Administrator flag ของ Domain Controller (<strong>40 point</strong>)</p>
+<p>ถึงตรงนี้ก็ได้มาในมือ <strong>40 point</strong> แล้ว เลยพักสักนิดนึง พร้อมกับหยุดจับเวลาของ AD และเริ่มจับของ Standalone ต่อ</p>
+<p><strong>Standalone (3 Machines)</strong><br/>16.00 เริ่มการ Recon และ Enum เครื่องแรก<br/>16.20 หลังจาก Recon และ Enum ดันเจอข้อสอบเดิมที่เราทำไม่ได้ในรอบที่แล้ว<br/>16.30 เปลี่ยนไป Recon และ Enum เครื่องอื่นต่อ<br/>18.00 หาทางเข้าเครื่องสองเจอ กว่าจะได้ตก Rabbit Hole ไปอยู่พักนึง<br/>18.30 พักกินข้าว มื้อนี้กับข้าวอร่อยมาก เพราะเป็นกับข้าวที่คุณป้าเป็นคนทำไว้ให้<br/>เลยทำให้มีแรงฮึกเฮิมครั้งพร้อมไปลุยต่อ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*LGEFVQS4umvyCnQw.gif"/>
+</figure>
+<p>19.30 Recon และ Enum เครื่องสอง และ เครื่องสาม<br/>20.30 ได้ข้อมูลจากการ Recon และ Enum เตรียมหาทางเข้า<br/>20.50 หาทางเข้าเครื่องที่สองได้เป็นที่เรียบร้อย หาช่องทางในการเข้าถึง<br/>21.00 กลับมาทำเครื่องแรกที่เราติดอยู่เลยนึกคำนึงได้ <strong>Enum is Key </strong>เลยทำการ Enum ใหม่ให้ละเอียดขึ้นกว่าเดิมใช้ทุกอย่างที่มี<br/>22.00 กว่าจะ Enum หมด และแล้วก็เจอทางเข้าจนได้<br/>22.30 Get user flag ของเครื่องแรก (<strong>50 point</strong>)<br/>22.45 Privilege Escalation เครื่องแรก<br/>23.00 Get root flag เครื่องแรก (<strong>60 point</strong>)<br/>23.15 เข้าถึงเครื่องที่สอง<br/>23.30 Get user flag เครื่องสอง (<strong>70 point</strong>)<br/>มาถึงตรงนี้จริงๆ จะหยุดก็ได้นะเพราะคะแนนผ่านแล้วแต่ก็เลือดนักสู้ไปต่อสิครับเวลาเหลืออีกเยอะ</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*FW-FxKf0-HJVvYjA.gif"/>
+<figcaption>ท่านี้เลยตอนสอบ</figcaption>
+</figure>
+<p>00.00 Get root flag เครื่องสอง (<strong>80 point</strong> )</p>
+<p><strong>หลังจาก 00.00 ก็หาทางเข้าเครื่องที่ 3 ไม่ได้จบการสอบที่ 80 คะแนน</strong></p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*VQaQj9b5MTj5xwEX.gif"/>
+</figure>
+<h2>19 October 2024 (Submit Report)</h2>
+<p>วันนี้ก็ไม่มีไรมากนั่งทำ Report โดยตัว Template ก็เอามาจากของ Offsec Download จากลิ้งค์นี้ได้เลย</p>
+<blockquote><a href="https://help.offsec.com/hc/en-us/articles/360046787731-PEN-200-Reporting-Requirements" rel="noopener" target="_blank"><em>https://help.offsec.com/hc/en-us/articles/360046787731-PEN-200-Reporting-Requirements</em></a></blockquote>
+<p>ส่วนเนื้อหา Report ก็แคปขั้นตอนวิธีการทำทุกขั้นตอนที่เราทำลง Template และเขียนคำอธิบายแต่ละวิธี (เก็บข้อมูลมาให้มากที่สุด ทุกขั้นตอนเลยยิ่งดี ) ส่วนตัวทำจบแต่ละเครื่องก็แคปเก็บไว้เลย<br/>เวลาทำ Report ก็ทำตั้งแต่ 12.30 Submit Report อีกที 23.30 เสร็จแล้วก็นอนได้….นอนได้จริงหรือหลังจาก Submit แล้วเป็นช่วงเวลาที่เครียดที่สุดเพราะต้องรอประกาศผลอย่างเป็นทางการ ซึ่งเขาแจ้งไว้ “Business Day 10 Days”<br/>และของผมรอ 4 วันก็มี Mail จาก Offsec ส่งมา</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*eEFOYutjtmRn-o3f.png"/>
+<figcaption>หน้าที่ใครต่างก็รอคอย</figcaption>
+</figure>
+<p>หลังจาก Mail ส่งมาเราก็สามารถ Get Certified ได้เลย ผ่านจากเว็บที่ทาง Offsec แนบมา</p>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*JDKvHnpn9wqQAtGp.png"/>
+<figcaption>Offsec Certified Professional</figcaption>
+</figure>
+<p>ก็จบไปแล้วสำหรับ OSCP Journey ของผมหวังว่าจะสนุกกันนะครับ และที่สำคัญขอขอบคุณทุกๆคนที่ทำให้ผมมาถึงจุดนี้ กำลังใจจากทุกคนทำให้ผมผ่านมาได้ ถ้าไม่มีกำลังใจจากทุกคนผมคงไม่สามารถผ่านได้</p>
+<p><strong>#เครื่องมือส่วนใช้ที่ใช้ Recon จะเป็นตัว Rustscan และ Nmap (ตัวต้องมี)<br/></strong><a href="https://github.com/RustScan/RustScan" rel="noopener" target="_blank"><strong>https://github.com/RustScan/RustScan</strong></a></p>
+<h2>TRY HARDER</h2>
+<figure>
+<img alt="" loading="lazy" src="https://cdn-images-1.medium.com/max/800/0*eQN090kydNXRyFw8.png"/>
+</figure>
+<p><strong>เป้าหมายในปีหน้าคงจะไม่พ้น : OSEP หรือ </strong><a href="https://www.offsec.com/courses/pen-300/" rel="noopener" target="_blank"><strong>PEN-300: Advanced Penetration Testing Certification</strong></a><strong> นั่นเอง</strong></p>
+<h2>Reference</h2>
+<blockquote><strong><em>Profile เจ้าของ Blog<br/></em></strong><em>Linkedin :</em><a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" rel="noopener" target="_blank"><em>https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/</em></a><em><br/>Hack The Box :</em><a href="https://app.hackthebox.com/users/190672" rel="noopener" target="_blank"><em>https://app.hackthebox.com/users/190672</em></a></blockquote>
+<blockquote><strong><em>Bigfish Enterprise Limited (บริษัทที่ผู้เขียนทำงานอยู่)</em></strong><em><br/></em><a href="https://www.bigfish.co.th/" rel="noopener" target="_blank"><em>https://www.bigfish.co.th/</em></a><em> อัพเดทข่าวสาร Technology มากมาย<br/></em><a href="https://web.facebook.com/bigfishthailand/?locale=th_TH&amp;_rdc=1&amp;_rdr=" rel="noopener" target="_blank"><em>https://web.facebook.com/bigfishthailand/?locale=th_TH&amp;_rdc=1&amp;_rdr</em></a><em><br/></em><a href="https://www.youtube.com/@bigfishthailand" rel="noopener" target="_blank"><em>https://www.youtube.com/@bigfishthailand</em></a><em> (อย่าลืม Subscribe นะครับ)</em></blockquote>
+<blockquote><strong><em>Mayaseven<br/></em></strong><em>https://mayaseven.com/blog/) ในลิงค์นี้มีความรู้มากมายเพียบ<br/></em><a href="https://web.facebook.com/LifeAtMayaseven?_rdc=1&amp;_rdr=" rel="noopener" target="_blank"><em>https://web.facebook.com/LifeAtMayaseven?_rdc=1&amp;_rdr</em></a><em> นี่ก็เหมือนกัน</em></blockquote>
+<blockquote><strong><em>Siam Thanat Hack<br/></em></strong><a href="https://web.facebook.com/siamthanathack.co.ltd" rel="noopener" target="_blank"><em>https://web.facebook.com/siamthanathack.co.ltd</em></a><em> อัพเดทข่าวสารและความรู้มากมาย</em></blockquote>
+<blockquote><strong><em>c1inton’s Diary </em></strong><em>อัพเดทข่าวสารมากมาย<br/></em><a href="https://web.facebook.com/c1inton.sh" rel="noopener" target="_blank"><em>https://web.facebook.com/c1inton.sh</em></a></blockquote>
+<p>สุดท้ายและท้ายสุดขอให้ทุกท่านที่กำลังจะสอบจงอย่าท้อสู้ต่อไปครับ<br/>ความพยายามยังไงก็ไม่ศูนย์เปล่าครับ “<strong>TRY HARDER”</strong></p>
+<p>แล้วพบกันใหม่ Blog หน้าครับ ผิดพลาดประการใดขออภัยด้วยครับ</p>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="cpts.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">My Journey Through Certified Penetration Testing Specialist (CPTS) 100%</span></a>
+<a class="post-navlink next" href="crta.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">CRTA Exam: One Night Miracle</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+<script>
+(function(){
+  var toggle=document.getElementById('toc-toggle');
+  var panel=document.getElementById('toc-panel');
+  var list=document.getElementById('toc-list');
+  if(!toggle||!panel||!list)return;
+  toggle.addEventListener('click',function(){panel.classList.toggle('open');});
+
+  function build(){
+    var lang=document.documentElement.className.match(/lang-(\w+)/);
+    lang=lang?lang[1]:'en';
+    var body=document.querySelector('.post-body.lb[lang="'+lang+'"]');
+    list.innerHTML='';
+    if(!body)return;
+    var heads=body.querySelectorAll('h2');
+    heads.forEach(function(h,i){
+      var id='toc-h-'+i;
+      h.id=id;
+      var li=document.createElement('li');
+      var a=document.createElement('a');
+      a.href='#'+id;
+      a.textContent=h.textContent;
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+        panel.classList.remove('open');
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  }
+  build();
+  new MutationObserver(build).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

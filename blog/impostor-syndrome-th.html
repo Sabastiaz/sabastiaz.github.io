@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก | Sabastiaz</title>
+<meta content="ทำไมความสำเร็จ ใบเซอร์ และคำชม ยังลบความรู้สึกว่าตัวเองไม่เก่งไปไม่ได้ - บทความสะท้อนเรื่อง impostor syndrome และวิธีมองหลักฐานของการเติบโตที่แท้จริง" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก | Sabastiaz" property="og:title"/>
+<meta content="ทำไมความสำเร็จ ใบเซอร์ และคำชม ยังลบความรู้สึกว่าตัวเองไม่เก่งไปไม่ได้ - บทความสะท้อนเรื่อง impostor syndrome และวิธีมองหลักฐานของการเติบโตที่แท้จริง" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/thumb/impostor-mountain.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/impostor-syndrome-th.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+.share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+.share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+.share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+.share-btn svg{flex-shrink:0}
+.lb[lang="en"]{display:none}
+html.lang-en .lb[lang="th"]{display:none}
+html.lang-en .lb[lang="en"]{display:block}
+.lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+.lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+.lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+.lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags"><span class="post-tag tag-th">TH</span><span class="post-tag tag-life">Life</span></div>
+<div class="post-meta-row">
+<span>July 20, 2026</span><span class="dot">✦</span><span>7 min read</span>
+</div>
+<h1 class="post-title"><span class="lb" lang="th">ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก</span><span class="lb" lang="en">Why We Feel Like We're Not Good Enough - Even Though We've Come Far</span></h1>
+</div>
+<div class="post-body lb" lang="th">
+<p>เคยไหม?<br/>เราทำงานที่ยากขึ้นเรื่อย ๆ<br/>เรียนรู้เรื่องที่ซับซ้อนขึ้น<br/>สอบผ่านใบรับรองที่เคยคิดว่าไกลเกินเอื้อม<br/>ได้รับโอกาสใหม่ ๆ และสร้างผลงานออกมาอย่างต่อเนื่อง</p>
+<p>แต่ลึก ๆ กลับยังรู้สึกว่า</p>
+<blockquote>“จริง ๆ แล้วเราเก่งพอหรือยัง?”</blockquote>
+<p>บางครั้ง ต่อให้มีคนชม มีผลงาน หรือมีหลักฐานความสำเร็จอยู่ตรงหน้า ความรู้สึกว่า “ตัวเองยังไม่เก่ง” ก็ยังไม่หายไป<br/>คำถามคือ ทำไมเราถึงรู้สึกแบบนั้น?</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img1.jpg" style="max-width:200px"/>
+</figure>
+
+<h2>เราไม่ได้วัดตัวเองจากสิ่งที่ทำได้แล้ว</h2>
+<p>หนึ่งในเหตุผลสำคัญคือ เรามักวัดตัวเองจากสิ่งที่ยังทำไม่ได้ มากกว่าสิ่งที่ทำสำเร็จไปแล้ว<br/>ก่อนเริ่มต้น เราอาจเคยคิดว่า</p>
+<ul>
+<li>ถ้าสอบใบรับรองนี้ผ่าน เราคงเก่งขึ้น</li>
+<li>ถ้าทำโปรเจกต์นี้ได้ เราคงมั่นใจมากขึ้น</li>
+<li>ถ้าเข้าใจเทคนิคนี้ เราคงยอมรับตัวเองได้</li>
+<li>ถ้ามีคนเห็นผลงานมากขึ้น เราคงรู้สึกว่าตัวเองมีคุณค่า</li>
+</ul>
+<p>แต่เมื่อทำสำเร็จจริง เรากลับใช้เวลาอยู่กับความภูมิใจเพียงไม่นาน<br/>หลังจากนั้น สมองจะเริ่มบอกว่า</p>
+<blockquote>“เรื่องนี้ก็ไม่ได้ยากขนาดนั้น”<br/>“ใคร ๆ ก็คงทำได้”<br/>“ยังมีคนที่เก่งกว่าเราอีกเยอะ”<br/>“ยังมีอีกหลายเรื่องที่เรายังไม่รู้”</blockquote>
+<p>เป้าหมายที่เคยดูยิ่งใหญ่ กลายเป็นเรื่องธรรมดาทันทีที่เราทำได้<br/>จากนั้นเราก็ย้ายเส้นชัยออกไปอีกครั้ง</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img2.jpg"/>
+</figure>
+<p>นี่จึงไม่ใช่เพราะเราไม่มีความสามารถ แต่เป็นเพราะมาตรฐานของเราเพิ่มขึ้นทุกครั้งที่เราเติบโต</p>
+
+<h2>เราเปรียบเทียบเบื้องหลังของตัวเองกับผลงานที่ดีที่สุดของคนอื่น</h2>
+<p>เมื่อเรามองคนอื่น เรามักเห็นเฉพาะสิ่งที่เขาเลือกนำเสนอ</p>
+<ul>
+<li>เราเห็นวันที่เขาประสบความสำเร็จ</li>
+<li>เห็นวันที่เขาพูดบนเวที</li>
+<li>เห็นงานวิจัยที่เผยแพร่แล้ว</li>
+<li>เห็นใบรับรองที่สอบผ่าน</li>
+<li>เห็นโปรเจกต์ที่เสร็จสมบูรณ์</li>
+<li>เห็นคำอธิบายที่ดูชัดเจนและเป็นมืออาชีพ</li>
+</ul>
+<p>แต่เราไม่เห็นคืนที่เขานั่งแก้ปัญหาไม่ได้ ไม่เห็นช่วงที่เขาสงสัยในตัวเอง ไม่เห็นงานที่ล้มเหลว ไม่เห็นคำถามพื้นฐานที่เขาเคยต้องถาม และไม่เห็นเวลาหลายปีที่อยู่เบื้องหลังผลงานชิ้นนั้น</p>
+<p>ในทางกลับกัน เราเห็นทุกอย่างของตัวเอง</p>
+<ul>
+<li>เราเห็นว่าตัวเองติดตรงไหน</li>
+<li>เห็นความผิดพลาดทุกครั้ง</li>
+<li>เห็นสิ่งที่ยังไม่เข้าใจ</li>
+<li>เห็นงานที่ยังไม่สมบูรณ์</li>
+</ul>
+<p>และรู้ว่าบางครั้งเราต้องพยายามมากเพียงใดกว่าจะได้ผลลัพธ์ออกมา<br/>เราจึงเผลอเปรียบเทียบ “กระบวนการที่ยุ่งเหยิงของเรา” กับ “ผลงานที่ถูกขัดเกลาแล้วของคนอื่น”<br/>การเปรียบเทียบแบบนี้แทบไม่มีทางยุติธรรม</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img3.jpg"/>
+</figure>
+
+<h2>เราอาจเข้าใจผิดว่าคนเก่งต้องตอบได้ทุกอย่าง</h2>
+<p>หลายคนผูกความหมายของคำว่า “เก่ง” เข้ากับการรู้คำตอบทันที</p>
+<ul>
+<li>เมื่อเจอคำถามแล้วตอบไม่ได้</li>
+<li>เมื่อพบเทคนิคใหม่ที่ไม่เคยเห็น</li>
+<li>เมื่อเครื่องมือทำงานไม่เป็นไปตามคาด</li>
+<li>หรือเมื่อจำเป็นต้องกลับไปอ่านเอกสารเพิ่มเติม</li>
+</ul>
+<p>เราจึงตีความว่า</p>
+<blockquote>“ถ้าเราเก่งจริง เราน่าจะรู้เรื่องนี้อยู่แล้ว”</blockquote>
+<p>แต่ในความเป็นจริง ไม่มีใครรู้ทุกเรื่อง โดยเฉพาะในสายงานที่เปลี่ยนแปลงเร็วและมีความซับซ้อนสูง<br/>คนที่มีความสามารถไม่ได้จำเป็นต้องมีทุกคำตอบอยู่ในหัว<br/>สิ่งที่ทำให้เขาเก่งคือ เขารู้ว่าจะเริ่มต้นตรวจสอบจากตรงไหน</p>
+<ul>
+<li>รู้วิธีแบ่งปัญหาออกเป็นส่วนเล็ก ๆ</li>
+<li>รู้วิธีค้นหาหลักฐาน</li>
+<li>รู้วิธีทดลอง</li>
+<li>รู้วิธีตั้งสมมติฐาน</li>
+<li>และรู้วิธีตรวจสอบว่าข้อสรุปของตัวเองถูกต้องหรือไม่</li>
+</ul>
+<p>การต้องค้นคว้าไม่ได้แปลว่าเราไม่เก่ง<br/>การต้องทดลองไม่ได้แปลว่าเราไม่มีความรู้<br/>การยอมรับว่าไม่รู้บางเรื่อง ไม่ได้ทำให้ความสามารถทั้งหมดของเราหายไป</p>
+<p>บางครั้ง การกล้าพูดว่า “ผมยังไม่แน่ใจ แต่จะตรวจสอบให้ถูกต้อง” อาจเป็นลักษณะของมืออาชีพมากกว่าการตอบทุกอย่างด้วยความมั่นใจเสียอีก</p>
+
+<h2>ยิ่งเก่งขึ้น เรายิ่งเห็นว่าตัวเองไม่รู้อีกมากแค่ไหน</h2>
+<p>ในช่วงเริ่มต้น เราอาจมองเห็นเพียงภาพรวมของเรื่องหนึ่ง และรู้สึกว่ามันไม่ได้ซับซ้อนมากนัก<br/>แต่เมื่อศึกษาอย่างจริงจัง เราจะเริ่มเห็นรายละเอียด ข้อยกเว้น ความเชื่อมโยง และปัญหาที่ซ่อนอยู่ภายใน</p>
+<p>ยิ่งเข้าใจมากขึ้น เราก็ยิ่งเห็นขอบเขตของสิ่งที่ยังไม่เข้าใจมากขึ้น<br/>นี่อาจทำให้เรารู้สึกว่าตัวเองรู้น้อยลง ทั้งที่ความจริงคือเรามีความเข้าใจลึกขึ้นจนมองเห็นความซับซ้อนที่เมื่อก่อนไม่เคยเห็น</p>
+<p>คนที่ยังไม่เข้าใจเรื่องหนึ่งมากนัก อาจรู้สึกมั่นใจ เพราะยังมองไม่เห็นปัญหาทั้งหมด<br/>ส่วนคนที่มีประสบการณ์มากกว่า อาจพูดอย่างระมัดระวัง เพราะรู้ว่าเรื่องนั้นมีเงื่อนไขมากเพียงใด</p>
+<p>ดังนั้น ความไม่มั่นใจบางส่วนไม่ได้เกิดจากการไม่มีความรู้<br/>แต่มันอาจเกิดจากการที่เรามีความรู้มากพอจะรู้ว่าโลกไม่ได้ง่ายเหมือนที่เคยคิด</p>
+
+<h2>เราอยู่กับสิ่งที่ยาก จนลืมไปว่าสิ่งที่เราทำไม่ใช่เรื่องธรรมดา</h2>
+<p>คนที่ชอบพัฒนาตัวเองมักใช้เวลาส่วนใหญ่กับเรื่องที่ยากกว่าความสามารถในปัจจุบันเล็กน้อย<br/>ถ้าเราทำเรื่องเดิมที่คุ้นเคยทุกวัน เราอาจรู้สึกเก่งและมั่นใจ เพราะทุกอย่างอยู่ภายใต้การควบคุม</p>
+<p>แต่ถ้าเราเลือกเรียนรู้หัวข้อใหม่ รับผิดชอบโปรเจกต์ที่ใหญ่ขึ้น ลงมือทำงานวิจัย แก้ปัญหาที่ไม่เคยเจอ หรือทำงานใกล้ขอบเขตความสามารถของตัวเองตลอดเวลา ความรู้สึกประจำวันของเราอาจเป็น</p>
+<blockquote>“ทำไมเรื่องนี้ยากจัง”<br/>“ทำไมเรายังแก้ไม่ได้”<br/>“ทำไมเรายังไม่เข้าใจทั้งหมด”</blockquote>
+<p>จนลืมไปว่า การได้อยู่ในจุดที่สามารถต่อสู้กับปัญหาเหล่านั้นได้ ก็เป็นหลักฐานของความสามารถอยู่แล้ว<br/>บางปัญหาไม่ได้ยากเพราะเราไม่เก่ง มันยากเพราะมันเป็นปัญหาที่ยากจริง ๆ</p>
+
+<h2>เราอาจพึ่งพาการยอมรับจากคนอื่นมากเกินไป</h2>
+<p>ความมั่นใจที่เกิดจากคำชม ผลงาน รางวัล ยอดไลก์ หรือการได้รับการยอมรับ เป็นความรู้สึกที่ดี<br/>แต่หากเราใช้สิ่งเหล่านี้เป็นหลักฐานเพียงอย่างเดียวว่าเรามีคุณค่า ความมั่นใจจะไม่มั่นคง</p>
+<p>วันที่คนชม เราอาจรู้สึกว่าตัวเองเก่ง</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img4.jpg"/>
+</figure>
+<p>วันที่ไม่มีใครพูดถึง เราอาจเริ่มสงสัย<br/>วันที่เห็นคนอื่นได้รับโอกาสมากกว่า เราอาจคิดว่าตัวเองยังไม่ดีพอ<br/>วันที่ผลงานไม่ได้รับความสนใจ เราอาจตีความว่าผลงานนั้นไม่มีคุณค่า</p>
+<p>ปัญหาไม่ได้อยู่ที่การอยากได้รับการยอมรับ เพราะเป็นธรรมชาติของมนุษย์<br/>ปัญหาเกิดขึ้นเมื่อเสียงของคนอื่นดังมากกว่าเสียงที่เกิดจากหลักฐานจริงในชีวิตของเรา</p>
+<p>คำถามที่ว่า</p>
+<blockquote>“คนอื่นคิดว่าเราเก่งไหม?”</blockquote>
+<p>อาจไม่มีวันให้คำตอบที่มั่นคง คำถามที่มีประโยชน์กว่าอาจเป็น</p>
+<blockquote>“มีหลักฐานอะไรบ้างที่แสดงว่าเรามีพัฒนาการและมีความสามารถจริง?”</blockquote>
+<p>หลักฐานนั้นอาจไม่จำเป็นต้องเป็นรางวัลใหญ่ อาจเป็นปัญหาที่วันนี้เราแก้ได้ แต่เมื่อปีก่อนยังทำไม่ได้ อาจเป็นเรื่องที่วันนี้เราอธิบายให้คนอื่นเข้าใจได้ อาจเป็นโปรเจกต์ที่เรารับผิดชอบจนสำเร็จ อาจเป็นการกลับมาลองใหม่หลังจากเคยล้มเหลว หรืออาจเป็นความสามารถในการรับมือกับสถานการณ์ที่เมื่อก่อนเคยทำให้เรากลัว</p>
+
+<h2>ระบบประเมินตัวเองของเราอาจไม่ยุติธรรม</h2>
+<p>หลายครั้ง ความรู้สึกว่าไม่เก่งไม่ได้เกิดจากการพิจารณาหลักฐานทั้งหมด แต่มาจากการเลือกนับเฉพาะหลักฐานบางประเภท</p>
+<p>เรานับข้อผิดพลาดทุกครั้ง แต่มองข้ามความสำเร็จเพราะคิดว่าเป็นเรื่องปกติ<br/>เราจำเวลาที่ตอบไม่ได้ แต่ลืมเวลาที่เราแก้ปัญหายากสำเร็จ<br/>เราใช้คนที่เก่งกว่าเป็นมาตรฐาน แต่ไม่เคยมองย้อนกลับไปเทียบกับตัวเองในอดีต<br/>เราเห็นความพยายามของตัวเองเป็นหลักฐานว่าไม่มีพรสวรรค์ ทั้งที่ความพยายาม ความอดทน และวินัย คือเหตุผลสำคัญที่ทำให้เรามาถึงจุดนี้</p>
+<p>ระบบประเมินแบบนี้มีข้อสรุปเพียงทางเดียว ไม่ว่าเราจะพัฒนาไปไกลแค่ไหน เราก็จะยังรู้สึกว่าไม่พอ</p>
+
+<h2>ความมั่นใจไม่ใช่การเชื่อว่าเรารู้ทุกอย่าง</h2>
+<p>ความมั่นใจที่แข็งแรงไม่ได้หมายถึงการบอกตัวเองว่า</p>
+<blockquote>“เราเก่งที่สุด”<br/>“เราไม่มีข้อผิดพลาด”<br/>“เราต้องทำได้ทุกอย่าง”<br/>“เราไม่ต้องพึ่งพาใคร”</blockquote>
+<p>ความมั่นใจที่มีพื้นฐานอยู่บนความจริง อาจเป็นเพียงการยอมรับว่า</p>
+<blockquote>“เรามีความสามารถในหลายเรื่อง แม้ยังมีเรื่องที่ต้องเรียนรู้อีกมาก”</blockquote>
+<p>เราสามารถเก่งและยังมีข้อบกพร่องได้<br/>เราสามารถมีประสบการณ์และยังถามคำถามได้<br/>เราสามารถประสบความสำเร็จและยังรู้สึกกลัวได้<br/>เราสามารถได้รับการยอมรับและยังไม่มั่นใจในบางวันได้</p>
+<p>สิ่งเหล่านี้ไม่ได้ขัดแย้งกัน การมีจุดที่ต้องพัฒนา ไม่ได้ลบความสามารถที่เรามีอยู่แล้ว</p>
+
+<h2>ลองเปลี่ยนวิธีมองตัวเอง</h2>
+<p>แทนที่จะถามว่า</p>
+<blockquote>“ผมเก่งจริงหรือเปล่า?”</blockquote>
+<p>ลองเปลี่ยนเป็นคำถามที่เฉพาะเจาะจงกว่า</p>
+<ul>
+<li>วันนี้ผมทำอะไรได้ดีขึ้นกว่าเมื่อก่อน?</li>
+<li>มีปัญหาอะไรที่ผมเคยแก้ไม่ได้ แต่ตอนนี้แก้ได้แล้ว?</li>
+<li>คนอื่นมักมาขอความช่วยเหลือจากผมในเรื่องใด?</li>
+<li>ผมมีผลงานอะไรที่เกิดจากความสามารถและความพยายามของตัวเอง?</li>
+<li>ผมเรียนรู้อะไรจากความผิดพลาดล่าสุด?</li>
+<li>ถ้าเพื่อนคนหนึ่งมีผลงานแบบเดียวกับผม ผมจะบอกว่าเขาไม่เก่งหรือไม่?</li>
+</ul>
+<p>คำถามเหล่านี้ช่วยให้เราประเมินตัวเองจากข้อมูลจริง มากกว่าจากความรู้สึกในวันที่เหนื่อยหรือไม่มั่นใจ</p>
+<p>อีกวิธีหนึ่งคือการจดบันทึกสิ่งที่ทำสำเร็จ ไม่จำเป็นต้องเป็นความสำเร็จครั้งใหญ่ จดโปรเจกต์ที่จบ ปัญหาที่แก้ได้ คำชมที่ได้รับ สิ่งที่ได้เรียนรู้ งานยากที่กล้ารับผิดชอบ หรือช่วงเวลาที่เราไม่ยอมแพ้<br/>เพราะสมองของเรามักจำความผิดพลาดได้ชัดกว่าความสำเร็จ หากเราไม่เก็บหลักฐานเอาไว้ วันหนึ่งเราอาจลืมไปว่าเคยเดินมาไกลเพียงใด</p>
+
+<h2>บทสรุป</h2>
+<p>บางครั้ง เราไม่ได้รู้สึกไม่เก่งเพราะเราไม่มีความสามารถ<br/>แต่เพราะเราอยู่ใกล้ข้อบกพร่องของตัวเองเกินไป<br/>เพราะเราคุ้นเคยกับความสำเร็จของตัวเองเร็วเกินไป<br/>เพราะเราเปรียบเทียบตัวเองกับคนที่อยู่ไกลกว่าเสมอ<br/>และเพราะเราไม่ยอมให้อดีตที่ผ่านมาเป็นหลักฐานว่าเราเติบโตขึ้นจริง</p>
+<p>เราไม่จำเป็นต้องรู้ทุกอย่าง ไม่จำเป็นต้องเก่งที่สุด และไม่จำเป็นต้องมั่นใจตลอดเวลา เพื่อยอมรับว่าตัวเองมีความสามารถ</p>
+<p>บางที ประโยคที่เราควรบอกตัวเองอาจไม่ใช่</p>
+<blockquote>“ผมเก่งทุกเรื่อง”</blockquote>
+<p>แต่อาจเป็น</p>
+<blockquote>“ผมยังมีอีกหลายเรื่องที่ต้องเรียนรู้ แต่สิ่งนั้นไม่ได้ลบความจริงที่ว่าผมมาไกลและมีความสามารถจริง”</blockquote>
+<p>ความรู้สึกว่าไม่เก่งอาจยังกลับมาเป็นบางวัน แต่เมื่อวันนั้นมาถึง อย่าใช้ความรู้สึกชั่วคราวเป็นคำตัดสินคุณค่าทั้งหมดของตัวเอง<br/>ลองกลับไปมองหลักฐาน มองสิ่งที่เคยทำไม่ได้ มองสิ่งที่ผ่านพ้นมา มองความพยายามที่ไม่มีใครเห็น และมองตัวเองในอดีต<br/>และคุณจะพบว่า</p>
+<blockquote><em>คุณไม่ได้รู้สึกไม่เก่งเพราะไม่มีความสามารถ<br/>แต่เพราะคุณยังไม่ยอมให้สิ่งที่ตัวเองทำสำเร็จ มีน้ำหนักมากพอในการตัดสินตัวเอง<br/>- Sabastiaz</em></blockquote>
+</div>
+<div class="post-body lb" lang="en">
+<p>Ever felt this way?<br/>The work keeps getting harder.<br/>What you're learning keeps getting more complex.<br/>You pass certifications you once thought were out of reach.<br/>New opportunities keep coming, and you keep shipping.</p>
+<p>But deep down, there's still this thought:</p>
+<blockquote>"Am I actually good enough yet?"</blockquote>
+<p>Sometimes, even with praise, a portfolio, and hard evidence of success sitting right in front of you, the feeling that "I'm still not good enough" doesn't go away.<br/>So the question is: why do we feel that way?</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img1.jpg" style="max-width:200px"/>
+</figure>
+
+<h2>We don't measure ourselves by what we've already accomplished</h2>
+<p>One key reason is that we tend to measure ourselves by what we still can't do, rather than what we've already achieved.<br/>Before starting something, we might have thought:</p>
+<ul>
+<li>If I pass this certification, I'll finally feel skilled.</li>
+<li>If I pull off this project, I'll feel more confident.</li>
+<li>If I understand this technique, I'll finally accept myself.</li>
+<li>If more people see my work, I'll feel like I have value.</li>
+</ul>
+<p>But once we actually succeed, the pride lasts only a short while.<br/>After that, the brain starts saying:</p>
+<blockquote>"That wasn't really that hard."<br/>"Anyone could've done it."<br/>"There are still plenty of people better than me."<br/>"There's still so much I don't know."</blockquote>
+<p>A goal that once looked huge becomes ordinary the moment we reach it. Then we move the finish line again.</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img2.jpg"/>
+</figure>
+<p>This isn't because we lack ability - it's because our own standards keep rising every time we grow.</p>
+
+<h2>We compare our own behind-the-scenes to everyone else's highlight reel</h2>
+<p>When we look at other people, we usually only see what they chose to show.</p>
+<ul>
+<li>We see the day they succeeded.</li>
+<li>We see them speaking on stage.</li>
+<li>We see the published research.</li>
+<li>We see the certification they passed.</li>
+<li>We see the finished project.</li>
+<li>We see the explanation that sounds clear and professional.</li>
+</ul>
+<p>But we don't see the nights they sat stuck, unable to solve the problem. We don't see the periods of self-doubt. We don't see the failed attempts. We don't see the basic questions they once had to ask. And we don't see the years that sat behind that one piece of work.</p>
+<p>Meanwhile, we see everything about ourselves.</p>
+<ul>
+<li>We see exactly where we're stuck.</li>
+<li>We see every mistake.</li>
+<li>We see what we still don't understand.</li>
+<li>We see the work that's still unfinished.</li>
+</ul>
+<p>And we know exactly how hard we had to work to get any result at all.<br/>So we end up comparing "our own messy process" to "everyone else's polished output."<br/>That comparison is almost never fair.</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img3.jpg"/>
+</figure>
+
+<h2>We might be wrong that being skilled means having every answer</h2>
+<p>Many people tie the meaning of "skilled" to knowing the answer instantly.</p>
+<ul>
+<li>When we hit a question we can't answer,</li>
+<li>when we run into a technique we've never seen,</li>
+<li>when a tool doesn't behave the way we expected,</li>
+<li>or when we have to go back and read the docs again,</li>
+</ul>
+<p>we interpret it as:</p>
+<blockquote>"If I were really skilled, I'd already know this."</blockquote>
+<p>But in reality, no one knows everything - especially in fields that move fast and run deep.<br/>Capable people don't necessarily carry every answer in their head.<br/>What makes them capable is knowing exactly where to start checking.</p>
+<ul>
+<li>They know how to break a problem into smaller pieces.</li>
+<li>They know how to look for evidence.</li>
+<li>They know how to run an experiment.</li>
+<li>They know how to form a hypothesis.</li>
+<li>And they know how to verify whether their own conclusion is actually correct.</li>
+</ul>
+<p>Needing to research something doesn't mean you're not skilled. Needing to experiment doesn't mean you lack knowledge. Admitting you don't know something doesn't erase all the ability you have.</p>
+<p>Sometimes, being able to say "I'm not sure yet, but I'll verify it properly" is more professional than answering everything with false confidence.</p>
+
+<h2>The more skilled we get, the more we see how much we don't know</h2>
+<p>In the beginning, we might only see the surface of a topic and feel like it isn't all that complex.<br/>But once we study it seriously, we start seeing the details, the exceptions, the connections, and the problems hiding underneath.</p>
+<p>The more we understand, the more we see the edges of what we still don't understand.<br/>This can make us feel like we know less - even though the truth is that our understanding has gone deep enough to see complexity we never noticed before.</p>
+<p>Someone who doesn't understand a topic well yet might feel confident, simply because they can't see the whole problem. Someone with more experience might speak more carefully, precisely because they know how many conditions and caveats that topic actually has.</p>
+<p>So some of that uncertainty isn't coming from a lack of knowledge - it might be coming from having enough knowledge to know the world isn't as simple as we once thought.</p>
+
+<h2>We live so close to hard things, we forget they aren't ordinary</h2>
+<p>People who like to keep improving tend to spend most of their time on things just slightly harder than their current ability.<br/>If we did the same familiar thing every day, we'd probably feel skilled and confident, because everything is under control.</p>
+<p>But if we choose to learn a new topic, take on a bigger project, do original research, solve a problem we've never faced, or constantly work near the edge of our own ability, our day-to-day feeling might be:</p>
+<blockquote>"Why is this so hard?"<br/>"Why can't I solve this yet?"<br/>"Why don't I fully understand this yet?"</blockquote>
+<p>And we forget that simply being in a position to fight these problems at all is already evidence of ability.<br/>Some problems aren't hard because we're not skilled. They're hard because they're genuinely hard problems.</p>
+
+<h2>We might be relying on other people's approval too much</h2>
+<p>Confidence built from praise, achievements, awards, likes, or recognition feels good.<br/>But if we use these as the only evidence of our own worth, that confidence will never be stable.</p>
+<p>On the day people praise us, we might feel skilled.</p>
+<figure>
+<img alt="" loading="lazy" src="../pic/impostor/img4.jpg"/>
+</figure>
+<p>On the day no one mentions us, we might start to doubt.<br/>On the day we see someone else get a bigger opportunity, we might think we're still not good enough.<br/>On the day our work gets no attention, we might interpret that as the work having no value.</p>
+<p>The problem isn't wanting recognition - that's simply human nature.<br/>The problem happens when other people's voices become louder than the voice that comes from real evidence in our own life.</p>
+<p>The question</p>
+<blockquote>"Do other people think I'm skilled?"</blockquote>
+<p>may never give a stable answer. A more useful question might be:</p>
+<blockquote>"What evidence actually shows that I've grown and that my ability is real?"</blockquote>
+<p>That evidence doesn't need to be some big award. It could be a problem you can solve today that you couldn't solve a year ago. It could be something you can now explain clearly to someone else. It could be a project you took full responsibility for and delivered. It could be trying again after a past failure. Or it could be the ability to handle a situation that used to scare you.</p>
+
+<h2>Our own self-scoring system might not be fair</h2>
+<p>Often, the feeling of not being skilled doesn't come from weighing all the evidence - it comes from only counting certain kinds of evidence.</p>
+<p>We count every mistake, but overlook our successes because we assume they're normal.<br/>We remember every time we couldn't answer, but forget every time we solved something genuinely hard.<br/>We use people more skilled than us as the benchmark, but never look back and compare against our own past self.<br/>We treat our own effort as proof that we have no natural talent - even though effort, persistence, and discipline are exactly what got us here.</p>
+<p>A scoring system built like this only ever produces one conclusion: no matter how far we grow, we'll still feel like it isn't enough.</p>
+
+<h2>Confidence isn't believing you know everything</h2>
+<p>Strong, real confidence doesn't mean telling yourself:</p>
+<blockquote>"I'm the best."<br/>"I never make mistakes."<br/>"I have to be able to do everything."<br/>"I don't need to rely on anyone."</blockquote>
+<p>Confidence grounded in reality might just be accepting that:</p>
+<blockquote>"I'm capable in many areas, even though there's still a lot I need to learn."</blockquote>
+<p>You can be skilled and still have flaws.<br/>You can be experienced and still ask questions.<br/>You can succeed and still feel afraid.<br/>You can be recognized and still feel unsure on some days.</p>
+<p>None of these contradict each other. Having room to grow doesn't erase the ability you already have.</p>
+
+<h2>Try changing how you look at yourself</h2>
+<p>Instead of asking:</p>
+<blockquote>"Am I actually skilled?"</blockquote>
+<p>try asking something more specific instead:</p>
+<ul>
+<li>What did I do better today than I used to?</li>
+<li>What's a problem I once couldn't solve, that I can solve now?</li>
+<li>What do people usually come to me for help with?</li>
+<li>What have I produced that came from my own ability and effort?</li>
+<li>What did I learn from my most recent mistake?</li>
+<li>If a friend had the exact same track record as me, would I say they weren't skilled?</li>
+</ul>
+<p>These questions help you evaluate yourself using real data, instead of a feeling from a tired or uncertain day.</p>
+<p>Another approach is keeping a record of what you've accomplished - it doesn't have to be a huge win. Write down projects you've finished, problems you've solved, praise you've received, things you've learned, hard work you took responsibility for, or moments you refused to give up.<br/>Because your brain tends to remember mistakes far more vividly than successes. If you don't keep the evidence, one day you might forget just how far you've actually come.</p>
+
+<h2>Closing thoughts</h2>
+<p>Sometimes we don't feel unskilled because we lack ability - we feel that way because we stand too close to our own flaws, because we get used to our own successes too quickly, because we always compare ourselves to people further ahead, and because we won't let our own past stand as evidence that we've genuinely grown.</p>
+<p>We don't have to know everything. We don't have to be the best. And we don't have to be confident all the time, in order to accept that we're capable.</p>
+<p>Maybe the sentence we should tell ourselves isn't</p>
+<blockquote>"I'm good at everything."</blockquote>
+<p>but rather</p>
+<blockquote>"I still have a lot to learn - but that doesn't erase the fact that I've come far, and that my ability is real."</blockquote>
+<p>The feeling of not being good enough might still return some days. But when it does, don't let a temporary feeling pass final judgment on your entire worth.<br/>Go back and look at the evidence. Look at what you once couldn't do. Look at what you've already been through. Look at the effort no one else saw. And look at who you used to be.<br/>And you'll find that:</p>
+<blockquote><em>You don't feel unskilled because you lack ability.<br/>You feel that way because you still haven't let what you've actually accomplished carry enough weight in how you judge yourself.<br/>- Sabastiaz</em></blockquote>
+</div>
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          X / Twitter
+        </a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+          LinkedIn
+        </a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+          Facebook
+        </a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="godpotato.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">GodPotato - รายงานเชิงเทคนิค (Windows PrivEsc)</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

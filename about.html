@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/about.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    /* ── Bio section ── */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .bio-text p {
+      color: var(--text-dim);
+      line-height: 2;
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+
+    .bio-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .bio-photo {
+      float: right;
+      width: 42%;
+      max-width: 260px;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.25);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      margin: 0.3rem 0 1rem 1.5rem;
+      transition: transform 0.4s;
+    }
+
+    .bio-photo:hover { transform: scale(1.01); }
+
+    .badge-item {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .badge-item:hover {
+      border-color: rgba(201,168,76,0.35);
+      box-shadow: 0 0 12px rgba(201,168,76,0.07);
+    }
+
+    .badge-icon {
+      font-size: 1.3rem;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .badge-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .badge-value {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      margin-top: 0.1rem;
+    }
+
+    .quick-connect {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+    }
+
+    .quick-connect-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .quick-connect-links {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .quick-connect-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.12);
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .quick-connect-links a:hover {
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 0 12px rgba(201,168,76,0.1);
+    }
+
+    /* ── Two-column blocks ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── Offensive focus list ── */
+    .focus-domain-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .domain-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.8rem 1rem;
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      transition: border-color 0.2s;
+    }
+
+    .domain-item:hover { border-color: rgba(201,168,76,0.3); }
+
+    .domain-rune {
+      color: var(--gold);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Attack methodology ── */
+    .lifecycle {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .lifecycle-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      position: relative;
+    }
+
+    .lifecycle-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: calc(1rem + 14px);
+      top: calc(0.9rem + 28px);
+      bottom: 0;
+      width: 1px;
+      background: rgba(201,168,76,0.18);
+    }
+
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .step-text {
+      color: var(--text-dim);
+      font-size: 0.92rem;
+      padding-top: 0.3rem;
+    }
+
+    /* ── Areas of expertise ── */
+    .expertise-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .expertise-tag {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 20px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem;
+      font-family: 'Cinzel', serif;
+      color: var(--text-dim);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .expertise-tag:hover {
+      border-color: rgba(201,168,76,0.45);
+      color: var(--gold2);
+      transform: translateY(-2px);
+    }
+
+    /* ── Certifications ── */
+    .cert-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .cert-item:hover { border-color: rgba(201,168,76,0.3); }
+
+    .cert-seal {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 6px rgba(201,168,76,0.5);
+      flex-shrink: 0;
+    }
+
+    .cert-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* ── Case study ── */
+    .case-study {
+      background: linear-gradient(135deg, #1a1208 0%, #221a0e 100%);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-study::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon));
+    }
+
+    .case-chain {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.25rem 0;
+    }
+
+    .chain-step {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 3px;
+      padding: 0.3rem 0.8rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--gold2);
+    }
+
+    .chain-arrow {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* ── Section blocks ── */
+    .about-block {
+      margin-bottom: 3.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .bio-grid  { grid-template-columns: 1fr; }
+      .two-col   { grid-template-columns: 1fr; }
+      .cert-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+   
+    <li><a href="contact.html">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Wizard's Chronicle ✦</div>
+    <h1 class="page-title">About the Sorcerer</h1>
+    <p class="page-subtitle">Ratthapong Sommanus · @sabastiaz</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🦅</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── Bio ── -->
+    <div class="about-block fade-up">
+      <div class="section-rune">The Wizard's Identity</div>
+      <div class="section-title">Who I Am</div>
+      <div class="section-hdivider"></div>
+
+      <div class="bio-grid">
+        <div class="bio-text parchment-box">
+          <img class="bio-photo" src="pic/Black.jpeg" alt="Ratthapong Sommanus receiving the Tenable Outstanding Technical Impact Award" loading="lazy">
+          <p>
+            I am Ratthapong Sommanus, known as Sabastiaz Founder of
+            <strong style="color:var(--gold2)">Wowza Group</strong>, a cybersecurity community focused on
+            both Red Team and Blue Team development, and a
+            <strong style="color:var(--gold2)">Cybersecurity Assessment Specialist</strong>
+            at Bigfish Enterprise Limited.
+          </p>
+          <p>
+            My work centers on Penetration Testing, Red Teaming, and Vulnerability
+            Management across web applications, enterprise networks, and Active Directory
+            environments. I specialize in identifying realistic attack paths, demonstrating
+            tangible impact, and translating complex technical findings into clear,
+            business-aligned recommendations.
+          </p>
+          <p>
+            I collaborate closely with technical teams and executive stakeholders to
+            strengthen security posture, enhance governance frameworks, and reduce
+            operational risk through structured assessments and threat-informed
+            methodologies.
+          </p>
+        </div>
+
+        <div class="bio-badges">
+          <div class="badge-item">
+            <div class="badge-icon">🏛️</div>
+            <div>
+              <div class="badge-label">Community Founder</div>
+              <div class="badge-value">Wowza Group Red &amp; Blue Team Community</div>
+            </div>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">🏢</div>
+            <div>
+              <div class="badge-label">Current Role</div>
+              <div class="badge-value">Cybersecurity Assessment Specialist · Bigfish Enterprise</div>
+            </div>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">🎯</div>
+            <div>
+              <div class="badge-label">Primary Discipline</div>
+              <div class="badge-value">Penetration Testing / Red Teaming / Vuln Management</div>
+            </div>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">🌐</div>
+            <div>
+              <div class="badge-label">Scope</div>
+              <div class="badge-value">Web Apps · Enterprise Networks · Active Directory</div>
+            </div>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">📜</div>
+            <div>
+              <div class="badge-label">Published On</div>
+              <div class="badge-value">Medium - @sabastiaz</div>
+            </div>
+          </div>
+
+          <div class="quick-connect">
+            <div class="quick-connect-label">Quick Connect</div>
+            <div class="quick-connect-links">
+              <a href="mailto:ratthapong_c@hotmail.com" aria-label="Email" title="Email">✉️</a>
+              <a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">💼</a>
+              <a href="https://github.com/Sabastiaz" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">🐙</a>
+              <a href="https://medium.com/@sabastiaz" target="_blank" rel="noopener" aria-label="Medium" title="Medium">📖</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Offensive Focus + Attack Methodology ── -->
+    <div class="about-block fade-up">
+      <div class="two-col">
+
+        <!-- Offensive Focus -->
+        <div>
+          <div class="section-rune">Offensive Disciplines</div>
+          <div class="section-title">Offensive Focus</div>
+          <div class="section-hdivider"></div>
+          <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:1.2rem;font-style:italic;">
+            Specializing in chaining misconfigurations inside enterprise networks to simulate realistic attack paths.
+          </p>
+          <div class="focus-domain-list">
+            <div class="domain-item"><span class="domain-rune">⚡</span> Active Directory Compromise &amp; Abuse</div>
+            <div class="domain-item"><span class="domain-rune">⚡</span> Privilege Escalation &amp; Lateral Movement</div>
+            <div class="domain-item"><span class="domain-rune">⚡</span> Kerberos Attacks - Kerberoasting / DCSync</div>
+            <div class="domain-item"><span class="domain-rune">⚡</span> BloodHound Attack Path Analysis</div>
+            <div class="domain-item"><span class="domain-rune">⚡</span> Enterprise Vulnerability Exploitation</div>
+          </div>
+        </div>
+
+        <!-- Attack Methodology -->
+        <div>
+          <div class="section-rune">The Ritual Lifecycle</div>
+          <div class="section-title">Attack Methodology</div>
+          <div class="section-hdivider"></div>
+          <div class="lifecycle">
+            <div class="lifecycle-step">
+              <div class="step-num">I</div>
+              <div class="step-text">Initial Access</div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">II</div>
+              <div class="step-text">Enumeration &amp; Attack Surface Mapping</div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">III</div>
+              <div class="step-text">Credential Extraction</div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">IV</div>
+              <div class="step-text">Privilege Escalation</div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">V</div>
+              <div class="step-text">Lateral Movement</div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">VI</div>
+              <div class="step-text">Domain Compromise</div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">VII</div>
+              <div class="step-text">Impact Analysis &amp; Executive Reporting</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Areas of Expertise ── -->
+    <div class="about-block fade-up">
+      <div class="section-rune">The Mastery Compendium</div>
+      <div class="section-title">Areas of Expertise</div>
+      <div class="section-hdivider"></div>
+      <div class="expertise-tags">
+        <span class="expertise-tag">Active Directory Security</span>
+        <span class="expertise-tag">Network &amp; Infrastructure Security</span>
+        <span class="expertise-tag">Vulnerability Management</span>
+        <span class="expertise-tag">Certifications</span>
+        <span class="expertise-tag">Tenable Platform Expertise</span>
+        <span class="expertise-tag">Burp Suite Expertise</span>
+        <span class="expertise-tag">Security Baseline &amp; CIS Benchmark</span>
+        <span class="expertise-tag">Cybersecurity Awareness</span>
+        <span class="expertise-tag">Phishing Simulation</span>
+        <span class="expertise-tag">Incident Response</span>
+        <span class="expertise-tag">Community Building &amp; Personal Brand (Wowza)</span>
+        <span class="expertise-tag">EDR Bypass Techniques</span>
+      </div>
+    </div>
+
+    <!-- ── Certifications ── -->
+    <div class="about-block fade-up">
+      <div class="section-rune">Ancient Orders &amp; Seals</div>
+      <div class="section-title">Certifications</div>
+      <div class="section-hdivider"></div>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">OffSec Experienced Penetration Tester (OSEP)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">OffSec Certified Professional (OSCP)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">HTB Certified Penetration Testing Specialist (CPTS)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">Red Team Operator (CRTO)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">HTB Certified Active Directory Pentesting Expert (CAPE)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">Certified Active Directory Pentesting eXpert (C-ADPenX)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">Certified Red Team Analyst (CRTA)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">Tenable.VM Specialist Certification</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-seal"></div>
+          <div class="cert-text">Certified Ethical Hacker (CEH)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Case Study ── -->
+    <div class="about-block fade-up">
+      <div class="section-rune">The Dark Archives</div>
+      <div class="section-title">Case Study Highlight</div>
+      <div class="section-hdivider"></div>
+      <div class="case-study">
+        <div class="section-rune" style="margin-bottom:0.4rem">Enterprise Assessment</div>
+        <div style="font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--gold2);margin-bottom:0.75rem;">
+          Active Directory Internal Assessment
+        </div>
+        <div class="case-chain">
+          <span class="chain-step">Foothold</span>
+          <span class="chain-arrow">→</span>
+          <span class="chain-step">DACL</span>
+          <span class="chain-arrow">→</span>
+          <span class="chain-step">Privilege Escalation</span>
+          <span class="chain-arrow">→</span>
+          <span class="chain-step">Domain Admin</span>
+        </div>
+        <p style="color:var(--text-muted);font-size:0.9rem;font-style:italic;line-height:1.8;">
+          Structured attack-chain documentation with executive-ready reporting,
+          demonstrating full domain compromise from initial foothold.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Engagement CTA ── -->
+    <div class="about-block fade-up" style="text-align:center;">
+      <div class="parchment-box" style="max-width:600px;margin:0 auto;text-align:center;">
+        <div style="font-size:1.8rem;margin-bottom:0.75rem;">🦉</div>
+        <div style="font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.75rem;">Engagement</div>
+        <p style="color:var(--text-dim);font-size:0.95rem;font-style:italic;line-height:1.9;margin-bottom:1.5rem;">
+          For enterprise red team simulations, Active Directory security assessments,
+          or technical collaboration - dispatch your owl to the Owlery.
+        </p>
+        <a href="contact.html" class="btn-magic">Send Owl Post →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

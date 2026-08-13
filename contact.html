@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owl Post | Sabastiaz</title>
+    <!-- SEO & Search -->
+  <meta name="description" content="Sabastiaz (Ratthapong Sommanus) - Red Team Sorcerer, Penetration Tester, Offensive Security Specialist, Founder of Wowza Group. OSEP, OSCP, CRTO, CPTS, CEH certified. Tenable Guardian of Thailand. CVE-2025-48878 discoverer." />
+  <meta name="keywords" content="Sabastiaz, Ratthapong Sommanus, Red Team, Penetration Testing, OSEP, OSCP, CRTO, CPTS, CEH, Offensive Security, Wowza Group, Cybersecurity, CVE, Tenable Guardian, Active Directory, Bigfish Enterprise, Bug Bounty, Thailand" />
+  <meta name="author" content="Ratthapong Sommanus (Sabastiaz)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#1a1008" />
+  <meta name="color-scheme" content="dark" />
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sabastiaz - Red Team Sorcerer" />
+  <meta property="og:url" content="https://sabastiaz.github.io/contact.html" />
+  <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:locale" content="th_TH" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
+  <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <!-- Apple -->
+  <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="pic/Sabastiaz_Sly.png">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── Profile card ── */
+    .profile-card {
+      background: linear-gradient(135deg, #1e1810, #231d12);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon));
+    }
+
+    .profile-owl {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 0.75rem;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(201,168,76,0.35));
+    }
+
+    .profile-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold2);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.2rem;
+    }
+
+    .profile-alias {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .profile-divider {
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 1.25rem;
+    }
+
+    .profile-services {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      padding: 0.4rem 0;
+    }
+
+    .service-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 5px rgba(201,168,76,0.5);
+      flex-shrink: 0;
+    }
+
+    .response-badge {
+      margin-top: 1.5rem;
+      background: rgba(93,186,106,0.08);
+      border: 1px solid rgba(93,186,106,0.2);
+      border-radius: 3px;
+      padding: 0.5rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .response-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #5dba6a;
+      box-shadow: 0 0 6px rgba(93,186,106,0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    .response-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #5dba6a;
+    }
+
+    /* ── Links column ── */
+    .links-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .owl-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.13);
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 1.1rem 1.4rem;
+      border-radius: 4px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .owl-link::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      border-radius: 2px 0 0 2px;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .owl-link:hover {
+      border-color: rgba(201,168,76,0.38);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .owl-link:hover::before { opacity: 1; }
+
+    /* per-platform accent colours */
+    .link-email:hover  { color: var(--text); }
+    .link-email::before { background: var(--gold); }
+
+    .link-linkedin:hover { color: #4db6e6; }
+    .link-linkedin::before { background: #0a66c2; }
+
+    .link-github:hover { color: #d4d4d4; }
+    .link-github::before { background: #6e5494; }
+
+    .link-medium:hover { color: #e8dcc8; }
+    .link-medium::before { background: var(--gold); }
+
+    .link-facebook:hover { color: #7aadff; }
+    .link-facebook::before { background: #1877f2; }
+
+    .owl-link-icon {
+      font-size: 1.3rem;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .owl-link-info { flex: 1; }
+
+    .owl-link-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: 0.15rem;
+    }
+
+    .owl-link-handle {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .owl-link-arrow {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      opacity: 0.4;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .owl-link:hover .owl-link-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    /* ── Seal ── */
+    .seal-block {
+      margin-top: 3.5rem;
+      padding: 2rem;
+      text-align: center;
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .seal-block::before,
+    .seal-block::after {
+      content: '✦';
+      position: absolute;
+      font-size: 0.55rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+    .seal-block::before { top: 8px; left: 10px; }
+    .seal-block::after  { bottom: 8px; right: 10px; }
+
+    .seal-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .seal-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(201,168,76,0.4);
+      margin-bottom: 0.3rem;
+    }
+
+    .seal-role {
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Inquiry form ── */
+    .inquiry-form {
+      background: var(--surface);
+      border: 1px solid rgba(201,168,76,0.13);
+      border-radius: 4px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-row { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .form-input, .form-textarea {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 3px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 0.65rem 0.85rem;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: rgba(201,168,76,0.55);
+    }
+    .form-textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      align-self: flex-start;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      padding: 0.65rem 1.6rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .form-submit:hover {
+      background: rgba(201,168,76,0.2);
+      border-color: var(--gold);
+    }
+    .form-status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .form-status.success { color: #5dba6a; }
+    .form-status.error { color: #e07b5a; }
+  </style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Spells</a></li>
+    <li><a href="tools.html">Arsenal</a></li>
+    <li><a href="writings.html">Tomes</a></li>
+    <li><a href="honor.html">Honours</a></li>
+    <li><a href="wowza.html">Wowza</a></li>
+    <li><a href="event.html">Events</a></li>
+    <li><a href="changelog.html">Updates</a></li>
+    <li><a href="contact.html" class="active">Owl Post</a></li>
+    <li><a href="cocacola.html">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-rune">✦ The Owlery ✦</div>
+    <h1 class="page-title">Send Owl Post</h1>
+    <p class="page-subtitle">Dispatch your owl and I shall reply with haste</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🦉</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="contact-grid fade-up">
+
+      <!-- ── Profile card ── -->
+      <div class="profile-card">
+        <span class="profile-owl">🦉</span>
+        <div class="profile-name">Ratthapong Sommanus</div>
+        <div class="profile-alias">also known as Sabastiaz</div>
+        <div class="profile-divider"></div>
+
+        <div class="section-rune" style="justify-content:center;margin-bottom:0.75rem;">Available Services</div>
+        <div class="profile-services">
+          <div class="service-item">
+            <div class="service-dot"></div>
+            Active Directory Security Assessment
+          </div>
+          <div class="service-item">
+            <div class="service-dot"></div>
+            Red Team Simulation
+          </div>
+          <div class="service-item">
+            <div class="service-dot"></div>
+            Enterprise Vulnerability Management
+          </div>
+          <div class="service-item">
+            <div class="service-dot"></div>
+            Technical Collaboration
+          </div>
+          <div class="service-item">
+            <div class="service-dot"></div>
+            Conference Speaking
+          </div>
+        </div>
+
+        <div class="response-badge">
+          <div class="response-dot"></div>
+          <span class="response-text">Responds within 24–48 hours</span>
+        </div>
+      </div>
+
+      <!-- ── Contact links ── -->
+      <div class="links-col">
+
+        <a href="mailto:ratthapong_c@hotmail.com" class="owl-link link-email">
+          <div class="owl-link-icon">✉️</div>
+          <div class="owl-link-info">
+            <div class="owl-link-name">Email</div>
+            <div class="owl-link-handle">ratthapong_c@hotmail.com</div>
+          </div>
+          <span class="owl-link-arrow">→</span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/ratthapong-sommanus-465b661b2/" class="owl-link link-linkedin" target="_blank" rel="noopener">
+          <div class="owl-link-icon">💼</div>
+          <div class="owl-link-info">
+            <div class="owl-link-name">LinkedIn</div>
+            <div class="owl-link-handle">linkedin.com/in/sabastiaz</div>
+          </div>
+          <span class="owl-link-arrow">→</span>
+        </a>
+
+        <a href="https://github.com/Sabastiaz" class="owl-link link-github" target="_blank" rel="noopener">
+          <div class="owl-link-icon">🐙</div>
+          <div class="owl-link-info">
+            <div class="owl-link-name">GitHub</div>
+            <div class="owl-link-handle">github.com/Sabastiaz</div>
+          </div>
+          <span class="owl-link-arrow">→</span>
+        </a>
+
+        <a href="https://medium.com/@sabastiaz" class="owl-link link-medium" target="_blank" rel="noopener">
+          <div class="owl-link-icon">📖</div>
+          <div class="owl-link-info">
+            <div class="owl-link-name">Medium</div>
+            <div class="owl-link-handle">medium.com/@sabastiaz</div>
+          </div>
+          <span class="owl-link-arrow">→</span>
+        </a>
+
+        <a href="https://facebook.com/sabastian.fhantomhive" class="owl-link link-facebook" target="_blank" rel="noopener">
+          <div class="owl-link-icon">📘</div>
+          <div class="owl-link-info">
+            <div class="owl-link-name">Facebook</div>
+            <div class="owl-link-handle">sabastian.fhantomhive</div>
+          </div>
+          <span class="owl-link-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Inquiry form -->
+    <div class="section-rune" style="justify-content:center;margin:2.5rem 0 1.25rem;">Send a Direct Inquiry</div>
+    <form class="inquiry-form fade-up" id="inquiry-form">
+      <div class="form-row">
+        <label class="form-label" for="f-name">Your Name</label>
+        <input class="form-input" type="text" id="f-name" required>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="f-email">Your Email</label>
+        <input class="form-input" type="email" id="f-email" required>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="f-subject">Subject</label>
+        <input class="form-input" type="text" id="f-subject" required>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="f-message">Message</label>
+        <textarea class="form-textarea" id="f-message" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Dispatch Owl →</button>
+      <div class="form-status" id="form-status"></div>
+    </form>
+
+    <!-- Seal -->
+    <div class="seal-block fade-up">
+      <div class="seal-label">Sealed by the hand of</div>
+      <div class="seal-name">Sabastiaz 🪄</div>
+      <div class="seal-role">Red Team Sorcerer · Cybersecurity Assessment Specialist · Founder of Wowza Group</div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4"></span>
+</footer>
+
+<script src="stars.js"></script>
+<script src="notif.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('inquiry-form');
+  var status = document.getElementById('form-status');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('f-name').value;
+    var email = document.getElementById('f-email').value;
+    var subject = document.getElementById('f-subject').value;
+    var message = document.getElementById('f-message').value;
+    var body = 'From: ' + name + ' (' + email + ')\n\n' + message;
+    var mailto = 'mailto:ratthapong_c@hotmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    window.location.href = mailto;
+    status.textContent = 'Opening your email client to send this owl...';
+    status.className = 'form-status success';
+  });
+})();
+</script>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

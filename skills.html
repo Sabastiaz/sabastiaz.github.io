@@ -287,48 +287,51 @@
       .stats-row  { flex-direction: column; }
     }
 
-    /* ── Cert corridor (mid-page section) ── */
-    .tome-gallery-section {
+    /* ── Scroll parallax gallery (mid-page section) ── */
+    .scroll-gallery-section {
       margin: 4rem 0;
       text-align: center;
     }
-    .ish-wrap {
-      container-type: inline-size;
-      position: relative;
-      height: 320px;
+    .scroll-gallery {
+      display: flex;
+      gap: 0.75rem;
+      height: 420px;
       overflow: hidden;
       border-radius: 6px;
       border: 1px solid rgba(201,168,76,0.2);
       margin-top: 1.75rem;
+      background: #14100a;
     }
-    .ish-scene {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+    .scroll-gallery-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      will-change: transform;
     }
-    .ish-layer {
-      position: absolute;
-      inset: 0;
-      transform-style: preserve-3d;
-    }
-    .ish-card {
-      position: absolute;
+    .scroll-gallery-cell {
+      flex-shrink: 0;
+      height: 150px;
+      border-radius: 6px;
       overflow: hidden;
       background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
-      border: 1px solid rgba(201,168,76,0.28);
-      backface-visibility: hidden;
+      border: 1px solid rgba(201,168,76,0.22);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .ish-card img {
+    .scroll-gallery-cell img {
       width: 78%;
       height: 78%;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(0,0,0,0.5));
     }
     @media (prefers-reduced-motion: reduce) {
-      .ish-card { animation-play-state: paused !important; }
+      .scroll-gallery-col { transform: none !important; }
+    }
+    @media (max-width: 768px) {
+      .scroll-gallery { height: 320px; }
+      .scroll-gallery-cell { height: 110px; }
     }
   </style>
 </head>
@@ -547,9 +550,34 @@
       </div>
     </div>
 
-    <div class="tome-gallery-section fade-up">
+    <div class="scroll-gallery-section fade-up">
       <div class="page-rune">✦ A Glimpse of the Seals ✦</div>
-      <div class="ish-wrap" id="cert-corridor" aria-hidden="true"></div>
+      <div class="scroll-gallery" id="cert-scroll-gallery" aria-hidden="true">
+        <div class="scroll-gallery-col" data-speed="0.35">
+          <div class="scroll-gallery-cell"><img src="pic/osep.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/oscp.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/cpts.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/crta.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/tenablecert.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/ceh.png" alt=""></div>
+        </div>
+        <div class="scroll-gallery-col" data-speed="-0.22" style="margin-top:-120px;">
+          <div class="scroll-gallery-cell"><img src="pic/cadpenx.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/ADTS.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/crid.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/crtsv2.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/ertl.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/HTBCAPE.png" alt=""></div>
+        </div>
+        <div class="scroll-gallery-col" data-speed="0.5">
+          <div class="scroll-gallery-cell"><img src="pic/PT1.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/osep.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/oscp.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/cpts.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/crta.png" alt=""></div>
+          <div class="scroll-gallery-cell"><img src="pic/tenablecert.png" alt=""></div>
+        </div>
+      </div>
     </div>
 
     <!-- ── III. HTB Lab Tracks ── -->
@@ -660,104 +688,41 @@
 </script>
 <script>
 (function(){
-  // Vanilla port of the "image stream" corridor effect: two rails of cards
-  // ride from far behind the screen toward the viewer using CSS 3D transforms.
-  // Geometry is authored as apparent size so consecutive cards keep a constant
-  // size ratio all the way out - see the original React component's notes.
-  var PATH = {
-    perspective: 30,
-    cardWidth: 15,
-    cardHeight: 11,
-    cardRadius: 0.6,
-    birthHeight: 2.2,
-    exitHeight: 38,
-    railBirth: -11,
-    railExit: 42,
-    fan: 3.3,
-    turnBirth: 6,
-    turnExit: 26,
-    stops: 24
-  };
-  var CARDS = 8;
-  var SPEED = 20;
-  var AXIS = 52;
-  var IMAGES = [
-    'pic/oscp.png', 'pic/osep.png', 'pic/cpts.png', 'pic/crta.png',
-    'pic/tenablecert.png', 'pic/ceh.png', 'pic/cadpenx.png', 'pic/ADTS.png',
-    'pic/crid.png', 'pic/crtsv2.png', 'pic/ertl.png', 'pic/HTBCAPE.png', 'pic/PT1.png'
-  ];
+  // Vanilla port of a scroll-linked parallax gallery: each column translates
+  // vertically at its own rate as the section scrolls through the viewport,
+  // instead of a time-based CSS animation.
+  var wrap = document.getElementById('cert-scroll-gallery');
+  if (!wrap) return;
+  var cols = [].slice.call(wrap.querySelectorAll('.scroll-gallery-col'));
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  function keyframes(dir, name, p) {
-    var steps = [];
-    for (var s = 0; s <= p.stops; s++) {
-      var u = s / p.stops;
-      var scale = (p.birthHeight / p.cardHeight) * Math.pow(p.exitHeight / p.birthHeight, u);
-      var z = p.perspective * (1 - 1 / scale);
-      var rail = p.railExit - (p.railExit - p.railBirth) * Math.pow(1 - u, p.fan);
-      var turn = p.turnBirth + (p.turnExit - p.turnBirth) * u;
-      steps.push(
-        (u * 100).toFixed(2) + '%{transform:translate3d(' +
-        (dir * rail).toFixed(2) + 'cqw,0,' + z.toFixed(2) + 'cqw) rotateY(' +
-        (-dir * turn).toFixed(2) + 'deg)}'
-      );
-    }
-    return '@keyframes ' + name + '{' + steps.join('') + '}';
-  }
+  var ticking = false;
 
-  function init() {
-    var wrap = document.getElementById('cert-corridor');
-    if (!wrap) return;
+  function update() {
+    ticking = false;
+    var rect = wrap.getBoundingClientRect();
+    var vh = window.innerHeight;
+    // progress: -1 when section is below the viewport, 0 centered, 1 when above
+    var center = rect.top + rect.height / 2;
+    var progress = (vh / 2 - center) / (vh / 2 + rect.height / 2);
+    progress = Math.max(-1, Math.min(1, progress));
 
-    var right = 'ish-r-skills';
-    var left = 'ish-l-skills';
-    var css = keyframes(1, right, PATH) + keyframes(-1, left, PATH);
-    var styleEl = document.createElement('style');
-    styleEl.textContent = css;
-    document.head.appendChild(styleEl);
-
-    var scene = document.createElement('div');
-    scene.className = 'ish-scene';
-    scene.style.perspective = PATH.perspective + 'cqw';
-    scene.style.perspectiveOrigin = '50% ' + AXIS + '%';
-
-    var layer = document.createElement('div');
-    layer.className = 'ish-layer';
-    scene.appendChild(layer);
-    wrap.appendChild(scene);
-
-    [right, left].forEach(function(name) {
-      for (var i = 0; i < CARDS; i++) {
-        var img = IMAGES[i % IMAGES.length];
-        var card = document.createElement('div');
-        card.className = 'ish-card';
-        card.style.left = '50%';
-        card.style.top = AXIS + '%';
-        card.style.width = PATH.cardWidth + 'cqw';
-        card.style.height = PATH.cardHeight + 'cqw';
-        card.style.marginLeft = (-PATH.cardWidth / 2) + 'cqw';
-        card.style.marginTop = (-PATH.cardHeight / 2) + 'cqw';
-        card.style.borderRadius = PATH.cardRadius + 'cqw';
-        card.style.animation = name + ' ' + SPEED + 's linear infinite';
-        card.style.animationDelay = (-(i * SPEED) / CARDS) + 's';
-
-        var imgEl = document.createElement('img');
-        imgEl.src = img;
-        imgEl.alt = '';
-        imgEl.loading = 'lazy';
-        imgEl.decoding = 'async';
-        imgEl.draggable = false;
-        card.appendChild(imgEl);
-
-        layer.appendChild(card);
-      }
+    cols.forEach(function(col) {
+      var speed = parseFloat(col.getAttribute('data-speed')) || 0;
+      col.style.transform = 'translate3d(0,' + (progress * speed * 220).toFixed(1) + 'px,0)';
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
   }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
 })();
 </script>
 <script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

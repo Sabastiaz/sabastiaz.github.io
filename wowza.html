@@ -52,39 +52,96 @@
       background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
     }
 
+    .wowza-banner::after {
+      content: '✦';
+      position: absolute;
+      bottom: 10px; right: 14px;
+      font-size: 0.6rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+
     .wowza-wordmark-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
+      gap: 1.1rem;
       margin-bottom: 0.4rem;
+    }
+
+    .wowza-mascot-wrap {
+      position: relative;
+      width: 78px;
+      height: 78px;
+      flex-shrink: 0;
+    }
+
+    .wowza-mascot-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px dashed rgba(201,168,76,0.4);
+      animation: wowza-ring-spin 14s linear infinite;
+    }
+
+    .wowza-mascot-ring::before,
+    .wowza-mascot-ring::after {
+      content: '✦';
+      position: absolute;
+      color: var(--gold);
+      font-size: 0.6rem;
+      opacity: 0.8;
+    }
+    .wowza-mascot-ring::before { top: -5px; left: 50%; transform: translateX(-50%); }
+    .wowza-mascot-ring::after  { bottom: -5px; left: 50%; transform: translateX(-50%); }
+
+    @keyframes wowza-ring-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
 
     .wowza-mascot {
       display: block;
-      width: 64px;
-      height: 64px;
+      position: absolute;
+      inset: 7px;
+      width: calc(100% - 14px);
+      height: calc(100% - 14px);
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid rgba(255,105,180,0.4);
       box-shadow: 0 0 20px rgba(255,20,147,0.35);
       transition: transform 0.4s;
-      flex-shrink: 0;
     }
 
     .wowza-mascot:hover { transform: scale(1.08) rotate(-3deg); }
 
+    @media (prefers-reduced-motion: reduce) {
+      .wowza-mascot-ring { animation: none; }
+    }
+
     .wowza-logo {
+      position: relative;
       font-family: 'Cinzel', serif;
       font-size: clamp(2.2rem, 5vw, 3.5rem);
       font-weight: 900;
       letter-spacing: 0.12em;
-      background: linear-gradient(135deg, #fff8e7 0%, var(--gold2) 50%, var(--candle) 100%);
+      line-height: 1;
+      background: linear-gradient(115deg, #fff8e7 0%, var(--gold2) 30%, var(--candle) 50%, var(--gold2) 70%, #fff8e7 100%);
+      background-size: 250% 100%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       filter: drop-shadow(0 0 18px rgba(201,168,76,0.4));
-      line-height: 1;
+      animation: wowza-shimmer 6s ease-in-out infinite;
+    }
+
+    @keyframes wowza-shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wowza-logo { animation: none; }
     }
 
     @media (max-width: 480px) {
@@ -165,6 +222,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0.65rem;
+      position: relative;
     }
 
     .pillar-card:hover {
@@ -173,7 +231,24 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.35), 0 0 14px rgba(201,168,76,0.07);
     }
 
-    .pillar-icon { font-size: 1.8rem; }
+    .pillar-icon {
+      font-size: 1.8rem;
+      filter: drop-shadow(0 0 6px rgba(201,168,76,0.25));
+      transition: filter 0.3s;
+    }
+
+    .pillar-card:hover .pillar-icon {
+      filter: drop-shadow(0 0 12px rgba(201,168,76,0.55));
+    }
+
+    .pillar-card::after {
+      content: '✦';
+      position: absolute;
+      bottom: 6px; right: 8px;
+      font-size: 0.45rem;
+      color: var(--gold);
+      opacity: 0.18;
+    }
 
     .pillar-label {
       font-family: 'Cinzel', serif;
@@ -221,6 +296,15 @@
     }
 
     .member-card:hover::before { opacity: 1; }
+
+    .member-card::after {
+      content: '✦';
+      position: absolute;
+      bottom: 6px; right: 8px;
+      font-size: 0.45rem;
+      color: var(--gold);
+      opacity: 0.18;
+    }
 
     /* Founder card special style */
     .member-card.founder {
@@ -301,6 +385,22 @@
       flex: 1;
       min-width: 110px;
       text-align: center;
+      position: relative;
+      transition: all 0.25s;
+    }
+
+    .wstat:hover {
+      border-color: rgba(201,168,76,0.35);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3), 0 0 12px rgba(201,168,76,0.08);
+    }
+
+    .wstat::after {
+      content: '✦';
+      position: absolute;
+      bottom: 6px; right: 8px;
+      font-size: 0.45rem;
+      color: var(--gold);
+      opacity: 0.18;
     }
 
     .wstat-num {
@@ -372,7 +472,10 @@
     <!-- ── Banner ── -->
     <div class="wowza-banner fade-up">
       <div class="wowza-wordmark-row">
-        <img class="wowza-mascot" src="pic/wowza_logo.png" alt="Wowza Group mascot logo" loading="lazy">
+        <div class="wowza-mascot-wrap">
+          <div class="wowza-mascot-ring" aria-hidden="true"></div>
+          <img class="wowza-mascot" src="pic/wowza_logo.png" alt="Wowza Group mascot logo" loading="lazy">
+        </div>
         <div class="wowza-logo">✦ WOWZA ✦</div>
       </div>
       <div class="wowza-tagline">Blue Team · Red Team · Community</div>

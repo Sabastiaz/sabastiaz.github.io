@@ -287,13 +287,19 @@
       .stats-row  { flex-direction: column; }
     }
 
-    /* ── Cert corridor (hero background) ── */
+    /* ── Cert corridor (bottom section) ── */
+    .tome-gallery-section {
+      margin-top: 4rem;
+      text-align: center;
+    }
     .ish-wrap {
       container-type: inline-size;
-      position: absolute;
-      inset: 0;
+      position: relative;
+      height: 320px;
       overflow: hidden;
-      z-index: 0;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.2);
+      margin-top: 1.75rem;
     }
     .ish-scene {
       position: absolute;
@@ -320,18 +326,6 @@
       height: 78%;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(0,0,0,0.5));
-    }
-    .ish-veil {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 50% 55%, rgba(26,16,8,0.35) 0%, rgba(26,16,8,0.75) 65%, rgba(26,16,8,0.92) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
-    .page-hero-inner {
-      position: relative;
-      z-index: 2;
     }
     @media (prefers-reduced-motion: reduce) {
       .ish-card { animation-play-state: paused !important; }
@@ -361,17 +355,13 @@
 
 <div class="page">
   <div class="page-hero">
-    <div class="ish-wrap" id="cert-corridor" aria-hidden="true"></div>
-    <div class="ish-veil"></div>
-    <div class="page-hero-inner">
-      <div class="page-rune">✦ The Spellbook ✦</div>
-      <h1 class="page-title">Mastered Incantations</h1>
-      <p class="page-subtitle">Ancient orders, seals, and certifications of dark mastery</p>
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-rune">🪄</div>
-        <div class="divider-line"></div>
-      </div>
+    <div class="page-rune">✦ The Spellbook ✦</div>
+    <h1 class="page-title">Mastered Incantations</h1>
+    <p class="page-subtitle">Ancient orders, seals, and certifications of dark mastery</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🪄</div>
+      <div class="divider-line"></div>
     </div>
   </div>
 
@@ -637,6 +627,11 @@
           <div class="cert-id">ID: ECC6497135280</div><img src="pic/ceh.png" alt="">
         
       </div>
+    </div>
+
+    <div class="tome-gallery-section fade-up">
+      <div class="page-rune">✦ A Glimpse of the Seals ✦</div>
+      <div class="ish-wrap" id="cert-corridor" aria-hidden="true"></div>
     </div>
 
     <div style="text-align:center; margin-top:1rem;" class="fade-up">

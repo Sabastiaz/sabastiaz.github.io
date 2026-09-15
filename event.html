@@ -289,19 +289,13 @@
       opacity: 0.5;
     }
 
-    /* ── Event corridor (bottom section) ── */
-    .tome-gallery-section {
-      margin-top: 4rem;
-      text-align: center;
-    }
+    /* ── Event corridor (hero background) ── */
     .ish-wrap {
       container-type: inline-size;
-      position: relative;
-      height: 320px;
+      position: absolute;
+      inset: 0;
       overflow: hidden;
-      border-radius: 6px;
-      border: 1px solid rgba(201,168,76,0.2);
-      margin-top: 1.75rem;
+      z-index: 0;
     }
     .ish-scene {
       position: absolute;
@@ -325,6 +319,18 @@
       height: 100%;
       object-fit: cover;
       opacity: 0.92;
+    }
+    .ish-veil {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 55%, rgba(26,16,8,0.35) 0%, rgba(26,16,8,0.75) 65%, rgba(26,16,8,0.92) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      position: relative;
+      z-index: 2;
     }
     @media (prefers-reduced-motion: reduce) {
       .ish-card { animation-play-state: paused !important; }
@@ -354,13 +360,17 @@
 
 <div class="page">
   <div class="page-hero">
-    <div class="page-rune">✦ The Great Hall Gatherings ✦</div>
-    <h1 class="page-title">Events</h1>
-    <p class="page-subtitle">Summits, meetups &amp; wizarding gatherings attended</p>
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-rune">🏟️</div>
-      <div class="divider-line"></div>
+    <div class="ish-wrap" id="event-corridor" aria-hidden="true"></div>
+    <div class="ish-veil"></div>
+    <div class="page-hero-inner">
+      <div class="page-rune">✦ The Great Hall Gatherings ✦</div>
+      <h1 class="page-title">Events</h1>
+      <p class="page-subtitle">Summits, meetups &amp; wizarding gatherings attended</p>
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-rune">🏟️</div>
+        <div class="divider-line"></div>
+      </div>
     </div>
   </div>
 
@@ -602,11 +612,6 @@
         <div class="more-coming-text">More gatherings shall be announced</div>
       </div>
 
-    </div>
-
-    <div class="tome-gallery-section fade-up">
-      <div class="page-rune">✦ A Glimpse of the Gatherings ✦</div>
-      <div class="ish-wrap" id="event-corridor" aria-hidden="true"></div>
     </div>
 
     <div style="text-align:center; margin-top:3.5rem;" class="fade-up">

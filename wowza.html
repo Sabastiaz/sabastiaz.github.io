@@ -52,19 +52,27 @@
       background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
     }
 
+    .wowza-wordmark-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
     .wowza-mascot {
       display: block;
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 1rem;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid rgba(255,105,180,0.4);
-      box-shadow: 0 0 30px rgba(255,20,147,0.35);
+      box-shadow: 0 0 20px rgba(255,20,147,0.35);
       transition: transform 0.4s;
+      flex-shrink: 0;
     }
 
-    .wowza-mascot:hover { transform: scale(1.05) rotate(-2deg); }
+    .wowza-mascot:hover { transform: scale(1.08) rotate(-3deg); }
 
     .wowza-logo {
       font-family: 'Cinzel', serif;
@@ -76,7 +84,11 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       filter: drop-shadow(0 0 18px rgba(201,168,76,0.4));
-      margin-bottom: 0.4rem;
+      line-height: 1;
+    }
+
+    @media (max-width: 480px) {
+      .wowza-wordmark-row { flex-direction: column; gap: 0.6rem; }
     }
 
     .wowza-tagline {
@@ -246,6 +258,17 @@
       font-style: italic;
     }
 
+    .member-platform {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      opacity: 0.55;
+      margin-top: 0.3rem;
+    }
+
     .member-link-icon {
       color: var(--text-muted);
       font-size: 0.8rem;
@@ -283,6 +306,12 @@
       color: var(--gold);
       text-shadow: 0 0 14px rgba(201,168,76,0.4);
       display: block;
+    }
+
+    .wstat-num.wstat-emoji {
+      font-size: 1.5rem;
+      text-shadow: none;
+      filter: drop-shadow(0 0 8px rgba(0,0,0,0.4));
     }
 
     .wstat-label {
@@ -338,8 +367,10 @@
 
     <!-- ── Banner ── -->
     <div class="wowza-banner fade-up">
-      <img class="wowza-mascot" src="pic/wowza_logo.png" alt="Wowza Group mascot logo" loading="lazy">
-      <div class="wowza-logo">✦ WOWZA ✦</div>
+      <div class="wowza-wordmark-row">
+        <img class="wowza-mascot" src="pic/wowza_logo.png" alt="Wowza Group mascot logo" loading="lazy">
+        <div class="wowza-logo">✦ WOWZA ✦</div>
+      </div>
       <div class="wowza-tagline">Blue Team · Red Team · Community</div>
       <img class="wowza-team-img" src="pic/wowza4k.jpg" alt="Wowza Group team at Red x Blue Pill Cybersecurity Conference 2026" loading="lazy">
 
@@ -363,11 +394,11 @@
         <div class="wstat-label">Disciplines</div>
       </div>
       <div class="wstat">
-        <span class="wstat-num">🔴</span>
+        <span class="wstat-num wstat-emoji">🔴</span>
         <div class="wstat-label">Red Team</div>
       </div>
       <div class="wstat">
-        <span class="wstat-num">🔵</span>
+        <span class="wstat-num wstat-emoji">🔵</span>
         <div class="wstat-label">Blue Team</div>
       </div>
     </div>
@@ -413,6 +444,7 @@
           <div class="member-info">
             <div class="member-name">Sabastiaz</div>
             <div class="member-role">Founder · Red Team Operator</div>
+            <div class="member-platform">LinkedIn</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
@@ -422,6 +454,7 @@
           <div class="member-info">
             <div class="member-name">Chicken</div>
             <div class="member-role">Blue Team Specialist</div>
+            <div class="member-platform">Portfolio</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
@@ -431,6 +464,7 @@
           <div class="member-info">
             <div class="member-name">Kyokito</div>
             <div class="member-role">XSS Master</div>
+            <div class="member-platform">Medium</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
@@ -440,6 +474,7 @@
           <div class="member-info">
             <div class="member-name">Professorx777</div>
             <div class="member-role">AI Specialist</div>
+            <div class="member-platform">Portfolio</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
@@ -449,6 +484,7 @@
           <div class="member-info">
             <div class="member-name">Natsuiro</div>
             <div class="member-role">No.1 Aseans</div>
+            <div class="member-platform">Medium</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
@@ -458,6 +494,7 @@
           <div class="member-info">
             <div class="member-name">Jockky</div>
             <div class="member-role">Mobile Master</div>
+            <div class="member-platform">Facebook</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
@@ -467,15 +504,17 @@
           <div class="member-info">
             <div class="member-name">Waris</div>
             <div class="member-role">AI Expert</div>
+            <div class="member-platform">Portfolio</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>
-        
+
         <a href="https://www.linkedin.com/in/prawee-lertprasertphan/" class="member-card" target="_blank" rel="noopener">
           <div class="member-avatar">❓</div>
           <div class="member-info">
             <div class="member-name">BigPud</div>
             <div class="member-role">Secret</div>
+            <div class="member-platform">LinkedIn</div>
           </div>
           <span class="member-link-icon">→</span>
         </a>

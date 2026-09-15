@@ -286,6 +286,50 @@
       .track-list { grid-template-columns: 1fr; }
       .stats-row  { flex-direction: column; }
     }
+
+    /* ── Cert corridor (bottom section) ── */
+    .tome-gallery-section {
+      margin-top: 4rem;
+      text-align: center;
+    }
+    .ish-wrap {
+      container-type: inline-size;
+      position: relative;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.2);
+      margin-top: 1.75rem;
+    }
+    .ish-scene {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .ish-layer {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+    .ish-card {
+      position: absolute;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
+      border: 1px solid rgba(201,168,76,0.28);
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ish-card img {
+      width: 78%;
+      height: 78%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.5));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ish-card { animation-play-state: paused !important; }
+    }
   </style>
 </head>
 <body>
@@ -585,6 +629,11 @@
       </div>
     </div>
 
+    <div class="tome-gallery-section fade-up">
+      <div class="page-rune">✦ A Glimpse of the Seals ✦</div>
+      <div class="ish-wrap" id="cert-corridor" aria-hidden="true"></div>
+    </div>
+
     <div style="text-align:center; margin-top:1rem;" class="fade-up">
       <a href="tools.html" class="btn-magic">View Arsenal →</a>
     </div>
@@ -607,6 +656,108 @@
   var btn=document.getElementById('back-to-top');
   window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
   btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script>
+(function(){
+  // Vanilla port of the "image stream" corridor effect: two rails of cards
+  // ride from far behind the screen toward the viewer using CSS 3D transforms.
+  // Geometry is authored as apparent size so consecutive cards keep a constant
+  // size ratio all the way out - see the original React component's notes.
+  var PATH = {
+    perspective: 30,
+    cardWidth: 15,
+    cardHeight: 11,
+    cardRadius: 0.6,
+    birthHeight: 2.2,
+    exitHeight: 38,
+    railBirth: -11,
+    railExit: 42,
+    fan: 3.3,
+    turnBirth: 6,
+    turnExit: 26,
+    stops: 24
+  };
+  var CARDS = 8;
+  var SPEED = 20;
+  var AXIS = 52;
+  var IMAGES = [
+    'pic/oscp.png', 'pic/osep.png', 'pic/cpts.png', 'pic/crta.png',
+    'pic/tenablecert.png', 'pic/ceh.png', 'pic/cadpenx.png', 'pic/ADTS.png',
+    'pic/crid.png', 'pic/crtsv2.png', 'pic/ertl.png', 'pic/HTBCAPE.png', 'pic/PT1.png'
+  ];
+
+  function keyframes(dir, name, p) {
+    var steps = [];
+    for (var s = 0; s <= p.stops; s++) {
+      var u = s / p.stops;
+      var scale = (p.birthHeight / p.cardHeight) * Math.pow(p.exitHeight / p.birthHeight, u);
+      var z = p.perspective * (1 - 1 / scale);
+      var rail = p.railExit - (p.railExit - p.railBirth) * Math.pow(1 - u, p.fan);
+      var turn = p.turnBirth + (p.turnExit - p.turnBirth) * u;
+      steps.push(
+        (u * 100).toFixed(2) + '%{transform:translate3d(' +
+        (dir * rail).toFixed(2) + 'cqw,0,' + z.toFixed(2) + 'cqw) rotateY(' +
+        (-dir * turn).toFixed(2) + 'deg)}'
+      );
+    }
+    return '@keyframes ' + name + '{' + steps.join('') + '}';
+  }
+
+  function init() {
+    var wrap = document.getElementById('cert-corridor');
+    if (!wrap) return;
+
+    var right = 'ish-r-skills';
+    var left = 'ish-l-skills';
+    var css = keyframes(1, right, PATH) + keyframes(-1, left, PATH);
+    var styleEl = document.createElement('style');
+    styleEl.textContent = css;
+    document.head.appendChild(styleEl);
+
+    var scene = document.createElement('div');
+    scene.className = 'ish-scene';
+    scene.style.perspective = PATH.perspective + 'cqw';
+    scene.style.perspectiveOrigin = '50% ' + AXIS + '%';
+
+    var layer = document.createElement('div');
+    layer.className = 'ish-layer';
+    scene.appendChild(layer);
+    wrap.appendChild(scene);
+
+    [right, left].forEach(function(name) {
+      for (var i = 0; i < CARDS; i++) {
+        var img = IMAGES[i % IMAGES.length];
+        var card = document.createElement('div');
+        card.className = 'ish-card';
+        card.style.left = '50%';
+        card.style.top = AXIS + '%';
+        card.style.width = PATH.cardWidth + 'cqw';
+        card.style.height = PATH.cardHeight + 'cqw';
+        card.style.marginLeft = (-PATH.cardWidth / 2) + 'cqw';
+        card.style.marginTop = (-PATH.cardHeight / 2) + 'cqw';
+        card.style.borderRadius = PATH.cardRadius + 'cqw';
+        card.style.animation = name + ' ' + SPEED + 's linear infinite';
+        card.style.animationDelay = (-(i * SPEED) / CARDS) + 's';
+
+        var imgEl = document.createElement('img');
+        imgEl.src = img;
+        imgEl.alt = '';
+        imgEl.loading = 'lazy';
+        imgEl.decoding = 'async';
+        imgEl.draggable = false;
+        card.appendChild(imgEl);
+
+        layer.appendChild(card);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 <script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

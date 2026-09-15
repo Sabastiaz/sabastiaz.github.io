@@ -330,95 +330,6 @@
     @media (prefers-reduced-motion: reduce) {
       .ish-card { animation-play-state: paused !important; }
     }
-
-    /* ── Full-bleed gallery, breaks out of .content's max-width ── */
-    .full-gallery {
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      width: 100vw;
-      height: 82vh;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 3px;
-      background: #0d0803;
-    }
-    .full-gallery-cell {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
-    }
-    .full-gallery-cell img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 10%;
-      box-sizing: border-box;
-      filter: drop-shadow(0 0 10px rgba(0,0,0,0.6));
-      transition: transform 0.5s;
-    }
-    .full-gallery-cell:hover img { transform: scale(1.08); }
-    .full-gallery-cell .cell-caption {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      padding: 1rem 1.2rem;
-      background: linear-gradient(0deg, rgba(13,8,3,0.92) 0%, transparent 100%);
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      color: var(--gold2);
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .full-gallery-cell:hover .cell-caption { opacity: 1; transform: translateY(0); }
-    .full-gallery-cell .cell-caption small {
-      display: block;
-      color: var(--text-muted);
-      font-family: system-ui, sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0;
-      margin-top: 0.15rem;
-    }
-    .full-gallery-veil {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(ellipse at 50% 50%, rgba(13,8,3,0.15) 0%, rgba(13,8,3,0.55) 75%);
-      pointer-events: none;
-    }
-    .full-gallery-title {
-      text-align: center;
-      pointer-events: none;
-    }
-    .full-gallery-title .section-rune {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.8;
-      margin-bottom: 0.4rem;
-    }
-    .full-gallery-title h2 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      color: var(--text);
-      text-shadow: 0 0 30px rgba(0,0,0,0.9), 0 0 14px rgba(201,168,76,0.3);
-      margin: 0;
-    }
-    @media (max-width: 900px) {
-      .full-gallery { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); height: 70vh; }
-    }
-    @media (max-width: 560px) {
-      .full-gallery { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
-    }
   </style>
 </head>
 <body>
@@ -477,47 +388,87 @@
     </div>
 
     <!-- ── I. Offensive Security ── -->
-    <div class="full-gallery fade-up">
-      <div class="full-gallery-cell">
-        <img src="pic/osep.png" alt="">
-        <div class="cell-caption">OffSec Experienced Penetration Tester (OSEP)<small>OffSec &middot; Aug 2025 &middot; Active</small></div>
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/oscp.png" alt="">
-        <div class="cell-caption">OffSec Certified Professional (OSCP)<small>OffSec &middot; Oct 2024 &middot; Active</small></div>
-      </div>
-      <div class="full-gallery-cell">
-        <div class="full-gallery-veil">
-          <div class="full-gallery-title">
-            <div class="section-rune">Chapter I</div>
-            <h2>Offensive Security</h2>
+    <div class="cert-section fade-up">
+      <div class="section-rune">Chapter I</div>
+      <div class="section-title">Offensive Security</div>
+      <div class="section-hdivider"></div>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">OffSec Experienced Penetration Tester (OSEP)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">OffSec</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Aug 2025</span>
+          </div>
+          <div class="cert-id">ID: 158156733</div><img src="pic/osep.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">OffSec Certified Professional (OSCP)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">OffSec</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Oct 2024</span>
+          </div>
+          <div class="cert-id">ID: 119488898</div><img src="pic/oscp.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">HTB Certified Penetration Testing Specialist (CPTS)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Hack The Box</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Apr 2025</span>
+          </div>
+          <div class="cert-id">ID: HTBCERT-43AC847A36</div><img src="pic/cpts.png" alt="">
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">Red Team Operator (CRTO)</div>
+            <span class="cert-status status-active">Active</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Zero-Point Security</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Oct 2025</span>
+          </div><img src="pic/Zero-Point Security - Red Team Operator - 2025-10-05.png" alt="">
+        </div>
+        
+        <div class="cert-card">
+          <div class="cert-header">
+            <div class="cert-name">HTB Certified Active Directory Pentesting Expert (CAPE)</div>
+            <span class="cert-status status-active">Active</span>
+            </div>
+            <div class="cert-meta">
+            <span class="cert-issuer">Hack The Box</span>
+            <span class="cert-dot"></span>
+            <span class="cert-date">Mar 2026</span>
+            </div>
+            <div class="cert-id">ID: HTBCERT-4461DBC502</div><img src="pic/HTBCAPE.png" alt="">
+          </div>
+        
+
+        <div class="cert-card coming-soon">
+          <div class="cert-header">
+            <div class="cert-name">OffSec Certified Web Expert (OSWE)</div>
+            <span class="cert-status status-soon">Coming Soon</span>
+          </div>
+          <div class="cert-meta">
+            <span class="cert-issuer">OffSec</span>
           </div>
         </div>
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/cpts.png" alt="">
-        <div class="cell-caption">HTB Certified Penetration Testing Specialist (CPTS)<small>Hack The Box &middot; Apr 2025 &middot; Active</small></div>
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/HTBCAPE.png" alt="">
-        <div class="cell-caption">HTB Certified Active Directory Pentesting Expert (CAPE)<small>Hack The Box &middot; Mar 2026 &middot; Active</small></div>
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/Zero-Point Security - Red Team Operator - 2025-10-05.png" alt="">
-        <div class="cell-caption">Red Team Operator (CRTO)<small>Zero-Point Security &middot; Oct 2025 &middot; Active</small></div>
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/osep.png" alt="" style="opacity:0.6;">
-        <div class="cell-caption">OffSec Certified Web Expert (OSWE)<small>OffSec &middot; Coming Soon</small></div>
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/oscp.png" alt="" style="opacity:0.6;">
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/cpts.png" alt="" style="opacity:0.6;">
-      </div>
-      <div class="full-gallery-cell">
-        <img src="pic/HTBCAPE.png" alt="" style="opacity:0.6;">
+
       </div>
     </div>
 

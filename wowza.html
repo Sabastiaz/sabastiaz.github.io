@@ -17,13 +17,13 @@
   <meta property="og:url" content="https://sabastiaz.github.io/wowza.html" />
   <meta property="og:title" content="Sabastiaz | Red Team Sorcerer" />
   <meta property="og:description" content="Penetration Tester, Offensive Security Specialist &amp; Founder of Wowza Group. Tenable Guardian of Thailand." />
-  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/wowza4k.jpg" />
   <meta property="og:locale" content="th_TH" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sabastiaz | Red Team Sorcerer" />
   <meta name="twitter:description" content="Red Team Specialist, OSEP/OSCP/CRTO/CPTS certified. Founder of Wowza Group. Tenable Guardian of Thailand." />
-  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/wowza4k.jpg" />
   <!-- Apple -->
   <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
   <link rel="stylesheet" href="style.css" />
@@ -145,9 +145,13 @@
     /* ── Focus pillars ── */
     .pillars-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
       margin-bottom: 3.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .pillars-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     .pillar-card {
@@ -324,7 +328,7 @@
     }
 
     @media (max-width: 768px) {
-      .pillars-grid  { grid-template-columns: repeat(2, 1fr); }
+      .pillars-grid  { grid-template-columns: 1fr; }
       .members-grid  { grid-template-columns: 1fr; }
       .wowza-stats   { flex-direction: column; }
     }

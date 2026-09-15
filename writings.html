@@ -259,6 +259,53 @@
     @media (max-width: 768px) {
       .tomes-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── Tome corridor (hero background) ── */
+    .ish-wrap {
+      container-type: inline-size;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .ish-scene {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .ish-layer {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+    .ish-card {
+      position: absolute;
+      overflow: hidden;
+      background: #1a1008;
+      border: 1px solid rgba(201,168,76,0.28);
+      backface-visibility: hidden;
+    }
+    .ish-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.92;
+    }
+    .ish-veil {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 55%, rgba(26,16,8,0.35) 0%, rgba(26,16,8,0.75) 65%, rgba(26,16,8,0.92) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      position: relative;
+      z-index: 2;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ish-card { animation-play-state: paused !important; }
+    }
   </style>
 </head>
 <body>
@@ -284,13 +331,17 @@
 
 <div class="page">
   <div class="page-hero">
-    <div class="page-rune">✦ The Restricted Section ✦</div>
-    <h1 class="page-title">Published Tomes</h1>
-    <p class="page-subtitle">Forbidden scrolls shared with the wizarding world</p>
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-rune">📚</div>
-      <div class="divider-line"></div>
+    <div class="ish-wrap" id="tome-corridor" aria-hidden="true"></div>
+    <div class="ish-veil"></div>
+    <div class="page-hero-inner">
+      <div class="page-rune">✦ The Restricted Section ✦</div>
+      <h1 class="page-title">Published Tomes</h1>
+      <p class="page-subtitle">Forbidden scrolls shared with the wizarding world</p>
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-rune">📚</div>
+        <div class="divider-line"></div>
+      </div>
     </div>
   </div>
 
@@ -693,6 +744,110 @@
   var btn=document.getElementById('back-to-top');
   window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300);},{passive:true});
   btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script>
+(function(){
+  // Vanilla port of the "image stream" corridor effect: two rails of cards
+  // ride from far behind the screen toward the viewer using CSS 3D transforms.
+  var PATH = {
+    perspective: 30,
+    cardWidth: 15,
+    cardHeight: 10,
+    cardRadius: 0.5,
+    birthHeight: 2.2,
+    exitHeight: 40,
+    railBirth: -11,
+    railExit: 42,
+    fan: 3.3,
+    turnBirth: 6,
+    turnExit: 26,
+    stops: 24
+  };
+  var CARDS = 8;
+  var SPEED = 22;
+  var AXIS = 52;
+  var IMAGES = [
+    'pic/thumb/Godpotato.jpg', 'pic/thumb/achievement-2025.jpg', 'pic/thumb/brain-body-3.jpg',
+    'pic/thumb/cpts.jpg', 'pic/thumb/crta.jpg', 'pic/thumb/ctf-fun.jpg', 'pic/thumb/ctfhalf.jpg',
+    'pic/thumb/hackscam.jpg', 'pic/thumb/halo2025.jpg', 'pic/thumb/impostor-mountain.jpg',
+    'pic/thumb/keng.jpg', 'pic/thumb/mssql-domain.jpg', 'pic/thumb/oscp-guide.jpg',
+    'pic/thumb/oscp.jpg', 'pic/thumb/osep.jpg', 'pic/thumb/rustpotato-1.jpg',
+    'pic/thumb/singapore.jpg', 'pic/thumb/sliver-1-startup.jpg', 'pic/thumb/summit2025.jpg',
+    'pic/thumb/tctt2025.jpg', 'pic/thumb/tenablecert.jpg'
+  ];
+
+  function keyframes(dir, name, p) {
+    var steps = [];
+    for (var s = 0; s <= p.stops; s++) {
+      var u = s / p.stops;
+      var scale = (p.birthHeight / p.cardHeight) * Math.pow(p.exitHeight / p.birthHeight, u);
+      var z = p.perspective * (1 - 1 / scale);
+      var rail = p.railExit - (p.railExit - p.railBirth) * Math.pow(1 - u, p.fan);
+      var turn = p.turnBirth + (p.turnExit - p.turnBirth) * u;
+      steps.push(
+        (u * 100).toFixed(2) + '%{transform:translate3d(' +
+        (dir * rail).toFixed(2) + 'cqw,0,' + z.toFixed(2) + 'cqw) rotateY(' +
+        (-dir * turn).toFixed(2) + 'deg)}'
+      );
+    }
+    return '@keyframes ' + name + '{' + steps.join('') + '}';
+  }
+
+  function init() {
+    var wrap = document.getElementById('tome-corridor');
+    if (!wrap) return;
+
+    var right = 'ish-r-tomes';
+    var left = 'ish-l-tomes';
+    var css = keyframes(1, right, PATH) + keyframes(-1, left, PATH);
+    var styleEl = document.createElement('style');
+    styleEl.textContent = css;
+    document.head.appendChild(styleEl);
+
+    var scene = document.createElement('div');
+    scene.className = 'ish-scene';
+    scene.style.perspective = PATH.perspective + 'cqw';
+    scene.style.perspectiveOrigin = '50% ' + AXIS + '%';
+
+    var layer = document.createElement('div');
+    layer.className = 'ish-layer';
+    scene.appendChild(layer);
+    wrap.appendChild(scene);
+
+    [right, left].forEach(function(name) {
+      for (var i = 0; i < CARDS; i++) {
+        var img = IMAGES[i % IMAGES.length];
+        var card = document.createElement('div');
+        card.className = 'ish-card';
+        card.style.left = '50%';
+        card.style.top = AXIS + '%';
+        card.style.width = PATH.cardWidth + 'cqw';
+        card.style.height = PATH.cardHeight + 'cqw';
+        card.style.marginLeft = (-PATH.cardWidth / 2) + 'cqw';
+        card.style.marginTop = (-PATH.cardHeight / 2) + 'cqw';
+        card.style.borderRadius = PATH.cardRadius + 'cqw';
+        card.style.animation = name + ' ' + SPEED + 's linear infinite';
+        card.style.animationDelay = (-(i * SPEED) / CARDS) + 's';
+
+        var imgEl = document.createElement('img');
+        imgEl.src = img;
+        imgEl.alt = '';
+        imgEl.loading = 'lazy';
+        imgEl.decoding = 'async';
+        imgEl.draggable = false;
+        card.appendChild(imgEl);
+
+        layer.appendChild(card);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 <script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

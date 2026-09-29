@@ -228,6 +228,14 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
 .toast.out{opacity:0;transform:translateX(20px);transition:opacity .28s ease-in,transform .28s ease-in}
 @keyframes tin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 
+/* province filter tabs */
+.provtabs{display:inline-flex;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel);align-self:flex-start}
+.provtabs button{font:inherit;font-size:13px;border:0;background:transparent;color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer;min-height:32px;white-space:nowrap}
+.provtabs button.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.provtabs button.sp.on{background:var(--l4);color:#fff}
+.provtabs button.pt.on{background:var(--k4);color:#fff}
+@media (max-width:520px){.provtabs button{padding:8px 12px;min-height:38px}}
+
 /* rangsit citizen reports */
 .rp{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .rp .r{border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-width:0;position:relative;overflow:hidden;text-decoration:none;color:inherit}
@@ -258,6 +266,12 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
     </div>
   </header>
   <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+  <div class="provtabs" role="tablist" aria-label="เลือกพื้นที่เฝ้าระวัง" id="provtabs">
+    <button type="button" class="on" data-prov="all" aria-pressed="true">ทั้งหมด</button>
+    <button type="button" class="pt" data-prov="pt" aria-pressed="false">ปทุมธานี</button>
+    <button type="button" class="sp" data-prov="sp" aria-pressed="false">สมุทรปราการ</button>
+  </div>
 
   <div class="alert" id="alertBox"><div class="al"><strong>คลองรังสิตฯ สะพานแดง: วิกฤต</strong><span>เทศบาลนครรังสิตประเมินจากกล้อง 29 ก.ย. 10:56 น. · <a href="#khlong">ดูฝั่งคลอง 1-4</a></span></div><div class="al"><strong>น้ำล้นตลิ่ง 5 จุด</strong><span>บ้านบางหลวงโดด (+1.73 ม.) · คลองเปรมประชากร หลักหก (+0.45 ม.) · บางปะอิน (+0.44 ม.) · บ้านป้อม (+0.51 ม.) · วัดขนอนใต้ (+0.15 ม.)</span></div></div>
 
@@ -623,6 +637,7 @@ BTS สายสุขุมวิท · สถานีปลายทาง"><
   <a href="#top" data-t="top" class="on"><b>⌂</b><span>ภาพรวม</span></a>
   <a href="#khlong" data-t="khlong"><b>4</b><span>คลอง 1-4</span></a>
   <a href="#near" data-t="near"><b>◎</b><span>ลาดสวาย</span></a>
+  <a href="#samut" data-t="samut" hidden><b>▼</b><span>สมุทร</span></a>
   <a href="#stations-sec" data-t="stations-sec"><b>≋</b><span>ระดับน้ำ</span></a>
   <a href="#cams-sec" data-t="cams-sec"><b>▣</b><span>กล้อง</span></a>
 </nav>
@@ -1230,6 +1245,20 @@ function buildCams(){
   CAMSETS.push(["a",all],["z",zone]); loadCams();
 }
 function loadCams(){for(const [pre,list] of CAMSETS) list.forEach(({c},j)=>{const img=$(pre+"img"+j);const sep=c.src.indexOf("?")>-1?"&":"?";img.src=c.src+sep+"t="+Date.now()})}
+
+/* ---------- province filter ---------- */
+const PROV_HIDE = {pt:["samut"], sp:["rp-sec","khlong"]};
+const PROV_MNAV_HIDE = {pt:["samut"], sp:["khlong","near"]};
+function applyProv(mode){
+  const hide=PROV_HIDE[mode]||[];
+  ["rp-sec","khlong","samut"].forEach(id=>{const el=$(id); if(el)el.hidden=hide.includes(id)});
+  const mHide=PROV_MNAV_HIDE[mode]||[];
+  document.querySelectorAll("#mnav a").forEach(a=>{const t=a.dataset.t;if(["khlong","near","samut"].includes(t)){a.hidden = mHide.includes(t) || (t==="samut" && mode!=="sp" && mode!=="all")}});
+  document.querySelectorAll("#provtabs button").forEach(b=>{const on=b.dataset.prov===mode; b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false")});
+  try{localStorage.setItem("provFilter",mode)}catch(e){}
+}
+document.querySelectorAll("#provtabs button").forEach(b=>b.addEventListener("click",()=>applyProv(b.dataset.prov)));
+try{const saved=localStorage.getItem("provFilter"); if(saved && ["all","pt","sp"].includes(saved)) applyProv(saved); else applyProv("all")}catch(e){applyProv("all")}
 
 /* ---------- boot ---------- */
 render(); bindTips("mapbox","tip"); bindTips("zmapbox","ztip"); buildCams(); buildDdsCams(); loadDdsCams();

@@ -735,10 +735,14 @@ async function fetchLive(){
 }
 async function refresh(){
   const btn=document.getElementById("refreshBtn"); btn.disabled=true; btn.textContent="กำลังโหลด…";
+  const prevTime=state.time, prevCanalKey=zstate.canal.map(c=>c.k+":"+(c.t||"")+":"+(c.v??"")).join("|");
   try{ state = await fetchLive(); }
   catch(e){ state.live=false; }
   await fetchZoneLive();
-  nextAt=Date.now()+REFRESH_MS; btn.disabled=false; btn.textContent="อัปเดตตอนนี้"; render();
+  nextAt=Date.now()+REFRESH_MS; btn.disabled=false; btn.textContent="อัปเดตตอนนี้";
+  const nextCanalKey=zstate.canal.map(c=>c.k+":"+(c.t||"")+":"+(c.v??"")).join("|");
+  const changed=(state.time!==prevTime)||(nextCanalKey!==prevCanalKey)||alertState.firstLoad;
+  if(changed) render(); else { $("dataTime").textContent=fmtTime(state.time); }
   alertState.firstLoad=false;
 }
 

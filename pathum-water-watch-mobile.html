@@ -212,6 +212,21 @@ section,header{scroll-margin-top:12px}
   .summary .stat:last-child{grid-column:1/-1}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* alert bell + toasts */
+button.bell{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;line-height:1}
+button.bell svg{width:16px;height:16px;flex:none}
+button.bell.on{background:var(--l5);color:#fff;border-color:var(--l5)}
+button.bell.on .bs{color:#fff}
+button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);letter-spacing:.04em}
+@media (max-width:900px){button.bell{min-height:40px;padding:8px 12px}}
+.toasts{position:fixed;top:16px;right:16px;z-index:100;display:flex;flex-direction:column;gap:10px;max-width:min(360px,calc(100vw - 32px));pointer-events:none}
+.toast{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--l5);padding:10px 32px 10px 14px;display:flex;flex-direction:column;gap:2px;box-shadow:0 8px 24px rgba(0,0,0,.18);pointer-events:auto;position:relative;animation:tin .28s ease-out}
+.toast strong{font-family:var(--display);font-size:14px;color:var(--ink)}
+.toast span{color:var(--muted);font-size:12.5px}
+.toast button{position:absolute;top:4px;right:6px;background:transparent;border:0;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:2px 8px;font-family:var(--body)}
+.toast.out{opacity:0;transform:translateX(20px);transition:opacity .28s ease-in,transform .28s ease-in}
+@keyframes tin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 </style>
 
 </head><body><div class="wrap">
@@ -223,10 +238,12 @@ section,header{scroll-margin-top:12px}
     <div class="status">
       <span class="pill snap" id="modePill"><span class="dot"></span><span id="modeText">ข้อมูลสำรอง (ยังเชื่อมต่อสดไม่ได้)</span></span>
       <span class="pill"><span class="note">ข้อมูลล่าสุด</span> <span class="num" id="dataTime">29 ก.ย. 10:20 น.</span></span>
-      <span class="pill"><span class="note">รีเฟรชใน</span> <span class="num" id="countdown">10:00</span></span>
+      <span class="pill"><span class="note">รีเฟรชใน</span> <span class="num" id="countdown">01:00</span></span>
+      <button class="bell" id="bellBtn" type="button" aria-pressed="false" aria-label="เปิดเสียงแจ้งเตือนจุดวิกฤต" title="เปิด/ปิดเสียงแจ้งเตือน"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="bs" id="bellState">ปิด</span></button>
       <button class="btn" id="refreshBtn" type="button">อัปเดตตอนนี้</button>
     </div>
   </header>
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
 
   <div class="alert" id="alertBox"><div class="al"><strong>คลองรังสิตฯ สะพานแดง: วิกฤต</strong><span>เทศบาลนครรังสิตประเมินจากกล้อง 29 ก.ย. 10:56 น. · <a href="#khlong">ดูฝั่งคลอง 1-4</a></span></div><div class="al"><strong>น้ำล้นตลิ่ง 5 จุด</strong><span>บ้านบางหลวงโดด (+1.73 ม.) · คลองเปรมประชากร หลักหก (+0.45 ม.) · บางปะอิน (+0.44 ม.) · บ้านป้อม (+0.51 ม.) · วัดขนอนใต้ (+0.15 ม.)</span></div></div>
 
@@ -678,7 +695,7 @@ const LANDMARKS = [
 const DEPTH = {A:["ระดับข้อเท้า","--dA",1],K:["ระดับเข่า","--dK",2],W:["ระดับเอว","--dW",3],X:["รถเล็กผ่านไม่ได้","--dX",4]};
 const SEGS = ["ตะวันตกคลอง 1 (ถึงคลองเปรมฯ)","คลอง 1-2","คลอง 2-3","คลอง 3-4","ตะวันออกคลอง 4 (ถึงคลอง 5)"];
 const API = "https://api-v3.thaiwater.net/api/v1/thaiwater30/public/";
-const REFRESH_MS = 10*60*1000;
+const REFRESH_MS = 60*1000;
 const BBOX = {w:100.24,e:100.98,s:13.83,n:14.46};
 
 const CAMS = [
@@ -722,6 +739,7 @@ async function refresh(){
   catch(e){ state.live=false; }
   await fetchZoneLive();
   nextAt=Date.now()+REFRESH_MS; btn.disabled=false; btn.textContent="อัปเดตตอนนี้"; render();
+  alertState.firstLoad=false;
 }
 
 async function fetchZoneLive(){
@@ -764,9 +782,57 @@ function render(){
   $("modeText").textContent=state.live?"ข้อมูลสด ThaiWater":"ข้อมูลสำรอง (ยังเชื่อมต่อสดไม่ได้)";
   $("dataTime").textContent=fmtTime(state.time);
   $("footMode").textContent=state.live
-    ? "ดึงข้อมูลสดจาก api-v3.thaiwater.net ทุก 10 นาที (ค่าที่สถานีส่วนใหญ่อัปเดตทุก 10 นาที ถึง 1 ชั่วโมง)"
-    : "หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 10 นาทีโดยอัตโนมัติ";
+    ? "ดึงข้อมูลสดจาก api-v3.thaiwater.net ทุก 1 นาที (ค่าที่สถานีส่วนใหญ่อัปเดตทุก 10 นาที ถึง 1 ชั่วโมง)"
+    : "หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 1 นาทีโดยอัตโนมัติ";
   renderSummary(); renderAlert(); renderMap(); renderStations(); renderChain(); renderRain(); renderZone();
+  checkAlerts();
+}
+
+/* ---------- alerts (bell + toast + beep) ---------- */
+const alertState = {enabled:false, seen:new Set(), firstLoad:true, audio:null};
+function ensureAudio(){
+  if(!alertState.audio){
+    try{ const Ctx=window.AudioContext||window.webkitAudioContext; if(Ctx) alertState.audio=new Ctx(); }catch(e){}
+  }
+  if(alertState.audio && alertState.audio.state==="suspended") alertState.audio.resume();
+}
+function beep(){
+  const ctx=alertState.audio; if(!ctx) return;
+  const now=ctx.currentTime;
+  [[880,0],[660,0.32]].forEach(([freq,offset])=>{
+    const t=now+offset;
+    const osc=ctx.createOscillator(), gain=ctx.createGain();
+    osc.type="sine"; osc.frequency.value=freq;
+    gain.gain.setValueAtTime(0,t);
+    gain.gain.linearRampToValueAtTime(0.22,t+0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001,t+0.28);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t); osc.stop(t+0.3);
+  });
+}
+function toast(title,body){
+  const box=document.getElementById("toasts"); if(!box) return;
+  const el=document.createElement("div"); el.className="toast";
+  el.innerHTML=`<strong></strong><span></span><button aria-label="ปิด">×</button>`;
+  el.querySelector("strong").textContent=title;
+  el.querySelector("span").textContent=body;
+  const kill=()=>{ el.classList.add("out"); setTimeout(()=>el.remove(),300); };
+  el.querySelector("button").addEventListener("click",kill);
+  setTimeout(kill,12000);
+  box.appendChild(el);
+}
+function checkAlerts(){
+  const crit=(state.wl||[]).filter(s=>s.lvl>=5 && s.code);
+  if(alertState.firstLoad){ alertState.seen=new Set(crit.map(s=>s.code)); return; }
+  const fresh=crit.filter(s=>!alertState.seen.has(s.code));
+  crit.forEach(s=>alertState.seen.add(s.code));
+  if(!fresh.length) return;
+  if(alertState.enabled) beep();
+  fresh.forEach(s=>{
+    const where=[s.amphoe,s.prov].filter(Boolean).join(" · ");
+    const over=s.diff!=null?` · ${s.over?"สูงกว่า":"ต่ำกว่า"}ตลิ่ง ${s.diff.toFixed(2)} ม.`:"";
+    toast(`จุดวิกฤตใหม่: ${s.name||s.code}`, `${where}${over}`);
+  });
 }
 
 function renderSummary(){
@@ -1020,6 +1086,14 @@ render(); bindTips("mapbox","tip"); bindTips("zmapbox","ztip"); buildCams();
   links.forEach(a=>a.addEventListener("click",e=>{const el=document.getElementById(a.dataset.t);if(el){e.preventDefault();el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}}));
 })();
 $("refreshBtn").addEventListener("click",()=>{refresh();loadCams()});
+$("bellBtn").addEventListener("click",()=>{
+  alertState.enabled=!alertState.enabled;
+  const btn=$("bellBtn");
+  btn.classList.toggle("on",alertState.enabled);
+  btn.setAttribute("aria-pressed",alertState.enabled?"true":"false");
+  $("bellState").textContent=alertState.enabled?"เปิด":"ปิด";
+  if(alertState.enabled){ ensureAudio(); beep(); }
+});
 setInterval(()=>{const s=Math.max(0,Math.round((nextAt-Date.now())/1000));$("countdown").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");if(s===0){nextAt=Date.now()+REFRESH_MS;refresh()}},1000);
 setInterval(loadCams,60000);
 refresh();

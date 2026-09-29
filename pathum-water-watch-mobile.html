@@ -227,6 +227,21 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
 .toast button{position:absolute;top:4px;right:6px;background:transparent;border:0;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:2px 8px;font-family:var(--body)}
 .toast.out{opacity:0;transform:translateX(20px);transition:opacity .28s ease-in,transform .28s ease-in}
 @keyframes tin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* rangsit citizen reports */
+.rp{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.rp .r{border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-width:0;position:relative;overflow:hidden;text-decoration:none;color:inherit}
+.rp .r:hover{border-color:var(--accent)}
+.rp .rf{aspect-ratio:4/3;background:var(--soft);position:relative;overflow:hidden}
+.rp .rf img{width:100%;height:100%;object-fit:cover;display:block}
+.rp .rf .dp{position:absolute;bottom:6px;left:6px;font-size:11.5px;padding:2px 8px;border-radius:3px;color:#fff;font-weight:600}
+.rp .rf .vd{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.65);color:#fff;font-size:10.5px;padding:2px 6px;border-radius:3px;font-family:var(--mono);display:flex;align-items:center;gap:4px}
+.rp .rm{padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:12.5px;min-width:0}
+.rp .rm b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px}
+.rp .rm small{color:var(--muted);font-size:11.5px;display:flex;justify-content:space-between;gap:8px}
+.rp .rm small span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.rp .rm small span:last-child{flex:none}
+.rp .empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;border:1px dashed var(--line)}
 </style>
 
 </head><body><div class="wrap">
@@ -582,6 +597,12 @@ BTS สายสุขุมวิท · สถานีปลายทาง"><
     </div>
   </section>
 
+  <section class="panel" id="rp-sec">
+    <div class="phead"><h2>รายงานภาพน้ำท่วมจากประชาชน · ทน.รังสิต</h2><span class="note" id="rpNote">กำลังโหลดจาก cdp.rangsitcity.go.th …</span></div>
+    <div class="rp" id="rp"><div class="empty">กำลังโหลดรายงานล่าสุด …</div></div>
+    <div class="note"><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">ดูทั้งหมด + แผนที่หมุด + เล่นวิดีโอที่ต้นทาง ↗</a></div>
+  </section>
+
   <footer>
     <div>แหล่งข้อมูล: คลังข้อมูลน้ำแห่งชาติ (ThaiWater, สสน.) รวมโทรมาตรของ สสน. และกรมชลประทาน · ภาพกล้องจากเทศบาลนครรังสิต และสถานี ThaiWater</div>
     <div id="footMode">หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 10 นาทีโดยอัตโนมัติ</div>
@@ -679,6 +700,38 @@ const SNAP_ZRAIN = `คลองลาดพร้าว ท้ายปตร.�
 const SNAP_FC = {start:10, h:"0:14 0.1:35 0.1:64 0.2:82 0.3:78 0.1:62 0:47 0.4:37 0.1:28 0:20 0:14 0:9 0:6 0:5 0:6 0:6 0:5 0:3 0:2 0:1 0:0 0:0 0:3 0:8"};
 /* citizen flood reports, Rangsit City Data Platform, last 7 days (UTC): lat,lng,depth,time */
 const RPT_REF = Date.UTC(2026,8,29,3,56);
+const SNAP_RP_TIME = "2026-09-29 12:49";
+const SNAP_RP = `P5JAEGVWGN~KNEE~13.98139583109224~100.6669145822525~1~7~2026-09-29T05:34:37.363Z~ชลมารคพิจารณ์, ตำบลลาดสวาย~รถเล็กเสี่ยง
+HRUQV9ZC7H~KNEE~13.97536079618722~100.6251029670239~0~0~2026-09-29T05:31:50.085Z~เพลิน เพลิน คอนโด ซอย  8~
+LKZZQX622M~WAIST~13.94697312942714~100.6321165861519~1~5~2026-09-29T05:28:19.568Z~บ้านทาวเฮาส์ 99/106 ซ.พหลโยธิน64(กม27) คูคต ลำลูกกา ปทุมธานี (เลี้ยวซ้ายข้องร้าน~นํ้ายังคงที่ แต่อยากทราบนํ้าไม่มีแล้วทำไมระดับนํ้าไม่ลดลงเลยสัก ซม
+6V6EA9QQ7S~KNEE~13.9932328176525~100.6670218706131~0~0~2026-09-29T05:23:50.196Z~ชลมารคพิจารณ์, ตำบลลาดสวาย~
+578L9WSPPY~KNEE~13.9796287763284~100.6355595588684~1~5~2026-09-29T04:50:16.986Z~สิริวลัย~น้ำไม่ลดลงเลยมา4วันแล้วค่ะ ขยะหนอนขึ้นแล้วค่ะ
+KY3T7XYFL4~KNEE~13.95056618733873~100.663332939148~0~0~2026-09-29T04:47:49.514Z~พฤกษา 17 เฟส 4~
+FM6GE9BRDV~KNEE~13.97424237821364~100.622704321793~1~24~2026-09-29T04:21:09.863Z~หพลโยธิน 94 (ถนนสร้างใหม่ หรือซอยลุงพาย)~น้ำท่วมสูงเลยเข่าระนาบน้ำเสมอคลอง มองไม่เห็นถนน รถใหญ่เข้าม
+SNGP3QPJKA~KNEE~13.95410441683454~100.6377518177032~1~23~2026-09-29T04:15:05.971Z~ลำลูกกา3~
+U3UDPCCG6S~KNEE~13.95937635615642~100.6248159706593~0~0~2026-09-29T03:46:59.296Z~ตำบลคูคต~
+J7JZ8M93WY~WAIST~13.95125340334801~100.6611424684525~0~0~2026-09-29T03:33:42.896Z~ตำบลคูคต~น้ำไม่ลดลง
+N3XDL6SMF4~WAIST~13.9682711~100.624259~0~0~2026-09-29T00:00:46.072Z~ซอยสามัคคี2 หลัง รพ.แพทย์รังสิต~น้ำขึ้นเรื่อย ตามสถานการณ์
+S2XGDPTHXR~ANKLE~14.0095870157339~100.6231263379851~0~0~2026-09-28T23:55:29.208Z~ซอยคลองหลวง 8/8~
+PP8CAAPPYJ~KNEE~13.98302619222905~100.6440572584469~1~261~2026-09-28T14:50:56.058Z~ตำบลประชาธิปัตย์~
+YQTFVU7G83~KNEE~14.01262558379194~100.6208235025406~1~172~2026-09-28T10:56:19.879Z~มบ. นอร์ทเทรินทาวน์~รถเก๋ง ไม่น่าจะผ่านได้
+HDHK39A9FR~KNEE~14.0137147409809~100.6240161013097~0~0~2026-09-28T10:44:30.960Z~มบ. นอร์ทเทรินทาวน์ เฟส ไพรม~
+RVLWCAM7CP~ANKLE~14.0143395784134~100.625127106905~1~174~2026-09-28T10:37:07.520Z~ตำบลคลองหนึ่ง~
+GFCP6PCC5J~KNEE~13.98579869778672~100.6263197926168~0~0~2026-09-28T08:27:04.641Z~ถนนเลียบคลองรังสิตประยูรศักดิ์, ตำบลประชาธิปัตย์~
+LWRXR3KELM~KNEE~13.98643244526104~100.6293087468075~1~218~2026-09-28T08:22:15.830Z~ถนนเลียบคลองรังสิตประยูรศักดิ์, ตำบลประชาธิปัตย์~
+PXWQVQRCR2~KNEE~13.98668837065233~100.6312217825106~1~205~2026-09-28T08:20:20.351Z~ซอยรังสิต-นครนายก 28/1, ตำบลประชาธิปัตย์~
+LTXC5N2LUC~KNEE~13.9870109531896~100.6320093507268~1~156~2026-09-28T08:18:41.554Z~ถนนเลียบคลองรังสิตประยูรศักดิ์, ตำบลประชาธิปัตย์~
+P9PQL5DMU2~KNEE~13.99048409678343~100.6346905904546~1~120~2026-09-28T08:00:29.815Z~ซอยรังสิต-นครนายก 23, ตำบลประชาธิปัตย์~
+4U76WPLBAC~KNEE~13.98460394707175~100.6252155516868~1~202~2026-09-28T07:26:06.267Z~ซอยรังสิต-นครนายก 12, ตำบลประชาธิปัตย์~
+UGB2VBG7T4~KNEE~13.9853886625905~100.6243992770678~1~273~2026-09-28T07:24:51.105Z~ถนนเลียบคลองรังสิตประยูรศักดิ์, ตำบลประชาธิปัตย์~
+BTVT2PMD5U~KNEE~13.98343411277947~100.6161275625145~1~503~2026-09-28T07:21:25.895Z~ถนนพหลโยธิน, ตำบลประชาธิปัตย์~
+NB9XAMNWQF~KNEE~13.98449856209115~100.6140585675914~1~327~2026-09-28T07:17:43.521Z~ตลาดรังสิต~
+WPMMRYX7DG~KNEE~14.01740818994509~100.6406262516976~1~150~2026-09-28T07:09:47.411Z~ซ.บงกช38~ซ.บงกช 38  น้ำท่วมสูง ท้ายซอย ระดับเป้า  กลางซอย ระดับหัวเข่า อยากได้อาหาร
+EPNQCJVPKJ~KNEE~13.9547021~100.6524642~1~196~2026-09-28T06:57:12.855Z~ซื่อตรง​ ดอนเมือง​ ลำลูกกา​ คลองสอง~น้ำเพิ่มเรื่อยๆ​ ไม่มีทีท่าจะลดลง
+WRGNL57XY6~KNEE~13.98613506987233~100.6090330736718~1~208~2026-09-28T06:38:54.998Z~ตำบลประชาธิปัตย์~
+H5SZPESNFE~KNEE~13.98628915788327~100.6088426712356~1~122~2026-09-28T06:38:12.264Z~ถนนรังสิต-ปทุมธานี 17, ตำบลประชาธิปัตย์~
+X4J3A7FHZY~KNEE~13.98628915788327~100.6088426712356~1~95~2026-09-28T06:37:15.326Z~ถนนรังสิต-ปทุมธานี 17, ตำบลประชาธิปัตย์~`;
+function parseSnapRp(t){return t.trim().split("\n").map(l=>{const f=l.split("~");return{code:f[0],waterLevel:f[1],latitude:+f[2],longitude:+f[3],hasVideo:f[4]==="1",videoPlays:+f[5]||0,createdAt:f[6],locationName:f[7],description:f[8]||""}})}
 const SNAP_RPT = "13.9594,100.6248,K,09-29 03:46;13.9513,100.6611,W,09-29 03:33;13.9683,100.6243,W,09-29 00:00;14.0096,100.6231,A,09-28 23:55;13.9830,100.6441,K,09-28 14:50;14.0126,100.6208,K,09-28 10:56;14.0137,100.6240,K,09-28 10:44;14.0143,100.6251,A,09-28 10:37;13.9858,100.6263,K,09-28 08:27;13.9864,100.6293,K,09-28 08:22;13.9867,100.6312,K,09-28 08:20;13.9870,100.6320,K,09-28 08:18;13.9905,100.6347,K,09-28 08:00;13.9846,100.6252,K,09-28 07:26;13.9854,100.6244,K,09-28 07:24;13.9834,100.6161,K,09-28 07:21;13.9845,100.6141,K,09-28 07:17;14.0174,100.6406,K,09-28 07:09;13.9547,100.6525,K,09-28 06:57;13.9861,100.6090,K,09-28 06:38;13.9863,100.6088,K,09-28 06:38;13.9863,100.6088,K,09-28 06:37;13.9884,100.6380,K,09-28 04:05;13.9770,100.6562,K,09-28 03:57;13.9797,100.6668,K,09-28 03:56;13.9867,100.6579,K,09-28 03:22;13.9886,100.6389,K,09-28 02:50;14.0313,100.6229,A,09-28 02:48;13.9754,100.6250,K,09-28 02:42;13.9885,100.6387,K,09-28 02:00;14.0034,100.6269,K,09-28 00:40;13.9654,100.6500,K,09-28 00:33;13.9564,100.6220,K,09-27 23:57;13.9568,100.6216,A,09-27 23:52;13.9478,100.6381,K,09-27 20:28;13.9906,100.6248,K,09-27 15:09;13.9867,100.6555,W,09-27 14:43;13.9818,100.6335,K,09-27 14:08;13.9781,100.6334,K,09-27 14:05;13.9779,100.6334,K,09-27 14:03;13.9901,100.6318,K,09-27 14:01;13.9904,100.6246,K,09-27 14:00;13.9868,100.6352,K,09-27 13:44;14.0029,100.6344,A,09-27 09:57;13.9825,100.6084,K,09-27 09:10;13.9831,100.6117,A,09-27 09:07;13.9508,100.6224,K,09-27 09:03;13.9780,100.6232,K,09-27 08:57;13.9845,100.6161,K,09-27 08:57;13.9843,100.6161,K,09-27 08:55;13.9840,100.6228,K,09-27 08:46;13.9835,100.6167,K,09-27 08:40;13.9829,100.6118,A,09-27 08:33;13.9620,100.6375,K,09-27 08:20;13.9726,100.6370,W,09-27 07:10;13.9446,100.6332,K,09-27 05:32;13.9446,100.6332,K,09-27 05:32;13.9866,100.6031,K,09-27 05:01;13.9757,100.6553,W,09-27 03:20;13.9837,100.6316,K,09-27 01:57;13.9914,100.6370,K,09-27 01:54;13.9771,100.6249,K,09-27 01:52;13.9711,100.6278,A,09-27 01:48;13.9814,100.6297,A,09-27 01:40;13.9719,100.6311,A,09-27 01:33;13.9758,100.6335,K,09-27 01:29;13.9868,100.6356,K,09-27 01:27;13.9852,100.6332,K,09-27 01:25;13.9807,100.6334,A,09-27 01:24;13.9889,100.6407,K,09-27 01:20;13.9691,100.6236,X,09-27 00:38;13.9741,100.6249,A,09-26 19:52;13.9607,100.6613,K,09-26 16:26;13.9981,100.6779,A,09-26 13:39;13.9986,100.6808,A,09-26 13:38;13.9731,100.6336,A,09-26 13:19;13.9718,100.6308,A,09-26 13:17;13.9820,100.6296,A,09-26 13:10;13.9860,100.6332,A,09-26 12:57;13.9860,100.6180,A,09-26 12:51;13.9865,100.6179,A,09-26 12:50;13.9872,100.6079,A,09-26 12:48;13.9869,100.6074,A,09-26 12:45;13.9854,100.6546,K,09-26 09:12;13.9806,100.6250,A,09-26 05:57;13.9833,100.6124,A,09-26 05:48;13.9828,100.6112,A,09-26 05:43;13.9827,100.6107,A,09-26 05:32";
 /* sub-district boundaries (OpenStreetMap, simplified) */
 const TAMBON = {
@@ -736,7 +789,7 @@ async function refresh(){
   const prevTime=state.time, prevCanalKey=zstate.canal.map(c=>c.k+":"+(c.t||"")+":"+(c.v??"")).join("|");
   try{ state = await fetchLive(); }
   catch(e){ state.live=false; }
-  await fetchZoneLive();
+  await Promise.all([fetchZoneLive(), refreshRangsit()]);
   nextAt=Date.now()+REFRESH_MS;
   const nextCanalKey=zstate.canal.map(c=>c.k+":"+(c.t||"")+":"+(c.v??"")).join("|");
   const changed=(state.time!==prevTime)||(nextCanalKey!==prevCanalKey)||alertState.firstLoad;
@@ -788,7 +841,7 @@ function render(){
   $("footMode").textContent=state.live
     ? "ดึงข้อมูลสดจาก api-v3.thaiwater.net ทุก 1 นาที (ค่าที่สถานีส่วนใหญ่อัปเดตทุก 10 นาที ถึง 1 ชั่วโมง)"
     : "หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 1 นาทีโดยอัตโนมัติ";
-  renderSummary(); renderAlert(); renderMap(); renderStations(); renderChain(); renderRain(); renderZone();
+  renderSummary(); renderAlert(); renderMap(); renderStations(); renderChain(); renderRain(); renderZone(); renderReports();
   checkAlerts();
 }
 
@@ -824,6 +877,52 @@ function toast(title,body){
   el.querySelector("button").addEventListener("click",kill);
   setTimeout(kill,12000);
   box.appendChild(el);
+}
+/* ---------- Rangsit citizen reports ---------- */
+const RANGSIT_URL="https://cdp.rangsitcity.go.th/api/flood/reports";
+const RANGSIT_IMG=code=>"https://cdp.rangsitcity.go.th/api/flood/image/"+encodeURIComponent(code);
+const RS_DEPTH={ANKLE:{label:"ระดับข้อเท้า",color:"--dA"},KNEE:{label:"ระดับเข่า",color:"--dK"},WAIST:{label:"ระดับเอว",color:"--dW"},CAR:{label:"รถเล็กเสี่ยง",color:"--dX"},HEAD:{label:"ท่วมมิด",color:"--dX"}};
+let rpState={items:parseSnapRp(SNAP_RP),live:false,snapAt:SNAP_RP_TIME};
+async function fetchRangsit(){
+  const tryUrl=u=>withTimeout(fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()}),12000);
+  const key=new URLSearchParams(location.search).get("corskey");
+  try{ return await tryUrl(RANGSIT_URL); }catch(e){}
+  if(key){ try{ return await tryUrl("https://corsproxy.io/?key="+encodeURIComponent(key)+"&url="+encodeURIComponent(RANGSIT_URL)); }catch(e){} }
+  return null;
+}
+async function refreshRangsit(){
+  const j=await fetchRangsit();
+  const items = Array.isArray(j)?j:(j&&Array.isArray(j.reports)?j.reports:(j&&Array.isArray(j.data)?j.data:null));
+  if(items){ rpState.items=items; rpState.live=true; }
+  renderReports();
+}
+function relISO(iso){
+  const d=new Date(iso); if(isNaN(d)) return "-";
+  const s=Math.max(0,Math.round((Date.now()-d.getTime())/1000));
+  if(s<60) return s+" วิที่แล้ว";
+  const mi=Math.floor(s/60); if(mi<60) return mi+" นาทีที่แล้ว";
+  const hr=Math.floor(mi/60); if(hr<24) return hr+" ชม.ที่แล้ว";
+  return Math.floor(hr/24)+" วันที่แล้ว";
+}
+const RANGSIT_VID=code=>"https://cdp.rangsitcity.go.th/api/flood/video/"+encodeURIComponent(code);
+function renderReports(){
+  const box=$("rp"), note=$("rpNote"); if(!box) return;
+  const items=rpState.items;
+  if(!items||!items.length){ box.innerHTML=`<div class="empty">ยังไม่มีรายงาน · <a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">เปิดต้นทาง ↗</a></div>`; note.textContent="0 รายงาน"; return; }
+  const sorted=items.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  const shown=sorted.slice(0,30);
+  box.innerHTML=shown.map(r=>{
+    const d=RS_DEPTH[r.waterLevel]||{label:r.waterLevel||"-",color:"--muted"};
+    const loc=esc(r.locationName||"—");
+    const desc=r.description?esc(r.description):"";
+    const rel=relISO(r.createdAt);
+    const src=esc(RANGSIT_IMG(r.code));
+    const vd=r.hasVideo?`<span class="vd" title="เล่นวิดีโอ ${r.videoPlays||0} ครั้ง">▶ ${r.videoPlays||0}</span>`:"";
+    const href=r.hasVideo?esc(RANGSIT_VID(r.code)):"https://cdp.rangsitcity.go.th/";
+    return `<a class="r" href="${href}" target="_blank" rel="noopener"><div class="rf"><img loading="lazy" src="${src}" alt="ภาพน้ำท่วม"><span class="dp" style="background:var(${d.color})">${esc(d.label)}</span>${vd}</div><div class="rm"><b title="${loc}">${loc}</b><small><span title="${desc}">${desc||"—"}</span><span>${rel}</span></small></div></a>`;
+  }).join("");
+  const tag = rpState.live ? "สด" : `สแนปช็อต ${fmtTime(rpState.snapAt)}`;
+  note.textContent=`${items.length} รายงาน · แสดง ${shown.length} จุดล่าสุด · ${tag} · แตะเพื่อดูรูป/วิดีโอ`;
 }
 function checkAlerts(){
   const crit=(state.wl||[]).filter(s=>s.lvl>=5 && s.code);

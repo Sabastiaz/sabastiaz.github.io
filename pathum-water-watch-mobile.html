@@ -240,7 +240,6 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
       <span class="pill"><span class="note">ข้อมูลล่าสุด</span> <span class="num" id="dataTime">29 ก.ย. 10:20 น.</span></span>
       <span class="pill"><span class="note">รีเฟรชใน</span> <span class="num" id="countdown">01:00</span></span>
       <button class="bell" id="bellBtn" type="button" aria-pressed="false" aria-label="เปิดเสียงแจ้งเตือนจุดวิกฤต" title="เปิด/ปิดเสียงแจ้งเตือน"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="bs" id="bellState">ปิด</span></button>
-      <button class="btn" id="refreshBtn" type="button">อัปเดตตอนนี้</button>
     </div>
   </header>
   <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
@@ -734,15 +733,14 @@ async function fetchLive(){
   return {wl,rain,time,live:true};
 }
 async function refresh(){
-  const btn=document.getElementById("refreshBtn"); btn.disabled=true; btn.textContent="กำลังโหลด…";
   const prevTime=state.time, prevCanalKey=zstate.canal.map(c=>c.k+":"+(c.t||"")+":"+(c.v??"")).join("|");
   try{ state = await fetchLive(); }
   catch(e){ state.live=false; }
   await fetchZoneLive();
-  nextAt=Date.now()+REFRESH_MS; btn.disabled=false; btn.textContent="อัปเดตตอนนี้";
+  nextAt=Date.now()+REFRESH_MS;
   const nextCanalKey=zstate.canal.map(c=>c.k+":"+(c.t||"")+":"+(c.v??"")).join("|");
   const changed=(state.time!==prevTime)||(nextCanalKey!==prevCanalKey)||alertState.firstLoad;
-  if(changed) render(); else { $("dataTime").textContent=fmtTime(state.time); }
+  if(changed) render(); else { paintDataTime(); }
   alertState.firstLoad=false;
 }
 
@@ -778,13 +776,15 @@ const cv=v=>`var(${v})`;
 const lvlColor=l=>cv((LVL[l]||LVL[3])[1]);
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function fmtTime(t){if(!t)return "-";const m=t.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}:\d{2})/);if(!m)return t;const mon=["","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];return `${+m[3]} ${mon[+m[2]]} ${m[4]} น.`}
+function fmtRel(t){if(!t)return "-";const m=t.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/);if(!m)return fmtTime(t);const d=new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5]);const s=Math.max(0,Math.round((Date.now()-d.getTime())/1000));if(s<10)return"เมื่อสักครู่";if(s<60)return s+" วิที่แล้ว";const mi=Math.floor(s/60);if(mi<60)return mi+" นาทีที่แล้ว";const hr=Math.floor(mi/60);if(hr<24)return hr+" ชม."+(mi%60?" "+(mi%60)+" นาที":"")+"ที่แล้ว";return fmtTime(t)}
+function paintDataTime(){const el=$("dataTime");if(!el)return;el.textContent=fmtRel(state.time);el.title=fmtTime(state.time)}
 function deltaTxt(s){if(s.wl==null||s.prev==null)return "";const d=Math.round((s.wl-s.prev)*100);return d===0?"คงที่":(d>0?"▲ +"+d+" ซม.":"▼ "+d+" ซม.")}
 
 /* ---------- render ---------- */
 function render(){
   const pill=$("modePill"); pill.className="pill "+(state.live?"live":"snap");
   $("modeText").textContent=state.live?"ข้อมูลสด ThaiWater":"ข้อมูลสำรอง (ยังเชื่อมต่อสดไม่ได้)";
-  $("dataTime").textContent=fmtTime(state.time);
+  paintDataTime();
   $("footMode").textContent=state.live
     ? "ดึงข้อมูลสดจาก api-v3.thaiwater.net ทุก 1 นาที (ค่าที่สถานีส่วนใหญ่อัปเดตทุก 10 นาที ถึง 1 ชั่วโมง)"
     : "หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 1 นาทีโดยอัตโนมัติ";
@@ -1089,7 +1089,6 @@ render(); bindTips("mapbox","tip"); bindTips("zmapbox","ztip"); buildCams();
   window.addEventListener("scroll",()=>{mark();document.querySelectorAll(".tip").forEach(t=>t.hidden=true)},{passive:true});mark();
   links.forEach(a=>a.addEventListener("click",e=>{const el=document.getElementById(a.dataset.t);if(el){e.preventDefault();el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}}));
 })();
-$("refreshBtn").addEventListener("click",()=>{refresh();loadCams()});
 $("bellBtn").addEventListener("click",()=>{
   alertState.enabled=!alertState.enabled;
   const btn=$("bellBtn");
@@ -1098,7 +1097,7 @@ $("bellBtn").addEventListener("click",()=>{
   $("bellState").textContent=alertState.enabled?"เปิด":"ปิด";
   if(alertState.enabled){ ensureAudio(); beep(); }
 });
-setInterval(()=>{const s=Math.max(0,Math.round((nextAt-Date.now())/1000));$("countdown").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");if(s===0){nextAt=Date.now()+REFRESH_MS;refresh()}},1000);
+setInterval(()=>{const s=Math.max(0,Math.round((nextAt-Date.now())/1000));$("countdown").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");paintDataTime();if(s===0){nextAt=Date.now()+REFRESH_MS;refresh()}},1000);
 setInterval(loadCams,60000);
 refresh();
 })();

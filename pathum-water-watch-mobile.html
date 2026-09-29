@@ -1,0 +1,1028 @@
+﻿<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f6f86">
+<title>เฝ้าระวังน้ำปทุมธานี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans+Thai:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+/* Layout: operations console. Status bar, then map + station gauges side by side, upstream flow chain, rain, CCTV wall, sources. */
+:root{
+  --bg:#eef2f3; --panel:#ffffff; --ink:#132a33; --muted:#5b707a; --line:#d4dde1; --soft:#e3eaed;
+  --accent:#0f6f86; --accent-ink:#ffffff; --land:#dfe7e9; --land-pt:#c9dde2; --river:#6aa9c4;
+  --l1:#8a5a2b; --l2:#c79a1c; --l3:#2f8f4e; --l4:#2a6fd1; --l5:#d23a2f;
+  --k4:#c2410c; --k4-soft:#fbe9df; --dA:#c79a1c; --dK:#e0701a; --dW:#d23a2f; --dX:#7a1414;
+  --display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --body:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1a1f; --panel:#13252c; --ink:#e3eef1; --muted:#93a9b2; --line:#24404a; --soft:#1a3139;
+  --accent:#4fb6cf; --accent-ink:#06222a; --land:#18303a; --land-pt:#1f4550; --river:#3f86a6;
+  --l1:#c08a55; --l2:#e2b93b; --l3:#4cbc72; --l4:#5b9bf0; --l5:#ff6b5e;
+  --k4:#ff8a4c; --k4-soft:#3a2418; --dA:#e2b93b; --dK:#f59a4b; --dW:#ff6b5e; --dX:#ffb4ad; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1a1f; --panel:#13252c; --ink:#e3eef1; --muted:#93a9b2; --line:#24404a; --soft:#1a3139;
+  --accent:#4fb6cf; --accent-ink:#06222a; --land:#18303a; --land-pt:#1f4550; --river:#3f86a6;
+  --l1:#c08a55; --l2:#e2b93b; --l3:#4cbc72; --l4:#5b9bf0; --l5:#ff6b5e;
+  --k4:#ff8a4c; --k4-soft:#3a2418; --dA:#e2b93b; --dK:#f59a4b; --dW:#ff6b5e; --dX:#ffb4ad; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:.01em}
+h1{font-size:clamp(26px,4vw,38px);font-weight:700;line-height:1.1}
+h2{font-size:19px;font-weight:600}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.status{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 12px;font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.pill.live .dot{background:var(--l3);box-shadow:0 0 0 3px color-mix(in srgb,var(--l3) 25%,transparent)}
+.pill.snap .dot{background:var(--l2)}
+button.btn{font:inherit;font-size:13px;border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+button.btn:disabled{opacity:.6;cursor:progress}
+
+.alert{border-left:4px solid var(--l5);background:var(--panel);padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.alert .al{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline}
+.alert strong{font-family:var(--display);font-size:17px}
+
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.stat{background:var(--panel);border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.stat .v{font-family:var(--mono);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat .k{font-size:13px;color:var(--muted)}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+section.panel{background:var(--panel);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.phead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 12px}
+.note{font-size:12.5px;color:var(--muted)}
+
+/* map */
+.mapbox{position:relative}
+.mapbox svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;padding:6px 10px;border-radius:4px;max-width:240px;line-height:1.4}
+
+/* station rows */
+.group{display:flex;flex-direction:column;gap:2px}
+.group>h3{font-size:14px;font-weight:600;color:var(--muted);padding:8px 0 4px;border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:6px minmax(0,1fr) minmax(120px,190px) 64px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--soft);cursor:default}
+.row:hover,.row.hl{background:var(--soft)}
+.stripe{align-self:stretch;border-radius:2px}
+.nm{min-width:0}
+.nm b{font-weight:600;display:block;overflow-wrap:anywhere}
+.nm small{color:var(--muted);font-size:12px}
+.gauge{position:relative;height:10px;background:var(--soft);border-radius:2px;overflow:visible}
+.gauge i{position:absolute;left:0;top:0;bottom:0;border-radius:2px}
+.gauge .bank{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.7}
+.gl{font-size:11.5px;color:var(--muted);margin-top:4px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 8px;white-space:nowrap}
+.val{text-align:right}
+.val .p{font-family:var(--mono);font-size:15px;font-weight:500}
+.val .d{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.chip{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:3px;color:#fff;white-space:nowrap}
+@media (max-width:520px){.row{grid-template-columns:6px minmax(0,1fr) 70px}.row .gwrap{grid-column:2/4}}
+
+/* upstream chain */
+.chain{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.node{border:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:4px;position:relative}
+.node .q{font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums}
+.node .cap{height:6px;background:var(--soft);position:relative}
+.node .cap i{position:absolute;left:0;top:0;bottom:0}
+.node small{color:var(--muted);font-size:12px}
+
+/* rain */
+.rain{display:flex;flex-direction:column;gap:6px}
+.rbar{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) 58px;gap:10px;align-items:center;font-size:13.5px}
+.rbar .t{min-width:0;overflow-wrap:anywhere}
+.rbar .b{height:10px;background:var(--soft);position:relative}
+.rbar .b i{position:absolute;left:0;top:0;bottom:0;background:var(--accent)}
+.rbar .n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* cctv */
+.cams{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.cam{border:1px solid var(--line);display:flex;flex-direction:column;min-width:0;background:var(--panel)}
+.frame{aspect-ratio:16/10;background:var(--ink);position:relative;overflow:hidden;max-width:100%}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+.frame .fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--bg);text-align:center;padding:16px;font-size:13px}
+.frame .fb a{color:var(--bg);border:1px solid color-mix(in srgb,var(--bg) 60%,transparent);padding:6px 14px;border-radius:999px;text-decoration:none}
+.frame .ts{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:3px}
+.frame .rec{position:absolute;right:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;display:flex;gap:6px;align-items:center}
+.frame .rec::before{content:"";width:7px;height:7px;border-radius:50%;background:#ff4b3e}
+.cam .meta{padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.cam .meta b{font-weight:600}
+.cam .meta small{color:var(--muted);font-size:12px}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px 16px}
+.links a{display:flex;flex-direction:column;text-decoration:none;padding:8px 0;border-bottom:1px solid var(--soft)}
+.links a span{color:var(--ink);font-weight:600}
+.links a small{color:var(--muted);font-size:12px}
+
+.hot{display:flex;flex-wrap:wrap;gap:10px}
+.hot div{border:1px solid var(--line);background:var(--panel);padding:8px 14px;display:flex;gap:10px;align-items:baseline}
+.hot b{font-family:var(--mono);font-size:20px}
+footer{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+/* khlong 1-4 zone */
+section.zone{border-top:4px solid var(--k4);gap:16px}
+.zone .zh{font-size:clamp(22px,3vw,28px);font-weight:700}
+.zone .zh em{font-style:normal;color:var(--k4)}
+.flagline{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.flag{border:1px solid var(--line);padding:8px 12px;display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 180px}
+.flag .fl{display:flex;gap:8px;align-items:center;font-weight:600}
+.flag .fl i{width:12px;height:12px;border-radius:2px;flex:none}
+.flag small{color:var(--muted);font-size:12px}
+.flag.now{border-color:var(--l5);background:color-mix(in srgb,var(--l5) 8%,var(--panel))}
+.kgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.kgrid{grid-template-columns:minmax(0,1fr)}}
+.k4{border:2px solid var(--k4);background:var(--k4-soft);padding:14px 16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.k4 h3{font-size:22px;font-weight:700;color:var(--k4);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.k4 h3 span{font-family:var(--body);font-size:12px;font-weight:600;background:var(--k4);color:var(--panel);padding:2px 8px;border-radius:3px}
+.kf{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding-bottom:10px;border-bottom:1px solid color-mix(in srgb,var(--k4) 25%,transparent)}
+.kf:last-child{border-bottom:0;padding-bottom:0}
+.kf b{font-weight:600}
+.kf .kv{font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.kf small{grid-column:1/-1;color:var(--muted);font-size:12.5px}
+.fc{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:2px;align-items:end;height:54px;margin-top:4px}
+.fc i{display:block;background:var(--k4);border-radius:1px 1px 0 0;min-height:2px}
+.fcx{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.stale{display:inline-block;font-size:11px;padding:0 6px;border-radius:3px;background:var(--soft);color:var(--muted);margin-left:4px}
+table.seg{width:100%;border-collapse:collapse;font-size:13.5px}
+table.seg th{font-weight:600;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);font-size:12.5px}
+table.seg th:first-child,table.seg td:first-child{text-align:left}
+table.seg td{padding:8px;border-bottom:1px solid var(--soft);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+table.seg td:first-child{font-family:var(--body)}
+table.seg tr.k4row td{background:var(--k4-soft)}
+table.seg tr.k4row td:first-child{box-shadow:inset 3px 0 0 var(--k4);font-weight:600}
+.tscroll{overflow-x:auto}
+.zg{display:flex;flex-direction:column}
+.zrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:8px 0;border-bottom:1px solid var(--soft)}
+.zrow b{font-weight:600}
+.zrow small{color:var(--muted);font-size:12px}
+.zrow .zv{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.zrow.k4r{box-shadow:inset 3px 0 0 var(--k4);padding-left:10px}
+.zcams{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.near{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.pc{border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0;background:var(--panel)}
+.pc.main{border:2px solid var(--k4)}
+.pc h4{margin:0;font-family:var(--display);font-size:17px;font-weight:700}
+.pc .kind{font-size:11.5px;color:var(--muted);font-family:var(--mono);letter-spacing:.04em}
+.pc .big{display:flex;gap:14px;flex-wrap:wrap;align-items:baseline}
+.pc .big span{font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums}
+.pc .big small{font-size:12px;color:var(--muted)}
+.pc .big span.chip{font-family:var(--body);font-size:11.5px}
+.pc ul{margin:0;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:3px}
+.pc ul li::marker{color:var(--muted)}
+section,header{scroll-margin-top:12px}
+.mnav{display:none}
+@media (max-width:900px){
+  .wrap{padding-block:12px calc(84px + env(safe-area-inset-bottom,0px));gap:14px}
+  .mnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--panel);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around;box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+  .mnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;text-decoration:none;color:var(--muted);font-size:11.5px;padding:4px 2px;min-height:48px;justify-content:center;border-radius:8px}
+  .mnav a b{font-family:var(--mono);font-size:17px;line-height:1.1}
+  .mnav a.on{color:var(--k4);background:var(--k4-soft)}
+  header.top{gap:8px}
+  .status{gap:6px}
+  .status .pill{padding:3px 10px;font-size:12px}
+  button.btn{min-height:40px;padding:8px 16px;font-size:14px}
+  .summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .stat{padding:10px 12px}
+  .stat .v{font-size:22px}
+  .stat .k{font-size:12px;line-height:1.35}
+  section.panel{padding:14px 12px}
+  .k4{padding:12px}
+  .flagline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .flag{padding:6px 8px}
+  .flag .fl{font-size:13px;flex-wrap:wrap;gap:4px}
+  .flag small{font-size:11px}
+  .flag small:last-child{display:none}
+  .legend{font-size:12px;gap:4px 10px}
+  table.seg{font-size:12.5px}
+  table.seg th,table.seg td{padding:6px 5px}
+  .links a{min-height:48px}
+  .tip{font-size:13px;max-width:220px}
+}
+@media (max-width:420px){
+  .flagline{grid-template-columns:minmax(0,1fr)}
+  .flag small:last-child{display:block}
+  .summary .stat:last-child{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head><body><div class="wrap">
+  <header class="top" id="top">
+    <div>
+      <div class="eyebrow">Pathum Thani · Flood Watch · ลุ่มน้ำเจ้าพระยา / บางปะกง</div>
+      <h1>เฝ้าระวังน้ำปทุมธานี</h1>
+    </div>
+    <div class="status">
+      <span class="pill snap" id="modePill"><span class="dot"></span><span id="modeText">ข้อมูลสำรอง (ยังเชื่อมต่อสดไม่ได้)</span></span>
+      <span class="pill"><span class="note">ข้อมูลล่าสุด</span> <span class="num" id="dataTime">29 ก.ย. 10:20 น.</span></span>
+      <span class="pill"><span class="note">รีเฟรชใน</span> <span class="num" id="countdown">10:00</span></span>
+      <button class="btn" id="refreshBtn" type="button">อัปเดตตอนนี้</button>
+    </div>
+  </header>
+
+  <div class="alert" id="alertBox"><div class="al"><strong>คลองรังสิตฯ สะพานแดง: วิกฤต</strong><span>เทศบาลนครรังสิตประเมินจากกล้อง 29 ก.ย. 10:56 น. · <a href="#khlong">ดูฝั่งคลอง 1-4</a></span></div><div class="al"><strong>น้ำล้นตลิ่ง 5 จุด</strong><span>บ้านบางหลวงโดด (+1.73 ม.) · คลองเปรมประชากร หลักหก (+0.45 ม.) · บางปะอิน (+0.44 ม.) · บ้านป้อม (+0.51 ม.) · วัดขนอนใต้ (+0.15 ม.)</span></div></div>
+
+  <div class="summary" id="summary"><div class="stat"><span class="v" style="color:var(--l5)">1/4</span><span class="k">สถานีในจังหวัดที่น้ำล้นตลิ่ง</span></div><div class="stat"><span class="v" style="color:var(--l4)">3</span><span class="k">สถานีในจังหวัดระดับน้ำมาก</span></div><div class="stat"><span class="v" style="color:var(--l5)">1,304</span><span class="k">ลบ.ม./วินาที ไหลผ่าน C.35 บ้านป้อม</span></div><div class="stat"><span class="v" style="color:var(--ink)">17.2</span><span class="k">มม. ฝน 24 ชม. สูงสุด (หนองเสือ)</span></div><div class="stat"><span class="v" style="color:var(--k4)">25</span><span class="k">จุดน้ำท่วมที่ประชาชนแจ้ง ฝั่งคลอง 1-4 ใน 24 ชม.</span></div></div>
+
+  <section class="panel zone" id="khlong">
+    <div class="phead">
+      <div><div class="eyebrow">โซนเฝ้าระวังพิเศษ · ธัญบุรี · คลองหลวง · ลำลูกกา (ลาดสวาย · คูคต)</div><h2 class="zh">ฝั่งคลอง 1 ถึง<em> คลอง 4</em></h2></div>
+      <span class="note">คลองซอยที่ตัดคลองรังสิตประยูรศักดิ์ ไหลลงคลองหกวา (แนวเขต กทม.)</span>
+    </div>
+    <div class="flagline" id="flagline"><div class="flag"><span class="fl"><i style="background:var(--dK)"></i>ธงส้ม <span class="num">1.66 ม.</span></span><small>25 ก.ย. · คลองรังสิตฯ สะพานแดง (ใกล้คลอง 1)</small><small>ที่มา: ฐานเศรษฐกิจ</small></div><div class="flag"><span class="fl"><i style="background:var(--l5)"></i>ธงแดง <span class="num">2.04 ม.</span></span><small>27 ก.ย. 19:05 น. · คลองรังสิตฯ สะพานแดง (ใกล้คลอง 1)</small><small>ที่มา: โพสต์ทูเดย์</small></div><div class="flag now"><span class="fl"><i style="background:var(--l5)"></i>วิกฤต</span><small>29 ก.ย. 10:56 น. · คลองรังสิตฯ สะพานแดง (ใกล้คลอง 1)</small><small>ที่มา: เจ้าหน้าที่ ทน.รังสิต ประเมินจากกล้อง</small></div></div>
+    <div class="kgrid">
+      <div class="mapbox" id="zmapbox"><svg id="zmap" viewBox="0 0 680 680" role="img" aria-label="แผนที่คลอง 1 ถึงคลอง 4 พร้อมจุดน้ำท่วมที่ประชาชนแจ้งและจุดวัดระดับน้ำ"><defs><clipPath id="zclip"><rect x="0" y="0" width="680" height="680"></rect></clipPath></defs><rect x="0" y="0" width="680" height="680" fill="var(--land-pt)"></rect><g clip-path="url(#zclip)"><path d="M0.0,505.5L248.0,505.5L298.7,511.6L351.8,514.0L414.3,512.6L459.7,511.6L502.7,510.2L582.5,507.9L638.3,506.0L718.1,502.7L797.0,484.0L680.0,484.0L680.0,726.9L0.0,726.9Z" fill="var(--land)"></path><path d="M-1.4,-261.2L19.5,-102.2L30.4,-21.6L46.7,100.8L61.2,209.2L71.2,282.3L83.9,377.0L94.3,450.2L98.4,492.4L71.2,546.8L39.9,605.9L11.3,659.8" fill="none" stroke="var(--river)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M248.0,505.5L298.7,511.6L351.8,514.0L414.3,512.6L459.7,511.6L502.7,510.2L582.5,507.9L638.3,506.0L718.1,502.7L797.0,484.0" fill="none" stroke="var(--river)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M-221.7,359.2L-185.9,348.4L-132.4,334.8L-13.1,303.9L71.2,282.3L111.1,271.5L161.8,258.4L232.1,242.5L260.2,236.4L281.5,230.7L327.3,219.0L358.6,212.4L384.9,206.8L464.7,188.5L566.2,143.5L648.3,107.9L737.1,68.9L827.8,33.3" fill="none" stroke="var(--river)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M120.6,-857.7L152.8,-836.2L148.2,-796.8L142.8,-731.6L155.9,-704.4L156.4,-639.2L156.9,-556.7L157.3,-492.4L158.2,-421.1L158.7,-316.6L159.1,-226.0L160.0,-108.8L160.9,68.9L160.9,104.6L161.8,256.1L170.9,315.1L175.0,342.3L203.5,361.1L243.9,382.2L251.6,389.2" fill="none" stroke="var(--river)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M255.2,-536.5L256.1,-394.4L258.4,-121.9L259.8,159.4L260.2,236.4L258.9,266.8L257.0,303.0L253.9,353.1L251.6,389.2L248.4,470.4L247.5,501.8L229.8,540.7L209.4,576.8L186.8,618.1L145.5,640.1L117.9,657.5" fill="none" stroke="var(--river)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M353.1,-589.5L355.4,-322.2L356.8,-111.6L358.1,141.6L358.6,212.4L355.9,285.1L353.1,392.5L352.7,433.8L351.8,500.9L351.8,514.0" fill="none" stroke="var(--river)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M459.2,-647.6L461.9,-199.8L463.8,14.1L464.2,113.0L464.2,184.8L464.2,230.7L463.8,265.4L461.5,376.1L460.1,474.1L459.7,511.6L463.8,556.7L478.3,650.9L485.1,703.4" fill="none" stroke="var(--k4)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path><text x="160.93333333338703" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลอง 1</text><text x="259.30666666669674" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลอง 2</text><text x="357.22666666665805" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลอง 3</text><text x="464.213333333329" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="var(--k4)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลอง 4</text><text x="527.3333333333549" y="188.48275862068533" font-size="12.5" fill="var(--accent)" font-weight="600" transform="rotate(-22 527.3333333333549 188.48275862068533)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลองรังสิตประยูรศักดิ์</text><text x="544" y="501.29655172413544" font-size="12" fill="var(--accent)" font-weight="600" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลองหกวา · แนวเขต กทม.</text><text x="57.20000000003222" y="46.89655172413707" text-anchor="end" font-size="12" fill="var(--accent)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">คลองเปรมฯ</text><text x="317.3333333333548" y="84.4137931034434" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">อ.คลองหลวง</text><text x="394.4" y="318.89655172413705" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">อ.ธัญบุรี</text><text x="317.3333333333548" y="633.103448275863" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">กรุงเทพฯ (สายไหม · คลองสามวา)</text><path d="M248.4,481.2L247.5,501.8L250.7,507.9L256.6,509.8L298.7,511.6L341.8,513.5L351.8,514.0L351.8,500.9L352.2,465.2L352.7,433.8L353.1,412.7L353.1,392.5L354.5,346.1L355.9,285.1L335.9,288.4L327.3,290.3L283.3,301.1L255.7,308.6L228.0,315.1L173.2,327.8L152.8,333.0L106.1,344.2L96.6,346.6L91.6,349.8L92.9,361.6L94.7,378.5L96.6,392.5L97.9,405.2L101.1,398.6L126.0,397.7L145.1,408.0L170.5,421.1L180.9,431.4L181.3,445.5L180.4,465.2L180.0,475.5L248.4,481.2Z" fill="none" fill-opacity="0" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4"></path><text x="247.0666666666774" y="391.5862068965483" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)" font-family="Chakra Petch,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">ต.คูคต</text><path d="M462.4,580.1L538.6,577.8L545.8,577.8L545.4,561.8L549.9,557.6L548.5,509.3L548.5,495.7L548.1,476.0L547.2,448.3L546.3,413.2L546.3,395.3L547.2,375.2L547.6,354.5L551.3,325.0L548.1,315.6L547.6,274.3L546.7,241.0L547.6,229.8L549.4,215.7L508.6,227.9L508.6,245.7L463.8,265.4L398.5,275.3L355.9,285.1L354.5,346.1L353.1,392.5L353.1,412.7L352.7,433.8L352.2,457.7L351.8,500.9L351.8,514.0L375.4,514.0L414.3,512.6L459.7,511.6L475.1,511.2L475.1,518.7L473.3,534.6L469.7,540.2L466.5,549.2L464.2,555.3L463.3,563.7L464.7,575.4L461.5,580.1Z" fill="var(--k4)" fill-opacity="0.1" stroke="var(--k4)" stroke-width="2.5" stroke-dasharray=""></path><text x="451.0666666666774" y="384.5517241379273" text-anchor="middle" font-size="16" font-weight="700" fill="var(--k4)" font-family="Chakra Petch,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">ต.ลาดสวาย</text></g><g data-tip="สถานีรถไฟฟ้าคูคต
+BTS สายสุขุมวิท · สถานีปลายทาง"><circle cx="278.89066666666326" cy="504.7475862068913" r="10" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"></circle><text x="278.89066666666326" y="508.7475862068913" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono,monospace" fill="var(--ink)">T</text></g><text x="292.89066666666326" y="508.7475862068913" text-anchor="start" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">BTS คูคต</text><g data-tip="อนุสรณ์สถานแห่งชาติ
+ถนนพหลโยธิน · ต.คูคต"><circle cx="164.061333333349" cy="412.361379310338" r="10" fill="var(--panel)" stroke="var(--ink)" stroke-width="2"></circle><text x="164.061333333349" y="416.361379310338" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono,monospace" fill="var(--ink)">M</text></g><text x="150.061333333349" y="416.361379310338" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">อนุสรณ์สถานแห่งชาติ</text><g data-tip="ย่านหมู่บ้านรินทร์ทอง
+ลำลูกกา คลอง 2 · ต.คูคต (ตำแหน่งโดยประมาณ)"><circle cx="251.6000000000322" cy="422.0689655172419" r="10" fill="var(--panel)" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 2"></circle><text x="251.6000000000322" y="426.0689655172419" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono,monospace" fill="var(--ink)">R</text></g><text x="265.6000000000322" y="426.0689655172419" text-anchor="start" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">ย่านหมู่บ้านรินทร์ทอง</text><circle cx="116.5" cy="268.7" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 12:32 น."></circle><circle cx="118.8" cy="268.2" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 12:43 น."></circle><circle cx="124.2" cy="265.9" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 12:48 น."></circle><circle cx="181.3" cy="278.6" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 12:57 น."></circle><circle cx="315.5" cy="256.1" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+26 ก.ย. 16:12 น."></circle><circle cx="101.5" cy="249.0" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 19:45 น."></circle><circle cx="103.8" cy="247.6" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 19:48 น."></circle><circle cx="149.1" cy="250.9" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 19:50 น."></circle><circle cx="149.6" cy="253.2" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 19:51 น."></circle><circle cx="218.5" cy="253.2" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 19:57 น."></circle><circle cx="202.2" cy="272.0" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 20:10 น."></circle><circle cx="207.6" cy="319.8" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 20:17 น."></circle><circle cx="220.3" cy="313.7" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 20:19 น."></circle><circle cx="434.3" cy="194.2" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 20:38 น."></circle><circle cx="421.1" cy="196.5" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+26 ก.ย. 20:39 น."></circle><circle cx="345.9" cy="371.9" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+26 ก.ย. 23:26 น."></circle><circle cx="180.9" cy="309.0" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 02:52 น."></circle><circle cx="175.0" cy="332.5" r="8.2" fill="var(--dX)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำรถเล็กผ่านไม่ได้
+27 ก.ย. 07:38 น."></circle><circle cx="252.5" cy="239.6" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:20 น."></circle><circle cx="219.4" cy="278.1" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 08:24 น."></circle><circle cx="218.5" cy="257.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:25 น."></circle><circle cx="229.4" cy="249.5" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:27 น."></circle><circle cx="219.9" cy="301.1" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:29 น."></circle><circle cx="209.0" cy="319.4" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 08:33 น."></circle><circle cx="202.6" cy="274.8" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 08:40 น."></circle><circle cx="194.0" cy="323.1" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 08:48 น."></circle><circle cx="180.9" cy="295.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:52 น."></circle><circle cx="235.7" cy="227.9" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:54 น."></circle><circle cx="211.3" cy="264.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 08:57 น."></circle><circle cx="318.7" cy="301.5" r="6.9" fill="var(--dW)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเอว
+27 ก.ย. 10:20 น."></circle><circle cx="82.1" cy="250.4" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 12:01 น."></circle><circle cx="218.5" cy="447.4" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 12:32 น."></circle><circle cx="218.5" cy="447.4" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 12:32 น."></circle><circle cx="235.7" cy="316.1" r="6.9" fill="var(--dW)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเอว
+27 ก.ย. 14:10 น."></circle><circle cx="238.0" cy="365.8" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 15:20 น."></circle><circle cx="121.5" cy="267.8" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 15:33 น."></circle><circle cx="143.7" cy="265.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 15:40 น."></circle><circle cx="171.4" cy="262.6" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 15:46 น."></circle><circle cx="141.0" cy="261.2" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 15:55 น."></circle><circle cx="173.2" cy="290.8" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 15:57 น."></circle><circle cx="141.0" cy="260.3" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 15:57 น."></circle><circle cx="169.5" cy="418.3" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 16:03 น."></circle><circle cx="121.0" cy="266.8" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 16:07 น."></circle><circle cx="106.1" cy="269.7" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 16:10 น."></circle><circle cx="223.9" cy="174.0" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+27 ก.ย. 16:57 น."></circle><circle cx="227.6" cy="249.5" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 20:44 น."></circle><circle cx="179.5" cy="232.6" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 21:00 น."></circle><circle cx="212.2" cy="234.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 21:01 น."></circle><circle cx="219.4" cy="291.2" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 21:03 น."></circle><circle cx="219.4" cy="290.3" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 21:05 น."></circle><circle cx="219.9" cy="272.9" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 21:08 น."></circle><circle cx="319.6" cy="250.0" r="6.9" fill="var(--dW)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเอว
+27 ก.ย. 21:43 น."></circle><circle cx="180.4" cy="231.7" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+27 ก.ย. 22:09 น."></circle><circle cx="240.7" cy="432.4" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 03:28 น."></circle><circle cx="165.9" cy="390.2" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+28 ก.ย. 06:52 น."></circle><circle cx="167.7" cy="392.1" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 06:57 น."></circle><circle cx="294.7" cy="349.8" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 07:33 น."></circle><circle cx="189.9" cy="171.6" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 07:40 น."></circle><circle cx="243.4" cy="241.5" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 09:00 น."></circle><circle cx="181.3" cy="303.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 09:42 น."></circle><circle cx="171.8" cy="40.8" r="4.3" fill="var(--dA)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+28 ก.ย. 09:48 น."></circle><circle cx="244.3" cy="241.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 09:50 น."></circle><circle cx="330.5" cy="250.0" r="5.6" fill="var(--dK)" opacity="0.45" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 10:22 น."></circle><circle cx="370.8" cy="282.8" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 10:56 น."></circle><circle cx="322.8" cy="295.4" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 10:57 น."></circle><circle cx="240.3" cy="242.0" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 11:05 น."></circle><circle cx="107.9" cy="251.8" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 13:37 น."></circle><circle cx="108.8" cy="252.8" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 13:38 น."></circle><circle cx="107.9" cy="251.8" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 13:38 น."></circle><circle cx="306.0" cy="400.0" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 13:57 น."></circle><circle cx="252.1" cy="106.0" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 14:09 น."></circle><circle cx="131.9" cy="260.3" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 14:17 น."></circle><circle cx="141.0" cy="265.4" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 14:21 น."></circle><circle cx="178.6" cy="256.1" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 14:24 น."></circle><circle cx="182.2" cy="259.8" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 14:26 น."></circle><circle cx="225.3" cy="232.1" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 15:00 น."></circle><circle cx="213.1" cy="248.6" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 15:18 น."></circle><circle cx="209.4" cy="250.0" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 15:20 น."></circle><circle cx="200.8" cy="251.4" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 15:22 น."></circle><circle cx="187.2" cy="254.2" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 15:27 น."></circle><circle cx="181.8" cy="120.5" r="4.3" fill="var(--dA)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+28 ก.ย. 17:37 น."></circle><circle cx="176.8" cy="123.3" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 17:44 น."></circle><circle cx="162.3" cy="128.5" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 17:56 น."></circle><circle cx="267.9" cy="267.3" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+28 ก.ย. 21:50 น."></circle><circle cx="172.7" cy="142.6" r="4.3" fill="var(--dA)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับข้อเท้า
+29 ก.ย. 06:55 น."></circle><circle cx="178.2" cy="336.2" r="6.9" fill="var(--dW)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเอว
+29 ก.ย. 07:00 น."></circle><circle cx="345.0" cy="416.0" r="6.9" fill="var(--dW)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเอว
+29 ก.ย. 10:33 น."></circle><circle cx="180.4" cy="378.0" r="5.6" fill="var(--dK)" opacity="0.95" stroke="var(--panel)" stroke-width="1" data-tip="ประชาชนแจ้ง: น้ำระดับเข่า
+29 ก.ย. 10:46 น."></circle><g data-tip="ปตร.คลองพระยาสุเรนทร์
+ปลายคลอง 4 (ต่อจากคลองหกวา ลง กทม.)
+ระดับ 1.60 ม. · ด้านนอก 2.05 ม.
+28 ก.ย. 13:20 น."><rect x="456.8053333333284" y="549.7558620689658" width="14" height="14" fill="var(--l4)" stroke="var(--panel)" stroke-width="2" transform="rotate(45 463.8053333333284 556.7558620689658)"></rect></g><g data-tip="ค.พระยาสุเรนทร์ ถ.หนองระแหง
+ท้ายน้ำคลอง 4 ในเขต กทม.
+ระดับ 1.63 ม.
+28 ก.ย. 13:20 น."><rect x="471.22133333332965" y="643.8772413793049" width="14" height="14" fill="var(--l5)" stroke="var(--panel)" stroke-width="2" transform="rotate(45 478.22133333332965 650.8772413793049)"></rect></g><g data-tip="ปตร.คลองสองสายใต้
+ปลายคลอง 2 (ลง กทม.)
+ระดับ 1.54 ม. · ด้านนอก 2.06 ม.
+28 ก.ย. 13:20 น."><rect x="217.6266666667064" y="541.9710344827537" width="14" height="14" fill="var(--l4)" stroke="var(--panel)" stroke-width="2" transform="rotate(45 224.6266666667064 548.9710344827537)"></rect></g><g data-tip="ค.เปรมประชากร-ค.บ้านใหม่
+คลองเปรมฯ ตะวันตกคลอง 1
+ระดับ 1.57 ม.
+28 ก.ย. 12:55 น."><rect x="87.24800000001997" y="446.2082758620654" width="14" height="14" fill="var(--l5)" stroke="var(--panel)" stroke-width="2" transform="rotate(45 94.24800000001997 453.2082758620654)"></rect></g><g data-tip="คลองเปรมประชากร หลักหก
+117% ความจุ · ล้นตลิ่ง"><circle cx="79.87733333336641" cy="348.8165517241374" r="8" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-tip="คลองลาดพร้าว ปากคลอง2สายใต้
+58% ความจุ · ปกติ"><circle cx="247.15733333337286" cy="507.2799999999989" r="8" fill="var(--l3)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-tip="คลองลาดพร้าว ท้ายปตร.คลอง2
+81% ความจุ · น้ำมาก"><circle cx="223.8559999999884" cy="551.2689655172411" r="8" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle></g><rect x="216.22666666668385" y="543.7834482758612" width="15.44" height="15.44" fill="none" stroke="var(--accent)" stroke-width="2" data-tip="ฝน 24 ชม. 17.4 มม.
+คลองลาดพร้าว ท้ายปตร.คลอง2"></rect><rect x="239.52666666667741" y="499.8806896551659" width="15.08" height="15.08" fill="none" stroke="var(--accent)" stroke-width="2" data-tip="ฝน 24 ชม. 16.8 มม.
+คลองลาดพร้าว ปากคลอง2สายใต้"></rect><rect x="90.20000000001933" y="271.17379310344177" width="7.279999999999999" height="7.279999999999999" fill="none" stroke="var(--accent)" stroke-width="2" data-tip="ฝน 24 ชม. 3.8 มม.
+ปตร.จุฬาลงกรณ์"></rect><rect x="76.20666666667096" y="345.33034482758217" width="7.16" height="7.16" fill="none" stroke="var(--accent)" stroke-width="2" data-tip="ฝน 24 ชม. 3.6 มม.
+คลองเปรมประชากร หลักหก"></rect><g data-tip="กล้อง CCTV สะพานแดง (ทน.รังสิต)"><rect x="177.68533333338317" y="234.63172413793112" width="16" height="11" rx="2" fill="var(--ink)"></rect><circle cx="185.68533333338317" cy="240.13172413793112" r="3" fill="var(--bg)"></circle></g></svg><div class="tip" id="ztip" hidden=""></div></div>
+      <div class="k4" id="k4card"><h3>คลอง 4 <span>เน้นเฝ้าระวัง</span></h3>
+   <div class="kf"><b>ปลายคลอง 4 · ปตร.คลองพระยาสุเรนทร์</b><span class="kv" style="color:var(--l4)">1.60 ม.</span>
+     <small>ด้านนอกประตู 2.05 ม. ต่างกัน 45 ซม. เกณฑ์เตือน 1.1 ม. วิกฤต 1.8 ม. ตลิ่ง 1.98 ม. · 28 ก.ย. 13:20 น.<span class="stale">ข้อมูลช้า 23 ชม.</span></small>
+     <small>จุดนี้คือทางระบายน้ำของคลอง 4 ลงสู่ กทม. ถ้าระดับสองฝั่งประตูต่างกันมาก แปลว่าน้ำฝั่งคลองหกวากำลังถูกกั้นหรือระบายได้ช้า</small></div>
+   <div class="kf"><b>จุดตัดคลอง 4 กับคลองรังสิต</b><span class="kv" style="color:var(--l5)">วิกฤต</span>
+     <small>ไม่มีสถานีวัดสาธารณะที่จุดนี้ ใช้สถานะคลองรังสิตที่สะพานแดง (ห่างไปทางตะวันตกราว 7 กม.) ซึ่งเทศบาลนครรังสิตประเมินเป็น "วิกฤต" เมื่อ 29 ก.ย. 10:56 น.</small></div>
+   <div class="kf"><b>ประชาชนแจ้งน้ำท่วมริมคลอง 4 (ห่างไม่เกิน ~1 กม.)</b><span class="kv">2</span>
+     <small>ใน 7 วัน · 0 จุดใน 24 ชม. · ลึกสุดระดับข้อเท้า · ระบบรับแจ้งของ ทน.รังสิต ครอบคลุมคลอง 4 น้อย</small></div>
+   <div class="kf"><b>ฝนคาดการณ์ 24 ชม. ที่คลอง 4</b><span class="kv">1.3 มม.</span>
+     <small>โอกาสฝนสูงสุด 82% ช่วง 13:00 น. · Open-Meteo (ณ 10:00 น.)</small>
+     <div style="grid-column:1/-1"><div class="fc"><i style="height:14%;opacity:0.35" title="10:00 14% 0 มม."></i><i style="height:35%;opacity:0.48" title="11:00 35% 0.1 มม."></i><i style="height:64%;opacity:0.48" title="12:00 64% 0.1 มม."></i><i style="height:82%;opacity:0.61" title="13:00 82% 0.2 มม."></i><i style="height:78%;opacity:0.74" title="14:00 78% 0.3 มม."></i><i style="height:62%;opacity:0.48" title="15:00 62% 0.1 มม."></i><i style="height:47%;opacity:0.35" title="16:00 47% 0 มม."></i><i style="height:37%;opacity:0.87" title="17:00 37% 0.4 มม."></i><i style="height:28%;opacity:0.48" title="18:00 28% 0.1 มม."></i><i style="height:20%;opacity:0.35" title="19:00 20% 0 มม."></i><i style="height:14%;opacity:0.35" title="20:00 14% 0 มม."></i><i style="height:9%;opacity:0.35" title="21:00 9% 0 มม."></i><i style="height:6%;opacity:0.35" title="22:00 6% 0 มม."></i><i style="height:5%;opacity:0.35" title="23:00 5% 0 มม."></i><i style="height:6%;opacity:0.35" title="00:00 6% 0 มม."></i><i style="height:6%;opacity:0.35" title="01:00 6% 0 มม."></i><i style="height:5%;opacity:0.35" title="02:00 5% 0 มม."></i><i style="height:3%;opacity:0.35" title="03:00 3% 0 มม."></i><i style="height:3%;opacity:0.35" title="04:00 2% 0 มม."></i><i style="height:3%;opacity:0.35" title="05:00 1% 0 มม."></i><i style="height:3%;opacity:0.35" title="06:00 0% 0 มม."></i><i style="height:3%;opacity:0.35" title="07:00 0% 0 มม."></i><i style="height:3%;opacity:0.35" title="08:00 3% 0 มม."></i><i style="height:8%;opacity:0.35" title="09:00 8% 0 มม."></i></div><div class="fcx"><span>10:00</span><span>+12 ชม.</span><span>+24 ชม.</span></div></div></div></div>
+    </div>
+    <div class="legend" id="zlegend"><span><i class="sw" style="background:var(--dA)"></i>แจ้งน้ำระดับข้อเท้า</span><span><i class="sw" style="background:var(--dK)"></i>แจ้งน้ำระดับเข่า</span><span><i class="sw" style="background:var(--dW)"></i>แจ้งน้ำระดับเอว</span><span><i class="sw" style="background:var(--dX)"></i>แจ้งน้ำรถเล็กผ่านไม่ได้</span><span>จุดจาง = เกิน 24 ชม.</span><span><i class="sw" style="background:var(--l4);border-radius:1px;transform:rotate(45deg)"></i>ประตูระบายน้ำ กทม.</span><span><i class="sw" style="background:var(--l5)"></i>สถานีโทรมาตร ThaiWater</span><span><i class="sw" style="border:2px solid var(--accent);border-radius:1px;background:none"></i>สถานีฝน</span><span><i class="sw" style="background:var(--k4);border-radius:1px;height:4px;width:16px"></i>คลอง 4</span><span><i class="sw" style="border:2px solid var(--k4);border-radius:1px;background:none"></i>ต.ลาดสวาย</span><span><i class="sw" style="border:1.5px dashed var(--ink);border-radius:1px;background:none"></i>ต.คูคต</span><span>T = BTS คูคต · M = อนุสรณ์สถานแห่งชาติ · R = ย่านรินทร์ทอง (โดยประมาณ)</span></div>
+    <div class="phead" style="margin-top:4px;scroll-margin-top:12px" id="near"><h3 style="font-size:18px">ลาดสวาย · คูคต และละแวกใกล้เคียง</h3><span class="note">รายงานน้ำท่วม 7 วัน / 24 ชม. และจุดวัดที่ใกล้ที่สุด</span></div>
+    <div class="near" id="nearCards"><div class="pc main"><span class="kind">ตำบล</span><h4 style="color:var(--k4)">ตำบลลาดสวาย</h4><small class="note">เทศบาลเมืองลาดสวาย · อ.ลำลูกกา · คลอง 3 ถึงคลอง 5</small><div class="big"><span>1</span><small>จุดแจ้งใน 7 วัน</small><span>1</span><small>ใน 24 ชม.</small><span class="chip" style="background:var(--dK);color:var(--panel)">ลึกสุดระดับเข่า</span></div><small class="note">แจ้งล่าสุด 28 ก.ย. 10:56 น.</small><ul><li><b style="color:var(--l4)">1.60 ม.</b> ปตร.คลองพระยาสุเรนทร์ <span class="note">ห่าง 2.9 กม. · ปลายคลอง 4 (ต่อจากคลองหกวา ลง กทม.) · ข้อมูลช้า 23 ชม.</span></li><li><b style="color:var(--l5)">1.63 ม.</b> ค.พระยาสุเรนทร์ ถ.หนองระแหง <span class="note">ห่าง 5.1 กม. · ท้ายน้ำคลอง 4 ในเขต กทม. · ข้อมูลช้า 23 ชม.</span></li><li><b style="color:var(--l3)">58%</b> คลองลาดพร้าว ปากคลอง2สายใต้ <span class="note">ห่าง 5.7 กม. · ปากคลอง 2 ลงคลองลาดพร้าว · ปกติ</span></li></ul><small class="note">ปตร.คลองพระยาสุเรนทร์อยู่ในส่วนใต้สุดของตำบลนี้ (คลอง 4 ใต้คลองหกวา) เป็นจุดวัดทางการที่ใกล้ลาดสวายที่สุด</small></div><div class="pc"><span class="kind">ตำบล</span><h4 style="">ตำบลคูคต</h4><small class="note">อ.ลำลูกกา · คลองเปรมฯ ถึงคลอง 3 · BTS คูคต</small><div class="big"><span>18</span><small>จุดแจ้งใน 7 วัน</small><span>5</span><small>ใน 24 ชม.</small><span class="chip" style="background:var(--dX);color:var(--panel)">ลึกสุดรถเล็กผ่านไม่ได้</span></div><small class="note">แจ้งล่าสุด 29 ก.ย. 10:46 น.</small><ul><li><b style="color:var(--l3)">58%</b> คลองลาดพร้าว ปากคลอง2สายใต้ <span class="note">ห่าง 2.4 กม. · ปากคลอง 2 ลงคลองลาดพร้าว · ปกติ</span></li><li><b style="color:var(--l5)">1.57 ม.</b> ค.เปรมประชากร-ค.บ้านใหม่ <span class="note">ห่าง 3.4 กม. · คลองเปรมฯ ตะวันตกคลอง 1 · ข้อมูลช้า 23 ชม.</span></li></ul></div><div class="pc"><span class="kind">BTS สายสุขุมวิท · สถานีปลายทาง</span><h4>สถานีรถไฟฟ้าคูคต</h4><div class="big"><span>0</span><small>จุดแจ้งรัศมี 1 กม. 7 วัน</small><span>0</span><small>ใน 24 ชม.</small></div><ul><li><b style="color:var(--l3)">58%</b> คลองลาดพร้าว ปากคลอง2สายใต้ <span class="note">ห่าง 0.8 กม. · ปากคลอง 2 ลงคลองลาดพร้าว · ปกติ</span></li><li><b style="color:var(--l4)">1.54 ม.</b> ปตร.คลองสองสายใต้ <span class="note">ห่าง 1.7 กม. · ปลายคลอง 2 (ลง กทม.) · ข้อมูลช้า 23 ชม.</span></li></ul></div><div class="pc"><span class="kind">ถนนพหลโยธิน · ต.คูคต</span><h4>อนุสรณ์สถานแห่งชาติ</h4><div class="big"><span>4</span><small>จุดแจ้งรัศมี 1 กม. 7 วัน</small><span>1</span><small>ใน 24 ชม.</small><span class="chip" style="background:var(--dK);color:var(--panel)">ลึกสุดระดับเข่า</span></div><small class="note">แจ้งล่าสุด 29 ก.ย. 10:46 น.</small><ul><li><b style="color:var(--l5)">1.57 ม.</b> ค.เปรมประชากร-ค.บ้านใหม่ <span class="note">ห่าง 1.9 กม. · คลองเปรมฯ ตะวันตกคลอง 1 · ข้อมูลช้า 23 ชม.</span></li><li><b style="color:var(--l5)">117%</b> คลองเปรมประชากร หลักหก <span class="note">ห่าง 2.5 กม. · คลองเปรมฯ ตะวันตกคลอง 1 · ล้นตลิ่ง</span></li></ul></div><div class="pc"><span class="kind">ลำลูกกา คลอง 2 · ต.คูคต (ตำแหน่งโดยประมาณ)</span><h4>ย่านหมู่บ้านรินทร์ทอง</h4><div class="big"><span>3</span><small>จุดแจ้งรัศมี 1 กม. 7 วัน</small><span>0</span><small>ใน 24 ชม.</small><span class="chip" style="background:var(--dK);color:var(--panel)">ลึกสุดระดับเข่า</span></div><small class="note">แจ้งล่าสุด 28 ก.ย. 03:28 น.</small><ul><li><b style="color:var(--l3)">58%</b> คลองลาดพร้าว ปากคลอง2สายใต้ <span class="note">ห่าง 2.0 กม. · ปากคลอง 2 ลงคลองลาดพร้าว · ปกติ</span></li><li><b style="color:var(--l4)">1.54 ม.</b> ปตร.คลองสองสายใต้ <span class="note">ห่าง 3.1 กม. · ปลายคลอง 2 (ลง กทม.) · ข้อมูลช้า 23 ชม.</span></li></ul></div></div>
+    <div class="grid2">
+      <div class="panel" style="padding:0;border:0">
+        <div class="phead"><h3 style="font-size:16px">จุดน้ำท่วมที่ประชาชนแจ้ง แยกตามช่วงคลอง</h3><span class="note" id="segNote">7 วันล่าสุด ถึง 29 ก.ย. 10:56 น.</span></div>
+        <div class="tscroll"><table class="seg" id="segTable"><thead><tr><th>ช่วงคลอง</th><th>เหนือคลองรังสิต</th><th>ใต้คลองรังสิต</th><th>24 ชม.</th><th>ลึกสุดที่แจ้ง</th></tr></thead><tbody><tr class=""><td>ตะวันตกคลอง 1 (ถึงคลองเปรมฯ)</td><td>17</td><td>2</td><td>5</td><td><span class="chip" style="background:var(--dK);color:var(--panel)">ระดับเข่า</span></td></tr><tr class=""><td>คลอง 1-2</td><td>13</td><td>43</td><td>15</td><td><span class="chip" style="background:var(--dX);color:var(--panel)">รถเล็กผ่านไม่ได้</span></td></tr><tr class=""><td>คลอง 2-3</td><td>0</td><td>10</td><td>4</td><td><span class="chip" style="background:var(--dW);color:var(--panel)">ระดับเอว</span></td></tr><tr class="k4row"><td>คลอง 3-4</td><td>2</td><td>1</td><td>1</td><td><span class="chip" style="background:var(--dK);color:var(--panel)">ระดับเข่า</span></td></tr><tr class="k4row"><td>ตะวันออกคลอง 4 (ถึงคลอง 5)</td><td>0</td><td>0</td><td>0</td><td>-</td></tr></tbody></table></div>
+      </div>
+      <div class="panel" style="padding:0;border:0">
+        <div class="phead"><h3 style="font-size:16px">จุดวัดระดับน้ำที่เกี่ยวกับคลอง 1-4</h3><span class="note">ต้นคลองถึงปลายคลอง</span></div>
+        <div class="zg" id="zgauges"><div class="zrow k4r"><div><b>ปตร.คลองพระยาสุเรนทร์</b><span class="stale">ข้อมูลช้า 23 ชม.</span><br><small>ปลายคลอง 4 (ต่อจากคลองหกวา ลง กทม.) · เตือน 1.10 / วิกฤต 1.80 ม. · 28 ก.ย. 13:20 น.</small></div><div class="zv"><span style="color:var(--l4)">1.60 ม.</span><br><small>ด้านนอก 2.05 ม.</small></div></div><div class="zrow k4r"><div><b>ค.พระยาสุเรนทร์ ถ.หนองระแหง</b><span class="stale">ข้อมูลช้า 23 ชม.</span><br><small>ท้ายน้ำคลอง 4 ในเขต กทม. · เตือน 1.00 / วิกฤต 1.20 ม. · 28 ก.ย. 13:20 น.</small></div><div class="zv"><span style="color:var(--l5)">1.63 ม.</span></div></div><div class="zrow"><div><b>คลองลาดพร้าว ปากคลอง2สายใต้</b><br><small>ปากคลอง 2 ลงคลองลาดพร้าว · ThaiWater BKK020 · 29 ก.ย. 10:20 น.</small></div><div class="zv"><span style="color:var(--l3)">58%</span><br><small>ปกติ</small></div></div><div class="zrow"><div><b>คลองลาดพร้าว ท้ายปตร.คลอง2</b><br><small>ท้าย ปตร.คลอง 2 · ThaiWater BKK001 · 29 ก.ย. 10:20 น.</small></div><div class="zv"><span style="color:var(--l4)">81%</span><br><small>น้ำมาก</small></div></div><div class="zrow"><div><b>ปตร.คลองสองสายใต้</b><span class="stale">ข้อมูลช้า 23 ชม.</span><br><small>ปลายคลอง 2 (ลง กทม.) · เตือน 1.10 / วิกฤต 1.80 ม. · 28 ก.ย. 13:20 น.</small></div><div class="zv"><span style="color:var(--l4)">1.54 ม.</span><br><small>ด้านนอก 2.06 ม.</small></div></div><div class="zrow"><div><b>คลองเปรมประชากร หลักหก</b><br><small>คลองเปรมฯ ตะวันตกคลอง 1 · ThaiWater BKK002 · 29 ก.ย. 10:20 น.</small></div><div class="zv"><span style="color:var(--l5)">117%</span><br><small>ล้นตลิ่ง</small></div></div><div class="zrow"><div><b>ค.เปรมประชากร-ค.บ้านใหม่</b><span class="stale">ข้อมูลช้า 23 ชม.</span><br><small>คลองเปรมฯ ตะวันตกคลอง 1 · เตือน 0.80 / วิกฤต 0.90 ม. · 28 ก.ย. 12:55 น.</small></div><div class="zv"><span style="color:var(--l5)">1.57 ม.</span></div></div></div>
+      </div>
+    </div>
+    <div class="zcams" id="zcams"><div class="cam"><div class="frame">
+      <img id="zimg0" alt="ภาพจากกล้อง สะพานแดง คลองรังสิต" hidden="" src="https://cdp.rangsitcity.go.th/api/flood/snapshot/151?t=1790657852892">
+      <div class="fb" id="zfb0"><span>หน้านี้โหลดภาพกล้องตรงไม่ได้</span><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a></div>
+      <span class="rec" id="zrec0" hidden="">LIVE</span><span class="ts num" id="zts0" hidden=""></span></div>
+    <div class="meta"><b>สะพานแดง คลองรังสิต</b><small>เทศบาลนครรังสิต · ธัญบุรี · ใกล้คลอง 1</small><small><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div><div class="cam" style="border-color:var(--k4)"><div class="frame" style="background:var(--k4-soft)"><div class="fb" style="color:var(--ink)"><b style="font-family:var(--display);font-size:18px;color:var(--k4)">คลอง 4</b><span>ยังไม่พบกล้องที่เปิดภาพให้ประชาชนดูได้บนคลอง 4 ฝั่งปทุมธานี</span><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener" style="color:var(--ink);border-color:var(--k4)">แจ้งจุดน้ำท่วม / ดูแผนที่ ทน.รังสิต ↗</a></div></div><div class="meta"><b>ทางเลือกเมื่อไม่มีกล้อง</b><small>ดูระดับที่ ปตร.คลองพระยาสุเรนทร์ (ปลายคลอง 4) ด้านบน หรือโทร 1784 แจ้งเหตุน้ำท่วม</small></div></div></div>
+    <p class="note">ยังไม่มีสถานีวัดระดับน้ำสาธารณะบนตัวคลอง 1 ถึงคลอง 4 ในฝั่งปทุมธานีโดยตรง หน้านี้จึงใช้ 3 แหล่งประกอบกัน: สถานะคลองรังสิตที่สะพานแดงซึ่งเจ้าหน้าที่เทศบาลนครรังสิตประเมินจากกล้อง, ประตูระบายน้ำปลายคลอง 2 และคลอง 4 ฝั่งกรุงเทพฯ (สำนักการระบายน้ำ กทม.), และรายงานจากประชาชนผ่านระบบของเทศบาลนครรังสิต ซึ่งมีผู้ใช้หนาแน่นช่วงคลอง 1-2 มากกว่าคลอง 3-4 จำนวนรายงานน้อยจึงไม่ได้แปลว่าไม่มีน้ำท่วม</p>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" id="map-sec">
+      <div class="phead"><h2>แผนที่สถานีวัดระดับน้ำ</h2><span class="note">แตะ/ชี้จุดเพื่อดูค่า</span></div>
+      <div class="mapbox" id="mapbox"><svg id="map" viewBox="0 0 680 600" role="img" aria-label="แผนที่สถานีวัดระดับน้ำรอบจังหวัดปทุมธานี"><defs><clipPath id="clipMap"><rect x="0" y="0" width="680" height="600"></rect></clipPath></defs><rect x="0" y="0" width="680" height="600" fill="var(--bg)"></rect><g clip-path="url(#clipMap)"><path d="M247.2,-202.9L246.3,-195.2L272.9,-197.1L287.6,-191.4L308.8,-191.4L332.6,-184.8L307.8,-129.5L333.6,-113.3L333.6,-91.4L399.7,-92.4L382.3,-139.0L423.6,-109.5L497.1,-102.9L493.5,-65.7L467.7,-48.6L488.9,-32.4L477.8,44.8L511.8,64.8L506.3,90.5L489.8,126.7L536.6,123.8L535.7,205.7L349.2,301.9L349.2,315.2L332.6,309.5L287.6,333.3L255.5,315.2L218.7,332.4L145.2,328.6L134.2,311.4L131.4,328.6L95.6,327.6L57.0,304.8L36.8,319.0L40.4,276.2L-5.5,271.4L-13.8,217.1L36.8,114.3L34.0,67.6L30.3,28.6L3.7,3.8L11.9,-20.0L43.2,-36.2L74.4,-26.7L144.3,-45.7L171.8,-32.4L163.6,15.2L204.9,20.0L236.2,1.0L238.0,-57.1L219.6,-102.9L239.8,-169.5L247.2,-202.9Z" fill="var(--land)" stroke="var(--line)" stroke-width="1.2"></path><path d="M95.6,327.6L85.5,391.4L113.0,445.7L205.8,464.8L239.8,498.1L288.5,484.8L301.4,484.8L279.4,580.0L240.8,627.6L207.7,639.0L80.9,624.8L22.1,513.3L53.3,473.3L20.2,440.0L32.2,415.2L22.1,381.0L34.0,347.6L36.8,319.0L57.0,304.8L95.6,327.6Z" fill="var(--land)" stroke="var(--line)" stroke-width="1.2"></path><path d="M617.5,490.5L612.9,591.4L641.4,614.3L566.1,723.8L431.9,706.7L416.3,770.5L386.9,750.5L374.9,769.5L311.5,754.3L317.0,727.6L287.6,719.0L281.2,751.4L254.5,749.5L258.2,814.3L235.2,830.5L194.8,817.1L200.3,926.7L157.1,922.9L153.5,880.0L165.4,870.5L142.4,862.9L125.9,799.0L96.5,781.0L88.2,702.9L86.4,674.3L80.9,624.8L207.7,639.0L240.8,627.6L279.4,580.0L301.4,484.8L338.2,492.4L339.1,481.9L367.6,502.9L412.6,503.8L413.5,517.1L617.5,490.5Z" fill="var(--land)" stroke="var(--line)" stroke-width="1.2"></path><path d="M654.3,179.0L650.6,195.2L649.7,212.4L619.4,227.6L618.4,475.2L617.5,490.5L413.5,517.1L412.6,503.8L367.6,502.9L339.1,481.9L338.2,492.4L301.4,484.8L288.5,484.8L239.8,498.1L205.8,464.8L113.0,445.7L85.5,391.4L95.6,327.6L131.4,328.6L134.2,311.4L145.2,328.6L218.7,332.4L255.5,315.2L287.6,333.3L332.6,309.5L349.2,315.2L349.2,301.9L535.7,205.7L599.1,176.2L599.1,205.7L654.3,179.0Z" fill="var(--land-pt)" stroke="var(--accent)" stroke-width="2"></path><path d="M196.0,-123.8L223.7,30.5L265.3,86.7L300.0,148.0L241.3,252.8L271.4,324.1L264.6,404.8L271.1,488.1L231.5,538.4L238.9,590.5" fill="none" stroke="var(--river)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"></path><path d="M272.1,473.0L279.4,470.8L290.2,468.0L314.4,461.7L331.5,457.3L339.5,455.1L349.8,452.5L364.1,449.2L369.8,448.0L374.1,446.9L383.4,444.5L389.7,443.1L395.0,442.0L411.2,438.3L431.8,429.1L448.4,421.9L466.4,414.0L484.8,406.8" fill="none" stroke="var(--river)" stroke-width="2.5" opacity="0.8"></path><path d="M316.8,347.0L321.0,379.2L323.2,395.6L326.5,420.5L329.4,442.5L331.5,457.3L334.0,476.6L336.1,491.4L337.0,500.0L331.5,511.0L325.1,523.0L319.3,534.0" fill="none" stroke="var(--river)" stroke-width="1.5" opacity="0.8"></path><path d="M367.3,502.7L377.6,503.9L388.3,504.4L401.0,504.1L410.2,503.9L418.9,503.6L435.1,503.1L446.4,502.8L462.6,502.1L478.6,498.3" fill="none" stroke="var(--river)" stroke-width="1.5" opacity="0.8"></path><path d="M341.5,225.8L348.0,230.2L347.1,238.2L346.0,251.4L348.6,257.0L348.7,270.2L348.8,287.0L348.9,300.0L349.1,314.5L349.2,335.7L349.3,354.1L349.5,377.9L349.6,414.0L349.6,421.2L349.8,452.0L351.7,464.0L352.5,469.5L358.3,473.3L366.5,477.6L368.0,479.0" fill="none" stroke="var(--river)" stroke-width="1.5" opacity="0.8"></path><path d="M368.8,291.0L368.9,319.9L369.4,375.2L369.7,432.4L369.8,448.0L369.5,454.2L369.1,461.5L368.5,471.7L368.0,479.0L367.4,495.5L367.2,501.9L363.6,509.8L359.5,517.1L354.9,525.5L346.5,530.0L340.9,533.5" fill="none" stroke="var(--river)" stroke-width="1.5" opacity="0.8"></path><path d="M388.6,280.3L389.1,334.6L389.3,377.3L389.6,428.8L389.7,443.1L389.2,457.9L388.6,479.7L388.5,488.1L388.3,501.7L388.3,504.4" fill="none" stroke="var(--river)" stroke-width="1.5" opacity="0.8"></path><path d="M410.1,268.5L410.7,359.4L411.0,402.9L411.1,423.0L411.1,437.5L411.1,446.9L411.0,453.9L410.6,476.4L410.3,496.3L410.2,503.9L411.0,513.0L414.0,532.2L415.4,542.9" fill="none" stroke="var(--k4)" stroke-width="3" opacity="1"></path><a href="#khlong"><rect x="317.0270270270221" y="400.00000000000114" width="137.8378378378414" height="138.0952380952375" fill="none" stroke="var(--k4)" stroke-width="2" stroke-dasharray="6 4"></rect><text x="450.8648648648635" y="394.00000000000114" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--k4)" font-family="Chakra Petch,sans-serif">โซนคลอง 1-4</text></a><line x1="0" x2="680" y1="533.3333333333331" y2="533.3333333333331" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"></line><text x="6" y="529.3333333333331" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">13.9°N</text><line x1="0" x2="680" y1="342.8571428571436" y2="342.8571428571436" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"></line><text x="6" y="338.8571428571436" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">14.1°N</text><line x1="0" x2="680" y1="152.38095238095235" y2="152.38095238095235" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"></line><text x="6" y="148.38095238095235" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">14.3°N</text><line y1="0" y2="600" x1="147.02702702703516" x2="147.02702702703516" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"></line><text x="151.02702702703516" y="594" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">100.4°E</text><line y1="0" y2="600" x1="330.81081081080623" x2="330.81081081080623" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"></line><text x="334.81081081080623" y="594" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">100.6°E</text><line y1="0" y2="600" x1="514.5945945945904" x2="514.5945945945904" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"></line><text x="518.5945945945904" y="594" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">100.8°E</text><text x="441.0810810810793" y="571.428571428572" text-anchor="middle" font-size="14" font-weight="500" font-family="Chakra Petch,sans-serif" fill="var(--muted)" opacity="0.9">กรุงเทพฯ</text><text x="110.27027027027309" y="552.3809523809517" text-anchor="middle" font-size="14" font-weight="500" font-family="Chakra Petch,sans-serif" fill="var(--muted)" opacity="0.9">นนทบุรี</text><text x="459.4594594594538" y="361.9047619047622" text-anchor="middle" font-size="20" font-weight="700" font-family="Chakra Petch,sans-serif" fill="var(--accent)" opacity="1">ปทุมธานี</text><text x="385.94594594594275" y="57.14285714285755" text-anchor="middle" font-size="14" font-weight="500" font-family="Chakra Petch,sans-serif" fill="var(--muted)" opacity="0.9">พระนครศรีอยุธยา</text><text x="235.51351351351101" y="419.0476190476198" text-anchor="end" font-size="12" fill="var(--river)" font-family="IBM Plex Sans Thai,sans-serif">แม่น้ำเจ้าพระยา</text></g><rect x="487.8" y="273.8" width="14.0" height="14.0" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 17.2 มม. · บ้านน้อยสว่าง (หนองเสือ)"></rect><rect x="466.7" y="250.3" width="11.6" height="11.6" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 12.6 มม. · รร.วัดอู่ข้าว (คลองหลวง)"></rect><rect x="593.6" y="222.8" width="10.5" height="10.5" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 10.8 มม. · คลองระพีพัฒน์แยกใต้ หนองเสือ (หนองเสือ)"></rect><rect x="487.9" y="490.0" width="7.5" height="7.5" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 5.8 มม. · คลองหกวา ลำลูกกา คลอง8 (ลำลูกกา)"></rect><rect x="460.5" y="238.4" width="6.8" height="6.8" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 4.6 มม. · คลองระพีพัฒน์แยกตก (คลองหลวง)"></rect><rect x="332.9" y="452.7" width="6.3" height="6.3" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 3.8 มม. · ปตร.จุฬาลงกรณ์ (ธัญบุรี)"></rect><rect x="330.1" y="467.8" width="6.2" height="6.2" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 3.6 มม. · คลองเปรมประชากร หลักหก (เมืองปทุมธานี)"></rect><rect x="598.0" y="362.4" width="5.8" height="5.8" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 3 มม. · ท้ายปตร.พระธรรมราชา (ธัญบุรี)"></rect><rect x="596.6" y="361.4" width="5.3" height="5.3" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 2.2 มม. · เหนือปตร.พระธรรมราชา (ธัญบุรี)"></rect><rect x="598.5" y="362.4" width="5.2" height="5.2" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 2 มม. · ท้ายไซฟอน ปตร.พระธรรมราชา (ธัญบุรี)"></rect><rect x="344.0" y="340.7" width="4.4" height="4.4" fill="var(--accent)" opacity=".35" data-tip="ฝน 24 ชม. 0.6 มม. · ปทุมธานี สกษ. (คลองหลวง)"></rect><g data-tip="กล้อง: สะพานแดง คลองรังสิต"><rect x="329.0486486486481" y="432.6190476190473" width="14" height="10" rx="2" fill="var(--ink)"></rect><circle cx="336.0486486486481" cy="437.6190476190473" r="2.6" fill="var(--bg)"></circle></g><g data-tip="กล้อง: บ้านท้ายดง ริมเจ้าพระยา"><rect x="264.3567567567641" y="319.0952380952386" width="14" height="10" rx="2" fill="var(--ink)"></rect><circle cx="271.3567567567641" cy="324.0952380952386" r="2.6" fill="var(--bg)"></circle></g><g data-tip="กล้อง: บ้านป้อม (C.35)"><rect x="258.6594594594606" y="82.23809523809652" width="14" height="10" rx="2" fill="var(--ink)"></rect><circle cx="265.6594594594606" cy="87.23809523809652" r="2.6" fill="var(--bg)"></circle></g><g data-tip="กล้อง: อำเภอเสนา แม่น้ำน้อย"><rect x="144.6216216216255" y="131.8571428571435" width="14" height="10" rx="2" fill="var(--ink)"></rect><circle cx="151.6216216216255" cy="136.8571428571435" r="2.6" fill="var(--bg)"></circle></g><g data-code="BKK020" data-tip="คลองลาดพร้าว ปากคลอง2สายใต้ · กรุงเทพมหานคร
+58% ความจุ · ปกติ (ต่ำกว่าตลิ่ง 2.29 ม.)"><circle cx="367.1264864864909" cy="503.0190476190481" r="7" fill="var(--l3)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="CPY014" data-tip="สะพานนวลฉวี · นนทบุรี
+100% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 0.04 ม.)"><circle cx="271.145405405411" cy="488.104761904762" r="7" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="BKK013" data-tip="คลองระพีพัฒน์แยกใต้ หนองเสือ · ปทุมธานี
+97% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 0.13 ม.)"><circle cx="598.8410810810727" cy="228.00000000000128" r="9" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle><text x="585.8410810810727" y="232.00000000000128" text-anchor="end" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">ค.ระพีพัฒน์แยกใต้ หนองเสือ</text></g><g data-code="CAN001" data-tip="คลองระพีพัฒน์แยกตก · ปทุมธานี
+92% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 0.41 ม.)"><circle cx="463.833513513512" cy="241.7904761904764" r="9" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle><text x="476.833513513512" y="245.7904761904764" text-anchor="start" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">ค.ระพีพัฒน์แยกตก</text></g><g data-code="CPY016" data-tip="คลองพระยาบรรลือ · พระนครศรีอยุธยา
+86% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 0.68 ม.)"><circle cx="61.79729729729779" cy="281.1809523809535" r="7" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="CPY017" data-tip="เสนา · พระนครศรีอยุธยา
+82% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 0.92 ม.)"><circle cx="128.20756756757015" cy="133.56190476190494" r="7" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="BKK001" data-tip="คลองลาดพร้าว ท้ายปตร.คลอง2 · กรุงเทพมหานคร
+81% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 0.86 ม.)"><circle cx="362.4032432432371" cy="511.95238095238153" r="7" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="BKK015" data-tip="คลองหกวา ลำลูกกา คลอง8 · ปทุมธานี
+81% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 1.00 ม.)"><circle cx="491.61243243243337" cy="493.7142857142866" r="9" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle><text x="504.61243243243337" y="497.7142857142866" text-anchor="start" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">ค.หกวา ลำลูกกา คลอง8</text></g><g data-code="BKK018" data-tip="คลองพระพิมล (ไทรน้อย) · นนทบุรี
+71% ความจุ · น้ำมาก (ต่ำกว่าตลิ่ง 1.74 ม.)"><circle cx="72.60378378379292" cy="462.8952380952384" r="7" fill="var(--l4)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="C.36" data-tip="บ้านบางหลวงโดด · พระนครศรีอยุธยา
+117% ความจุ · ล้นตลิ่ง (สูงกว่าตลิ่ง 1.73 ม.)"><circle cx="184.51891891891756" cy="42.01904761904878" r="15" fill="var(--l5)" opacity=".18"></circle><circle cx="184.51891891891756" cy="42.01904761904878" r="7" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="BKK002" data-tip="คลองเปรมประชากร หลักหก · ปทุมธานี
+117% ความจุ · ล้นตลิ่ง (สูงกว่าตลิ่ง 0.45 ม.)"><circle cx="333.2183783783805" cy="470.83809523809595" r="15" fill="var(--l5)" opacity=".18"></circle><circle cx="333.2183783783805" cy="470.83809523809595" r="9" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle><text x="346.2183783783805" y="474.83809523809595" text-anchor="start" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">ค.เปรมประชากร หลักหก</text></g><g data-code="BKK021" data-tip="คลองลาดพร้าว วัดบางบัว · กรุงเทพมหานคร
+113% ความจุ · ล้นตลิ่ง (สูงกว่าตลิ่ง 0.34 ม.)"><circle cx="319.2875675675619" cy="577.1238095238094" r="15" fill="var(--l5)" opacity=".18"></circle><circle cx="319.2875675675619" cy="577.1238095238094" r="7" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="CPY012" data-tip="บางปะอิน · พระนครศรีอยุธยา
+104% ความจุ · ล้นตลิ่ง (สูงกว่าตลิ่ง 0.44 ม.)"><circle cx="299.98108108108505" cy="148.04761904761895" r="15" fill="var(--l5)" opacity=".18"></circle><circle cx="299.98108108108505" cy="148.04761904761895" r="7" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="C.35" data-tip="บ้านป้อม · พระนครศรีอยุธยา
+104% ความจุ · ล้นตลิ่ง (สูงกว่าตลิ่ง 0.51 ม.)"><circle cx="265.31945945945716" cy="86.5714285714297" r="15" fill="var(--l5)" opacity=".18"></circle><circle cx="265.31945945945716" cy="86.5714285714297" r="7" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle></g><g data-code="HDA005" data-tip="วัดขนอนใต้ · พระนครศรีอยุธยา
+103% ความจุ · ล้นตลิ่ง (สูงกว่าตลิ่ง 0.15 ม.)"><circle cx="341.2129729729793" cy="163.5714285714295" r="15" fill="var(--l5)" opacity=".18"></circle><circle cx="341.2129729729793" cy="163.5714285714295" r="7" fill="var(--l5)" stroke="var(--panel)" stroke-width="2.5"></circle></g></svg><div class="tip" id="tip" hidden=""></div></div>
+      <div class="legend" id="legend"><span><i class="sw" style="background:var(--l5)"></i>ล้นตลิ่ง</span><span><i class="sw" style="background:var(--l4)"></i>น้ำมาก</span><span><i class="sw" style="background:var(--l3)"></i>ปกติ</span><span><i class="sw" style="background:var(--l2)"></i>น้ำน้อย</span><span><i class="sw" style="background:var(--l1)"></i>น้ำน้อยวิกฤต</span><span><i class="sw" style="background:var(--accent);opacity:.35;border-radius:1px"></i>สถานีฝน (ขนาด = ปริมาณ)</span><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>กล้อง CCTV</span></div>
+      <p class="note">แนวแม่น้ำเจ้าพระยาวาดโดยประมาณจากพิกัดสถานีริมแม่น้ำ ขอบเขตจังหวัดจากชุดข้อมูลของคลังข้อมูลน้ำแห่งชาติ</p>
+    </section>
+
+    <section class="panel" id="stations-sec">
+      <div class="phead"><h2>ระดับน้ำเทียบตลิ่ง</h2><span class="note">แถบ = % ความจุลำน้ำ · เส้นดำ = ระดับตลิ่ง</span></div>
+      <div id="stations"><div class="group"><h3>ในจังหวัดปทุมธานี (4 สถานีโทรมาตร)</h3><div class="row" data-code="BKK002">
+    <span class="stripe" style="background:var(--l5)"></span>
+    <div class="nm"><b>คลองเปรมประชากร หลักหก</b><small>BKK002 · อ.เมืองปทุมธานี · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="117% ของความจุลำน้ำ"><i style="width:89.9%;background:var(--l5)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>สูงกว่าตลิ่ง 0.45 ม.</span><span class="num">1.74 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l5)">117%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="BKK013">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>คลองระพีพัฒน์แยกใต้ หนองเสือ</b><small>BKK013 · อ.หนองเสือ · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="97% ของความจุลำน้ำ"><i style="width:74.8%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 0.13 ม.</span><span class="num">3.83 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">97%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="CAN001">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>คลองระพีพัฒน์แยกตก</b><small>CAN001 · อ.คลองหลวง · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="92% ของความจุลำน้ำ"><i style="width:70.9%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 0.41 ม.</span><span class="num">4.15 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">92%</div><div class="d">▲ +9 ซม.</div></div>
+  </div><div class="row" data-code="BKK015">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>คลองหกวา ลำลูกกา คลอง8</b><small>BKK015 · อ.ลำลูกกา · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="81% ของความจุลำน้ำ"><i style="width:62.0%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 1.00 ม.</span><span class="num">1.70 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">81%</div><div class="d">คงที่</div></div>
+  </div></div><div class="group"><h3>แม่น้ำเจ้าพระยาและแม่น้ำน้อย เหนือและใต้ปทุมฯ</h3><div class="row" data-code="C.36">
+    <span class="stripe" style="background:var(--l5)"></span>
+    <div class="nm"><b>บ้านบางหลวงโดด</b><small>C.36 · อ.บางบาล จ.พระนครศรีอยุธยา · ชป. · 29 ก.ย. 09:00 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="117% ของความจุลำน้ำ"><i style="width:89.9%;background:var(--l5)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>สูงกว่าตลิ่ง 1.73 ม.</span><span class="num">6.03 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l5)">117%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="CPY012">
+    <span class="stripe" style="background:var(--l5)"></span>
+    <div class="nm"><b>บางปะอิน</b><small>CPY012 · อ.บางปะอิน จ.พระนครศรีอยุธยา · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="104% ของความจุลำน้ำ"><i style="width:79.9%;background:var(--l5)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>สูงกว่าตลิ่ง 0.44 ม.</span><span class="num">3.06 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l5)">104%</div><div class="d">▲ +2 ซม.</div></div>
+  </div><div class="row" data-code="C.35">
+    <span class="stripe" style="background:var(--l5)"></span>
+    <div class="nm"><b>บ้านป้อม</b><small>C.35 · อ.พระนครศรีอยุธยา จ.พระนครศรีอยุธยา · ชป. · 29 ก.ย. 09:00 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="104% ของความจุลำน้ำ"><i style="width:79.8%;background:var(--l5)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>สูงกว่าตลิ่ง 0.51 ม.</span><span class="num">4.86 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l5)">104%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="HDA005">
+    <span class="stripe" style="background:var(--l5)"></span>
+    <div class="nm"><b>วัดขนอนใต้</b><small>HDA005 · อ.บางปะอิน จ.พระนครศรีอยุธยา · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="103% ของความจุลำน้ำ"><i style="width:79.5%;background:var(--l5)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>สูงกว่าตลิ่ง 0.15 ม.</span><span class="num">2.69 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l5)">103%</div><div class="d">▲ +1 ซม.</div></div>
+  </div><div class="row" data-code="CPY014">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>สะพานนวลฉวี</b><small>CPY014 · อ.ปากเกร็ด จ.นนทบุรี · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="100% ของความจุลำน้ำ"><i style="width:76.7%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 0.04 ม.</span><span class="num">2.46 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">100%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="CPY016">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>คลองพระยาบรรลือ</b><small>CPY016 · อ.ลาดบัวหลวง จ.พระนครศรีอยุธยา · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="86% ของความจุลำน้ำ"><i style="width:66.5%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 0.68 ม.</span><span class="num">2.83 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">86%</div><div class="d">▼ -1 ซม.</div></div>
+  </div><div class="row" data-code="CPY017">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>เสนา</b><small>CPY017 · อ.เสนา จ.พระนครศรีอยุธยา · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="82% ของความจุลำน้ำ"><i style="width:63.4%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 0.92 ม.</span><span class="num">2.67 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">82%</div><div class="d">▲ +1 ซม.</div></div>
+  </div></div><div class="group"><h3>คลองข้างเคียง กรุงเทพฯ นนทบุรี อยุธยา</h3><div class="row" data-code="BKK021">
+    <span class="stripe" style="background:var(--l5)"></span>
+    <div class="nm"><b>คลองลาดพร้าว วัดบางบัว</b><small>BKK021 · อ.บางเขน จ.กรุงเทพมหานคร · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="113% ของความจุลำน้ำ"><i style="width:87.2%;background:var(--l5)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>สูงกว่าตลิ่ง 0.34 ม.</span><span class="num">2.54 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l5)">113%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="BKK001">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>คลองลาดพร้าว ท้ายปตร.คลอง2</b><small>BKK001 · อ.สายไหม จ.กรุงเทพมหานคร · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="81% ของความจุลำน้ำ"><i style="width:62.2%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 0.86 ม.</span><span class="num">1.71 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">81%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="BKK018">
+    <span class="stripe" style="background:var(--l4)"></span>
+    <div class="nm"><b>คลองพระพิมล (ไทรน้อย)</b><small>BKK018 · อ.ไทรน้อย จ.นนทบุรี · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="71% ของความจุลำน้ำ"><i style="width:55.0%;background:var(--l4)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 1.74 ม.</span><span class="num">2.31 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l4)">71%</div><div class="d">คงที่</div></div>
+  </div><div class="row" data-code="BKK020">
+    <span class="stripe" style="background:var(--l3)"></span>
+    <div class="nm"><b>คลองลาดพร้าว ปากคลอง2สายใต้</b><small>BKK020 · อ.ลาดพร้าว จ.กรุงเทพมหานคร · สสน. · 29 ก.ย. 10:20 น.</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="58% ของความจุลำน้ำ"><i style="width:44.8%;background:var(--l3)"></i><span class="bank" style="left:76.9%"></span></div><div class="gl"><span>ต่ำกว่าตลิ่ง 2.29 ม.</span><span class="num">2.17 ม.รทก.</span></div></div>
+    <div class="val"><div class="p" style="color:var(--l3)">58%</div><div class="d">คงที่</div></div>
+  </div></div></div>
+    </section>
+  </div>
+
+  <section class="panel" id="up-sec">
+    <div class="phead"><h2>น้ำเหนือที่กำลังไหลลงมา (แม่น้ำเจ้าพระยา)</h2><span class="note">ปริมาณน้ำไหลผ่าน ลบ.ม./วินาที เทียบความจุลำน้ำ</span></div>
+    <div class="chain" id="chain"><div class="node"><span class="eyebrow">1/5 · C.2</span><b>นครสวรรค์</b>
+    <span class="q" style="color:var(--l3)">2,063</span>
+    <div class="cap"><i style="width:55%;background:var(--l3)"></i></div>
+    <small>ความจุลำน้ำ 3,735 · 55%</small>
+    <small>ระดับ 22.91 ม.รทก. · 29 ก.ย. 09:00 น.</small></div><div class="node"><span class="eyebrow">2/5 · C.13</span><b>ท้ายเขื่อนเจ้าพระยา</b>
+    <span class="q" style="color:var(--l3)">2,000</span>
+    <div class="cap"><i style="width:74%;background:var(--l3)"></i></div>
+    <small>ความจุลำน้ำ 2,720 · 74%</small>
+    <small>ระดับ 14.67 ม.รทก. · 29 ก.ย. 09:00 น.</small></div><div class="node"><span class="eyebrow">3/5 · C.3</span><b>สิงห์บุรี</b>
+    <span class="q" style="color:var(--l3)">2,141</span>
+    <div class="cap"><i style="width:71%;background:var(--l3)"></i></div>
+    <small>ความจุลำน้ำ 2,997 · 71%</small>
+    <small>ระดับ 11.35 ม.รทก. · 29 ก.ย. 06:00 น.</small></div><div class="node"><span class="eyebrow">4/5 · C.7A</span><b>อ่างทอง</b>
+    <span class="q" style="color:var(--l3)">2,055</span>
+    <div class="cap"><i style="width:72%;background:var(--l3)"></i></div>
+    <small>ความจุลำน้ำ 2,862 · 72%</small>
+    <small>ระดับ 8.06 ม.รทก. · 29 ก.ย. 09:00 น.</small></div><div class="node"><span class="eyebrow">5/5 · C.35</span><b>บ้านป้อม อยุธยา</b>
+    <span class="q" style="color:var(--l5)">1,304</span>
+    <div class="cap"><i style="width:100%;background:var(--l5)"></i></div>
+    <small>ความจุลำน้ำ 1,159 · 113%</small>
+    <small>ระดับ 4.86 ม.รทก. · 29 ก.ย. 09:00 น.</small></div></div>
+    <p class="note">น้ำจากนครสวรรค์ใช้เวลาราว 2 ถึง 3 วันกว่าจะถึงปทุมธานี ค่าที่สถานี C.35 บ้านป้อม (อยุธยา) จึงเป็นตัวบอกล่วงหน้าที่ดีที่สุดสำหรับอำเภอสามโคก เมืองปทุมธานี และลาดหลุมแก้ว</p>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" id="rain-sec">
+      <div class="phead"><h2>ฝนสะสม 24 ชั่วโมง</h2><span class="note">มิลลิเมตร · สถานีในจังหวัด</span></div>
+      <div class="rain" id="rain"><div class="rbar"><span class="t">บ้านน้อยสว่าง <span class="note">อ.หนองเสือ</span></span><span class="b"><i style="width:86.0%"></i></span><span class="n">17.2</span></div><div class="rbar"><span class="t">รร.วัดอู่ข้าว <span class="note">อ.คลองหลวง</span></span><span class="b"><i style="width:63.0%"></i></span><span class="n">12.6</span></div><div class="rbar"><span class="t">คลองระพีพัฒน์แยกใต้ หนองเสือ <span class="note">อ.หนองเสือ</span></span><span class="b"><i style="width:54.0%"></i></span><span class="n">10.8</span></div><div class="rbar"><span class="t">คลองหกวา ลำลูกกา คลอง8 <span class="note">อ.ลำลูกกา</span></span><span class="b"><i style="width:29.0%"></i></span><span class="n">5.8</span></div><div class="rbar"><span class="t">คลองระพีพัฒน์แยกตก <span class="note">อ.คลองหลวง</span></span><span class="b"><i style="width:23.0%"></i></span><span class="n">4.6</span></div><div class="rbar"><span class="t">ปตร.จุฬาลงกรณ์ <span class="note">อ.ธัญบุรี</span></span><span class="b"><i style="width:19.0%"></i></span><span class="n">3.8</span></div><div class="rbar"><span class="t">คลองเปรมประชากร หลักหก <span class="note">อ.เมืองปทุมธานี</span></span><span class="b"><i style="width:18.0%"></i></span><span class="n">3.6</span></div><div class="rbar"><span class="t">ท้ายปตร.พระธรรมราชา <span class="note">อ.ธัญบุรี</span></span><span class="b"><i style="width:15.0%"></i></span><span class="n">3.0</span></div><div class="rbar"><span class="t">เหนือปตร.พระธรรมราชา <span class="note">อ.ธัญบุรี</span></span><span class="b"><i style="width:11.0%"></i></span><span class="n">2.2</span></div><div class="rbar"><span class="t">ท้ายไซฟอน ปตร.พระธรรมราชา <span class="note">อ.ธัญบุรี</span></span><span class="b"><i style="width:10.0%"></i></span><span class="n">2.0</span></div><div class="rbar"><span class="t">ปทุมธานี สกษ. <span class="note">อ.คลองหลวง</span></span><span class="b"><i style="width:3.0%"></i></span><span class="n">0.6</span></div></div>
+    </section>
+    <section class="panel">
+      <div class="phead"><h2>เบอร์ฉุกเฉินน้ำท่วม</h2></div>
+      <div class="hot">
+        <div><b>1784</b><span>ปภ. สายด่วนนิรภัย</span></div>
+        <div><b>1460</b><span>กรมชลประทาน</span></div>
+        <div><b>1669</b><span>เจ็บป่วยฉุกเฉิน</span></div>
+        <div><b>1146</b><span>ทางหลวงชนบท</span></div>
+      </div>
+      <p class="note">ระดับ "ล้นตลิ่ง" หมายถึงน้ำสูงกว่าตลิ่งต่ำสุดของจุดวัด ไม่ได้แปลว่าทุกพื้นที่รอบสถานีน้ำท่วม ให้ติดตามประกาศของจังหวัดและเทศบาลประกอบ</p>
+    </section>
+  </div>
+
+  <section class="panel" id="cams-sec">
+    <div class="phead"><h2>กล้อง CCTV ระดับน้ำ</h2><span class="note" id="camNote">ภาพนิ่งจากกล้องจริง รีเฟรชทุก 60 วินาที</span></div>
+    <div class="cams" id="cams"><div class="cam"><div class="frame">
+      <img id="aimg0" alt="ภาพจากกล้อง สะพานแดง คลองรังสิต" hidden="" src="https://cdp.rangsitcity.go.th/api/flood/snapshot/151?t=1790657852892">
+      <div class="fb" id="afb0"><span>หน้านี้โหลดภาพกล้องตรงไม่ได้</span><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a></div>
+      <span class="rec" id="arec0" hidden="">LIVE</span><span class="ts num" id="ats0" hidden=""></span></div>
+    <div class="meta"><b>สะพานแดง คลองรังสิต</b><small>เทศบาลนครรังสิต · ธัญบุรี · ใกล้คลอง 1</small><small><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div><div class="cam"><div class="frame">
+      <img id="aimg1" alt="ภาพจากกล้อง จุดเมืองปทุม" hidden="" src="https://cdp.rangsitcity.go.th/api/flood/snapshot/152?t=1790657852892">
+      <div class="fb" id="afb1"><span>หน้านี้โหลดภาพกล้องตรงไม่ได้</span><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a></div>
+      <span class="rec" id="arec1" hidden="">LIVE</span><span class="ts num" id="ats1" hidden=""></span></div>
+    <div class="meta"><b>จุดเมืองปทุม</b><small>เทศบาลนครรังสิต</small><small><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div><div class="cam"><div class="frame">
+      <img id="aimg2" alt="ภาพจากกล้อง บ้านท้ายดง ริมเจ้าพระยา" hidden="" src="http://bantaydong-cpy.dyndns.org:5001/axis-cgi/jpg/image.cgi?resolution=CiF&amp;t=1790657852892">
+      <div class="fb" id="afb2"><span>หน้านี้โหลดภาพกล้องตรงไม่ได้</span><a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a></div>
+      <span class="rec" id="arec2" hidden="">LIVE</span><span class="ts num" id="ats2" hidden=""></span></div>
+    <div class="meta"><b>บ้านท้ายดง ริมเจ้าพระยา</b><small>บางไทร อยุธยา · เหนือสามโคก ~10 กม.</small><small><a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div><div class="cam"><div class="frame">
+      <img id="aimg3" alt="ภาพจากกล้อง บ้านป้อม (C.35)" hidden="" src="http://banpom-cpy.dyndns.org:5001/axis-cgi/jpg/image.cgi?resolution=CiF&amp;t=1790657852892">
+      <div class="fb" id="afb3"><span>หน้านี้โหลดภาพกล้องตรงไม่ได้</span><a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a></div>
+      <span class="rec" id="arec3" hidden="">LIVE</span><span class="ts num" id="ats3" hidden=""></span></div>
+    <div class="meta"><b>บ้านป้อม (C.35)</b><small>พระนครศรีอยุธยา · สถานีเตือนล่วงหน้า</small><small><a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div><div class="cam"><div class="frame">
+      <img id="aimg4" alt="ภาพจากกล้อง อำเภอเสนา แม่น้ำน้อย" hidden="" src="http://woc-saena.dyndns.org:5001/axis-cgi/jpg/image.cgi?resolution=CiF&amp;t=1790657852892">
+      <div class="fb" id="afb4"><span>หน้านี้โหลดภาพกล้องตรงไม่ได้</span><a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a></div>
+      <span class="rec" id="arec4" hidden="">LIVE</span><span class="ts num" id="ats4" hidden=""></span></div>
+    <div class="meta"><b>อำเภอเสนา แม่น้ำน้อย</b><small>พระนครศรีอยุธยา</small><small><a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div></div>
+    <h3 style="font-size:15px;margin-top:6px">ดูกล้องเพิ่มเติม</h3>
+    <div class="links">
+      <a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener"><span>เทศบาลนครรังสิต Flood Watch</span><small>กล้องระดับน้ำ แผนที่จุดน้ำท่วม รายงานจากประชาชน</small></a>
+      <a href="https://sites.google.com/view/rangsitcitycctv" target="_blank" rel="noopener"><span>รวมกล้อง CCTV รังสิต</span><small>สะพานแดง คลองรังสิต จุดจราจร</small></a>
+      <a href="http://www.ridcctv.com/" target="_blank" rel="noopener"><span>RID CCTV กรมชลประทาน</span><small>กล้องจุดเสี่ยง ประตูระบายน้ำ</small></a>
+      <a href="https://www.thaiwater.net/water/cctv" target="_blank" rel="noopener"><span>ThaiWater CCTV</span><small>กล้องริมแม่น้ำเจ้าพระยาและเขื่อน</small></a>
+      <a href="https://pathumthani.thaiwater.net/wl" target="_blank" rel="noopener"><span>ศูนย์ข้อมูลน้ำจังหวัดปทุมธานี</span><small>คลังข้อมูลน้ำแห่งชาติ ระดับจังหวัด</small></a>
+      <a href="https://live.iticfoundation.org/" target="_blank" rel="noopener"><span>iTIC Live</span><small>กล้องจราจรและเหตุการณ์บนถนน</small></a>
+      <a href="https://traffic.longdo.com/" target="_blank" rel="noopener"><span>Longdo Traffic</span><small>กล้องและรายงานน้ำท่วมบนถนน</small></a>
+      <a href="https://www.muangpathum.org/" target="_blank" rel="noopener"><span>เทศบาลเมืองปทุมธานี</span><small>กล้องสวนเทพปทุม ริมเจ้าพระยา</small></a>
+    </div>
+  </section>
+
+  <footer>
+    <div>แหล่งข้อมูล: คลังข้อมูลน้ำแห่งชาติ (ThaiWater, สสน.) รวมโทรมาตรของ สสน. และกรมชลประทาน · ภาพกล้องจากเทศบาลนครรังสิต และสถานี ThaiWater</div>
+    <div id="footMode">หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 10 นาทีโดยอัตโนมัติ</div>
+  </footer>
+</div>
+<nav class="mnav" id="mnav" aria-label="ไปยังส่วน">
+  <a href="#top" data-t="top" class="on"><b>⌂</b><span>ภาพรวม</span></a>
+  <a href="#khlong" data-t="khlong"><b>4</b><span>คลอง 1-4</span></a>
+  <a href="#near" data-t="near"><b>◎</b><span>ลาดสวาย</span></a>
+  <a href="#stations-sec" data-t="stations-sec"><b>≋</b><span>ระดับน้ำ</span></a>
+  <a href="#cams-sec" data-t="cams-sec"><b>▣</b><span>กล้อง</span></a>
+</nav>
+
+<script>
+(function(){
+"use strict";
+/* ---------- snapshot (ThaiWater, 29 ก.ย. 2569) ---------- */
+const SNAP_TIME = "2026-09-29 10:20";
+const SNAP_WL = `C.36~บ้านบางหลวงโดด~พระนครศรีอยุธยา~บางบาล~แม่น้ำน้อย~14.41588~100.4408~6.03~6.03~4.3~116.88~5~1.73~1~ชป.~09-29 09:00~736~441
+BKK002~คลองเปรมประชากร หลักหก~ปทุมธานี~เมืองปทุมธานี~คลองเปรมประชากร~13.96562~100.60262~1.74~1.74~1.29~116.82~5~0.45~1~สสน.~09-29 10:20~~
+BKK021~คลองลาดพร้าว วัดบางบัว~กรุงเทพมหานคร~บางเขน~คลองบางบัว~13.85402~100.58746~2.54~2.54~2.2~113.4~5~0.34~1~สสน.~09-29 10:20~~
+CPY012~บางปะอิน~พระนครศรีอยุธยา~บางปะอิน~แม่น้ำเจ้าพระยา~14.30455~100.56645~3.06~3.04~2.62~103.93~5~0.44~1~สสน.~09-29 10:20~~
+C.35~บ้านป้อม~พระนครศรีอยุธยา~พระนครศรีอยุธยา~แม่น้ำเจ้าพระยา~14.3691~100.52873~4.86~4.86~4.35~103.75~5~0.51~1~ชป.~09-29 09:00~1304~1159
+HDA005~วัดขนอนใต้~พระนครศรีอยุธยา~บางปะอิน~คลองโพธิ์~14.28825~100.61132~2.69~2.68~2.54~103.4~5~0.15~1~สสน.~09-29 10:20~~
+CPY014~สะพานนวลฉวี~นนทบุรี~ปากเกร็ด~แม่น้ำเจ้าพระยา~13.94749~100.53507~2.46~2.46~2.5~99.75~4~0.04~0~สสน.~09-29 10:20~~
+BKK013~คลองระพีพัฒน์แยกใต้ หนองเสือ~ปทุมธานี~หนองเสือ~คลองลาดผักขวง~14.2206~100.89168~3.83~3.83~3.96~97.2~4~0.13~0~สสน.~09-29 10:20~~
+CAN001~คลองระพีพัฒน์แยกตก~ปทุมธานี~คลองหลวง~คลองระพีพัฒน์แยกตก~14.20612~100.74476~4.15~4.06~4.56~92.12~4~0.41~0~สสน.~09-29 10:20~~
+C.7A~บ้านบางแก้ว~อ่างทอง~เมืองอ่างทอง~แม่น้ำเจ้าพระยา~14.59044~100.45329~8.06~8.06~9.9~88.94~4~1.84~0~ชป.~09-29 09:00~2055~2862
+C.13~ท้ายเขื่อนเจ้าพระยา~ชัยนาท~สรรพยา~แม่น้ำเจ้าพระยา~15.16384~100.18792~14.67~14.67~16.34~88.29~4~1.67~0~ชป.~09-29 09:00~2000~2720
+C.3~บ้านบางพุทรา~สิงห์บุรี~เมืองสิงห์บุรี~แม่น้ำเจ้าพระยา~14.89868~100.40186~11.35~~13.2~88.06~4~1.85~0~ชป.~09-29 06:00~2141~2997
+CPY016~คลองพระยาบรรลือ~พระนครศรีอยุธยา~ลาดบัวหลวง~คลองพระยาบรรลือ~14.16476~100.30725~2.83~2.84~3.51~86.39~4~0.68~0~สสน.~09-29 10:20~~
+CPY017~เสนา~พระนครศรีอยุธยา~เสนา~แม่น้ำน้อย~14.31976~100.37952~2.67~2.66~3.59~82.38~4~0.92~0~สสน.~09-29 10:20~~
+BKK001~คลองลาดพร้าว ท้ายปตร.คลอง2~กรุงเทพมหานคร~สายไหม~คลองหกวา~13.92245~100.63438~1.71~1.71~2.56~80.8~4~0.86~0~สสน.~09-29 10:20~~
+BKK015~คลองหกวา ลำลูกกา คลอง8~ปทุมธานี~ลำลูกกา~คลองหกวา~13.9416~100.77499~1.7~1.7~2.71~80.66~4~1~0~สสน.~09-29 10:20~~
+C.2~ค่ายจิรประวัติ~นครสวรรค์~เมืองนครสวรรค์~แม่น้ำเจ้าพระยา~15.67059~100.10936~22.91~22.88~25.7~77.46~4~2.79~0~ชป.~09-29 09:00~2063~3735
+BKK018~คลองพระพิมล (ไทรน้อย)~นนทบุรี~ไทรน้อย~คลองพระพิมล~13.97396~100.31901~2.31~2.31~4.05~71.48~4~1.74~0~สสน.~09-29 10:20~~
+BKK020~คลองลาดพร้าว ปากคลอง2สายใต้~กรุงเทพมหานคร~ลาดพร้าว~คลองหกวา~13.93183~100.63952~2.17~2.17~4.46~58.2~3~2.29~0~สสน.~09-29 10:20~~`;
+const SNAP_RAIN = `บ้านน้อยสว่าง~หนองเสือ~บึงชำอ้อ~14.1652~100.7785~17.2~สสน.
+รร.วัดอู่ข้าว~คลองหลวง~คลองเจ็ด~14.1911~100.7542~12.6~สสน.
+คลองระพีพัฒน์แยกใต้ หนองเสือ~หนองเสือ~นพรัตน์~14.2206~100.8917~10.8~สสน.
+คลองหกวา ลำลูกกา คลอง8~ลำลูกกา~ลำลูกกา~13.9416~100.775~5.8~สสน.
+คลองระพีพัฒน์แยกตก~คลองหลวง~คลองเจ็ด~14.2061~100.7448~4.6~สสน.
+ปตร.จุฬาลงกรณ์~ธัญบุรี~ประชาธิปัตย์~13.9814~100.6057~3.8~สสน.
+คลองเปรมประชากร หลักหก~เมืองปทุมธานี~หลักหก~13.9656~100.6026~3.6~สสน.
+ท้ายปตร.พระธรรมราชา~ธัญบุรี~บึงน้ำรักษ์~14.0764~100.8939~3~สสน.
+เหนือปตร.พระธรรมราชา~ธัญบุรี~บึงน้ำรักษ์~14.0777~100.8921~2.2~สสน.
+ท้ายไซฟอน ปตร.พระธรรมราชา~ธัญบุรี~บึงน้ำรักษ์~14.0768~100.8941~2~สสน.
+ปทุมธานี สกษ.~คลองหลวง~คลองหนึ่ง~14.1~100.6167~0.6~อต.`;
+const POLY = {
+ "10":"100.912,13.945 100.907,13.839 100.938,13.815 100.856,13.7 100.71,13.718 100.693,13.651 100.661,13.672 100.648,13.652 100.579,13.668 100.585,13.696 100.553,13.705 100.546,13.671 100.517,13.673 100.521,13.605 100.496,13.588 100.452,13.602 100.458,13.487 100.411,13.491 100.407,13.536 100.42,13.546 100.395,13.554 100.377,13.621 100.345,13.64 100.336,13.722 100.334,13.752 100.328,13.804 100.466,13.789 100.502,13.801 100.544,13.851 100.568,13.951 100.608,13.943 100.609,13.954 100.64,13.932 100.689,13.931 100.69,13.917 100.912,13.945",
+ "12":"100.344,14.116 100.333,14.049 100.363,13.992 100.464,13.972 100.501,13.937 100.554,13.951 100.568,13.951 100.544,13.851 100.502,13.801 100.466,13.789 100.328,13.804 100.264,13.921 100.298,13.963 100.262,13.998 100.275,14.024 100.264,14.06 100.277,14.095 100.28,14.125 100.302,14.14 100.344,14.116",
+ "13":"100.952,14.272 100.948,14.255 100.947,14.237 100.914,14.221 100.913,13.961 100.912,13.945 100.69,13.917 100.689,13.931 100.64,13.932 100.609,13.954 100.608,13.943 100.568,13.951 100.554,13.951 100.501,13.937 100.464,13.972 100.363,13.992 100.333,14.049 100.344,14.116 100.383,14.115 100.386,14.133 100.398,14.115 100.478,14.111 100.518,14.129 100.553,14.11 100.602,14.135 100.62,14.129 100.62,14.143 100.823,14.244 100.892,14.275 100.892,14.244 100.952,14.272",
+ "14":"100.509,14.673 100.508,14.665 100.537,14.667 100.553,14.661 100.576,14.661 100.602,14.654 100.575,14.596 100.603,14.579 100.603,14.556 100.675,14.557 100.656,14.606 100.701,14.575 100.781,14.568 100.777,14.529 100.749,14.511 100.772,14.494 100.76,14.413 100.797,14.392 100.791,14.365 100.773,14.327 100.824,14.33 100.823,14.244 100.62,14.143 100.62,14.129 100.602,14.135 100.553,14.11 100.518,14.129 100.478,14.111 100.398,14.115 100.386,14.133 100.383,14.115 100.344,14.116 100.302,14.14 100.28,14.125 100.284,14.17 100.234,14.175 100.225,14.232 100.28,14.34 100.277,14.389 100.273,14.43 100.244,14.456 100.253,14.481 100.287,14.498 100.321,14.488 100.397,14.508 100.427,14.494 100.418,14.444 100.463,14.439 100.497,14.459 100.499,14.52 100.479,14.568 100.501,14.638 100.509,14.673"
+};
+const PROV_LABEL = {"10":["กรุงเทพฯ",100.72,13.86],"12":["นนทบุรี",100.36,13.88],"13":["ปทุมธานี",100.74,14.08],"14":["พระนครศรีอยุธยา",100.66,14.40]};
+/* Chao Phraya centreline, approximated from riverside station / camera coordinates */
+const RIVER = [[100.4533,14.59],[100.4834,14.428],[100.5287,14.369],[100.5665,14.3046],[100.5026,14.1946],[100.5353,14.1197],[100.528,14.035],[100.535,13.9475],[100.4919,13.8947],[100.5,13.84]];
+
+const LVL = {1:["น้ำน้อยวิกฤต","--l1"],2:["น้ำน้อย","--l2"],3:["ปกติ","--l3"],4:["น้ำมาก","--l4"],5:["ล้นตลิ่ง","--l5"]};
+const UPSTREAM = ["C.2","C.13","C.3","C.7A","C.35"];
+const RIVER_CODES = ["C.35","C.36","CPY012","HDA005","CPY017","CPY016","CPY014"];
+
+/* ---------- คลอง 1-4 (snapshot 29 ก.ย. 2569) ---------- */
+/* canal centrelines from OpenStreetMap, simplified */
+const KL = {
+ k1:"100.6116,14.2229 100.6187,14.2183 100.6177,14.2099 100.6165,14.1960 100.6194,14.1902 100.6195,14.1763 100.6196,14.1587 100.6197,14.1450 100.6199,14.1298 100.6200,14.1075 100.6201,14.0882 100.6203,14.0632 100.6205,14.0253 100.6205,14.0177 100.6207,13.9854 100.6227,13.9728 100.6236,13.9670 100.6299,13.9630 100.6388,13.9585 100.6405,13.9570",
+ k2:"100.6413,14.1544 100.6415,14.1241 100.6420,14.0660 100.6423,14.0060 100.6424,13.9896 100.6421,13.9831 100.6417,13.9754 100.6410,13.9647 100.6405,13.9570 100.6398,13.9397 100.6396,13.9330 100.6357,13.9247 100.6312,13.9170 100.6262,13.9082 100.6171,13.9035 100.6110,13.8998",
+ k3:"100.6629,14.1657 100.6634,14.1087 100.6637,14.0638 100.6640,14.0098 100.6641,13.9947 100.6635,13.9792 100.6629,13.9563 100.6628,13.9475 100.6626,13.9332 100.6626,13.9304",
+ k4:"100.6863,14.1781 100.6869,14.0826 100.6873,14.0370 100.6874,14.0159 100.6874,14.0006 100.6874,13.9908 100.6873,13.9834 100.6868,13.9598 100.6865,13.9389 100.6864,13.9309 100.6873,13.9213 100.6905,13.9012 100.6920,13.8900",
+ rangsit:"100.5361,13.9634 100.5440,13.9657 100.5558,13.9686 100.5821,13.9752 100.6007,13.9798 100.6095,13.9821 100.6207,13.9849 100.6362,13.9883 100.6424,13.9896 100.6471,13.9908 100.6572,13.9933 100.6641,13.9947 100.6699,13.9959 100.6875,13.9998 100.7099,14.0094 100.7280,14.0170 100.7476,14.0253 100.7676,14.0329",
+ hokwa:"100.6397,13.9322 100.6509,13.9309 100.6626,13.9304 100.6764,13.9307 100.6864,13.9309 100.6959,13.9312 100.7135,13.9317 100.7258,13.9321 100.7434,13.9328 100.7608,13.9368",
+ prem:"100.5847,14.0957 100.5893,14.0618 100.5917,14.0446 100.5953,14.0185 100.5985,13.9954 100.6007,13.9798 100.6035,13.9596 100.6058,13.9440 100.6067,13.9350 100.6007,13.9234 100.5938,13.9108 100.5875,13.8993"
+};
+const KX = [100.6205,100.6422,100.6638,100.6874]; /* where each numbered canal crosses the Rangsit canal */
+const ZB = {w:100.585,e:100.735,s:13.895,n:14.04};
+/* Rangsit municipality flag history at Saphan Daeng (Khlong Rangsit, near Khlong 1) */
+const FLAGS = [
+  {when:"25 ก.ย.", lvl:"1.66 ม.", label:"ธงส้ม", color:"--dK", src:"ฐานเศรษฐกิจ"},
+  {when:"27 ก.ย. 19:05 น.", lvl:"2.04 ม.", label:"ธงแดง", color:"--l5", src:"โพสต์ทูเดย์"},
+  {when:"29 ก.ย. 10:56 น.", lvl:"", label:"วิกฤต", color:"--l5", src:"เจ้าหน้าที่ ทน.รังสิต ประเมินจากกล้อง", now:true}
+];
+/* BMA canal gauges where Khlong 2 and Khlong 4 drain south (ThaiWater canal_waterlevel) */
+const SNAP_CANAL = [
+  {code:"WL.PSR.01",name:"ปตร.คลองพระยาสุเรนทร์",role:"ปลายคลอง 4 (ต่อจากคลองหกวา ลง กทม.)",k:4,lat:13.92128,lng:100.68731,v:1.60,out:2.05,bank:1.98,warn:1.1,crit:1.8,t:"2026-09-28 13:20"},
+  {code:"WL.PSR.02",name:"ค.พระยาสุเรนทร์ ถ.หนองระแหง",role:"ท้ายน้ำคลอง 4 ในเขต กทม.",k:4,lat:13.90121,lng:100.69049,v:1.63,out:null,bank:2,warn:1,crit:1.2,t:"2026-09-28 13:20"},
+  {code:"WL.SST.01",name:"ปตร.คลองสองสายใต้",role:"ปลายคลอง 2 (ลง กทม.)",k:2,lat:13.92294,lng:100.63455,v:1.54,out:2.06,bank:1.98,warn:1.1,crit:1.8,t:"2026-09-28 13:20"},
+  {code:"WL.KPM.06",name:"ค.เปรมประชากร-ค.บ้านใหม่",role:"คลองเปรมฯ ตะวันตกคลอง 1",k:0,lat:13.94336,lng:100.60579,v:1.57,out:null,bank:1.91,warn:0.8,crit:0.9,t:"2026-09-28 12:55"}
+];
+const ZONE_TELE = [["BKK002","คลองเปรมฯ ตะวันตกคลอง 1",0],["BKK020","ปากคลอง 2 ลงคลองลาดพร้าว",2],["BKK001","ท้าย ปตร.คลอง 2",2]];
+const SNAP_ZRAIN = `คลองลาดพร้าว ท้ายปตร.คลอง2~สายไหม~13.9224~100.6344~17.4
+คลองลาดพร้าว ปากคลอง2สายใต้~ลาดพร้าว~13.9318~100.6395~16.8
+ปตร.จุฬาลงกรณ์~ธัญบุรี~13.9814~100.6057~3.8
+คลองเปรมประชากร หลักหก~เมืองปทุมธานี~13.9656~100.6026~3.6`;
+/* Open-Meteo hourly forecast at Khlong 4 x Khlong Rangsit, from 29 ก.ย. 10:00: mm:probability */
+const SNAP_FC = {start:10, h:"0:14 0.1:35 0.1:64 0.2:82 0.3:78 0.1:62 0:47 0.4:37 0.1:28 0:20 0:14 0:9 0:6 0:5 0:6 0:6 0:5 0:3 0:2 0:1 0:0 0:0 0:3 0:8"};
+/* citizen flood reports, Rangsit City Data Platform, last 7 days (UTC): lat,lng,depth,time */
+const RPT_REF = Date.UTC(2026,8,29,3,56);
+const SNAP_RPT = "13.9594,100.6248,K,09-29 03:46;13.9513,100.6611,W,09-29 03:33;13.9683,100.6243,W,09-29 00:00;14.0096,100.6231,A,09-28 23:55;13.9830,100.6441,K,09-28 14:50;14.0126,100.6208,K,09-28 10:56;14.0137,100.6240,K,09-28 10:44;14.0143,100.6251,A,09-28 10:37;13.9858,100.6263,K,09-28 08:27;13.9864,100.6293,K,09-28 08:22;13.9867,100.6312,K,09-28 08:20;13.9870,100.6320,K,09-28 08:18;13.9905,100.6347,K,09-28 08:00;13.9846,100.6252,K,09-28 07:26;13.9854,100.6244,K,09-28 07:24;13.9834,100.6161,K,09-28 07:21;13.9845,100.6141,K,09-28 07:17;14.0174,100.6406,K,09-28 07:09;13.9547,100.6525,K,09-28 06:57;13.9861,100.6090,K,09-28 06:38;13.9863,100.6088,K,09-28 06:38;13.9863,100.6088,K,09-28 06:37;13.9884,100.6380,K,09-28 04:05;13.9770,100.6562,K,09-28 03:57;13.9797,100.6668,K,09-28 03:56;13.9867,100.6579,K,09-28 03:22;13.9886,100.6389,K,09-28 02:50;14.0313,100.6229,A,09-28 02:48;13.9754,100.6250,K,09-28 02:42;13.9885,100.6387,K,09-28 02:00;14.0034,100.6269,K,09-28 00:40;13.9654,100.6500,K,09-28 00:33;13.9564,100.6220,K,09-27 23:57;13.9568,100.6216,A,09-27 23:52;13.9478,100.6381,K,09-27 20:28;13.9906,100.6248,K,09-27 15:09;13.9867,100.6555,W,09-27 14:43;13.9818,100.6335,K,09-27 14:08;13.9781,100.6334,K,09-27 14:05;13.9779,100.6334,K,09-27 14:03;13.9901,100.6318,K,09-27 14:01;13.9904,100.6246,K,09-27 14:00;13.9868,100.6352,K,09-27 13:44;14.0029,100.6344,A,09-27 09:57;13.9825,100.6084,K,09-27 09:10;13.9831,100.6117,A,09-27 09:07;13.9508,100.6224,K,09-27 09:03;13.9780,100.6232,K,09-27 08:57;13.9845,100.6161,K,09-27 08:57;13.9843,100.6161,K,09-27 08:55;13.9840,100.6228,K,09-27 08:46;13.9835,100.6167,K,09-27 08:40;13.9829,100.6118,A,09-27 08:33;13.9620,100.6375,K,09-27 08:20;13.9726,100.6370,W,09-27 07:10;13.9446,100.6332,K,09-27 05:32;13.9446,100.6332,K,09-27 05:32;13.9866,100.6031,K,09-27 05:01;13.9757,100.6553,W,09-27 03:20;13.9837,100.6316,K,09-27 01:57;13.9914,100.6370,K,09-27 01:54;13.9771,100.6249,K,09-27 01:52;13.9711,100.6278,A,09-27 01:48;13.9814,100.6297,A,09-27 01:40;13.9719,100.6311,A,09-27 01:33;13.9758,100.6335,K,09-27 01:29;13.9868,100.6356,K,09-27 01:27;13.9852,100.6332,K,09-27 01:25;13.9807,100.6334,A,09-27 01:24;13.9889,100.6407,K,09-27 01:20;13.9691,100.6236,X,09-27 00:38;13.9741,100.6249,A,09-26 19:52;13.9607,100.6613,K,09-26 16:26;13.9981,100.6779,A,09-26 13:39;13.9986,100.6808,A,09-26 13:38;13.9731,100.6336,A,09-26 13:19;13.9718,100.6308,A,09-26 13:17;13.9820,100.6296,A,09-26 13:10;13.9860,100.6332,A,09-26 12:57;13.9860,100.6180,A,09-26 12:51;13.9865,100.6179,A,09-26 12:50;13.9872,100.6079,A,09-26 12:48;13.9869,100.6074,A,09-26 12:45;13.9854,100.6546,K,09-26 09:12;13.9806,100.6250,A,09-26 05:57;13.9833,100.6124,A,09-26 05:48;13.9828,100.6112,A,09-26 05:43;13.9827,100.6107,A,09-26 05:32";
+/* sub-district boundaries (OpenStreetMap, simplified) */
+const TAMBON = {
+ latsawai:{name:"ตำบลลาดสวาย",sub:"เทศบาลเมืองลาดสวาย · อ.ลำลูกกา · คลอง 3 ถึงคลอง 5",pts:"100.6870,13.9163 100.7038,13.9168 100.7054,13.9168 100.7053,13.9202 100.7063,13.9211 100.7060,13.9314 100.7060,13.9343 100.7059,13.9385 100.7057,13.9444 100.7055,13.9519 100.7055,13.9557 100.7057,13.9600 100.7058,13.9644 100.7066,13.9707 100.7059,13.9727 100.7058,13.9815 100.7056,13.9886 100.7058,13.9910 100.7062,13.9940 100.6972,13.9914 100.6972,13.9876 100.6873,13.9834 100.6729,13.9813 100.6635,13.9792 100.6632,13.9662 100.6629,13.9563 100.6629,13.9520 100.6628,13.9475 100.6627,13.9424 100.6626,13.9332 100.6626,13.9304 100.6678,13.9304 100.6764,13.9307 100.6864,13.9309 100.6898,13.9310 100.6898,13.9294 100.6894,13.9260 100.6886,13.9248 100.6879,13.9229 100.6874,13.9216 100.6872,13.9198 100.6875,13.9173 100.6868,13.9163",lab:[100.6845,13.958]},
+ khukhot:{name:"ตำบลคูคต",sub:"อ.ลำลูกกา · คลองเปรมฯ ถึงคลอง 3 · BTS คูคต",pts:"100.6398,13.9374 100.6396,13.9330 100.6403,13.9317 100.6416,13.9313 100.6509,13.9309 100.6604,13.9305 100.6626,13.9304 100.6626,13.9332 100.6627,13.9408 100.6628,13.9475 100.6629,13.9520 100.6629,13.9563 100.6632,13.9662 100.6635,13.9792 100.6591,13.9785 100.6572,13.9781 100.6475,13.9758 100.6414,13.9742 100.6353,13.9728 100.6232,13.9701 100.6187,13.9690 100.6084,13.9666 100.6063,13.9661 100.6052,13.9654 100.6055,13.9629 100.6059,13.9593 100.6063,13.9563 100.6066,13.9536 100.6073,13.9550 100.6128,13.9552 100.6170,13.9530 100.6226,13.9502 100.6249,13.9480 100.6250,13.9450 100.6248,13.9408 100.6247,13.9386 100.6398,13.9374",lab:[100.6395,13.9565]}
+};
+/* landmarks the user follows (OpenStreetMap; Rinthong is approximate) */
+const LANDMARKS = [
+ {id:"bts",name:"สถานีรถไฟฟ้าคูคต",kind:"BTS สายสุขุมวิท · สถานีปลายทาง",lat:13.93237,lng:100.64652,icon:"T"},
+ {id:"mem",name:"อนุสรณ์สถานแห่งชาติ",kind:"ถนนพหลโยธิน · ต.คูคต",lat:13.95207,lng:100.62119,icon:"M",left:true},
+ {id:"rin",name:"ย่านหมู่บ้านรินทร์ทอง",kind:"ลำลูกกา คลอง 2 · ต.คูคต (ตำแหน่งโดยประมาณ)",lat:13.9500,lng:100.6405,icon:"R",approx:true}
+];
+const DEPTH = {A:["ระดับข้อเท้า","--dA",1],K:["ระดับเข่า","--dK",2],W:["ระดับเอว","--dW",3],X:["รถเล็กผ่านไม่ได้","--dX",4]};
+const SEGS = ["ตะวันตกคลอง 1 (ถึงคลองเปรมฯ)","คลอง 1-2","คลอง 2-3","คลอง 3-4","ตะวันออกคลอง 4 (ถึงคลอง 5)"];
+const API = "https://api-v3.thaiwater.net/api/v1/thaiwater30/public/";
+const REFRESH_MS = 10*60*1000;
+const BBOX = {w:100.24,e:100.98,s:13.83,n:14.46};
+
+const CAMS = [
+  {name:"สะพานแดง คลองรังสิต",where:"เทศบาลนครรังสิต · ธัญบุรี · ใกล้คลอง 1",zone:true,src:"https://cdp.rangsitcity.go.th/api/flood/snapshot/151",page:"https://cdp.rangsitcity.go.th/",ts:true},
+  {name:"จุดเมืองปทุม",where:"เทศบาลนครรังสิต",src:"https://cdp.rangsitcity.go.th/api/flood/snapshot/152",page:"https://cdp.rangsitcity.go.th/",ts:true},
+  {name:"บ้านท้ายดง ริมเจ้าพระยา",where:"บางไทร อยุธยา · เหนือสามโคก ~10 กม.",src:"http://bantaydong-cpy.dyndns.org:5001/axis-cgi/jpg/image.cgi?resolution=CiF",page:"https://www.thaiwater.net/water/cctv",ts:false},
+  {name:"บ้านป้อม (C.35)",where:"พระนครศรีอยุธยา · สถานีเตือนล่วงหน้า",src:"http://banpom-cpy.dyndns.org:5001/axis-cgi/jpg/image.cgi?resolution=CiF",page:"https://www.thaiwater.net/water/cctv",ts:false},
+  {name:"อำเภอเสนา แม่น้ำน้อย",where:"พระนครศรีอยุธยา",src:"http://woc-saena.dyndns.org:5001/axis-cgi/jpg/image.cgi?resolution=CiF",page:"https://www.thaiwater.net/water/cctv",ts:false}
+];
+
+/* ---------- state ---------- */
+let state = {wl:parseSnapWL(SNAP_WL), rain:parseSnapRain(SNAP_RAIN), time:SNAP_TIME, live:false};
+let zstate = {canal:SNAP_CANAL, canalLive:false, zrain:SNAP_ZRAIN.trim().split("\n").map(l=>{const f=l.split("~");return{name:f[0],amphoe:f[1],lat:+f[2],lng:+f[3],r24:+f[4]}}), fc:parseSnapFC(), fcLive:false,
+  rpt:SNAP_RPT.split(";").map(r=>{const f=r.split(",");const m=f[3].match(/(\d+)-(\d+) (\d+):(\d+)/);return{lat:+f[0],lng:+f[1],d:f[2],ts:Date.UTC(2026,+m[1]-1,+m[2],+m[3],+m[4])}})};
+function parseSnapFC(){return SNAP_FC.h.split(" ").map((x,i)=>{const [mm,p]=x.split(":");return{hr:(SNAP_FC.start+i)%24,mm:+mm,p:+p}})}
+let nextAt = Date.now()+REFRESH_MS;
+
+function parseSnapWL(t){return t.trim().split("\n").map(l=>{const f=l.split("~");const n=v=>v===""?null:+v;return{code:f[0],name:f[1],prov:f[2],amphoe:f[3],river:f[4],lat:+f[5],lng:+f[6],wl:n(f[7]),prev:n(f[8]),bank:n(f[9]),pct:n(f[10]),lvl:+f[11],diff:n(f[12]),over:f[13]==="1",agency:f[14],t:"2026-"+f[15],q:n(f[16]),qmax:n(f[17])}})}
+function parseSnapRain(t){return t.trim().split("\n").map(l=>{const f=l.split("~");return{name:f[0],amphoe:f[1],tambon:f[2],lat:+f[3],lng:+f[4],r24:+f[5],agency:f[6]}})}
+
+/* ---------- live fetch (works when opened outside the claude.ai sandbox) ---------- */
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,r)=>setTimeout(()=>r(new Error("timeout")),ms))])}
+function num(v){return v===null||v===undefined||v===""?null:+v}
+async function fetchLive(){
+  const [wlj, rj] = await Promise.all([
+    withTimeout(fetch(API+"waterlevel_load").then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}),20000),
+    withTimeout(fetch(API+"rain_24h?province_code=13").then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}),20000)
+  ]);
+  const all = wlj.waterlevel_data.data;
+  const wl = all.filter(r=>{const s=r.station,g=r.geocode||{};const la=s.tele_station_lat,lo=s.tele_station_long;
+      return g.province_code==="13"||UPSTREAM.includes(s.tele_station_oldcode)||(la>13.85&&la<14.32&&lo>100.3&&lo<100.98)||RIVER_CODES.includes(s.tele_station_oldcode)})
+    .map(r=>{const s=r.station,g=r.geocode;return{code:s.tele_station_oldcode,name:s.tele_station_name.th||s.tele_station_name.en,prov:g.province_name.th,amphoe:g.amphoe_name.th,river:r.river_name||"",lat:s.tele_station_lat,lng:s.tele_station_long,wl:num(r.waterlevel_msl),prev:num(r.waterlevel_msl_previous),bank:num(s.min_bank),pct:num(r.storage_percent),lvl:+r.situation_level,diff:num(r.diff_wl_bank),over:(r.diff_wl_bank_text||"").indexOf("ล้น")>-1,agency:(r.agency.agency_shortname||{}).th||"",t:r.waterlevel_datetime,q:num(r.discharge),qmax:num(s.qmax)}});
+  const rain = (rj.data||[]).map(x=>({name:(x.station.tele_station_name||{}).th||"",amphoe:x.geocode.amphoe_name.th,tambon:x.geocode.tumbon_name.th,lat:+x.station.tele_station_lat,lng:+x.station.tele_station_long,r24:+x.rain_24h,agency:((x.agency||{}).agency_shortname||{}).th||""}));
+  if(!wl.length) throw new Error("empty");
+  const time = wl.filter(s=>s.prov==="ปทุมธานี").map(s=>s.t).sort().pop()||wl.map(s=>s.t).sort().pop();
+  return {wl,rain,time,live:true};
+}
+async function refresh(){
+  const btn=document.getElementById("refreshBtn"); btn.disabled=true; btn.textContent="กำลังโหลด…";
+  try{ state = await fetchLive(); }
+  catch(e){ state.live=false; }
+  await fetchZoneLive();
+  nextAt=Date.now()+REFRESH_MS; btn.disabled=false; btn.textContent="อัปเดตตอนนี้"; render();
+}
+
+async function fetchZoneLive(){
+  const inZ=(la,lo)=>la>ZB.s&&la<ZB.n&&lo>ZB.w&&lo<ZB.e;
+  const jobs = await Promise.allSettled([
+    withTimeout(fetch(API+"canal_waterlevel").then(r=>{if(!r.ok)throw 0;return r.json()}),20000),
+    withTimeout(fetch(API+"rain_24h?province_code=10").then(r=>{if(!r.ok)throw 0;return r.json()}),20000),
+    withTimeout(fetch(API+"rain_24h?province_code=13").then(r=>{if(!r.ok)throw 0;return r.json()}),20000),
+    withTimeout(fetch("https://api.open-meteo.com/v1/forecast?latitude=13.9998&longitude=100.6875&hourly=precipitation,precipitation_probability&forecast_days=2&timezone=Asia%2FBangkok").then(r=>{if(!r.ok)throw 0;return r.json()}),15000)
+  ]);
+  if(jobs[0].status==="fulfilled"){
+    const byCode={}; for(const x of jobs[0].value.data||[]) byCode[x.station.canal_oldcode]=x;
+    const next=SNAP_CANAL.map(c=>{const x=byCode[c.code];if(!x)return c;return Object.assign({},c,{v:num(x.canal_value),out:x.canal_out?num(x.canal_out):null,bank:num(x.station.bank),warn:num(x.station.warning_level),crit:num(x.station.critical_level),t:x.canal_datetime})});
+    zstate.canal=next; zstate.canalLive=true;
+  }
+  if(jobs[1].status==="fulfilled"||jobs[2].status==="fulfilled"){
+    const rows=[]; for(const j of [jobs[1],jobs[2]]) if(j.status==="fulfilled") for(const x of j.value.data||[]){const la=+x.station.tele_station_lat,lo=+x.station.tele_station_long;if(inZ(la,lo))rows.push({name:(x.station.tele_station_name||{}).th||"",amphoe:x.geocode.amphoe_name.th,lat:la,lng:lo,r24:+x.rain_24h})}
+    if(rows.length) zstate.zrain=rows;
+  }
+  if(jobs[3].status==="fulfilled"){
+    const h=jobs[3].value.hourly; const now=new Date(); const pad=n=>String(n).padStart(2,"0");
+    const key=new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",hourCycle:"h23"}).format(now).replace(" ","T").slice(0,13)+":00";
+    let i0=h.time.indexOf(key); if(i0<0)i0=0;
+    zstate.fc=h.time.slice(i0,i0+24).map((t,k)=>({hr:+t.slice(11,13),mm:+h.precipitation[i0+k]||0,p:+h.precipitation_probability[i0+k]||0}));
+    zstate.fcLive=true;
+  }
+}
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+const cv=v=>`var(${v})`;
+const lvlColor=l=>cv((LVL[l]||LVL[3])[1]);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function fmtTime(t){if(!t)return "-";const m=t.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}:\d{2})/);if(!m)return t;const mon=["","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];return `${+m[3]} ${mon[+m[2]]} ${m[4]} น.`}
+function deltaTxt(s){if(s.wl==null||s.prev==null)return "";const d=Math.round((s.wl-s.prev)*100);return d===0?"คงที่":(d>0?"▲ +"+d+" ซม.":"▼ "+d+" ซม.")}
+
+/* ---------- render ---------- */
+function render(){
+  const pill=$("modePill"); pill.className="pill "+(state.live?"live":"snap");
+  $("modeText").textContent=state.live?"ข้อมูลสด ThaiWater":"ข้อมูลสำรอง (ยังเชื่อมต่อสดไม่ได้)";
+  $("dataTime").textContent=fmtTime(state.time);
+  $("footMode").textContent=state.live
+    ? "ดึงข้อมูลสดจาก api-v3.thaiwater.net ทุก 10 นาที (ค่าที่สถานีส่วนใหญ่อัปเดตทุก 10 นาที ถึง 1 ชั่วโมง)"
+    : "หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 10 นาทีโดยอัตโนมัติ";
+  renderSummary(); renderAlert(); renderMap(); renderStations(); renderChain(); renderRain(); renderZone();
+}
+
+function renderSummary(){
+  const pt=state.wl.filter(s=>s.prov==="ปทุมธานี");
+  const over=pt.filter(s=>s.lvl>=5).length, high=pt.filter(s=>s.lvl===4).length;
+  const c35=state.wl.find(s=>s.code==="C.35");
+  const maxR=state.rain.slice().sort((a,b)=>b.r24-a.r24)[0];
+  const items=[
+    [`${over}/${pt.length}`,"สถานีในจังหวัดที่น้ำล้นตลิ่ง", over?"--l5":"--ink"],
+    [`${high}`,"สถานีในจังหวัดระดับน้ำมาก", high?"--l4":"--ink"],
+    [c35&&c35.q!=null?c35.q.toLocaleString("th-TH"):"-","ลบ.ม./วินาที ไหลผ่าน C.35 บ้านป้อม", c35&&c35.qmax&&c35.q>c35.qmax?"--l5":"--ink"],
+    [maxR?maxR.r24.toFixed(1):"-", maxR?`มม. ฝน 24 ชม. สูงสุด (${maxR.amphoe})`:"มม. ฝน 24 ชม. สูงสุด","--ink"],
+    [String(zstate.rpt.filter(r=>RPT_REF-r.ts<=864e5).length),"จุดน้ำท่วมที่ประชาชนแจ้ง ฝั่งคลอง 1-4 ใน 24 ชม.","--k4"]
+  ];
+  $("summary").innerHTML=items.map(([v,k,c])=>`<div class="stat"><span class="v" style="color:var(${c})">${esc(v)}</span><span class="k">${esc(k)}</span></div>`).join("");
+}
+
+function renderAlert(){
+  const box=$("alertBox");
+  const over=state.wl.filter(s=>s.lvl>=5&&(s.prov==="ปทุมธานี"||RIVER_CODES.includes(s.code)));
+  box.hidden=false;
+  box.innerHTML=`<div class="al"><strong>คลองรังสิตฯ สะพานแดง: วิกฤต</strong><span>เทศบาลนครรังสิตประเมินจากกล้อง 29 ก.ย. 10:56 น. · <a href="#khlong">ดูฝั่งคลอง 1-4</a></span></div>`+(over.length?`<div class="al"><strong>น้ำล้นตลิ่ง ${over.length} จุด</strong><span>${over.map(s=>`${esc(s.name)} (${s.diff!=null?"+"+s.diff.toFixed(2)+" ม.":""})`).join(" · ")}</span></div>`:"");
+}
+
+/* map */
+function proj(lng,lat){const W=680,H=600;return[(lng-BBOX.w)/(BBOX.e-BBOX.w)*W,(BBOX.n-lat)/(BBOX.n-BBOX.s)*H]}
+function polyPath(str){return str.split(" ").map((p,i)=>{const [x,y]=p.split(",").map(Number);const [a,b]=proj(x,y);return (i?"L":"M")+a.toFixed(1)+","+b.toFixed(1)}).join("")+"Z"}
+function renderMap(){
+  const svg=$("map");
+  let h=`<defs><clipPath id="clipMap"><rect x="0" y="0" width="680" height="600"/></clipPath></defs><rect x="0" y="0" width="680" height="600" fill="var(--bg)"/><g clip-path="url(#clipMap)">`;
+  for(const k of ["14","12","10"]) h+=`<path d="${polyPath(POLY[k])}" fill="var(--land)" stroke="var(--line)" stroke-width="1.2"/>`;
+  h+=`<path d="${polyPath(POLY["13"])}" fill="var(--land-pt)" stroke="var(--accent)" stroke-width="2"/>`;
+  const rp=RIVER.map((p,i)=>{const [x,y]=proj(p[0],p[1]);return (i?"L":"M")+x.toFixed(1)+","+y.toFixed(1)}).join("");
+  h+=`<path d="${rp}" fill="none" stroke="var(--river)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>`;
+  for(const k of ["rangsit","prem","hokwa","k1","k2","k3","k4"]) h+=`<path d="${linePath(klPts(k),proj)}" fill="none" stroke="${k==="k4"?"var(--k4)":"var(--river)"}" stroke-width="${k==="k4"?3:k==="rangsit"?2.5:1.5}" opacity="${k==="k4"?1:.8}"/>`;
+  {const [x1,y1]=proj(ZB.w,ZB.n),[x2,y2]=proj(ZB.e,ZB.s);h+=`<a href="#khlong"><rect x="${x1}" y="${y1}" width="${x2-x1}" height="${y2-y1}" fill="none" stroke="var(--k4)" stroke-width="2" stroke-dasharray="6 4"/><text x="${x2-4}" y="${y1-6}" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--k4)" font-family="Chakra Petch,sans-serif">โซนคลอง 1-4</text></a>`}
+  // graticule labels
+  for(const lat of [13.9,14.1,14.3]){const [,y]=proj(BBOX.w,lat);h+=`<line x1="0" x2="680" y1="${y}" y2="${y}" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"/><text x="6" y="${y-4}" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">${lat.toFixed(1)}°N</text>`}
+  for(const lng of [100.4,100.6,100.8]){const [x]=proj(lng,BBOX.s);h+=`<line y1="0" y2="600" x1="${x}" x2="${x}" stroke="var(--line)" stroke-dasharray="2 6" stroke-width="1"/><text x="${x+4}" y="594" font-size="11" font-family="IBM Plex Mono,monospace" fill="var(--muted)">${lng.toFixed(1)}°E</text>`}
+  for(const k in PROV_LABEL){const [t,lng,lat]=PROV_LABEL[k];const [x,y]=proj(lng,lat);h+=`<text x="${x}" y="${y}" text-anchor="middle" font-size="${k==="13"?20:14}" font-weight="${k==="13"?700:500}" font-family="Chakra Petch,sans-serif" fill="${k==="13"?"var(--accent)":"var(--muted)"}" opacity="${k==="13"?1:.9}">${t}</text>`}
+  {const [x,y]=proj(100.505,14.02);h+=`<text x="${x-8}" y="${y}" text-anchor="end" font-size="12" fill="var(--river)" font-family="IBM Plex Sans Thai,sans-serif">แม่น้ำเจ้าพระยา</text>`}
+  h+=`</g>`;
+  // rain stations (small squares)
+  for(const r of state.rain){const [x,y]=proj(r.lng,r.lat);if(x<0||x>680||y<0||y>600)continue;const s=Math.min(14,4+r.r24*0.6);h+=`<rect x="${(x-s/2).toFixed(1)}" y="${(y-s/2).toFixed(1)}" width="${s.toFixed(1)}" height="${s.toFixed(1)}" fill="var(--accent)" opacity=".35" data-tip="${esc("ฝน 24 ชม. "+r.r24+" มม. · "+r.name+" ("+r.amphoe+")")}"/>`}
+  // cameras
+  const camPts=[[100.6057,14.0005,0],[100.5353,14.1197,2],[100.5291,14.3684,3],[100.405,14.3163,4]];
+  for(const [lng,lat,i] of camPts){const [x,y]=proj(lng,lat);h+=`<g data-tip="${esc("กล้อง: "+CAMS[i].name)}"><rect x="${x-7}" y="${y-5}" width="14" height="10" rx="2" fill="var(--ink)"/><circle cx="${x}" cy="${y}" r="2.6" fill="var(--bg)"/></g>`}
+  // water level stations
+  const pts=state.wl.filter(s=>{const [x,y]=proj(s.lng,s.lat);return x>=0&&x<=680&&y>=0&&y<=600}).sort((a,b)=>a.lvl-b.lvl);
+  for(const s of pts){const [x,y]=proj(s.lng,s.lat);const pt=s.prov==="ปทุมธานี";
+    h+=`<g data-code="${esc(s.code)}" data-tip="${esc(s.name+" · "+s.prov+"\n"+(s.pct!=null?s.pct.toFixed(0)+"% ความจุ · ":"")+LVL[s.lvl][0]+(s.diff!=null?" ("+(s.over?"สูงกว่า":"ต่ำกว่า")+"ตลิ่ง "+s.diff.toFixed(2)+" ม.)":""))}">`;
+    if(s.lvl>=5)h+=`<circle cx="${x}" cy="${y}" r="15" fill="${lvlColor(s.lvl)}" opacity=".18"/>`;
+    h+=`<circle cx="${x}" cy="${y}" r="${pt?9:7}" fill="${lvlColor(s.lvl)}" stroke="var(--panel)" stroke-width="2.5"/>`;
+    if(pt){const L=x>520;h+=`<text x="${L?x-13:x+13}" y="${y+4}" text-anchor="${L?"end":"start"}" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">${esc(s.name.replace("คลอง","ค."))}</text>`}
+    h+=`</g>`}
+  svg.innerHTML=h;
+  $("legend").innerHTML=[5,4,3,2,1].map(l=>`<span><i class="sw" style="background:${lvlColor(l)}"></i>${LVL[l][0]}</span>`).join("")+`<span><i class="sw" style="background:var(--accent);opacity:.35;border-radius:1px"></i>สถานีฝน (ขนาด = ปริมาณ)</span><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>กล้อง CCTV</span>`;
+}
+function bindTips(boxId,tipId){
+  const box=$(boxId||"mapbox"),tip=$(tipId||"tip");
+  function show(e){const g=e.target.closest("[data-tip]");if(!g){tip.hidden=true;hl(null);return}
+    tip.textContent=g.getAttribute("data-tip");tip.style.whiteSpace="pre-line";tip.hidden=false;
+    const r=box.getBoundingClientRect();let x=(e.clientX||0)-r.left+12,y=(e.clientY||0)-r.top+12;
+    if(x>r.width-250)x=Math.max(0,x-260);tip.style.left=x+"px";tip.style.top=y+"px";hl(g.getAttribute("data-code"))}
+  box.addEventListener("pointermove",show);box.addEventListener("pointerdown",show);box.addEventListener("pointerleave",()=>{tip.hidden=true;hl(null)});
+}
+function hl(code){document.querySelectorAll(".row.hl").forEach(r=>r.classList.remove("hl"));if(code){const r=document.querySelector(`.row[data-code="${CSS.escape(code)}"]`);if(r)r.classList.add("hl")}}
+
+/* station list */
+function rowHTML(s){
+  const pct=s.pct==null?0:Math.max(0,Math.min(130,s.pct));
+  const w=(pct/130*100).toFixed(1), bank=(100/130*100).toFixed(1);
+  const bankTxt=s.diff==null?"":(s.over?`สูงกว่าตลิ่ง ${s.diff.toFixed(2)} ม.`:`ต่ำกว่าตลิ่ง ${s.diff.toFixed(2)} ม.`);
+  return `<div class="row" data-code="${esc(s.code)}">
+    <span class="stripe" style="background:${lvlColor(s.lvl)}"></span>
+    <div class="nm"><b>${esc(s.name)}</b><small>${esc(s.code)} · อ.${esc(s.amphoe)}${s.prov!=="ปทุมธานี"?" จ."+esc(s.prov):""} · ${esc(s.agency)} · ${esc(fmtTime(s.t))}</small></div>
+    <div class="gwrap"><div class="gauge" aria-label="${pct.toFixed(0)}% ของความจุลำน้ำ"><i style="width:${w}%;background:${lvlColor(s.lvl)}"></i><span class="bank" style="left:${bank}%"></span></div><div class="gl"><span>${esc(bankTxt)}</span><span class="num">${s.wl!=null?s.wl.toFixed(2)+" ม.รทก.":""}</span></div></div>
+    <div class="val"><div class="p" style="color:${lvlColor(s.lvl)}">${s.pct!=null?s.pct.toFixed(0)+"%":"-"}</div><div class="d">${esc(deltaTxt(s))}</div></div>
+  </div>`;
+}
+function renderStations(){
+  const byPct=(a,b)=>(b.pct||0)-(a.pct||0);
+  const pt=state.wl.filter(s=>s.prov==="ปทุมธานี").sort(byPct);
+  const river=state.wl.filter(s=>s.prov!=="ปทุมธานี"&&RIVER_CODES.includes(s.code)).sort(byPct);
+  const near=state.wl.filter(s=>s.prov!=="ปทุมธานี"&&!RIVER_CODES.includes(s.code)&&!UPSTREAM.includes(s.code)).sort(byPct);
+  const g=(t,a)=>a.length?`<div class="group"><h3>${t}</h3>${a.map(rowHTML).join("")}</div>`:"";
+  $("stations").innerHTML=g(`ในจังหวัดปทุมธานี (${pt.length} สถานีโทรมาตร)`,pt)+g("แม่น้ำเจ้าพระยาและแม่น้ำน้อย เหนือและใต้ปทุมฯ",river)+g("คลองข้างเคียง กรุงเทพฯ นนทบุรี อยุธยา",near);
+}
+
+/* upstream chain */
+function renderChain(){
+  const nodes=UPSTREAM.map(c=>state.wl.find(s=>s.code===c)).filter(Boolean);
+  const place={"C.2":"นครสวรรค์","C.13":"ท้ายเขื่อนเจ้าพระยา","C.3":"สิงห์บุรี","C.7A":"อ่างทอง","C.35":"บ้านป้อม อยุธยา"};
+  $("chain").innerHTML=nodes.map((s,i)=>{const r=s.q&&s.qmax?s.q/s.qmax:null;const col=r==null?"var(--muted)":r>1?"var(--l5)":r>.8?"var(--l4)":"var(--l3)";
+    return `<div class="node"><span class="eyebrow">${i+1}/${nodes.length} · ${esc(s.code)}</span><b>${esc(place[s.code]||s.name)}</b>
+    <span class="q" style="color:${col}">${s.q!=null?s.q.toLocaleString("th-TH"):"-"}</span>
+    <div class="cap"><i style="width:${r==null?0:Math.min(100,r*100).toFixed(0)}%;background:${col}"></i></div>
+    <small>ความจุลำน้ำ ${s.qmax!=null?s.qmax.toLocaleString("th-TH"):"-"} · ${r!=null?(r*100).toFixed(0)+"%":""}</small>
+    <small>ระดับ ${s.wl!=null?s.wl.toFixed(2):"-"} ม.รทก. · ${esc(fmtTime(s.t))}</small></div>`}).join("");
+}
+
+/* rain */
+function renderRain(){
+  const r=state.rain.slice().sort((a,b)=>b.r24-a.r24);
+  if(!r.length){$("rain").innerHTML='<p class="note">ยังไม่มีรายงานฝนในช่วง 24 ชั่วโมง</p>';return}
+  const max=Math.max(20,...r.map(x=>x.r24));
+  $("rain").innerHTML=r.map(x=>`<div class="rbar"><span class="t">${esc(x.name)} <span class="note">อ.${esc(x.amphoe)}</span></span><span class="b"><i style="width:${(x.r24/max*100).toFixed(1)}%"></i></span><span class="n">${x.r24.toFixed(1)}</span></div>`).join("");
+}
+
+
+/* ---------- คลอง 1-4 ---------- */
+function klPts(key){return KL[key].split(" ").map(p=>p.split(",").map(Number))}
+function zproj(lng,lat){const W=680,H=680;return[(lng-ZB.w)/(ZB.e-ZB.w)*W,(ZB.n-lat)/(ZB.n-ZB.s)*H]}
+function linePath(pts,pr){return pts.map((p,i)=>{const [x,y]=pr(p[0],p[1]);return (i?"L":"M")+x.toFixed(1)+","+y.toFixed(1)}).join("")}
+function rangsitLatAt(lng){const r=klPts("rangsit");for(let i=1;i<r.length;i++){if(lng<=r[i][0]){const a=r[i-1],b=r[i],t=(lng-a[0])/(b[0]-a[0]);return a[1]+t*(b[1]-a[1])}}return r[r.length-1][1]}
+function segOf(lng){if(lng<KX[0])return 0;if(lng<KX[1])return 1;if(lng<KX[2])return 2;if(lng<KX[3])return 3;return 4}
+const fmtLocal=ts=>new Date(ts).toLocaleString("th-TH",{timeZone:"Asia/Bangkok",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+" น.";
+function hoursOld(t){const m=t&&t.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/);if(!m)return null;const ts=Date.UTC(+m[1],+m[2]-1,+m[3],+m[4]-7,+m[5]);return (Date.now()-ts)/36e5}
+function staleTag(t){const h=hoursOld(t);return h!=null&&h>3?`<span class="stale">ข้อมูลช้า ${Math.round(h)} ชม.</span>`:""}
+function canalLvl(c){if(c.v==null)return 3;if(c.crit!=null&&c.v>=c.crit)return 5;if(c.warn!=null&&c.v>=c.warn)return 4;return 3}
+
+function ptIn(poly,lng,lat){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const [xi,yi]=poly[i],[xj,yj]=poly[j];if(((yi>lat)!==(yj>lat))&&(lng<(xj-xi)*(lat-yi)/(yj-yi)+xi))c=!c}return c}
+function kmBetween(a,b){const R=6371,t=Math.PI/180;const dLa=(b.lat-a.lat)*t,dLo=(b.lng-a.lng)*t;const x=Math.sin(dLa/2)**2+Math.cos(a.lat*t)*Math.cos(b.lat*t)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+const tPts=k=>TAMBON[k].pts.split(" ").map(p=>p.split(",").map(Number));
+function gaugePool(){
+  const g=[{name:"คลองรังสิตฯ สะพานแดง",lat:13.98613,lng:100.62596,val:"วิกฤต",col:"var(--l5)",sub:"ทน.รังสิต ประเมินจากกล้อง"}];
+  for(const c of zstate.canal)g.push({name:c.name,lat:c.lat,lng:c.lng,val:(c.v!=null?c.v.toFixed(2)+" ม.":"-"),col:lvlColor(canalLvl(c)),sub:c.role+(hoursOld(c.t)>3?" · ข้อมูลช้า "+Math.round(hoursOld(c.t))+" ชม.":"")});
+  for(const [code,role] of ZONE_TELE){const s=state.wl.find(w=>w.code===code);if(s)g.push({name:s.name,lat:s.lat,lng:s.lng,val:(s.pct!=null?s.pct.toFixed(0)+"%":"-"),col:lvlColor(s.lvl),sub:role+" · "+LVL[s.lvl][0]})}
+  return g;
+}
+function repStats(filter){const r=zstate.rpt.filter(filter);const d24=r.filter(x=>RPT_REF-x.ts<=864e5).length;const mx=r.reduce((m,x)=>Math.max(m,(DEPTH[x.d]||DEPTH.A)[2]),0);const md=mx?Object.values(DEPTH).find(d=>d[2]===mx):null;const last=r.reduce((m,x)=>Math.max(m,x.ts),0);return{n:r.length,d24,md,last}}
+function renderNear(){
+  const pool=gaugePool();
+  const nearest=(pt,k)=>pool.map(g=>Object.assign({d:kmBetween(pt,g)},g)).sort((a,b)=>a.d-b.d).slice(0,k);
+  const gl=list=>`<ul>${list.map(g=>`<li><b style="color:${g.col}">${esc(g.val)}</b> ${esc(g.name)} <span class="note">ห่าง ${g.d.toFixed(1)} กม. · ${esc(g.sub)}</span></li>`).join("")}</ul>`;
+  const stat=(st)=>`<div class="big"><span>${st.n}</span><small>จุดแจ้งใน 7 วัน</small><span>${st.d24}</span><small>ใน 24 ชม.</small>${st.md?`<span class="chip" style="background:var(${st.md[1]});color:var(--panel)">ลึกสุด${st.md[0]}</span>`:""}</div>${st.last?`<small class="note">แจ้งล่าสุด ${fmtLocal(st.last)}</small>`:""}`;
+  let h="";
+  for(const k of ["latsawai","khukhot"]){const T=TAMBON[k];const poly=tPts(k);const cx=poly.reduce((a,p)=>a+p[0],0)/poly.length,cy=poly.reduce((a,p)=>a+p[1],0)/poly.length;
+    const st=repStats(r=>ptIn(poly,r.lng,r.lat));
+    h+=`<div class="pc${k==="latsawai"?" main":""}"><span class="kind">ตำบล</span><h4 style="${k==="latsawai"?"color:var(--k4)":""}">${esc(T.name)}</h4><small class="note">${esc(T.sub)}</small>${stat(st)}${gl(nearest({lat:cy,lng:cx},k==="latsawai"?3:2))}${k==="latsawai"?`<small class="note">ปตร.คลองพระยาสุเรนทร์อยู่ในส่วนใต้สุดของตำบลนี้ (คลอง 4 ใต้คลองหกวา) เป็นจุดวัดทางการที่ใกล้ลาดสวายที่สุด</small>`:""}</div>`}
+  for(const L of LANDMARKS){const st=repStats(r=>kmBetween(L,r)<=1);
+    h+=`<div class="pc"><span class="kind">${esc(L.kind)}</span><h4>${esc(L.name)}</h4>${stat(st).replace("จุดแจ้งใน 7 วัน","จุดแจ้งรัศมี 1 กม. 7 วัน")}${gl(nearest(L,2))}</div>`}
+  $("nearCards").innerHTML=h;
+}
+
+function renderZone(){
+  /* flag timeline */
+  $("flagline").innerHTML=FLAGS.map(f=>`<div class="flag${f.now?" now":""}"><span class="fl"><i style="background:var(${f.color})"></i>${esc(f.label)}${f.lvl?` <span class="num">${esc(f.lvl)}</span>`:""}</span><small>${esc(f.when)} · คลองรังสิตฯ สะพานแดง (ใกล้คลอง 1)</small><small>ที่มา: ${esc(f.src)}</small></div>`).join("");
+
+  /* zoom map */
+  const pr=zproj; let h=`<defs><clipPath id="zclip"><rect x="0" y="0" width="680" height="680"/></clipPath></defs><rect x="0" y="0" width="680" height="680" fill="var(--land-pt)"/><g clip-path="url(#zclip)">`;
+  /* Bangkok side below Hok Wa */
+  const hw=klPts("hokwa"); const bk=[[ZB.w,hw[0][1]],...hw,[ZB.e,hw[hw.length-1][1]],[ZB.e,ZB.s-0.01],[ZB.w,ZB.s-0.01]];
+  h+=`<path d="${linePath(bk,pr)}Z" fill="var(--land)"/>`;
+  /* segment band for Khlong 3-4 */
+  for(const [k,w,c] of [["prem",4,"var(--river)"],["hokwa",4,"var(--river)"],["rangsit",7,"var(--river)"],["k1",3.5,"var(--river)"],["k2",3.5,"var(--river)"],["k3",3.5,"var(--river)"],["k4",6,"var(--k4)"]])
+    h+=`<path d="${linePath(klPts(k),pr)}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const T_=(x,y,t,main)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="${main?16:13}" font-weight="700" fill="${main?"var(--k4)":"var(--ink)"}" font-family="Chakra Petch,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">${t}</text>`;
+  const T=(x,y,t,o)=>`<text x="${x}" y="${y}" ${o||""} font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="4">${t}</text>`;
+  ["คลอง 1","คลอง 2","คลอง 3","คลอง 4"].forEach((t,i)=>{const [x]=pr(KX[i],0);h+=T(x,22,t,`text-anchor="middle" font-size="${i===3?17:14}" font-weight="700" fill="${i===3?"var(--k4)":"var(--ink)"}"`)});
+  {const [x,y]=pr(100.700,14.0045);h+=T(x+6,y+22,"คลองรังสิตประยูรศักดิ์",`font-size="12.5" fill="var(--accent)" font-weight="600" transform="rotate(-22 ${x+6} ${y+22})"`)}
+  {const [x,y]=pr(100.705,13.9314);h+=T(x,y-8,"คลองหกวา · แนวเขต กทม.",`font-size="12" fill="var(--accent)" font-weight="600"`)}
+  {const [x,y]=pr(100.5985,14.03);h+=T(x-4,y,"คลองเปรมฯ",`text-anchor="end" font-size="12" fill="var(--accent)"`)}
+  h+=T(pr(100.655,0)[0],pr(0,14.022)[1],"อ.คลองหลวง",`text-anchor="middle" font-size="13" fill="var(--muted)"`);
+  h+=T(pr(100.672,0)[0],pr(0,13.972)[1],"อ.ธัญบุรี",`text-anchor="middle" font-size="13" fill="var(--muted)"`);
+  h+=T(pr(100.655,0)[0],pr(0,13.905)[1],"กรุงเทพฯ (สายไหม · คลองสามวา)",`text-anchor="middle" font-size="12" fill="var(--muted)"`);
+  for(const k of ["khukhot","latsawai"]){const T=TAMBON[k];const main=k==="latsawai";
+    h+=`<path d="${linePath(tPts(k),pr)}Z" fill="${main?"var(--k4)":"none"}" fill-opacity="${main?.10:0}" stroke="${main?"var(--k4)":"var(--ink)"}" stroke-width="${main?2.5:1.5}" stroke-dasharray="${main?"":"5 4"}"/>`;
+    const [x,y]=pr(T.lab[0],T.lab[1]);h+=T_(x,y,T.name.replace("ตำบล","ต."),main);}
+  h+=`</g>`;
+  for(const L of LANDMARKS){const [x,y]=pr(L.lng,L.lat);
+    h+=`<g data-tip="${esc(L.name+"\n"+L.kind)}"><circle cx="${x}" cy="${y}" r="10" fill="var(--panel)" stroke="var(--ink)" stroke-width="2" ${L.approx?'stroke-dasharray="3 2"':""}/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" font-weight="700" font-family="IBM Plex Mono,monospace" fill="var(--ink)">${L.icon}</text></g>`;
+    h+=`<text x="${L.left?x-14:x+14}" y="${y+4}" text-anchor="${L.left?"end":"start"}" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">${esc(L.name.replace("สถานีรถไฟฟ้า","BTS "))}</text>`}
+  /* reports */
+  const R=zstate.rpt.slice().sort((a,b)=>a.ts-b.ts);
+  for(const r of R){const [x,y]=pr(r.lng,r.lat);if(x<0||x>680||y<0||y>680)continue;const d=DEPTH[r.d]||DEPTH.A;const fresh=RPT_REF-r.ts<=864e5;
+    h+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${3+d[2]*1.3}" fill="var(${d[1]})" opacity="${fresh?.95:.45}" stroke="var(--panel)" stroke-width="1" data-tip="${esc("ประชาชนแจ้ง: น้ำ"+d[0]+"\n"+fmtLocal(r.ts))}"/>`}
+  /* canal gauges */
+  for(const c of zstate.canal){const [x,y]=pr(c.lng,c.lat);if(y>680)continue;const l=canalLvl(c);
+    h+=`<g data-tip="${esc(c.name+"\n"+c.role+"\nระดับ "+(c.v!=null?c.v.toFixed(2):"-")+" ม."+(c.out!=null?" · ด้านนอก "+c.out.toFixed(2)+" ม.":"")+"\n"+fmtTime(c.t))}"><rect x="${x-7}" y="${y-7}" width="14" height="14" fill="${lvlColor(l)}" stroke="var(--panel)" stroke-width="2" transform="rotate(45 ${x} ${y})"/></g>`}
+  /* ThaiWater telemetry */
+  for(const [code] of ZONE_TELE){const s=state.wl.find(w=>w.code===code);if(!s)continue;const [x,y]=pr(s.lng,s.lat);
+    h+=`<g data-tip="${esc(s.name+"\n"+(s.pct!=null?s.pct.toFixed(0)+"% ความจุ · ":"")+LVL[s.lvl][0])}"><circle cx="${x}" cy="${y}" r="8" fill="${lvlColor(s.lvl)}" stroke="var(--panel)" stroke-width="2.5"/></g>`}
+  /* rain */
+  for(const r of zstate.zrain){const [x,y]=pr(r.lng,r.lat);if(x<0||x>680||y<0||y>680)continue;const sz=Math.min(16,5+r.r24*0.6);h+=`<rect x="${x-sz/2}" y="${y-sz/2}" width="${sz}" height="${sz}" fill="none" stroke="var(--accent)" stroke-width="2" data-tip="${esc("ฝน 24 ชม. "+r.r24+" มม.\n"+r.name)}"/>`}
+  /* camera at Saphan Daeng */
+  {const [x,y]=pr(100.62596,13.98613);h+=`<g data-tip="กล้อง CCTV สะพานแดง (ทน.รังสิต)"><rect x="${x-8}" y="${y-18}" width="16" height="11" rx="2" fill="var(--ink)"/><circle cx="${x}" cy="${y-12.5}" r="3" fill="var(--bg)"/></g>`}
+  $("zmap").innerHTML=h;
+  $("zlegend").innerHTML=["A","K","W","X"].map(k=>`<span><i class="sw" style="background:var(${DEPTH[k][1]})"></i>แจ้งน้ำ${DEPTH[k][0]}</span>`).join("")+`<span>จุดจาง = เกิน 24 ชม.</span><span><i class="sw" style="background:var(--l4);border-radius:1px;transform:rotate(45deg)"></i>ประตูระบายน้ำ กทม.</span><span><i class="sw" style="background:var(--l5)"></i>สถานีโทรมาตร ThaiWater</span><span><i class="sw" style="border:2px solid var(--accent);border-radius:1px;background:none"></i>สถานีฝน</span><span><i class="sw" style="background:var(--k4);border-radius:1px;height:4px;width:16px"></i>คลอง 4</span><span><i class="sw" style="border:2px solid var(--k4);border-radius:1px;background:none"></i>ต.ลาดสวาย</span><span><i class="sw" style="border:1.5px dashed var(--ink);border-radius:1px;background:none"></i>ต.คูคต</span><span>T = BTS คูคต · M = อนุสรณ์สถานแห่งชาติ · R = ย่านรินทร์ทอง (โดยประมาณ)</span>`;
+
+  /* segment table */
+  const rows=SEGS.map(()=>({n:0,s:0,d24:0,max:0}));
+  for(const r of zstate.rpt){if(r.lng<ZB.w||r.lng>KX[3]+0.0236)continue;const i=segOf(r.lng);const north=r.lat>rangsitLatAt(r.lng);rows[i][north?"n":"s"]++;if(RPT_REF-r.ts<=864e5)rows[i].d24++;rows[i].max=Math.max(rows[i].max,(DEPTH[r.d]||DEPTH.A)[2])}
+  const maxName=m=>m?Object.values(DEPTH).find(d=>d[2]===m):null;
+  $("segTable").innerHTML=`<thead><tr><th>ช่วงคลอง</th><th>เหนือคลองรังสิต</th><th>ใต้คลองรังสิต</th><th>24 ชม.</th><th>ลึกสุดที่แจ้ง</th></tr></thead><tbody>`+
+    rows.map((r,i)=>{const m=maxName(r.max);return `<tr class="${i>=3?"k4row":""}"><td>${esc(SEGS[i])}</td><td>${r.n}</td><td>${r.s}</td><td>${r.d24}</td><td>${m?`<span class="chip" style="background:var(${m[1]});color:var(--panel)">${m[0]}</span>`:"-"}</td></tr>`}).join("")+`</tbody>`;
+  $("segNote").textContent=`7 วันล่าสุด ถึง ${fmtLocal(RPT_REF)}`;
+
+  /* gauges list */
+  const tele=ZONE_TELE.map(([code,role,k])=>{const s=state.wl.find(w=>w.code===code);return s?{k,html:`<div class="zrow"><div><b>${esc(s.name)}</b><br><small>${esc(role)} · ThaiWater ${esc(s.code)} · ${esc(fmtTime(s.t))}</small></div><div class="zv"><span style="color:${lvlColor(s.lvl)}">${s.pct!=null?s.pct.toFixed(0)+"%":"-"}</span><br><small>${LVL[s.lvl][0]}</small></div></div>`}:null}).filter(Boolean);
+  const gates=zstate.canal.map(c=>{const l=canalLvl(c);return{k:c.k,html:`<div class="zrow${c.k===4?" k4r":""}"><div><b>${esc(c.name)}</b>${staleTag(c.t)}<br><small>${esc(c.role)} · เตือน ${c.warn!=null?c.warn.toFixed(2):"-"} / วิกฤต ${c.crit!=null?c.crit.toFixed(2):"-"} ม. · ${esc(fmtTime(c.t))}</small></div><div class="zv"><span style="color:${lvlColor(l)}">${c.v!=null?c.v.toFixed(2):"-"} ม.</span>${c.out!=null?`<br><small>ด้านนอก ${c.out.toFixed(2)} ม.</small>`:""}</div></div>`}});
+  $("zgauges").innerHTML=[...tele,...gates].sort((a,b)=>b.k-a.k).map(x=>x.html).join("");
+  renderNear();
+
+  /* Khlong 4 card */
+  const psr=zstate.canal.find(c=>c.code==="WL.PSR.01");
+  const near4=zstate.rpt.filter(r=>Math.abs(r.lng-KX[3])<0.011&&r.lat>13.93&&r.lat<14.05);
+  const near4_24=near4.filter(r=>RPT_REF-r.ts<=864e5).length;
+  const fc=zstate.fc; const tot=fc.reduce((a,b)=>a+b.mm,0); const pk=fc.reduce((a,b)=>b.p>a.p?b:a,fc[0]||{p:0,hr:0});
+  const head=psr&&psr.out!=null&&psr.v!=null?Math.round((psr.out-psr.v)*100):null;
+  $("k4card").innerHTML=`<h3>คลอง 4 <span>เน้นเฝ้าระวัง</span></h3>
+   <div class="kf"><b>ปลายคลอง 4 · ปตร.คลองพระยาสุเรนทร์</b><span class="kv" style="color:${lvlColor(canalLvl(psr||{}))}">${psr&&psr.v!=null?psr.v.toFixed(2):"-"} ม.</span>
+     <small>${psr?`${psr.out!=null?`ด้านนอกประตู ${psr.out.toFixed(2)} ม. ต่างกัน ${head} ซม. `:""}เกณฑ์เตือน ${psr.warn} ม. วิกฤต ${psr.crit} ม. ตลิ่ง ${psr.bank} ม. · ${esc(fmtTime(psr.t))}`:""}${psr?staleTag(psr.t):""}</small>
+     <small>จุดนี้คือทางระบายน้ำของคลอง 4 ลงสู่ กทม. ถ้าระดับสองฝั่งประตูต่างกันมาก แปลว่าน้ำฝั่งคลองหกวากำลังถูกกั้นหรือระบายได้ช้า</small></div>
+   <div class="kf"><b>จุดตัดคลอง 4 กับคลองรังสิต</b><span class="kv" style="color:var(--l5)">วิกฤต</span>
+     <small>ไม่มีสถานีวัดสาธารณะที่จุดนี้ ใช้สถานะคลองรังสิตที่สะพานแดง (ห่างไปทางตะวันตกราว 7 กม.) ซึ่งเทศบาลนครรังสิตประเมินเป็น "วิกฤต" เมื่อ 29 ก.ย. 10:56 น.</small></div>
+   <div class="kf"><b>ประชาชนแจ้งน้ำท่วมริมคลอง 4 (ห่างไม่เกิน ~1 กม.)</b><span class="kv">${near4.length}</span>
+     <small>ใน 7 วัน · ${near4_24} จุดใน 24 ชม. ${near4.length?`· ลึกสุด${Object.values(DEPTH).find(d=>d[2]===Math.max(...near4.map(r=>(DEPTH[r.d]||DEPTH.A)[2])))[0]}`:""} · ระบบรับแจ้งของ ทน.รังสิต ครอบคลุมคลอง 4 น้อย</small></div>
+   <div class="kf"><b>ฝนคาดการณ์ 24 ชม. ที่คลอง 4</b><span class="kv">${tot.toFixed(1)} มม.</span>
+     <small>โอกาสฝนสูงสุด ${pk.p}% ช่วง ${String(pk.hr).padStart(2,"0")}:00 น. · Open-Meteo${zstate.fcLive?" (สด)":" (ณ 10:00 น.)"}</small>
+     <div style="grid-column:1/-1"><div class="fc">${fc.map(f=>`<i style="height:${Math.max(3,f.p)}%;opacity:${(0.35+Math.min(1,f.mm/0.5)*0.65).toFixed(2)}" title="${String(f.hr).padStart(2,"0")}:00 ${f.p}% ${f.mm} มม."></i>`).join("")}</div><div class="fcx"><span>${String(fc[0]?fc[0].hr:0).padStart(2,"0")}:00</span><span>+12 ชม.</span><span>+24 ชม.</span></div></div></div>`;
+}
+
+/* cctv */
+function buildCamSet(container,list,pre){
+  $(container).innerHTML=list.map(({c},j)=>`<div class="cam"><div class="frame">
+      <img id="${pre}img${j}" alt="ภาพจากกล้อง ${esc(c.name)}" hidden>
+      <div class="fb" id="${pre}fb${j}"><span>กำลังเชื่อมต่อกล้อง…</span></div>
+      <span class="rec" id="${pre}rec${j}" hidden>LIVE</span><span class="ts num" id="${pre}ts${j}" hidden></span></div>
+    <div class="meta"><b>${esc(c.name)}</b><small>${esc(c.where)}</small><small><a href="${esc(c.page)}" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div>`).join("");
+  list.forEach(({c},j)=>{const img=$(pre+"img"+j);
+    img.addEventListener("load",()=>{img.hidden=false;$(pre+"fb"+j).hidden=true;$(pre+"rec"+j).hidden=false;$(pre+"ts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$(pre+"ts"+j).hidden=false});
+    img.addEventListener("error",()=>{img.hidden=true;$(pre+"rec"+j).hidden=true;$(pre+"ts"+j).hidden=true;const fb=$(pre+"fb"+j);fb.hidden=false;
+      fb.innerHTML=`<span>หน้านี้โหลดภาพกล้องตรงไม่ได้${location.protocol==="https:"&&c.src.startsWith("http:")?" (กล้องใช้ http)":""}</span><a href="${esc(c.page)}" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a>`});
+  });
+}
+const CAMSETS=[];
+function buildCams(){
+  const all=CAMS.map(c=>({c})); const zone=CAMS.filter(c=>c.zone).map(c=>({c}));
+  buildCamSet("cams",all,"a"); buildCamSet("zcams",zone,"z");
+  $("zcams").insertAdjacentHTML("beforeend",`<div class="cam" style="border-color:var(--k4)"><div class="frame" style="background:var(--k4-soft)"><div class="fb" style="color:var(--ink)"><b style="font-family:var(--display);font-size:18px;color:var(--k4)">คลอง 4</b><span>ยังไม่พบกล้องที่เปิดภาพให้ประชาชนดูได้บนคลอง 4 ฝั่งปทุมธานี</span><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener" style="color:var(--ink);border-color:var(--k4)">แจ้งจุดน้ำท่วม / ดูแผนที่ ทน.รังสิต ↗</a></div></div><div class="meta"><b>ทางเลือกเมื่อไม่มีกล้อง</b><small>ดูระดับที่ ปตร.คลองพระยาสุเรนทร์ (ปลายคลอง 4) ด้านบน หรือโทร 1784 แจ้งเหตุน้ำท่วม</small></div></div>`);
+  CAMSETS.push(["a",all],["z",zone]); loadCams();
+}
+function loadCams(){for(const [pre,list] of CAMSETS) list.forEach(({c},j)=>{const img=$(pre+"img"+j);const sep=c.src.indexOf("?")>-1?"&":"?";img.src=c.src+sep+"t="+Date.now()})}
+
+/* ---------- boot ---------- */
+render(); bindTips("mapbox","tip"); bindTips("zmapbox","ztip"); buildCams();
+(function(){const links=[...document.querySelectorAll("#mnav a")];const ids=links.map(a=>a.dataset.t);
+  function mark(){let cur=ids[0];for(const id of ids){const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<window.innerHeight*0.35)cur=id}links.forEach(a=>a.classList.toggle("on",a.dataset.t===cur))}
+  window.addEventListener("scroll",()=>{mark();document.querySelectorAll(".tip").forEach(t=>t.hidden=true)},{passive:true});mark();
+  links.forEach(a=>a.addEventListener("click",e=>{const el=document.getElementById(a.dataset.t);if(el){e.preventDefault();el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}}));
+})();
+$("refreshBtn").addEventListener("click",()=>{refresh();loadCams()});
+setInterval(()=>{const s=Math.max(0,Math.round((nextAt-Date.now())/1000));$("countdown").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");if(s===0){nextAt=Date.now()+REFRESH_MS;refresh()}},1000);
+setInterval(loadCams,60000);
+refresh();
+})();
+</script>
+</body></html>

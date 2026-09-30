@@ -250,6 +250,18 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
 .rp .rm small span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .rp .rm small span:last-child{flex:none}
 .rp .empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;border:1px dashed var(--line)}
+
+/* longdo flood incidents */
+.ldg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.ldg .i{border:1px solid var(--line);border-left:3px solid var(--l4);background:var(--panel);padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0;text-decoration:none;color:inherit}
+.ldg .i.sev-flood{border-left-color:var(--l5)}
+.ldg .i.sev-rain{border-left-color:var(--l4)}
+.ldg .i:hover{border-color:var(--accent)}
+.ldg .i b{font-weight:600;font-size:13px;line-height:1.35}
+.ldg .i .il{color:var(--muted);font-size:11.5px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.ldg .i .il .chip{font-family:var(--body)}
+.ldg .i p{margin:2px 0 0;font-size:12.5px;color:var(--muted);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ldg .empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;border:1px dashed var(--line)}
 </style>
 
 </head><body><div class="wrap">
@@ -281,6 +293,12 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
     <div class="phead"><h2>รายงานภาพน้ำท่วมจากประชาชน · ทน.รังสิต</h2><span class="note" id="rpNote">กำลังโหลดจาก cdp.rangsitcity.go.th …</span></div>
     <div class="rp" id="rp"><div class="empty">กำลังโหลดรายงานล่าสุด …</div></div>
     <div class="note"><a href="https://cdp.rangsitcity.go.th/" target="_blank" rel="noopener">ดูทั้งหมด + แผนที่หมุด + เล่นวิดีโอที่ต้นทาง ↗</a></div>
+  </section>
+
+  <section class="panel" id="ldg-sec">
+    <div class="phead"><h2>รายงานน้ำท่วมถนน · Longdo Traffic</h2><span class="note" id="ldgNote">กำลังโหลดจาก traffic.longdo.com …</span></div>
+    <div class="ldg" id="ldg"><div class="empty">กำลังโหลดรายงานล่าสุด …</div></div>
+    <div class="note"><a href="https://traffic.longdo.com/main/" target="_blank" rel="noopener">ดูแผนที่/เหตุการณ์ทั้งหมดที่ Longdo Traffic ↗</a> · ข้อมูลรวมจากกรมทางหลวง, ITIC, ITS และผู้ใช้</div>
   </section>
 
   <section class="panel zone" id="khlong">
@@ -821,7 +839,7 @@ async function refresh(){
   const prevTime=state.time, prevCanalKey=canalKey();
   try{ state = await fetchLive(); }
   catch(e){ state.live=false; }
-  await Promise.all([fetchZoneLive(), refreshRangsit()]);
+  await Promise.all([fetchZoneLive(), refreshRangsit(), refreshLongdo()]);
   nextAt=Date.now()+REFRESH_MS;
   const nextCanalKey=canalKey();
   const changed=(state.time!==prevTime)||(nextCanalKey!==prevCanalKey)||alertState.firstLoad;
@@ -874,7 +892,7 @@ function render(){
   $("footMode").textContent=state.live
     ? "ดึงข้อมูลสดจาก api-v3.thaiwater.net ทุก 1 นาที (ค่าที่สถานีส่วนใหญ่อัปเดตทุก 10 นาที ถึง 1 ชั่วโมง)"
     : "หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 1 นาทีโดยอัตโนมัติ";
-  renderSummary(); renderAlert(); renderMap(); renderStations(); renderChain(); renderRain(); renderZone(); renderSamut(); renderReports();
+  renderSummary(); renderAlert(); renderMap(); renderStations(); renderChain(); renderRain(); renderZone(); renderSamut(); renderReports(); renderLongdo();
   checkAlerts();
 }
 
@@ -942,6 +960,46 @@ function buildDdsCams(){
   });
 }
 function loadDdsCams(){for(let j=0;j<DDS_CAMS.length;j++){const img=$("dimg"+j);if(img)img.src=DDS_CAMS[j].src+"?t="+Date.now()}}
+
+/* ---------- Longdo Traffic flood incidents ---------- */
+const LONGDO_URL="https://traffic.longdo.com/incident.json";
+const LONGDO_BBOX={all:[13.55,14.32,100.3,100.98], pt:[13.85,14.32,100.3,100.98], sp:[13.55,13.78,100.55,100.85]};
+let ldgState={items:null,tried:false,mode:"all"};
+async function refreshLongdo(){
+  try{
+    const j=await withTimeout(fetch(LONGDO_URL+"?now="+Date.now()).then(r=>{if(!r.ok)throw 0;return r.json()}),15000);
+    if(j&&Array.isArray(j.item)){
+      ldgState.items=j.item.filter(x=>x.severity==="6"||x.severity===6||x.severity==="5"||x.severity===5);
+    }
+  }catch(e){}
+  ldgState.tried=true;
+  renderLongdo();
+}
+function stripTags(s){return (s||"").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/\s+/g," ").trim()}
+function renderLongdo(){
+  const box=$("ldg"), note=$("ldgNote"); if(!box) return;
+  const items=ldgState.items;
+  if(!items){ if(ldgState.tried){box.innerHTML=`<div class="empty">โหลดจาก Longdo Traffic ไม่สำเร็จ · <a href="https://traffic.longdo.com/main/" target="_blank" rel="noopener">เปิดต้นทาง ↗</a></div>`; note.textContent="เชื่อมต่อไม่สำเร็จ";} return; }
+  const mode=ldgState.mode||"all";
+  const [s,n,w,e]=LONGDO_BBOX[mode]||LONGDO_BBOX.all;
+  const filtered=items.filter(x=>{const la=+x.latitude,lo=+x.longitude;return la>=s&&la<=n&&lo>=w&&lo<=e});
+  filtered.sort((a,b)=>new Date(b.start_time)-new Date(a.start_time));
+  const shown=filtered.slice(0,30);
+  if(!shown.length){ box.innerHTML=`<div class="empty">ไม่พบเหตุน้ำท่วมถนนในโซนที่เลือก · <a href="https://traffic.longdo.com/main/" target="_blank" rel="noopener">เปิดต้นทาง ↗</a></div>`; note.textContent=`0 จุด (โหมด ${mode==="pt"?"ปทุมธานี":mode==="sp"?"สมุทรปราการ":"ทั้งหมด"})`; return; }
+  box.innerHTML=shown.map(x=>{
+    const isRain=x.severity==="5"||x.severity===5;
+    const kind=isRain?"ฝนตกหนัก":"น้ำท่วม";
+    const cls=isRain?"sev-rain":"sev-flood";
+    const chipColor=isRain?"--l4":"--l5";
+    const rel=relISO(x.start_time);
+    const desc=stripTags(x.comment).slice(0,180);
+    const near=x.nearplace||"";
+    const url=`https://traffic.longdo.com/main/traffic/event/${encodeURIComponent(x.eid)}`;
+    return `<a class="i ${cls}" href="${url}" target="_blank" rel="noopener"><b>${esc(x.title||kind)}</b><div class="il"><span class="chip" style="background:var(${chipColor});color:#fff;padding:1px 7px;border-radius:3px;font-size:11px">${kind}</span>${near?`<span>${esc(near)}</span>`:""}<span>${rel}</span>${x.imagenid&&x.imagenid!=="0"?`<span style="opacity:.75">มีรูป</span>`:""}</div>${desc?`<p>${esc(desc)}</p>`:""}</a>`;
+  }).join("");
+  const label=mode==="pt"?"ปทุมธานี":mode==="sp"?"สมุทรปราการ":"ทั้งหมด (ปทุม+สมุทร)";
+  note.textContent=`${filtered.length} จุด (${label}) · แสดง ${shown.length} · ประเภท น้ำท่วม+ฝนตก · Longdo Traffic`;
+}
 
 /* ---------- Rangsit citizen reports ---------- */
 const RANGSIT_URL="https://cdp.rangsitcity.go.th/api/flood/reports";
@@ -1056,8 +1114,12 @@ function renderMap(){
     h+=`<circle cx="${x}" cy="${y}" r="${pt?9:7}" fill="${lvlColor(s.lvl)}" stroke="var(--panel)" stroke-width="2.5"/>`;
     if(pt){const L=x>520;h+=`<text x="${L?x-13:x+13}" y="${y+4}" text-anchor="${L?"end":"start"}" font-size="12.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Sans Thai,sans-serif" paint-order="stroke" stroke="var(--land-pt)" stroke-width="3">${esc(s.name.replace("คลอง","ค."))}</text>`}
     h+=`</g>`}
+  // Longdo flood/rain incident pins
+  const ldg=(ldgState.items||[]).filter(x=>{const la=+x.latitude,lo=+x.longitude;const [xx,yy]=proj(lo,la);return xx>=0&&xx<=680&&yy>=0&&yy<=600});
+  for(const x of ldg){const la=+x.latitude,lo=+x.longitude;const [px,py]=proj(lo,la);const isRain=x.severity==="5"||x.severity===5;const col=isRain?"var(--l4)":"var(--l5)";const kind=isRain?"ฝนตกหนัก":"น้ำท่วมถนน";
+    h+=`<g data-tip="${esc(kind+": "+stripTags(x.title||"").slice(0,80)+(x.nearplace?"\n"+x.nearplace:"")+"\n"+x.start_time+" · Longdo Traffic")}"><path d="M ${px} ${py-8} L ${px+5} ${py+3} L ${px-5} ${py+3} Z" fill="${col}" stroke="var(--panel)" stroke-width="1.5" opacity=".92"/></g>`}
   svg.innerHTML=h;
-  $("legend").innerHTML=[5,4,3,2,1].map(l=>`<span><i class="sw" style="background:${lvlColor(l)}"></i>${LVL[l][0]}</span>`).join("")+`<span><i class="sw" style="background:var(--accent);opacity:.35;border-radius:1px"></i>สถานีฝน (ขนาด = ปริมาณ)</span><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>กล้อง CCTV</span>`;
+  $("legend").innerHTML=[5,4,3,2,1].map(l=>`<span><i class="sw" style="background:${lvlColor(l)}"></i>${LVL[l][0]}</span>`).join("")+`<span><i class="sw" style="background:var(--accent);opacity:.35;border-radius:1px"></i>สถานีฝน (ขนาด = ปริมาณ)</span><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>กล้อง CCTV</span><span><i class="sw" style="background:var(--l5);clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:0"></i>น้ำท่วมถนน (Longdo)</span><span><i class="sw" style="background:var(--l4);clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:0"></i>ฝนตกหนัก (Longdo)</span>`;
 }
 function bindTips(boxId,tipId){
   const box=$(boxId||"mapbox"),tip=$(tipId||"tip");
@@ -1188,8 +1250,11 @@ function renderZone(){
   for(const r of zstate.zrain){const [x,y]=pr(r.lng,r.lat);if(x<0||x>680||y<0||y>680)continue;const sz=Math.min(16,5+r.r24*0.6);h+=`<rect x="${x-sz/2}" y="${y-sz/2}" width="${sz}" height="${sz}" fill="none" stroke="var(--accent)" stroke-width="2" data-tip="${esc("ฝน 24 ชม. "+r.r24+" มม.\n"+r.name)}"/>`}
   /* camera at Saphan Daeng */
   {const [x,y]=pr(100.62596,13.98613);h+=`<g data-tip="กล้อง CCTV สะพานแดง (ทน.รังสิต)"><rect x="${x-8}" y="${y-18}" width="16" height="11" rx="2" fill="var(--ink)"/><circle cx="${x}" cy="${y-12.5}" r="3" fill="var(--bg)"/></g>`}
+  /* Longdo flood/rain pins */
+  for(const x of (ldgState.items||[])){const la=+x.latitude,lo=+x.longitude;const [px,py]=pr(lo,la);if(px<0||px>680||py<0||py>680)continue;const isRain=x.severity==="5"||x.severity===5;const col=isRain?"var(--l4)":"var(--l5)";const kind=isRain?"ฝนตกหนัก":"น้ำท่วมถนน";
+    h+=`<g data-tip="${esc(kind+": "+stripTags(x.title||"").slice(0,80)+(x.nearplace?"\n"+x.nearplace:"")+"\n"+x.start_time+" · Longdo Traffic")}"><path d="M ${px} ${py-9} L ${px+6} ${py+3} L ${px-6} ${py+3} Z" fill="${col}" stroke="var(--panel)" stroke-width="1.5" opacity=".92"/></g>`}
   $("zmap").innerHTML=h;
-  $("zlegend").innerHTML=["A","K","W","X"].map(k=>`<span><i class="sw" style="background:var(${DEPTH[k][1]})"></i>แจ้งน้ำ${DEPTH[k][0]}</span>`).join("")+`<span>จุดจาง = เกิน 24 ชม.</span><span><i class="sw" style="background:var(--l4);border-radius:1px;transform:rotate(45deg)"></i>ประตูระบายน้ำ กทม.</span><span><i class="sw" style="background:var(--l5)"></i>สถานีโทรมาตร ThaiWater</span><span><i class="sw" style="border:2px solid var(--accent);border-radius:1px;background:none"></i>สถานีฝน</span><span><i class="sw" style="background:var(--k4);border-radius:1px;height:4px;width:16px"></i>คลอง 4</span><span><i class="sw" style="border:2px solid var(--k4);border-radius:1px;background:none"></i>ต.ลาดสวาย</span><span><i class="sw" style="border:1.5px dashed var(--ink);border-radius:1px;background:none"></i>ต.คูคต</span><span>T = BTS คูคต · M = อนุสรณ์สถานแห่งชาติ · R = ย่านรินทร์ทอง (โดยประมาณ)</span>`;
+  $("zlegend").innerHTML=["A","K","W","X"].map(k=>`<span><i class="sw" style="background:var(${DEPTH[k][1]})"></i>แจ้งน้ำ${DEPTH[k][0]}</span>`).join("")+`<span>จุดจาง = เกิน 24 ชม.</span><span><i class="sw" style="background:var(--l4);border-radius:1px;transform:rotate(45deg)"></i>ประตูระบายน้ำ กทม.</span><span><i class="sw" style="background:var(--l5)"></i>สถานีโทรมาตร ThaiWater</span><span><i class="sw" style="border:2px solid var(--accent);border-radius:1px;background:none"></i>สถานีฝน</span><span><i class="sw" style="background:var(--l5);clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:0"></i>น้ำท่วมถนน (Longdo)</span><span><i class="sw" style="background:var(--k4);border-radius:1px;height:4px;width:16px"></i>คลอง 4</span><span><i class="sw" style="border:2px solid var(--k4);border-radius:1px;background:none"></i>ต.ลาดสวาย</span><span><i class="sw" style="border:1.5px dashed var(--ink);border-radius:1px;background:none"></i>ต.คูคต</span><span>T = BTS คูคต · M = อนุสรณ์สถานแห่งชาติ · R = ย่านรินทร์ทอง (โดยประมาณ)</span>`;
 
   /* segment table */
   const rows=SEGS.map(()=>({n:0,s:0,d24:0,max:0}));
@@ -1255,6 +1320,7 @@ function applyProv(mode){
   const mHide=PROV_MNAV_HIDE[mode]||[];
   document.querySelectorAll("#mnav a").forEach(a=>{const t=a.dataset.t;if(["khlong","near","samut"].includes(t)){a.hidden = mHide.includes(t) || (t==="samut" && mode!=="sp" && mode!=="all")}});
   document.querySelectorAll("#provtabs button").forEach(b=>{const on=b.dataset.prov===mode; b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false")});
+  ldgState.mode=mode; renderLongdo();
   try{localStorage.setItem("provFilter",mode)}catch(e){}
 }
 document.querySelectorAll("#provtabs button").forEach(b=>b.addEventListener("click",()=>applyProv(b.dataset.prov)));

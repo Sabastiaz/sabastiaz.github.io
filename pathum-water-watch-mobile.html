@@ -262,6 +262,7 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
 .ldg .i .il .chip{font-family:var(--body)}
 .ldg .i p{margin:2px 0 0;font-size:12.5px;color:var(--muted);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .ldg .empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;border:1px dashed var(--line)}
+.mhg h3{font-size:14px;font-weight:600;color:var(--muted);margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)}
 </style>
 
 </head><body><div class="wrap">
@@ -643,7 +644,14 @@ BTS สายสุขุมวิท · สถานีปลายทาง"><
       <a href="https://live.iticfoundation.org/" target="_blank" rel="noopener"><span>iTIC Live</span><small>กล้องจราจรและเหตุการณ์บนถนน</small></a>
       <a href="https://traffic.longdo.com/" target="_blank" rel="noopener"><span>Longdo Traffic</span><small>กล้องและรายงานน้ำท่วมบนถนน</small></a>
       <a href="https://www.muangpathum.org/" target="_blank" rel="noopener"><span>เทศบาลเมืองปทุมธานี</span><small>กล้องสวนเทพปทุม ริมเจ้าพระยา</small></a>
+      <a href="https://cctv.maholan.net/" target="_blank" rel="noopener"><span>maholan.net Flood CCTV</span><small>รวม 2,300+ กล้องน้ำท่วมทั่วไทย</small></a>
     </div>
+  </section>
+
+  <section class="panel" id="mh-sec">
+    <div class="phead"><h2>กล้อง CCTV น้ำท่วม · maholan.net</h2><span class="note" id="mhNote">ปทุม · รังสิต · ลำลูกกา · แจ้งวัฒนะ · ปากเกร็ด · สมุทรปราการ · บางนา — รีเฟรชทุก 60 วินาที</span></div>
+    <div id="mhCams"></div>
+    <div class="note">ดูกล้องอื่นทั่วประเทศได้ที่ <a href="https://cctv.maholan.net/" target="_blank" rel="noopener">cctv.maholan.net ↗</a> · แหล่งรวม 2,300+ กล้อง (กรมทางหลวง, iTIC, เทศบาล, สนง.ระบายน้ำ กทม.)</div>
   </section>
 
   <footer>
@@ -713,6 +721,32 @@ const SP_TELE_CODES = SP_TELE.map(x=>x[0]);
 const SP_CANAL = [["WL.BNA.02","ค.บางนา ถ.สุขุมวิท · หน้าเซ็นทรัลบางนา",true],["WL.BNA.01","สถานีสูบน้ำบางนา",false],["WL.BNA.03","ค.บางนา ถ.ศรีนครินทร์",false],["WL.LSG.01","ค.หลอด 2 ถ.บางนา-ตราด",false],["WL.KKD.03","ค.เคล็ด ถ.ศรีนครินทร์",false],["WL.SRG.01","ส.คลองสำโรง",false],["WL.KNB.02","ค.หนองบอน เฉลิมพระเกียรติ",false]];
 const SP_CANAL_CODES = SP_CANAL.map(x=>x[0]);
 const DDS_CAMS = [1,2,3,4,5,6].map(n=>({n,name:"สนง.ระบายน้ำ กทม. #"+n,src:"https://dds.bangkok.go.th/cctv-image/cctv"+n+".jpg",page:"https://dds.bangkok.go.th/"}));
+const MAHOLAN_GROUPS = [
+  {title:"ปทุมธานี · เมืองปทุม / คลองหลวง", zone:"pt", cams:[
+    {id:"pathum-muang", name:"ท่าน้ำเทศบาลเมืองปทุม · ไม้วัดระดับน้ำเจ้าพระยา", src:"เทศบาลเมืองปทุมธานี"},
+    {id:"tfc-doh-491", name:"ต่างระดับคลองหลวง · ประตูน้ำพระอินทร์", src:"กรมทางหลวง"}
+  ]},
+  {title:"รังสิต · ลำลูกกา", zone:"pt", cams:[
+    {id:"rangsit-200", name:"รังสิต 200 ปี", src:"ผู้ใช้เพิ่มเอง"},
+    {id:"tfc-doh-290", name:"วิภาวดี-รังสิต ดอนเมือง (ขาเข้า)", src:"กรมทางหลวง"},
+    {id:"tfc-doh-295", name:"ถ.ลำลูกกา กม.9", src:"กรมทางหลวง"},
+    {id:"itic-doh-per-3-017", name:"ลำลูกกา กม.9 → พหลโยธิน", src:"iTIC / Longdo"}
+  ]},
+  {title:"แจ้งวัฒนะ · ปากเกร็ด", zone:"pt", cams:[
+    {id:"pakkret-006", name:"แจ้งวัฒนะ หน้าเทศบาลนครปากเกร็ด", src:"เทศบาลนครปากเกร็ด"},
+    {id:"pakkret-001", name:"แจ้งวัฒนะ หน้าตึกจัสมิน #1", src:"เทศบาลนครปากเกร็ด"},
+    {id:"pakkret-017", name:"แจ้งวัฒนะ หน้าตลาดปากเกร็ด", src:"เทศบาลนครปากเกร็ด"},
+    {id:"pakkret-003", name:"ห้าแยกปากเกร็ด #1", src:"เทศบาลนครปากเกร็ด"}
+  ]},
+  {title:"สมุทรปราการ · บางนา", zone:"sp", cams:[
+    {id:"tfc-doh-293", name:"ถ.กิ่งแก้ว (ขาเข้า) · ใกล้วัดหลวงพ่อโต", src:"กรมทางหลวง"},
+    {id:"tfc-doh-297", name:"ถ.ศรีนครินทร์ กม.16", src:"กรมทางหลวง"},
+    {id:"tfc-doh-291", name:"บางนา-บางปะกง กม.6 (ขาเข้า)", src:"กรมทางหลวง"},
+    {id:"tfc-doh-460", name:"303 ราษฎร์บูรณะ - พระสมุทรเจดีย์", src:"กรมทางหลวง"}
+  ]}
+];
+const MAHOLAN_CAMS = MAHOLAN_GROUPS.flatMap(g=>g.cams.map(c=>Object.assign({},c,{zone:g.zone,group:g.title})));
+const MAHOLAN_IMG = id => "https://cctv.maholan.net/api/snap/" + encodeURIComponent(id);
 
 /* ---------- คลอง 1-4 (snapshot 29 ก.ย. 2569) ---------- */
 /* canal centrelines from OpenStreetMap, simplified */
@@ -960,6 +994,20 @@ function buildDdsCams(){
   });
 }
 function loadDdsCams(){for(let j=0;j<DDS_CAMS.length;j++){const img=$("dimg"+j);if(img)img.src=DDS_CAMS[j].src+"?t="+Date.now()}}
+
+function buildMhCams(){
+  const box=$("mhCams"); if(!box) return;
+  let idx=0;
+  box.innerHTML=MAHOLAN_GROUPS.map(g=>{
+    const cards=g.cams.map(c=>{const j=idx++;return `<div class="cam"><a href="https://cctv.maholan.net/" target="_blank" rel="noopener" class="frame" style="text-decoration:none;display:block"><img id="mhimg${j}" alt="กล้อง ${esc(c.name)}" hidden loading="lazy"><div class="fb" id="mhfb${j}"><span>โหลดกล้องไม่ได้</span><a href="https://cctv.maholan.net/" target="_blank" rel="noopener">ดูที่ต้นทาง ↗</a></div><span class="rec" id="mhrec${j}" hidden>LIVE</span><span class="ts num" id="mhts${j}" hidden></span></a><div class="meta"><b>${esc(c.name)}</b><small>${esc(c.src)} · maholan.net</small></div></div>`}).join("");
+    return `<div class="mhg" data-zone="${g.zone}"><h3>${esc(g.title)}</h3><div class="cams">${cards}</div></div>`;
+  }).join("");
+  MAHOLAN_CAMS.forEach((c,j)=>{const img=$("mhimg"+j);
+    img.addEventListener("load",()=>{img.hidden=false;$("mhfb"+j).hidden=true;$("mhrec"+j).hidden=false;$("mhts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$("mhts"+j).hidden=false});
+    img.addEventListener("error",()=>{img.hidden=true;$("mhrec"+j).hidden=true;$("mhts"+j).hidden=true;$("mhfb"+j).hidden=false});
+  });
+}
+function loadMhCams(){for(let j=0;j<MAHOLAN_CAMS.length;j++){const img=$("mhimg"+j);if(img)img.src=MAHOLAN_IMG(MAHOLAN_CAMS[j].id)+"?t="+Date.now()}}
 
 /* ---------- Longdo Traffic flood incidents ---------- */
 const LONGDO_URL="https://traffic.longdo.com/incident.json";
@@ -1317,6 +1365,7 @@ const PROV_MNAV_HIDE = {pt:["samut"], sp:["khlong","near"]};
 function applyProv(mode){
   const hide=PROV_HIDE[mode]||[];
   ["rp-sec","khlong","samut"].forEach(id=>{const el=$(id); if(el)el.hidden=hide.includes(id)});
+  document.querySelectorAll("#mhCams .mhg").forEach(g=>{const z=g.dataset.zone; g.hidden = (mode==="pt"&&z==="sp") || (mode==="sp"&&z!=="sp")});
   const mHide=PROV_MNAV_HIDE[mode]||[];
   document.querySelectorAll("#mnav a").forEach(a=>{const t=a.dataset.t;if(["khlong","near","samut"].includes(t)){a.hidden = mHide.includes(t) || (t==="samut" && mode!=="sp" && mode!=="all")}});
   document.querySelectorAll("#provtabs button").forEach(b=>{const on=b.dataset.prov===mode; b.classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false")});
@@ -1327,7 +1376,8 @@ document.querySelectorAll("#provtabs button").forEach(b=>b.addEventListener("cli
 try{const saved=localStorage.getItem("provFilter"); if(saved && ["all","pt","sp"].includes(saved)) applyProv(saved); else applyProv("all")}catch(e){applyProv("all")}
 
 /* ---------- boot ---------- */
-render(); bindTips("mapbox","tip"); bindTips("zmapbox","ztip"); buildCams(); buildDdsCams(); loadDdsCams();
+render(); bindTips("mapbox","tip"); bindTips("zmapbox","ztip"); buildCams(); buildDdsCams(); loadDdsCams(); buildMhCams(); loadMhCams();
+try{const saved=localStorage.getItem("provFilter"); if(saved && ["all","pt","sp"].includes(saved)) applyProv(saved); else applyProv("all")}catch(e){applyProv("all")}
 (function(){const links=[...document.querySelectorAll("#mnav a")];const ids=links.map(a=>a.dataset.t);
   function mark(){let cur=ids[0];for(const id of ids){const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<window.innerHeight*0.35)cur=id}links.forEach(a=>a.classList.toggle("on",a.dataset.t===cur))}
   window.addEventListener("scroll",()=>{mark();document.querySelectorAll(".tip").forEach(t=>t.hidden=true)},{passive:true});mark();
@@ -1342,7 +1392,7 @@ $("bellBtn").addEventListener("click",()=>{
   if(alertState.enabled){ ensureAudio(); beep(); }
 });
 setInterval(()=>{const s=Math.max(0,Math.round((nextAt-Date.now())/1000));$("countdown").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");paintDataTime();if(s===0){nextAt=Date.now()+REFRESH_MS;refresh()}},1000);
-setInterval(()=>{loadCams();loadDdsCams()},60000);
+setInterval(()=>{loadCams();loadDdsCams();loadMhCams()},60000);
 refresh();
 })();
 </script>

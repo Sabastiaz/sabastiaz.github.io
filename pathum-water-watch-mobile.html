@@ -290,6 +290,12 @@ button.bell .bs{font-size:11.5px;color:var(--muted);font-family:var(--mono);lett
 
   <div class="summary" id="summary"><div class="stat"><span class="v" style="color:var(--l5)">1/4</span><span class="k">สถานีในจังหวัดที่น้ำล้นตลิ่ง</span></div><div class="stat"><span class="v" style="color:var(--l4)">3</span><span class="k">สถานีในจังหวัดระดับน้ำมาก</span></div><div class="stat"><span class="v" style="color:var(--l5)">1,304</span><span class="k">ลบ.ม./วินาที ไหลผ่าน C.35 บ้านป้อม</span></div><div class="stat"><span class="v" style="color:var(--ink)">17.2</span><span class="k">มม. ฝน 24 ชม. สูงสุด (หนองเสือ)</span></div><div class="stat"><span class="v" style="color:var(--k4)">25</span><span class="k">จุดน้ำท่วมที่ประชาชนแจ้ง ฝั่งคลอง 1-4 ใน 24 ชม.</span></div></div>
 
+  <section class="panel" id="mh-sec">
+    <div class="phead"><h2>กล้อง CCTV น้ำท่วม · maholan.net</h2><span class="note" id="mhNote">ปทุม · รังสิต · ลำลูกกา · แจ้งวัฒนะ · ปากเกร็ด · สมุทรปราการ · บางนา — รีเฟรชทุก 60 วินาที</span></div>
+    <div id="mhCams"></div>
+    <div class="note">ดูกล้องอื่นทั่วประเทศได้ที่ <a href="https://cctv.maholan.net/" target="_blank" rel="noopener">cctv.maholan.net ↗</a> · แหล่งรวม 2,300+ กล้อง (กรมทางหลวง, iTIC, เทศบาล, สนง.ระบายน้ำ กทม.)</div>
+  </section>
+
   <section class="panel" id="rp-sec">
     <div class="phead"><h2>รายงานภาพน้ำท่วมจากประชาชน · ทน.รังสิต</h2><span class="note" id="rpNote">กำลังโหลดจาก cdp.rangsitcity.go.th …</span></div>
     <div class="rp" id="rp"><div class="empty">กำลังโหลดรายงานล่าสุด …</div></div>
@@ -648,12 +654,6 @@ BTS สายสุขุมวิท · สถานีปลายทาง"><
     </div>
   </section>
 
-  <section class="panel" id="mh-sec">
-    <div class="phead"><h2>กล้อง CCTV น้ำท่วม · maholan.net</h2><span class="note" id="mhNote">ปทุม · รังสิต · ลำลูกกา · แจ้งวัฒนะ · ปากเกร็ด · สมุทรปราการ · บางนา — รีเฟรชทุก 60 วินาที</span></div>
-    <div id="mhCams"></div>
-    <div class="note">ดูกล้องอื่นทั่วประเทศได้ที่ <a href="https://cctv.maholan.net/" target="_blank" rel="noopener">cctv.maholan.net ↗</a> · แหล่งรวม 2,300+ กล้อง (กรมทางหลวง, iTIC, เทศบาล, สนง.ระบายน้ำ กทม.)</div>
-  </section>
-
   <footer>
     <div>แหล่งข้อมูล: คลังข้อมูลน้ำแห่งชาติ (ThaiWater, สสน.) รวมโทรมาตรของ สสน. และกรมชลประทาน · ภาพกล้องจากเทศบาลนครรังสิต และสถานี ThaiWater</div>
     <div id="footMode">หน้านี้แสดงชุดข้อมูลที่บันทึกไว้ล่าสุด เมื่อเปิดไฟล์นี้บนเบราว์เซอร์โดยตรง จะดึงข้อมูลสดจาก ThaiWater ทุก 10 นาทีโดยอัตโนมัติ</div>
@@ -987,10 +987,10 @@ function renderSamut(){
 
 function buildDdsCams(){
   const box=$("ddsCams"); if(!box) return;
-  box.innerHTML=DDS_CAMS.map((c,j)=>`<div class="cam"><a href="${esc(c.page)}" target="_blank" rel="noopener" class="frame" style="text-decoration:none;display:block"><img id="dimg${j}" alt="กล้อง ${esc(c.name)}" hidden loading="lazy"><div class="fb" id="dfb${j}"><span>โหลดกล้อง #${c.n} ไม่ได้</span><a href="${esc(c.page)}" target="_blank" rel="noopener">ดูที่ต้นทาง ↗</a></div><span class="rec" id="drec${j}" hidden>LIVE</span><span class="ts num" id="dts${j}" hidden></span></a><div class="meta"><b>${esc(c.name)}</b><small>dds.bangkok.go.th · ตำแหน่งไม่ระบุจากพอร์ทัลต้นทาง</small></div></div>`).join("");
+  box.innerHTML=DDS_CAMS.map((c,j)=>`<div class="cam"><a href="${esc(c.page)}" target="_blank" rel="noopener" class="frame" style="text-decoration:none;display:block"><img id="dimg${j}" alt="กล้อง ${esc(c.name)}" style="opacity:0;transition:opacity .3s"><div class="fb" id="dfb${j}"><span>กำลังโหลด…</span></div><span class="rec" id="drec${j}" hidden>LIVE</span><span class="ts num" id="dts${j}" hidden></span></a><div class="meta"><b>${esc(c.name)}</b><small>dds.bangkok.go.th · ตำแหน่งไม่ระบุจากพอร์ทัลต้นทาง</small></div></div>`).join("");
   DDS_CAMS.forEach((c,j)=>{const img=$("dimg"+j);
-    img.addEventListener("load",()=>{img.hidden=false;$("dfb"+j).hidden=true;$("drec"+j).hidden=false;$("dts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$("dts"+j).hidden=false});
-    img.addEventListener("error",()=>{img.hidden=true;$("drec"+j).hidden=true;$("dts"+j).hidden=true;$("dfb"+j).hidden=false});
+    img.addEventListener("load",()=>{img.style.opacity=1;$("dfb"+j).hidden=true;$("drec"+j).hidden=false;$("dts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$("dts"+j).hidden=false});
+    img.addEventListener("error",()=>{img.style.opacity=0;$("drec"+j).hidden=true;$("dts"+j).hidden=true;$("dfb"+j).hidden=false;$("dfb"+j).innerHTML=`<span>โหลดกล้อง #${c.n} ไม่ได้</span><a href="${esc(c.page)}" target="_blank" rel="noopener">ดูที่ต้นทาง ↗</a>`});
   });
 }
 function loadDdsCams(){for(let j=0;j<DDS_CAMS.length;j++){const img=$("dimg"+j);if(img)img.src=DDS_CAMS[j].src+"?t="+Date.now()}}
@@ -999,12 +999,12 @@ function buildMhCams(){
   const box=$("mhCams"); if(!box) return;
   let idx=0;
   box.innerHTML=MAHOLAN_GROUPS.map(g=>{
-    const cards=g.cams.map(c=>{const j=idx++;return `<div class="cam"><a href="https://cctv.maholan.net/" target="_blank" rel="noopener" class="frame" style="text-decoration:none;display:block"><img id="mhimg${j}" alt="กล้อง ${esc(c.name)}" hidden loading="lazy"><div class="fb" id="mhfb${j}"><span>โหลดกล้องไม่ได้</span><a href="https://cctv.maholan.net/" target="_blank" rel="noopener">ดูที่ต้นทาง ↗</a></div><span class="rec" id="mhrec${j}" hidden>LIVE</span><span class="ts num" id="mhts${j}" hidden></span></a><div class="meta"><b>${esc(c.name)}</b><small>${esc(c.src)} · maholan.net</small></div></div>`}).join("");
+    const cards=g.cams.map(c=>{const j=idx++;return `<div class="cam"><a href="https://cctv.maholan.net/" target="_blank" rel="noopener" class="frame" style="text-decoration:none;display:block"><img id="mhimg${j}" alt="กล้อง ${esc(c.name)}" style="opacity:0;transition:opacity .3s"><div class="fb" id="mhfb${j}"><span>กำลังโหลด…</span></div><span class="rec" id="mhrec${j}" hidden>LIVE</span><span class="ts num" id="mhts${j}" hidden></span></a><div class="meta"><b>${esc(c.name)}</b><small>${esc(c.src)} · maholan.net</small></div></div>`}).join("");
     return `<div class="mhg" data-zone="${g.zone}"><h3>${esc(g.title)}</h3><div class="cams">${cards}</div></div>`;
   }).join("");
   MAHOLAN_CAMS.forEach((c,j)=>{const img=$("mhimg"+j);
-    img.addEventListener("load",()=>{img.hidden=false;$("mhfb"+j).hidden=true;$("mhrec"+j).hidden=false;$("mhts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$("mhts"+j).hidden=false});
-    img.addEventListener("error",()=>{img.hidden=true;$("mhrec"+j).hidden=true;$("mhts"+j).hidden=true;$("mhfb"+j).hidden=false});
+    img.addEventListener("load",()=>{img.style.opacity=1;$("mhfb"+j).hidden=true;$("mhrec"+j).hidden=false;$("mhts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$("mhts"+j).hidden=false});
+    img.addEventListener("error",()=>{img.style.opacity=0;$("mhrec"+j).hidden=true;$("mhts"+j).hidden=true;$("mhfb"+j).hidden=false;$("mhfb"+j).innerHTML=`<span>โหลดกล้องไม่ได้</span><a href="https://cctv.maholan.net/" target="_blank" rel="noopener">ดูที่ต้นทาง ↗</a>`});
   });
 }
 function loadMhCams(){for(let j=0;j<MAHOLAN_CAMS.length;j++){const img=$("mhimg"+j);if(img)img.src=MAHOLAN_IMG(MAHOLAN_CAMS[j].id)+"?t="+Date.now()}}
@@ -1340,13 +1340,13 @@ function renderZone(){
 /* cctv */
 function buildCamSet(container,list,pre){
   $(container).innerHTML=list.map(({c},j)=>`<div class="cam"><div class="frame">
-      <img id="${pre}img${j}" alt="ภาพจากกล้อง ${esc(c.name)}" hidden>
+      <img id="${pre}img${j}" alt="ภาพจากกล้อง ${esc(c.name)}" style="opacity:0;transition:opacity .3s">
       <div class="fb" id="${pre}fb${j}"><span>กำลังเชื่อมต่อกล้อง…</span></div>
       <span class="rec" id="${pre}rec${j}" hidden>LIVE</span><span class="ts num" id="${pre}ts${j}" hidden></span></div>
     <div class="meta"><b>${esc(c.name)}</b><small>${esc(c.where)}</small><small><a href="${esc(c.page)}" target="_blank" rel="noopener">เปิดหน้าต้นทาง ↗</a></small></div></div>`).join("");
   list.forEach(({c},j)=>{const img=$(pre+"img"+j);
-    img.addEventListener("load",()=>{img.hidden=false;$(pre+"fb"+j).hidden=true;$(pre+"rec"+j).hidden=false;$(pre+"ts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$(pre+"ts"+j).hidden=false});
-    img.addEventListener("error",()=>{img.hidden=true;$(pre+"rec"+j).hidden=true;$(pre+"ts"+j).hidden=true;const fb=$(pre+"fb"+j);fb.hidden=false;
+    img.addEventListener("load",()=>{img.style.opacity=1;$(pre+"fb"+j).hidden=true;$(pre+"rec"+j).hidden=false;$(pre+"ts"+j).textContent=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});$(pre+"ts"+j).hidden=false});
+    img.addEventListener("error",()=>{img.style.opacity=0;$(pre+"rec"+j).hidden=true;$(pre+"ts"+j).hidden=true;const fb=$(pre+"fb"+j);fb.hidden=false;
       fb.innerHTML=`<span>หน้านี้โหลดภาพกล้องตรงไม่ได้${location.protocol==="https:"&&c.src.startsWith("http:")?" (กล้องใช้ http)":""}</span><a href="${esc(c.page)}" target="_blank" rel="noopener">ดูภาพสดที่ต้นทาง ↗</a>`});
   });
 }

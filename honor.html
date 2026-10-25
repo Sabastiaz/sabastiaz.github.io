@@ -59,6 +59,8 @@
   border: 1px solid rgba(201,168,76,0.2);
 }
 
+.trophy-photo.portrait { height: 360px; }
+
 .trophy-photo img {
   width: 100%;
   height: 100%;
@@ -67,6 +69,8 @@
   filter: brightness(0.92);
   transition: transform 0.4s;
 }
+
+.trophy-photo.portrait img { object-fit: contain; background: #0a0a0a; filter: none; }
 
 .trophy-card:hover .trophy-photo img {
   transform: scale(1.04);
@@ -308,7 +312,7 @@
     Took 1st place at the Bangkok 2026 Tenable Exposure Management CTF (Thailand Edition), representing BigFish. A hands-on competition on real Tenable One / Hexa AI exposure management workflows, run alongside Tenable's product update sessions in Bangkok, Oct 2026.
   </div>
 
-  <div class="trophy-photo"><img src="pic/tenable-ctf-trophy.jpg" alt="Receiving the Champion trophy at Bangkok 2026 Tenable CTF Winners (Sabastiaz / BigFish 1st, Barcola 2nd, Putta / Mfec 3rd)" loading="lazy"></div>
+  <div class="trophy-photo portrait"><img src="pic/tenable-ctf-trophy.jpg" alt="Tenable Champion · Exposure Management Capture-the-Flag · Thailand Edition 2026 crystal trophy, Bangkok skyline in background" loading="lazy"></div>
 
   <div class="trophy-meta">
     <span class="trophy-badge badge-award">1st Place</span>

@@ -174,6 +174,7 @@
       <button class="filter-btn" data-filter="enum">Enumeration</button>
       <button class="filter-btn" data-filter="exploit">Exploitation</button>
       <button class="filter-btn" data-filter="c2">C2 & Post-Exploit</button>
+      <button class="filter-btn" data-filter="exposure">Exposure Mgmt</button>
       <button class="filter-btn" data-filter="custom">Custom</button>
     </div>
 
@@ -333,6 +334,52 @@
         <div class="tool-desc">Open-source C2 framework by Bishop Fox. Written in Go - supports mTLS, HTTP/S, DNS, WireGuard. Beacon & session modes with Armory extensions for AD attacks.</div>
         <div class="tool-tags"><span class="tool-tag">C2</span><span class="tool-tag">Red Team</span><span class="tool-tag">Open Source</span></div>
         <div class="tool-link">github.com →</div>
+      </a>
+
+    </div>
+
+    <!-- Exposure Management -->
+    <div class="section-label fade-up">🛡️ Exposure Management</div>
+    <div class="tool-grid fade-up">
+
+      <a href="https://www.tenable.com/products/tenable-one" target="_blank" class="tool-card" data-tags="exposure">
+        <div class="tool-icon">🧿</div>
+        <div class="tool-name">Tenable One</div>
+        <div class="tool-desc">Unified Exposure Management platform - combines vulnerability management, attack surface, cloud, identity (AD), OT, and web app exposure into one risk-ranked view. Won 1st at Bangkok 2026 Tenable CTF on this stack.</div>
+        <div class="tool-tags"><span class="tool-tag">Exposure</span><span class="tool-tag">Platform</span><span class="tool-tag">Risk</span></div>
+        <div class="tool-link">tenable.com →</div>
+      </a>
+
+      <a href="https://www.tenable.com/products/tenable-one/hexa-ai" target="_blank" class="tool-card" data-tags="exposure">
+        <div class="tool-icon">⬢</div>
+        <div class="tool-name">Hexa AI</div>
+        <div class="tool-desc">Tenable's exposure management AI assistant - natural-language queries over the Tenable One graph, auto-prioritization, and MCP integration for driving the platform from external agents.</div>
+        <div class="tool-tags"><span class="tool-tag">Exposure</span><span class="tool-tag">AI</span><span class="tool-tag">MCP</span></div>
+        <div class="tool-link">tenable.com →</div>
+      </a>
+
+      <a href="https://www.tenable.com/products/nessus" target="_blank" class="tool-card" data-tags="exposure enum">
+        <div class="tool-icon">🔭</div>
+        <div class="tool-name">Nessus</div>
+        <div class="tool-desc">The classic vulnerability scanner. Hundreds of thousands of plugins covering CVEs, compliance checks, and config audits. The engine behind Tenable's enterprise VM products.</div>
+        <div class="tool-tags"><span class="tool-tag">Scanner</span><span class="tool-tag">VM</span><span class="tool-tag">CVE</span></div>
+        <div class="tool-link">tenable.com →</div>
+      </a>
+
+      <a href="https://www.tenable.com/products/vulnerability-management" target="_blank" class="tool-card" data-tags="exposure">
+        <div class="tool-icon">📡</div>
+        <div class="tool-name">Tenable Vulnerability Management</div>
+        <div class="tool-desc">Cloud-delivered VM. Risk-based prioritization using VPR (Vulnerability Priority Rating), CISA KEV, and EPSS. The data source behind tenable-vpr-mcp.</div>
+        <div class="tool-tags"><span class="tool-tag">VM</span><span class="tool-tag">VPR</span><span class="tool-tag">Cloud</span></div>
+        <div class="tool-link">tenable.com →</div>
+      </a>
+
+      <a href="https://exchange.tenable.com/mcp-servers/tenable-vpr-mcp/" target="_blank" class="tool-card custom-tool" data-tags="exposure custom">
+        <div class="tool-icon">🔌</div>
+        <div class="tool-name">tenable-vpr-mcp</div>
+        <div class="tool-desc">My own open-source MCP server connecting Tenable.io / Tenable One to VPR re-prioritization, CISA KEV + EPSS cross-checks, and pentest re-test scan-delta reporting. Published on Tenable Exchange.</div>
+        <div class="tool-tags"><span class="tool-tag">Custom</span><span class="tool-tag">MCP</span><span class="tool-tag">Exposure</span></div>
+        <div class="tool-link">exchange.tenable.com →</div>
       </a>
 
     </div>

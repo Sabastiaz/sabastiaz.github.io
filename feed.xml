@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sabastiaz · Red Team Sorcerer</title>
+    <link>https://sabastiaz.lol/</link>
+    <atom:link href="https://sabastiaz.lol/feed.xml" rel="self" type="application/rss+xml" />
+    <description>New scrolls, trials, awards, and site updates from Ratthapong Sommanus (Sabastiaz) — Red Team Sorcerer, Penetration Tester, Tenable Guardian of Thailand.</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Nov 2026 11:50:29 +0000</lastBuildDate>
+    <ttl>60</ttl>
+    <image>
+      <url>https://sabastiaz.lol/pic/Sabastiaz_Sly.png</url>
+      <title>Sabastiaz · Red Team Sorcerer</title>
+      <link>https://sabastiaz.lol/</link>
+    </image>
+    <item>
+      <title>[New Award] Tenable Exposure Management CTF 2026 (Thailand Edition) - 1st Place 🥇</title>
+      <link>https://sabastiaz.lol/honor.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/honor.html#2026-10-26</guid>
+      <pubDate>Mon, 26 Oct 2026 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Won the Bangkok 2026 Tenable Exposure Management Capture-the-Flag (Thailand Edition), representing BigFish. Hands-on challenges on real Tenable One / Hexa AI exposure management workflows.</description>
+    </item>
+    <item>
+      <title>[New Award] Thailand Cyber Top Talent 2026 - Open Final (4th Place)</title>
+      <link>https://sabastiaz.lol/honor.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/honor.html#2026-09-08</guid>
+      <pubDate>Tue, 08 Sep 2026 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Competed as team "มาหาไร" representing Wowza in the Open level - ranked 1st in the qualifying round and placed 4th nationally in the Final, scoring 14,407 points.</description>
+    </item>
+    <item>
+      <title>[New Award] tenable-vpr-mcp - Published on Tenable Exchange</title>
+      <link>https://sabastiaz.lol/honor.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/honor.html#2026-08-13</guid>
+      <pubDate>Thu, 13 Aug 2026 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Built and published an open-source, read-only MCP server for Tenable.io / Tenable One - VPR re-prioritization comparisons, CISA KEV + EPSS cross-checks, and pentest re-test scan-delta reporting.</description>
+    </item>
+    <item>
+      <title>[New Scroll] ทำไมเราถึงรู้สึกว่าตัวเองไม่เก่ง ทั้งที่จริงแล้วเรามาไกลมาก</title>
+      <link>https://sabastiaz.lol/blog/impostor-syndrome-th.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/impostor-syndrome-th.html#2026-07-20</guid>
+      <pubDate>Mon, 20 Jul 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>บทความสะท้อนเรื่อง impostor syndrome - ทำไมความสำเร็จและคำชมยังลบความรู้สึกว่าตัวเองไม่เก่งไปไม่ได้ และวิธีมองหลักฐานของการเติบโตที่แท้จริง</description>
+    </item>
+    <item>
+      <title>[New Scroll] GodPotato - รายงานเชิงเทคนิค (Windows PrivEsc)</title>
+      <link>https://sabastiaz.lol/blog/godpotato.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/godpotato.html#2026-07-18</guid>
+      <pubDate>Sat, 18 Jul 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>วิเคราะห์เจาะลึกเครื่องมือ GodPotato - RPCSS OXID Resolution abuse, Attack Flow, Detection Sigma Rule และ Defense measures สำหรับ Windows Privilege Escalation</description>
+    </item>
+    <item>
+      <title>[New Scroll] Sliver C2: เริ่มต้นใช้งานสำหรับ Red Team</title>
+      <link>https://sabastiaz.lol/blog/sliver-c2.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/sliver-c2.html#2026-06-27</guid>
+      <pubDate>Sat, 27 Jun 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>เรียนรู้ Sliver C2 ตั้งแต่ศูนย์ - ติดตั้ง สร้าง Listener สร้าง Implant ควบคุม Session และเปรียบเทียบกับ Metasploit พร้อมตัวอย่างจริงจาก HTB Lab</description>
+    </item>
+    <item>
+      <title>[New Scroll] เมื่อสมองยังไหว แต่ร่างกายเริ่มทวงคืน</title>
+      <link>https://sabastiaz.lol/blog/brain-body-recover.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/brain-body-recover.html#2026-06-18</guid>
+      <pubDate>Thu, 18 Jun 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>ว่าด้วยการฟื้นตัว ความสมดุล และความจริงที่มองข้ามมาหลายปี - เมื่อความสามารถยังอยู่ แต่ร่างกายเริ่มส่งสัญญาณ</description>
+    </item>
+    <item>
+      <title>[New Scroll] 🥔 RustPotato - Privilege Escalation via SeImpersonate</title>
+      <link>https://sabastiaz.lol/blog/rustpotato.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/rustpotato.html#2026-05-01</guid>
+      <pubDate>Fri, 01 May 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>RustPotato เป็น Rust implementation ของ GodPotato ซึ่งเป็น Privilege Escalation tool ที่ใช้การ abuse DCOM และ RPC เพื่อ leverage SeImpersonatePrivilege และยกระดับสิทธิ์ขึ้นเป็น NT AUTHORITY\SYSTEM บน Windows</description>
+    </item>
+    <item>
+      <title>[New Award] HTB Certified Active Directory Pentesting Expert (CAPE)</title>
+      <link>https://sabastiaz.lol/blog/cape.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/cape.html#2026-05-01</guid>
+      <pubDate>Fri, 01 May 2026 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Passed CAPE with a perfect score - 10 out of 10 flags on the first attempt.</description>
+    </item>
+    <item>
+      <title>[New Scroll] My Journey Through HTB Certified Active Directory Pentesting Expert (CAPE)</title>
+      <link>https://sabastiaz.lol/blog/cape.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/cape.html#2026-05-01</guid>
+      <pubDate>Fri, 01 May 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>Full write-up: preparation, methodology, Kerberos &amp; ACL abuse, BloodHound analysis, budget, and pro tips.</description>
+    </item>
+    <item>
+      <title>[New Scroll] Mail Service Lab: Extreme Red Team LAB Review</title>
+      <link>https://sabastiaz.lol/blog/mailservice-en.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/mailservice-en.html#2026-03-01</guid>
+      <pubDate>Sun, 01 Mar 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>English review of the Mailservice Lab from Extreme Red Team Laboratories.</description>
+    </item>
+    <item>
+      <title>[New Scroll] Achievement 2025</title>
+      <link>https://sabastiaz.lol/blog/achievement-2025.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/achievement-2025.html#2026-02-01</guid>
+      <pubDate>Sun, 01 Feb 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>A look back at everything accomplished in 2025 - certifications, milestones, and lessons learned.</description>
+    </item>
+    <item>
+      <title>[New Scroll] From MSSQL to Domain Compromise: A Practical Attack Path in Active Directory (HTB Signed)</title>
+      <link>https://sabastiaz.lol/blog/mssql-domain.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/mssql-domain.html#2026-02-01</guid>
+      <pubDate>Sun, 01 Feb 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>Step-by-step walkthrough of chaining MSSQL exploitation into full domain compromise on HTB Signed machine.</description>
+    </item>
+    <item>
+      <title>[New Scroll] ความยากที่พอดี คือความสนุกของ CTF</title>
+      <link>https://sabastiaz.lol/blog/ctf-fun-th.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/ctf-fun-th.html#2026-02-01</guid>
+      <pubDate>Sun, 01 Feb 2026 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>บทความว่าด้วยความสนุกของการแก้โจทย์ CTF และมุมมองต่อความท้าทายในโลก Offensive Security</description>
+    </item>
+    <item>
+      <title>[New Scroll] [WRITE UP] Scenario 2 Part 2: Dark Web Monitoring</title>
+      <link>https://sabastiaz.lol/blog/dark-web-monitoring.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/dark-web-monitoring.html#2025-12-01</guid>
+      <pubDate>Mon, 01 Dec 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>Hack the Scammer CTF - OSINT &amp; dark web monitoring write-up covering threat actor investigation methodology.</description>
+    </item>
+    <item>
+      <title>[New Scroll] เมื่อคำว่า "เก่ง" ไม่ได้หมายถึงคนที่ไม่เคยพลาด แต่คือคนที่ลุกขึ้นมาได้เสมอ</title>
+      <link>https://sabastiaz.lol/blog/keng-th.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/keng-th.html#2025-12-01</guid>
+      <pubDate>Mon, 01 Dec 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>บทความเชิงปรัชญาว่าด้วยความหมายที่แท้จริงของ "ความเก่ง" และพลังของการลุกขึ้นหลังล้มเหลว</description>
+    </item>
+    <item>
+      <title>[New Scroll] Sec Playground Hackloween 2025: Anabelle's Secret</title>
+      <link>https://sabastiaz.lol/blog/hackloween-2025.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/hackloween-2025.html#2025-11-01</guid>
+      <pubDate>Sat, 01 Nov 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>CTF write-up for the Anabelle's Secret challenge - forensics, OSINT, and flag hunting.</description>
+    </item>
+    <item>
+      <title>[New Award] Tenable Guardian - Thailand</title>
+      <link>https://sabastiaz.lol/blog/guardian-summit.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/guardian-summit.html#2025-10-01</guid>
+      <pubDate>Wed, 01 Oct 2025 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Selected as Tenable Guardian representing Thailand at the Tenable Guardian Summit 2025.</description>
+    </item>
+    <item>
+      <title>[New Scroll] Tenable Guardian Summit 2025</title>
+      <link>https://sabastiaz.lol/blog/guardian-summit.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/guardian-summit.html#2025-10-01</guid>
+      <pubDate>Wed, 01 Oct 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>My experience attending the Tenable Guardian Summit 2025 as Guardian of Thailand.</description>
+    </item>
+    <item>
+      <title>[New Scroll] แก้โจทย์ Thailand Top Talent 2025 หมวด Network ด้วย ChatGPT {OPEN}</title>
+      <link>https://sabastiaz.lol/blog/thailand-top-talent.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/thailand-top-talent.html#2025-09-01</guid>
+      <pubDate>Mon, 01 Sep 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>บันทึกการแก้โจทย์ Network Challenge ในการแข่งขัน Thailand Top Talent 2025</description>
+    </item>
+    <item>
+      <title>[New Award] OffSec Experienced Penetration Tester (OSEP)</title>
+      <link>https://sabastiaz.lol/blog/osep.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/osep.html#2025-08-01</guid>
+      <pubDate>Fri, 01 Aug 2025 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Passed OSEP on the first attempt - captured secret.txt at 5:00 AM on day two of the exam.</description>
+    </item>
+    <item>
+      <title>[New Scroll] Passed OffSec Experienced Penetration Tester (OSEP) with secret.txt</title>
+      <link>https://sabastiaz.lol/blog/osep.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/osep.html#2025-08-01</guid>
+      <pubDate>Fri, 01 Aug 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>Full write-up of 3 months preparation, exam strategy, and the 47-hour journey to capturing secret.txt.</description>
+    </item>
+    <item>
+      <title>[New Award] HTB Certified Penetration Testing Specialist (CPTS) - 100%</title>
+      <link>https://sabastiaz.lol/blog/cpts.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/cpts.html#2025-08-01</guid>
+      <pubDate>Fri, 01 Aug 2025 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Completed CPTS with a perfect score across all modules and exam objectives.</description>
+    </item>
+    <item>
+      <title>[New Scroll] My Journey Through Certified Penetration Testing Specialist (CPTS) 100%</title>
+      <link>https://sabastiaz.lol/blog/cpts.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/cpts.html#2025-08-01</guid>
+      <pubDate>Fri, 01 Aug 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>10 days of hands-on hacking, AD exploitation, pivoting, and persistence - the full CPTS story.</description>
+    </item>
+    <item>
+      <title>[New Scroll] เตรียมตัวสอบ OSCP ยังไงให้ผ่านแบบไร้ข้อกังวล</title>
+      <link>https://sabastiaz.lol/blog/oscp-guide-th.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/oscp-guide-th.html#2025-08-01</guid>
+      <pubDate>Fri, 01 Aug 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>คู่มือภาษาไทยสำหรับการเตรียมสอบ OSCP จากประสบการณ์จริง 3 attempts</description>
+    </item>
+    <item>
+      <title>[New Award] Tenable Vulnerability Management Specialist</title>
+      <link>https://sabastiaz.lol/blog/tenable-vm.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/tenable-vm.html#2025-04-01</guid>
+      <pubDate>Tue, 01 Apr 2025 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Passed the Tenable VM Specialist exam on the first attempt.</description>
+    </item>
+    <item>
+      <title>[New Scroll] I Passed the Tenable Vulnerability Management Specialist Exam on My First Attempt!</title>
+      <link>https://sabastiaz.lol/blog/tenable-vm.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/tenable-vm.html#2025-04-01</guid>
+      <pubDate>Tue, 01 Apr 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>Study approach, exam tips, and thoughts on the Tenable VM Specialist certification path.</description>
+    </item>
+    <item>
+      <title>[New Award] Certified Red Team Analyst (CRTA)</title>
+      <link>https://sabastiaz.lol/blog/crta.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/crta.html#2025-03-01</guid>
+      <pubDate>Sat, 01 Mar 2025 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Passed CRTA in one night - from zero to compromise in a single focused session.</description>
+    </item>
+    <item>
+      <title>[New Scroll] CRTA Exam: One Night Miracle</title>
+      <link>https://sabastiaz.lol/blog/crta.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/crta.html#2025-03-01</guid>
+      <pubDate>Sat, 01 Mar 2025 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>How I prepared for and passed the CRTA certification in a single overnight exam session.</description>
+    </item>
+    <item>
+      <title>[New Award] Offensive Security Certified Professional (OSCP)</title>
+      <link>https://sabastiaz.lol/blog/oscp.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/oscp.html#2024-11-01</guid>
+      <pubDate>Fri, 01 Nov 2024 09:00:00 +0000</pubDate>
+      <category>New Award</category>
+      <description>Passed OSCP after three attempts - the certification that changed everything.</description>
+    </item>
+    <item>
+      <title>[New Scroll] My OSCP Journey: Triple Attempts</title>
+      <link>https://sabastiaz.lol/blog/oscp.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/oscp.html#2024-11-01</guid>
+      <pubDate>Fri, 01 Nov 2024 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>The honest story of failing twice and coming back stronger - what changed between attempt 2 and attempt 3.</description>
+    </item>
+    <item>
+      <title>[New Scroll] Secplayground Half Year CTF Event 2024 - Forensic File Hunt (Medium)</title>
+      <link>https://sabastiaz.lol/blog/secplayground-2024.html</link>
+      <guid isPermaLink="false">https://sabastiaz.lol/blog/secplayground-2024.html#2024-07-01</guid>
+      <pubDate>Mon, 01 Jul 2024 09:00:00 +0000</pubDate>
+      <category>New Scroll</category>
+      <description>Write-up for the Forensic File Hunt challenge at Secplayground's Half Year CTF 2024.</description>
+    </item>
+  </channel>
+</rss>

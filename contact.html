@@ -27,6 +27,7 @@
   <!-- Apple -->
   <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Sabastiaz · Red Team Sorcerer" href="/feed.xml" />
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=6">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=6">
@@ -372,33 +373,74 @@
       margin: 0 auto 1.5rem;
     }
 
+    .sub-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 1rem 0 0;
+    }
+
     .sub-cta {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
-      background: #00ab80;
-      color: #ffffff;
+      gap: 0.3rem;
       text-decoration: none;
-      padding: 0.9rem 1.75rem;
+      padding: 1rem 1.5rem;
       border-radius: 4px;
       font-family: 'Cinzel', serif;
-      font-size: 0.78rem;
+      transition: all 0.25s;
+      min-width: 220px;
+    }
+
+    .sub-cta .sub-cta-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      transition: all 0.25s;
-      box-shadow: 0 4px 16px rgba(0,171,128,0.3);
     }
 
-    .sub-cta:hover {
-      background: #00c694;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0,171,128,0.45), 0 0 20px rgba(0,171,128,0.25);
+    .sub-cta .sub-cta-hint {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      opacity: 0.85;
+      font-style: italic;
     }
 
     .sub-cta-icon {
       font-size: 1rem;
       line-height: 1;
+    }
+
+    .sub-cta.medium {
+      background: #00ab80;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(0,171,128,0.3);
+    }
+
+    .sub-cta.medium:hover {
+      background: #00c694;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0,171,128,0.45), 0 0 20px rgba(0,171,128,0.25);
+    }
+
+    .sub-cta.site {
+      background: #e67a1a;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(230,122,26,0.3);
+    }
+
+    .sub-cta.site:hover {
+      background: #ff8a2d;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(230,122,26,0.45), 0 0 20px rgba(230,122,26,0.25);
     }
 
     .sub-note {
@@ -601,18 +643,25 @@
       </div>
     </div>
 
-    <!-- Owl Post Subscription (Medium Follow) -->
+    <!-- Owl Post Subscription (Medium Follow + Site RSS via Follow.it) -->
     <div class="subscribe-panel fade-up">
       <div class="sub-owl">🦉</div>
       <div class="sub-eyebrow">Owl Post Subscription</div>
       <div class="sub-title">Have the next scroll delivered to <em>your inbox</em></div>
       <p class="sub-desc">
-        Follow me on Medium and every new scroll — writeups, CTF trials, reflections — flies straight into your email as soon as it's published. No forms, no promises to spam you later. Medium handles the delivery.
+        Pick an owl — Medium notifies you about pieces I publish there, and Follow.it watches this whole site's feed (new scrolls, awards, trials, events) and emails you the moment something new appears. Both routes are free. Both skip the signup forms on my side.
       </p>
-      <a href="https://medium.com/@sabastiaz" class="sub-cta" target="_blank" rel="noopener">
-        <span class="sub-cta-icon">📖</span> Follow on Medium
-      </a>
-      <small class="sub-note">Prefer RSS? Point your reader at <a href="https://medium.com/feed/@sabastiaz" target="_blank" rel="noopener">medium.com/feed/@sabastiaz</a></small>
+      <div class="sub-ctas">
+        <a href="https://medium.com/@sabastiaz" class="sub-cta medium" target="_blank" rel="noopener">
+          <span class="sub-cta-row"><span class="sub-cta-icon">📖</span> Follow on Medium</span>
+          <span class="sub-cta-hint">For my Medium posts</span>
+        </a>
+        <a href="https://follow.it/intent?url=https%3A%2F%2Fsabastiaz.lol%2Ffeed.xml" class="sub-cta site" target="_blank" rel="noopener">
+          <span class="sub-cta-row"><span class="sub-cta-icon">📡</span> Subscribe by Email</span>
+          <span class="sub-cta-hint">For all site updates (via Follow.it)</span>
+        </a>
+      </div>
+      <small class="sub-note">Prefer a feed reader? Grab the raw RSS: <a href="/feed.xml" target="_blank" rel="noopener">sabastiaz.lol/feed.xml</a> · or <a href="https://medium.com/feed/@sabastiaz" target="_blank" rel="noopener">medium.com/feed/@sabastiaz</a></small>
     </div>
 
     <!-- Inquiry form -->

@@ -144,8 +144,39 @@
     .reveal-actions{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:17px}
     .reveal-actions .primary,.reveal-actions .secondary{flex:1;min-width:180px}
     body.modal-open{overflow:hidden}
-    @media(max-width:560px){.reveal-overlay{padding:10px}.reveal-dialog{max-height:95dvh;border-radius:12px;padding:16px 12px 18px}.reveal-kicker{font-size:.6rem}.reveal-paper{padding:23px 15px}.reveal-quote{font-size:1.01rem;line-height:1.65}.reveal-en{font-size:.96rem}.reveal-reflection{font-size:.75rem}.share-grid{gap:7px}.share-action{font-size:.78rem;gap:5px}.reveal-actions .primary,.reveal-actions .secondary{min-width:130px}.reveal-header{margin-bottom:12px}}
-    @media(max-width:355px){.share-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reveal-overlay{padding:7px}}
+    @media(max-width:560px){
+      .reveal-overlay{padding:10px}
+      .reveal-dialog{max-height:95dvh;border-radius:12px;padding:16px 12px 18px}
+      /* Leave room on the right for the 44px close button + its 10px offset */
+      .reveal-kicker{font-size:.62rem;margin:4px 54px 7px 20px}
+      .reveal-header h2{margin:0 54px 4px 20px}
+      .reveal-paper{padding:23px 15px}
+      .reveal-quote{font-size:1.01rem;line-height:1.65}
+      .reveal-en{font-size:.96rem}
+      .reveal-reflection{font-size:.75rem}
+      .share-grid{gap:7px}
+      .share-action{font-size:.78rem;gap:5px}
+      .reveal-actions{gap:8px}
+      .reveal-actions .primary,.reveal-actions .secondary{min-width:130px}
+      .reveal-header{margin-bottom:12px}
+    }
+    @media(max-width:400px){
+      /* Share grid gets cramped as 3 columns under ~400px; fold to 2 columns */
+      .share-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:355px){
+      .reveal-overlay{padding:7px}
+      .reveal-dialog{padding:14px 10px 14px}
+      /* The kicker is already very small; keep it readable + out from under the X */
+      .reveal-kicker{font-size:.58rem;margin:2px 48px 6px 14px;letter-spacing:.14em}
+      .reveal-header h2{font-size:1.15rem;margin:0 48px 4px 14px}
+      .reveal-paper{padding:18px 12px}
+      .reveal-quote{font-size:.94rem}
+      .reveal-en{font-size:.9rem}
+      /* At real-narrow widths stack Copy / Try another vertically */
+      .reveal-actions{flex-direction:column;align-items:stretch}
+      .reveal-actions .primary,.reveal-actions .secondary{width:100%;min-width:0}
+    }
     @media(prefers-reduced-motion:reduce){.magic-leaf.animated,.reveal-dialog,.reveal-shade{animation-duration:.01ms!important}}
     /* ── Clear the site's fixed nav then carry the lang picker ── */
     .wrap{padding-top:84px;position:relative;z-index:1}

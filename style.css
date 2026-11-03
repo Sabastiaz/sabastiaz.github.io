@@ -19,7 +19,7 @@
   --parchment:  #e8dcc8;
   --text:       #e8dcc8;
   --text-dim:   #b8a88a;
-  --text-muted: #7a6a50;
+  --text-muted: #8c7c5e;
   --candle:     #ff9d3d;
   --candle2:    #ffcd7a;
   --magic:      #9b59b6;
@@ -44,6 +44,24 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ─── Accessibility: visible keyboard focus ─── */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--gold2);
+  outline-offset: 3px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 4px rgba(201,168,76,0.18);
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline-offset: 0;
+  box-shadow: 0 0 0 3px rgba(232,201,106,0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 
 /* ─── Stars Canvas ─── */
 #stars-canvas {

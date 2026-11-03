@@ -359,8 +359,12 @@
       transition: border-color 0.2s;
     }
     .form-input:focus, .form-textarea:focus {
-      outline: none;
       border-color: rgba(201,168,76,0.55);
+    }
+    .form-input:focus-visible, .form-textarea:focus-visible {
+      outline: 2px solid var(--gold2);
+      outline-offset: 1px;
+      box-shadow: 0 0 0 3px rgba(232,201,106,0.2);
     }
     .form-textarea { resize: vertical; min-height: 110px; }
     .form-submit {

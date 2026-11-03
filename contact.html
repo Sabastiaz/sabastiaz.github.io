@@ -292,10 +292,10 @@
       .contact-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── Scrolls Subscription (Medium follow) ── */
+    /* ── Scrolls Subscription (RSS via Follow.it) ── */
     .subscribe-panel {
-      background: linear-gradient(135deg, rgba(0,171,128,0.08) 0%, rgba(201,168,76,0.04) 100%);
-      border: 1px solid rgba(0,171,128,0.3);
+      background: linear-gradient(135deg, rgba(230,122,26,0.08) 0%, rgba(201,168,76,0.04) 100%);
+      border: 1px solid rgba(201,168,76,0.22);
       border-radius: 4px;
       padding: 2.5rem 2rem;
       text-align: center;
@@ -309,7 +309,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #00ab80, var(--gold), #00ab80, transparent);
+      background: linear-gradient(90deg, transparent, var(--maroon), var(--gold), var(--maroon), transparent);
     }
 
     .subscribe-panel::after {
@@ -325,7 +325,7 @@
       font-size: 2.6rem;
       display: inline-block;
       margin-bottom: 0.75rem;
-      filter: drop-shadow(0 0 14px rgba(0,171,128,0.4));
+      filter: drop-shadow(0 0 14px rgba(201,168,76,0.4));
       animation: owl-float 4s ease-in-out infinite;
     }
 
@@ -417,18 +417,6 @@
     .sub-cta-icon {
       font-size: 1rem;
       line-height: 1;
-    }
-
-    .sub-cta.medium {
-      background: #00ab80;
-      color: #ffffff;
-      box-shadow: 0 4px 16px rgba(0,171,128,0.3);
-    }
-
-    .sub-cta.medium:hover {
-      background: #00c694;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0,171,128,0.45), 0 0 20px rgba(0,171,128,0.25);
     }
 
     .sub-cta.site {
@@ -643,25 +631,21 @@
       </div>
     </div>
 
-    <!-- Owl Post Subscription (Medium Follow + Site RSS via Follow.it) -->
+    <!-- Owl Post Subscription (Site RSS via Follow.it) -->
     <div class="subscribe-panel fade-up">
       <div class="sub-owl">🦉</div>
       <div class="sub-eyebrow">Owl Post Subscription</div>
       <div class="sub-title">Have the next scroll delivered to <em>your inbox</em></div>
       <p class="sub-desc">
-        Pick an owl — Medium notifies you about pieces I publish there, and Follow.it watches this whole site's feed (new scrolls, awards, trials, events) and emails you the moment something new appears. Both routes are free. Both skip the signup forms on my side.
+        Follow.it watches this site's feed — every new scroll, award, trial, and event — and emails you the moment something new appears. Free, no signup form on my side, unsubscribe any time.
       </p>
       <div class="sub-ctas">
-        <a href="https://medium.com/@sabastiaz" class="sub-cta medium" target="_blank" rel="noopener">
-          <span class="sub-cta-row"><span class="sub-cta-icon">📖</span> Follow on Medium</span>
-          <span class="sub-cta-hint">For my Medium posts</span>
-        </a>
         <a href="https://follow.it/intent?url=https%3A%2F%2Fsabastiaz.lol%2Ffeed.xml" class="sub-cta site" target="_blank" rel="noopener">
           <span class="sub-cta-row"><span class="sub-cta-icon">📡</span> Subscribe by Email</span>
-          <span class="sub-cta-hint">For all site updates (via Follow.it)</span>
+          <span class="sub-cta-hint">Delivered via Follow.it</span>
         </a>
       </div>
-      <small class="sub-note">Prefer a feed reader? Grab the raw RSS: <a href="/feed.xml" target="_blank" rel="noopener">sabastiaz.lol/feed.xml</a> · or <a href="https://medium.com/feed/@sabastiaz" target="_blank" rel="noopener">medium.com/feed/@sabastiaz</a></small>
+      <small class="sub-note">Prefer a feed reader? Point it at <a href="/feed.xml" target="_blank" rel="noopener">sabastiaz.lol/feed.xml</a></small>
     </div>
 
     <!-- Inquiry form -->

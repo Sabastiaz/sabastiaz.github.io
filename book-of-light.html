@@ -435,11 +435,13 @@ These messages offer encouragement, not predictions or advice for major decision
   function focusQuote(){quoteEl.focus({preventScroll:true});}
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   function getShareUrl(){
-    // Change to the deployed canonical URL if this page is renamed.
-    const u=new URL('https://sabastiaz.lol/book-of-light.html');
-    u.searchParams.set('quote',String(lastIndex+1));
-    u.searchParams.set('lang',mode);
-    return u.href;
+    // Point at the per-quote landing page under /book-of-light/p/N.html.
+    // Each landing page carries its own og:image / twitter:image so Facebook,
+    // LINE, Discord, Slack, iMessage, X and the rest unfurl into the quote
+    // card (pic/book-of-light/page-NNN.png) instead of the generic site OG.
+    // The landing page redirects a human visitor to the interactive book
+    // with the right ?quote= and ?lang= pre-selected.
+    return 'https://sabastiaz.lol/book-of-light/p/'+String(lastIndex+1)+'.html';
   }
   // X caps a tweet at 280 chars (the URL costs 23). Trim quote text proportionally
   // so Thai + English + reflections + credit still fit. Everyone else gets the full share text.

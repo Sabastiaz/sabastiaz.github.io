@@ -183,18 +183,18 @@
   <main>
     <p class="kicker">✦ The Owlery Presents ✦</p>
     <h1>The Book of Light</h1>
-    <p class="subtitle" id="subtitle">คัมภีร์แห่งแสงดาว · Pages of Kindness</p>
-    <p class="intro" id="intro">บางครั้ง เราแค่ต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้
-Sometimes a few gentle words are all we need to keep going.</p>
+    <p class="subtitle" id="subtitle">Pages of Kindness · คัมภีร์แห่งแสงดาว</p>
+    <p class="intro" id="intro">Sometimes a few gentle words are all we need to keep going.
+บางครั้ง เราแค่ต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้</p>
     <div class="ornament" aria-hidden="true">✦ · ✧ · ✦</div>
     <section class="topic-area" id="topic-area" aria-label="Choose a theme / เลือกเรื่องที่ต้องการกำลังใจ">
-      <div class="topic-label" id="topic-label">วันนี้อยากอ่านเรื่องไหน? / Choose a theme</div>
-      <button type="button" class="topic" data-topic="all" aria-pressed="true">✨ ทั้งหมด / All</button>
-      <button type="button" class="topic" data-topic="tired" aria-pressed="false">🌙 เหนื่อย / Tired</button>
-      <button type="button" class="topic" data-topic="doubt" aria-pressed="false">🌱 ไม่มั่นใจ / Doubt</button>
-      <button type="button" class="topic" data-topic="new" aria-pressed="false">🕊️ เริ่มใหม่ / New</button>
-      <button type="button" class="topic" data-topic="hurt" aria-pressed="false">💛 ผิดหวัง / Hurt</button>
-      <button type="button" class="topic" data-topic="hope" aria-pressed="false">⭐ หวัง / Hope</button>
+      <div class="topic-label" id="topic-label">Choose a theme / วันนี้อยากอ่านเรื่องไหน?</div>
+      <button type="button" class="topic" data-topic="all" aria-pressed="true">✨ All / ทั้งหมด</button>
+      <button type="button" class="topic" data-topic="tired" aria-pressed="false">🌙 Tired / เหนื่อย</button>
+      <button type="button" class="topic" data-topic="doubt" aria-pressed="false">🌱 Doubt / ไม่มั่นใจ</button>
+      <button type="button" class="topic" data-topic="new" aria-pressed="false">🕊️ New / เริ่มใหม่</button>
+      <button type="button" class="topic" data-topic="hurt" aria-pressed="false">💛 Hurt / ผิดหวัง</button>
+      <button type="button" class="topic" data-topic="hope" aria-pressed="false">⭐ Hope / หวัง</button>
     </section>
     <section class="book-area" aria-label="หนังสือแห่งกำลังใจแบบโต้ตอบ">
       <div class="aura" aria-hidden="true"></div>
@@ -256,14 +256,14 @@ These messages offer encouragement, not predictions or advice for major decision
     </div>
     <div class="reveal-paper" id="reveal-paper">
       <div class="reveal-paper-label" id="reveal-num">✧ PAGE 001 ✧</div>
-      <div id="reveal-block-th" lang="th">
-        <p class="reveal-quote" id="reveal-th"></p>
-        <p class="reveal-reflection" id="reveal-reflection-th"></p>
-      </div>
-      <div class="reveal-separator" id="reveal-separator">✦ · ✧ · ✦</div>
       <div id="reveal-block-en" lang="en">
         <p class="reveal-quote reveal-en" id="reveal-en"></p>
         <p class="reveal-reflection" id="reveal-reflection-en"></p>
+      </div>
+      <div class="reveal-separator" id="reveal-separator">✦ · ✧ · ✦</div>
+      <div id="reveal-block-th" lang="th">
+        <p class="reveal-quote" id="reveal-th"></p>
+        <p class="reveal-reflection" id="reveal-reflection-th"></p>
       </div>
       <div class="reveal-credits">— The Book of Light · Sabastiaz</div>
     </div>
@@ -374,7 +374,7 @@ These messages offer encouragement, not predictions or advice for major decision
   const UI = {
     th:{return:'← กลับหน้าเว็บไซต์',subtitle:'คัมภีร์แห่งแสงดาว',intro:'บางครั้ง เราไม่ได้ต้องการคำตอบสำหรับทุกเรื่อง\nเราเพียงต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้',label:'วันนี้อยากให้หนังสือพูดกับคุณเรื่องไหน?',topics:['✨ ทุกเรื่อง','🌙 วันที่เหนื่อย','🌱 ความไม่มั่นใจ','🕊️ เริ่มต้นใหม่','💛 วันที่ผิดหวัง','⭐ ความหวัง'],cover:'✧ แตะเพื่อเปิดหนังสือ ✧',open:'📖 เปิดหน้าหนังสือ',next:'✧ เปิดหน้าใหม่',copy:'คัดลอกข้อความ',share:'แบ่งปันกำลังใจ',note:'ทุกหน้ามีข้อความเล็ก ๆ ที่เขียนด้วยความปรารถนาดี',opened:'ขอให้คุณได้พบถ้อยคำที่อ่อนโยนกับวันนี้ ✦',turned:'คุณเปิดอีกหน้าหนึ่งของหนังสือแล้ว ✦',chosen:'เลือกเรื่องที่ต้องการแล้ว แตะที่หน้าปกเพื่อเปิด ✦',copied:'คัดลอกข้อความแล้ว ส่งต่อกำลังใจได้เลย ✦',failed:'คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความเพื่อคัดลอก',shared:'ขอบคุณที่ส่งต่อกำลังใจ ✦',heading:'ข้อความถึงคุณ',left:'ไม่ว่าคุณจะมาจากวันแบบไหน\nขอให้หน้านี้เป็นมุมพักใจเล็ก ๆ',footnote:'ข้อความเหล่านี้มีไว้เพื่อให้กำลังใจ ไม่ใช่คำทำนายหรือคำแนะนำสำหรับการตัดสินใจสำคัญ หากวันนี้หนักเกินรับไหว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ'},
     en:{return:'← Back to Sabastiaz',subtitle:'Pages of gentle encouragement',intro:'Sometimes we do not need every answer.\nJust a few gentle words to help us get through today.',label:'What would you like encouragement for?',topics:['✨ Everything','🌙 Feeling tired','🌱 Self-doubt','🕊️ New beginnings','💛 Heartache','⭐ Hope'],cover:'✧ Tap to open the book ✧',open:'📖 Open the book',next:'✧ Turn the page',copy:'Copy quote',share:'Share kindness',note:'Every page is written with kindness',opened:'May you find a little kindness on this page ✦',turned:'Another gentle page, just for you ✦',chosen:'Theme selected. Tap the cover to open ✦',copied:'Copied! Share a little light with someone ✦',failed:'Automatic copy failed. Please select the text and copy it manually.',shared:'Thank you for sharing a little kindness ✦',heading:'A PAGE FOR YOU',left:'Whatever kind of day you have had,\nmay this page be a little place to rest.',footnote:'These messages offer encouragement, not predictions or advice for major decisions. If things feel overwhelming, consider talking to someone you trust or a professional.'},
-    both:{return:'← Back to Sabastiaz',subtitle:'คัมภีร์แห่งแสงดาว · Pages of Kindness',intro:'บางครั้ง เราแค่ต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้\nSometimes a few gentle words are all we need to keep going.',label:'วันนี้อยากอ่านเรื่องไหน? / Choose a theme',topics:['✨ ทั้งหมด / All','🌙 เหนื่อย / Tired','🌱 ไม่มั่นใจ / Doubt','🕊️ เริ่มใหม่ / New','💛 ผิดหวัง / Hurt','⭐ หวัง / Hope'],cover:'✧ แตะเพื่อเปิด / Tap to open ✧',open:'📖 เปิดหนังสือ / Open',next:'✧ หน้าใหม่ / Next',copy:'คัดลอก / Copy',share:'แบ่งปัน / Share',note:'ทุกหน้ามีถ้อยคำที่เขียนด้วยความปรารถนาดี · Every page is written with kindness',opened:'ขอให้หน้านี้มอบกำลังใจ · May this page bring a little light ✦',turned:'อีกหนึ่งหน้าแห่งกำลังใจ · Another page of kindness ✦',chosen:'เลือกหมวดแล้ว · Theme selected. Tap the cover ✦',copied:'คัดลอกแล้ว · Copied. Share a little light ✦',failed:'คัดลอกไม่ได้ · Copy failed. Please select the quote manually.',shared:'ขอบคุณที่แบ่งปัน · Thank you for sharing ✦',heading:'ภาษาไทย · THAI',left:'ไม่ว่าคุณจะมาจากวันแบบไหน\nขอให้หน้านี้เป็นมุมพักใจเล็ก ๆ',footnote:'ข้อความเหล่านี้มีไว้เพื่อให้กำลังใจ ไม่ใช่คำทำนายหรือคำแนะนำสำหรับการตัดสินใจสำคัญ หากวันนี้หนักเกินรับไหว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ\nThese messages offer encouragement, not predictions or advice for major decisions. If things feel overwhelming, consider talking to someone you trust or a professional.'}
+    both:{return:'← Back to Sabastiaz',subtitle:'Pages of Kindness · คัมภีร์แห่งแสงดาว',intro:'Sometimes a few gentle words are all we need to keep going.\nบางครั้ง เราแค่ต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้',label:'Choose a theme / วันนี้อยากอ่านเรื่องไหน?',topics:['✨ All / ทั้งหมด','🌙 Tired / เหนื่อย','🌱 Doubt / ไม่มั่นใจ','🕊️ New / เริ่มใหม่','💛 Hurt / ผิดหวัง','⭐ Hope / หวัง'],cover:'✧ Tap to open / แตะเพื่อเปิด ✧',open:'📖 Open / เปิดหนังสือ',next:'✧ Next / หน้าใหม่',copy:'Copy / คัดลอก',share:'Share / แบ่งปัน',note:'Every page is written with kindness · ทุกหน้ามีถ้อยคำที่เขียนด้วยความปรารถนาดี',opened:'May this page bring a little light · ขอให้หน้านี้มอบกำลังใจ ✦',turned:'Another page of kindness · อีกหนึ่งหน้าแห่งกำลังใจ ✦',chosen:'Theme selected. Tap the cover · เลือกหมวดแล้ว ✦',copied:'Copied. Share a little light · คัดลอกแล้ว ✦',failed:'Copy failed. Please select the quote manually. · คัดลอกไม่ได้',shared:'Thank you for sharing · ขอบคุณที่แบ่งปัน ✦',heading:'THAI · ภาษาไทย',left:'Whatever kind of day you have had,\nmay this page be a little place to rest.',footnote:'These messages offer encouragement, not predictions or advice for major decisions. If things feel overwhelming, consider talking to someone you trust or a professional.\nข้อความเหล่านี้มีไว้เพื่อให้กำลังใจ ไม่ใช่คำทำนายหรือคำแนะนำสำหรับการตัดสินใจสำคัญ หากวันนี้หนักเกินรับไหว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ'}
   };
   const topicNames=['all','tired','doubt','new','hurt','hope'];
   let mode='both';
@@ -455,8 +455,8 @@ These messages offer encouragement, not predictions or advice for major decision
   }
   function renderReveal(){
     if(!current)return;
-    $('reveal-title').textContent=mode==='en'?'A Page Just for You':mode==='th'?'หนังสือเปิดมาที่หน้านี้':'ข้อความจากหนังสือถึงคุณ · A Page for You';
-    $('reveal-intro').textContent=mode==='en'?'A little light to carry with you':mode==='th'?'บางที หน้านี้อาจเป็นข้อความที่คุณอยากได้ยิน':'ข้อความเล็ก ๆ ที่อยากส่งถึงคุณ · A little light for you';
+    $('reveal-title').textContent=mode==='en'?'A Page Just for You':mode==='th'?'หนังสือเปิดมาที่หน้านี้':'A Page for You · ข้อความจากหนังสือถึงคุณ';
+    $('reveal-intro').textContent=mode==='en'?'A little light to carry with you':mode==='th'?'บางที หน้านี้อาจเป็นข้อความที่คุณอยากได้ยิน':'A little light for you · ข้อความเล็ก ๆ ที่อยากส่งถึงคุณ';
     $('reveal-num').textContent='✧ PAGE '+String(lastIndex+1).padStart(3,'0')+' ✧';
     $('reveal-th').textContent='“'+current.text+'”';
     $('reveal-en').textContent='“'+current.en+'”';
@@ -465,10 +465,10 @@ These messages offer encouragement, not predictions or advice for major decision
     $('reveal-block-th').hidden=mode==='en';
     $('reveal-block-en').hidden=mode==='th';
     $('reveal-separator').hidden=mode!=='both';
-    $('share-heading').textContent=mode==='th'?'✧ ส่งต่อกำลังใจนี้ ✧':mode==='en'?'✧ SHARE THIS LITTLE LIGHT ✧':'✧ ส่งต่อแสงเล็ก ๆ นี้ / SHARE THIS LIGHT ✧';
-    $('share-hint').textContent=mode==='th'?'Instagram: แชร์เป็นรูปภาพผ่านแอป หรือบันทึก PNG เพื่อโพสต์เอง':mode==='en'?'Instagram: share the generated image using your device, or save the PNG to post manually.':'Instagram: แชร์รูปผ่านแอป หรือบันทึก PNG / Save the quote image to post';
-    $('reveal-copy').textContent=mode==='th'?'⧉ คัดลอกข้อความ':mode==='en'?'⧉ Copy quote':'⧉ คัดลอก / Copy';
-    $('reveal-again').textContent=mode==='th'?'✦ เปิดหน้าใหม่':mode==='en'?'✦ Another page':'✦ เปิดหน้าใหม่ / Try another';
+    $('share-heading').textContent=mode==='th'?'✧ ส่งต่อกำลังใจนี้ ✧':mode==='en'?'✧ SHARE THIS LITTLE LIGHT ✧':'✧ SHARE THIS LIGHT / ส่งต่อแสงเล็ก ๆ นี้ ✧';
+    $('share-hint').textContent=mode==='th'?'Instagram: แชร์เป็นรูปภาพผ่านแอป หรือบันทึก PNG เพื่อโพสต์เอง':mode==='en'?'Instagram: share the generated image using your device, or save the PNG to post manually.':'Instagram: Save the quote image to post / แชร์รูปผ่านแอป หรือบันทึก PNG';
+    $('reveal-copy').textContent=mode==='th'?'⧉ คัดลอกข้อความ':mode==='en'?'⧉ Copy quote':'⧉ Copy / คัดลอก';
+    $('reveal-again').textContent=mode==='th'?'✦ เปิดหน้าใหม่':mode==='en'?'✦ Another page':'✦ Try another / เปิดหน้าใหม่';
     updateShareLinks();
   }
   function showModal(){

@@ -547,8 +547,13 @@ footer .footer-wand { color: var(--gold); font-size: 1.25rem; display: block; ma
 }
 
 .mobile-nav.open {
-  max-height: 600px;
+  /* Fit to whatever space is left below the fixed nav; the drawer scrolls
+     internally when the item list is taller than the viewport. */
+  max-height: calc(100dvh - 70px);
   padding: 1rem 0 1.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-nav ul {

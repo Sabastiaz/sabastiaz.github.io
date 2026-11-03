@@ -730,18 +730,10 @@ These messages offer encouragement, not predictions or advice for major decision
   <br/><span style="display:block;margin-top:0.3rem;opacity:0.4">A little light for the long walk.</span>
 </footer>
 
-<script>
-  // Site-standard mobile nav hamburger
-  (function(){
-    var ham = document.getElementById('nav-hamburger');
-    var ul  = document.querySelector('.nav-links');
-    if (ham) ham.addEventListener('click', function(){
-      var open = ham.getAttribute('aria-expanded') === 'true';
-      ham.setAttribute('aria-expanded', String(!open));
-      ul.classList.toggle('open', !open);
-    });
-  })();
-</script>
+<!-- stars.js injects the site-standard mobile-nav drawer by cloning .nav-links
+     and wires the hamburger button to open/close it. No canvas on this page -
+     the Book of Light paints its own starfield background. -->
+<script src="stars.js"></script>
 <script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

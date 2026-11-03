@@ -17,13 +17,13 @@
   <meta property="og:url" content="https://sabastiaz.github.io/trials.html" />
   <meta property="og:title" content="Crafted Trials | Sabastiaz" />
   <meta property="og:description" content="Challenges, CTF puzzles, and training dungeons I've forged for others to break." />
-  <meta property="og:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta property="og:image" content="https://sabastiaz.github.io/pic/trials-coming-soon.jpg" />
   <meta property="og:locale" content="th_TH" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Crafted Trials | Sabastiaz" />
   <meta name="twitter:description" content="Challenges, CTF puzzles, and training dungeons I've forged for others to break." />
-  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/Sabastiaz_Sly.png" />
+  <meta name="twitter:image" content="https://sabastiaz.github.io/pic/trials-coming-soon.jpg" />
   <!-- Apple -->
   <link rel="apple-touch-icon" href="pic/Sabastiaz_Sly.png" />
   <link rel="stylesheet" href="style.css" />
@@ -37,7 +37,7 @@
       background: linear-gradient(135deg, #1e1810 0%, #231d12 60%, #1a1509 100%);
       border: 1px solid rgba(201,168,76,0.22);
       border-radius: 4px;
-      padding: 4rem 2.5rem;
+      padding: 2.25rem 2rem 2.75rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -61,21 +61,26 @@
       opacity: 0.25;
     }
 
-    .forge-anvil {
-      font-size: 4rem;
-      display: inline-block;
-      margin-bottom: 1rem;
-      filter: drop-shadow(0 0 18px rgba(201,168,76,0.45));
-      animation: forge-flicker 3s ease-in-out infinite;
+    .forge-hero {
+      display: block;
+      width: 100%;
+      max-width: 980px;
+      height: auto;
+      margin: 0 auto 1.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.2);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.55), 0 0 24px rgba(224,38,93,0.12);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
 
-    @keyframes forge-flicker {
-      0%, 100% { filter: drop-shadow(0 0 18px rgba(201,168,76,0.45)); transform: translateY(0); }
-      50%      { filter: drop-shadow(0 0 28px rgba(224,112,26,0.65)); transform: translateY(-3px); }
+    .forge-hero:hover {
+      transform: scale(1.015);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 36px rgba(224,38,93,0.22);
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .forge-anvil { animation: none; }
+      .forge-hero { transition: none; }
+      .forge-hero:hover { transform: none; }
     }
 
     .forge-eyebrow {
@@ -85,28 +90,15 @@
       text-transform: uppercase;
       color: var(--gold);
       opacity: 0.6;
-      margin-bottom: 0.4rem;
-    }
-
-    .forge-headline {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.2;
-      background: linear-gradient(135deg, #fff8e7 0%, var(--gold2) 50%, var(--candle) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 14px rgba(201,168,76,0.3));
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .forge-desc {
       font-size: 1.05rem;
       color: var(--text-dim);
       line-height: 1.9;
-      max-width: 620px;
-      margin: 0 auto 2rem;
+      max-width: 680px;
+      margin: 0 auto 1.75rem;
     }
 
     .forge-meta {
@@ -232,9 +224,8 @@
 
     <!-- Coming Soon forge panel -->
     <div class="forge-panel fade-up">
-      <div class="forge-anvil">⚒️</div>
       <div class="forge-eyebrow">The Forge Is Still Burning</div>
-      <div class="forge-headline">Coming Soon…</div>
+      <img class="forge-hero" src="pic/trials-coming-soon.jpg" alt="Coming Soon · Stay Tuned - anime illustration of Sabastiaz coding at a BigFish Enterprise workstation, OffSec / Red Team / DFIR / Tenable books stacked beside the laptop" loading="lazy">
       <p class="forge-desc">
         Writeups, blueprints, and post-mortems of the Capture-the-Flag challenges, lab dungeons, and training puzzles
         I've authored - what the players saw, what they didn't, and the reasoning behind the twist in each one.

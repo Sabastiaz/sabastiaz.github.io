@@ -441,17 +441,35 @@ These messages offer encouragement, not predictions or advice for major decision
     u.searchParams.set('lang',mode);
     return u.href;
   }
+  // X caps a tweet at 280 chars (the URL costs 23). Trim quote text proportionally
+  // so Thai + English + reflections + credit still fit. Everyone else gets the full share text.
   function sharePreview(){
     if(!current)return '';
-    const text=mode==='en'?current.en:current.text;
-    return '“'+text+'” — The Book of Light';
+    const full=shareText();
+    const BUDGET=280 - 23 - 2; // URL + two separators
+    if(full.length<=BUDGET)return full;
+    // Prefer: keep the primary-language quote + credit; drop reflections and the other-language block
+    const header='✦ Page '+String(lastIndex+1).padStart(3,'0')+' ✦';
+    const primary=mode==='en'?current.en:current.text;
+    const credit='— The Book of Light · Sabastiaz';
+    const compact=`${header}\n\n“${primary}”\n\n${credit}`;
+    return compact.length<=BUDGET?compact:`“${primary}”\n${credit}`;
   }
   function updateShareLinks(){
-    const url=getShareUrl(),preview=sharePreview();
-    $('fb-link').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
-    $('x-link').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(preview)+'&url='+encodeURIComponent(url);
-    $('line-link').href='https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(url);
-    $('wa-link').href='https://api.whatsapp.com/send?text='+encodeURIComponent(preview+'\n'+url);
+    const url=getShareUrl(),text=shareText(),xText=sharePreview();
+    $('fb-link').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'&quote='+encodeURIComponent(text);
+    $('x-link').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(xText)+'&url='+encodeURIComponent(url);
+    $('line-link').href='https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text);
+    $('wa-link').href='https://api.whatsapp.com/send?text='+encodeURIComponent(text+'\n'+url);
+  }
+  // Facebook's `quote` param and LINE's `text` param are honoured by their composers when available,
+  // but both sometimes strip it; silently copying the quote text first means the user can also paste it.
+  async function preCopyForShare(ev){
+    try{
+      if(!current)return;
+      if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(formatQuote());}
+      setFeedback(UI[mode].copied);
+    }catch(e){/* opening the share tab is still fine without clipboard access */}
   }
   function renderReveal(){
     if(!current)return;
@@ -533,10 +551,21 @@ These messages offer encouragement, not predictions or advice for major decision
   function nextPage(){if(!opened)return openBook();if(busy)return;enchantedFlip(false);}
   function formatQuote(){
     if(!current)return '';
-    const credit='— The Book of Light | Sabastiaz\nhttps://sabastiaz.lol/book-of-light.html';
-    if(mode==='both')return `“${current.text}”\n${current.reflection}\n\n“${current.en}”\n${current.reflectionEn}\n\n${credit}`;
-    if(mode==='en')return `“${current.en}”\n\n${current.reflectionEn}\n${credit}`;
-    return `“${current.text}”\n\n${current.reflection}\n${credit}`;
+    const header='✦ Page '+String(lastIndex+1).padStart(3,'0')+' ✦';
+    const credit='— The Book of Light · Sabastiaz\n'+getShareUrl();
+    if(mode==='both')return `${header}\n\n“${current.en}”\n${current.reflectionEn}\n\n“${current.text}”\n${current.reflection}\n\n${credit}`;
+    if(mode==='en')return `${header}\n\n“${current.en}”\n${current.reflectionEn}\n\n${credit}`;
+    return `${header}\n\n“${current.text}”\n${current.reflection}\n\n${credit}`;
+  }
+  // Text passed to share-intent URLs. Same shape as formatQuote but WITHOUT the trailing URL,
+  // because every social sharer already carries the URL as its own argument.
+  function shareText(){
+    if(!current)return '';
+    const header='✦ Page '+String(lastIndex+1).padStart(3,'0')+' ✦';
+    const credit='— The Book of Light · Sabastiaz';
+    if(mode==='both')return `${header}\n\n“${current.en}”\n${current.reflectionEn}\n\n“${current.text}”\n${current.reflection}\n\n${credit}`;
+    if(mode==='en')return `${header}\n\n“${current.en}”\n${current.reflectionEn}\n\n${credit}`;
+    return `${header}\n\n“${current.text}”\n${current.reflection}\n\n${credit}`;
   }
   async function copyQuote(){
     if(!current)return;
@@ -642,6 +671,9 @@ These messages offer encouragement, not predictions or advice for major decision
   $('reveal-again').addEventListener('click',()=>{closeModal();nextPage();});
   $('reveal-copy').addEventListener('click',copyQuote);
   $('native-share-btn').addEventListener('click',shareQuote);
+  // Facebook and LINE strip or ignore inline text sometimes; also copy the quote so the user can paste.
+  $('fb-link').addEventListener('click',preCopyForShare);
+  $('line-link').addEventListener('click',preCopyForShare);
   $('ig-btn').addEventListener('click',shareInstagramImage);
   document.querySelectorAll('.language-btn').forEach(b=>b.addEventListener('click',()=>applyMode(b.dataset.mode,true)));
   document.querySelectorAll('.topic').forEach(b=>b.addEventListener('click',()=>{

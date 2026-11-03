@@ -166,6 +166,37 @@
       .proof-card { transition: none; }
       .proof-card:hover { transform: none; }
     }
+    .featured-section { position: relative; z-index: 1; padding: 5rem 2rem; background: linear-gradient(180deg, var(--surface) 0%, transparent 100%); }
+    .featured-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .featured-header { text-align: center; margin-bottom: 2.75rem; }
+    .featured-label { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 0.4rem; }
+    .featured-title { font-family: 'Cinzel', serif; font-size: clamp(1.3rem, 2.4vw, 1.9rem); font-weight: 700; color: var(--gold2); text-shadow: 0 0 20px rgba(201,168,76,0.2); }
+    .featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto; }
+    .featured-card {
+      background: var(--surface2); border: 1px solid rgba(201,168,76,0.14); border-radius: 4px;
+      padding: 1.6rem 1.5rem; text-decoration: none; display: flex; flex-direction: column;
+      gap: 0.6rem; position: relative; overflow: hidden; transition: all 0.25s;
+    }
+    .featured-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon)); opacity: 0; transition: opacity 0.3s;
+    }
+    .featured-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.4), 0 0 18px rgba(201,168,76,0.08); }
+    .featured-card:hover::after { opacity: 1; }
+    .featured-domain { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); opacity: 0.65; display: flex; align-items: center; gap: 0.5rem; }
+    .featured-domain .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: 0.6; }
+    .featured-date { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.14em; color: var(--text-muted); text-transform: uppercase; }
+    .featured-title-row { font-family: 'Cinzel', serif; font-size: 0.98rem; font-weight: 700; color: var(--text); line-height: 1.45; }
+    .featured-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; flex: 1; }
+    .featured-link { font-family: 'Cinzel', serif; font-size: 0.63rem; letter-spacing: 0.14em; color: var(--gold); opacity: 0.6; margin-top: 0.3rem; transition: opacity 0.2s, letter-spacing 0.2s; }
+    .featured-card:hover .featured-link { opacity: 1; letter-spacing: 0.2em; }
+    .featured-more { text-align: center; margin-top: 2.25rem; }
+    .featured-more a { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); text-decoration: none; opacity: 0.75; padding: 0.6rem 1.4rem; border: 1px solid rgba(201,168,76,0.3); border-radius: 2px; transition: all 0.2s; }
+    .featured-more a:hover { opacity: 1; border-color: var(--gold); background: rgba(201,168,76,0.06); }
+    @media (prefers-reduced-motion: reduce) {
+      .featured-card { transition: none; }
+      .featured-card:hover { transform: none; }
+    }
     .grimoire-section { background: var(--surface); position: relative; z-index: 1; padding: 5rem 2rem; }
     .grimoire-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
     .grimoire-header { text-align: center; margin-bottom: 3.5rem; }
@@ -499,6 +530,36 @@
     </a>
   </div>
 </div>
+
+<section class="featured-section">
+  <div class="featured-header fade-up">
+    <div class="featured-label">✦ Featured Research ✦</div>
+    <div class="featured-title">Latest Scrolls from the Restricted Section</div>
+  </div>
+  <div class="featured-grid fade-up">
+    <a href="blog/godpotato.html" class="featured-card">
+      <div class="featured-domain"><span>Windows · PrivEsc</span><span class="dot"></span><span class="featured-date">Jul 2026</span></div>
+      <div class="featured-title-row">GodPotato - Technical Report on Windows Privilege Escalation</div>
+      <div class="featured-desc">Breakdown of the GodPotato impersonation chain on modern Windows - the SeImpersonatePrivilege path, DCOM activation trick, and detection surface.</div>
+      <div class="featured-link">Read Scroll →</div>
+    </a>
+    <a href="blog/sliver-c2.html" class="featured-card">
+      <div class="featured-domain"><span>Red Team · C2</span><span class="dot"></span><span class="featured-date">Jun 2026</span></div>
+      <div class="featured-title-row">Sliver C2 - Getting Started for Red Team Operations</div>
+      <div class="featured-desc">Operator-level walkthrough of the Sliver command-and-control framework: implant generation, listener setup, and the operational tradeoffs vs. Cobalt Strike.</div>
+      <div class="featured-link">Read Scroll →</div>
+    </a>
+    <a href="blog/mssql-domain.html" class="featured-card">
+      <div class="featured-domain"><span>Active Directory</span><span class="dot"></span><span class="featured-date">Feb 2026</span></div>
+      <div class="featured-title-row">From MSSQL to Domain Compromise - A Practical AD Attack Path</div>
+      <div class="featured-desc">End-to-end walkthrough of chaining MSSQL impersonation into full Active Directory domain compromise on Hack The Box Signed, with the mitigation story at each hop.</div>
+      <div class="featured-link">Read Scroll →</div>
+    </a>
+  </div>
+  <div class="featured-more fade-up">
+    <a href="writings.html">Browse the Full Restricted Section →</a>
+  </div>
+</section>
 
 <div class="quote-section fade-up">
   <p class="big-quote">

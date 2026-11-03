@@ -8,6 +8,9 @@
   <meta property="og:title" content="The Book of Light | Sabastiaz">
   <meta property="og:description" content="A little light for you · คำคมให้กำลังใจทั้งภาษาไทยและอังกฤษ">
   <title>The Book of Light | คัมภีร์แห่งแสงดาว — Sabastiaz</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="canonical" href="https://sabastiaz.lol/book-of-light.html" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
   <style>
     :root { color-scheme: dark; --bg:#0b0908; --gold:#d0a85b; --gold-bright:#f2d794; --muted:#b9a78b; --paper:#f6ead1; --ink:#4c3725; --line:#6c502d; --focus:#ffe6a1; }
     *{box-sizing:border-box}
@@ -144,11 +147,39 @@
     @media(max-width:560px){.reveal-overlay{padding:10px}.reveal-dialog{max-height:95dvh;border-radius:12px;padding:16px 12px 18px}.reveal-kicker{font-size:.6rem}.reveal-paper{padding:23px 15px}.reveal-quote{font-size:1.01rem;line-height:1.65}.reveal-en{font-size:.96rem}.reveal-reflection{font-size:.75rem}.share-grid{gap:7px}.share-action{font-size:.78rem;gap:5px}.reveal-actions .primary,.reveal-actions .secondary{min-width:130px}.reveal-header{margin-bottom:12px}}
     @media(max-width:355px){.share-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reveal-overlay{padding:7px}}
     @media(prefers-reduced-motion:reduce){.magic-leaf.animated,.reveal-dialog,.reveal-shade{animation-duration:.01ms!important}}
+    /* ── Clear the site's fixed nav then carry the lang picker ── */
+    .wrap{padding-top:84px;position:relative;z-index:1}
+    .page-toolbar{display:flex;justify-content:flex-end;align-items:center;padding:0 0 4px;gap:12px}
+    @media(max-width:680px){.page-toolbar{justify-content:center}}
+    body{display:block;overflow-x:hidden}
+    /* Push footer below the book, keep breathing room */
+    main{padding-bottom:32px}
   </style>
 </head>
 <body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Sabastiaz 🪄</a>
+  <ul class="nav-links">
+    <li><a href="index.html" title="Home">Home</a></li>
+    <li><a href="about.html" title="Experience & Expertise">About</a></li>
+    <li><a href="skills.html" title="Certifications">Spells</a></li>
+    <li><a href="tools.html" title="Tools">Arsenal</a></li>
+    <li><a href="trials.html" title="Labs & Challenges">Trials</a></li>
+    <li><a href="writings.html" title="Blog & Research">Tomes</a></li>
+    <li><a href="honor.html" title="Awards & Recognition">Honours</a></li>
+    <li><a href="wowza.html" title="Wowza Community">Wowza</a></li>
+    <li><a href="event.html" title="Events & Speaking">Events</a></li>
+    <li><a href="changelog.html" title="Changelog">Updates</a></li>
+    <li><a href="contact.html" title="Contact">Owl Post</a></li>
+    <li><a href="book-of-light.html" class="active" title="The Book of Light">📖</a></li>
+    <li><a href="cocacola.html" title="Coca-Cola Shrine">🥤</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
 <div class="wrap">
-  <header><a class="brand" href="https://sabastiaz.lol/">✦ SABASTIAZ</a><div class="header-right"><div class="language-picker" role="group" aria-label="Language / ภาษา"><button type="button" class="language-btn" data-mode="th" aria-pressed="false">ไทย</button><button type="button" class="language-btn" data-mode="en" aria-pressed="false">EN</button><button type="button" class="language-btn" data-mode="both" aria-pressed="true">TH + EN</button></div><a class="return" id="return" href="https://sabastiaz.lol/">← Back to Sabastiaz</a></div></header>
+  <div class="page-toolbar"><div class="language-picker" role="group" aria-label="Language / ภาษา"><button type="button" class="language-btn" data-mode="th" aria-pressed="false">ไทย</button><button type="button" class="language-btn" data-mode="en" aria-pressed="false">EN</button><button type="button" class="language-btn" data-mode="both" aria-pressed="true">TH + EN</button></div></div>
   <main>
     <p class="kicker">✦ The Owlery Presents ✦</p>
     <h1>The Book of Light</h1>
@@ -364,7 +395,7 @@ These messages offer encouragement, not predictions or advice for major decision
     const ui=UI[mode];
     document.documentElement.lang=mode==='en'?'en':'th';
     document.title=mode==='th'?'The Book of Light | คัมภีร์แห่งแสงดาว — Sabastiaz':'The Book of Light | Sabastiaz';
-    $('return').textContent=ui.return;
+    const retEl=$('return'); if(retEl)retEl.textContent=ui.return;
     $('subtitle').textContent=ui.subtitle;
     $('intro').textContent=ui.intro;
     $('topic-label').textContent=ui.label;
@@ -627,5 +658,25 @@ These messages offer encouragement, not predictions or advice for major decision
   shareBtn.addEventListener('click',shareQuote);
   applyMode(mode);
 </script>
+
+<footer>
+  <span class="footer-wand">🪄</span>
+  ✦ &nbsp; SABASTIAZ &nbsp; · &nbsp; Ratthapong Sommanus &nbsp; · &nbsp; Red Team Sorcerer &nbsp; ✦
+  <br/><span style="display:block;margin-top:0.3rem;opacity:0.4">A little light for the long walk.</span>
+</footer>
+
+<script>
+  // Site-standard mobile nav hamburger
+  (function(){
+    var ham = document.getElementById('nav-hamburger');
+    var ul  = document.querySelector('.nav-links');
+    if (ham) ham.addEventListener('click', function(){
+      var open = ham.getAttribute('aria-expanded') === 'true';
+      ham.setAttribute('aria-expanded', String(!open));
+      ul.classList.toggle('open', !open);
+    });
+  })();
+</script>
+<script data-goatcounter="https://sabastiaz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

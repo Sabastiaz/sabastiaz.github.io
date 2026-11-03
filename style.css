@@ -239,6 +239,55 @@ nav {
 
 .divider-rune { color: var(--gold); font-size: 0.9rem; }
 
+/* ─── CV / Resume download CTA ─── */
+.cv-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1.25rem auto 0.5rem;
+}
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.2rem;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.cv-btn-soon {
+  background: rgba(201,168,76,0.06);
+  border: 1px dashed rgba(201,168,76,0.4);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+.cv-btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--text-dim);
+}
+.cv-btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold2);
+  background: rgba(201,168,76,0.05);
+}
+.cv-icon { font-size: 0.95rem; opacity: 0.85; }
+.cv-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(201,168,76,0.14);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+
 /* ─── SECTION LABEL ─── */
 .section-rune {
   font-family: 'Cinzel', serif;

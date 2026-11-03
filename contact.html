@@ -317,6 +317,19 @@
     }
 
     /* ── Inquiry form ── */
+    .form-hint {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 100%;
+      margin: 0 0 1rem;
+      padding: 0.85rem 1rem;
+      border-left: 2px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.04);
+      border-radius: 2px;
+    }
+    .form-hint strong { color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .form-hint em { color: var(--text-dim); font-style: italic; }
     .inquiry-form {
       background: var(--surface);
       border: 1px solid rgba(201,168,76,0.13);
@@ -326,6 +339,7 @@
       flex-direction: column;
       gap: 1rem;
     }
+    .form-submit:disabled { opacity: 0.5; cursor: wait; }
     .form-row { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-label {
       font-family: 'Cinzel', serif;
@@ -510,6 +524,11 @@
 
     <!-- Inquiry form -->
     <div class="section-rune" style="justify-content:center;margin:2.5rem 0 1.25rem;">Send a Direct Inquiry</div>
+    <p class="form-hint fade-up">
+      <strong>How this works:</strong> Submitting opens your email client with the fields pre-filled -
+      your message is sent from <em>your own inbox</em>, not through this page. Please avoid sharing
+      confidential system details, credentials, or client data through this form.
+    </p>
     <form class="inquiry-form fade-up" id="inquiry-form">
       <div class="form-row">
         <label class="form-label" for="f-name">Your Name</label>
@@ -520,6 +539,15 @@
         <input class="form-input" type="email" id="f-email" required>
       </div>
       <div class="form-row">
+        <label class="form-label" for="f-inquiry-type">Inquiry Type</label>
+        <select class="form-input" id="f-inquiry-type">
+          <option value="Security Assessment">Security Assessment</option>
+          <option value="Collaboration">Collaboration</option>
+          <option value="Speaking">Speaking / Training</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-row">
         <label class="form-label" for="f-subject">Subject</label>
         <input class="form-input" type="text" id="f-subject" required>
       </div>
@@ -527,8 +555,8 @@
         <label class="form-label" for="f-message">Message</label>
         <textarea class="form-textarea" id="f-message" required></textarea>
       </div>
-      <button type="submit" class="form-submit">Dispatch Owl →</button>
-      <div class="form-status" id="form-status"></div>
+      <button type="submit" class="form-submit" id="f-submit">Dispatch Owl →</button>
+      <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
     </form>
 
     <!-- Seal -->
@@ -553,17 +581,27 @@
 (function(){
   var form = document.getElementById('inquiry-form');
   var status = document.getElementById('form-status');
+  var submit = document.getElementById('f-submit');
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    var name = document.getElementById('f-name').value;
-    var email = document.getElementById('f-email').value;
-    var subject = document.getElementById('f-subject').value;
-    var message = document.getElementById('f-message').value;
-    var body = 'From: ' + name + ' (' + email + ')\n\n' + message;
-    var mailto = 'mailto:ratthapong_c@hotmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    window.location.href = mailto;
-    status.textContent = 'Opening your email client to send this owl...';
+    var name = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var type = document.getElementById('f-inquiry-type').value;
+    var subject = document.getElementById('f-subject').value.trim();
+    var message = document.getElementById('f-message').value.trim();
+    if (!name || !email || !subject || !message) {
+      status.textContent = 'Please fill in every field before dispatching the owl.';
+      status.className = 'form-status error';
+      return;
+    }
+    var fullSubject = '[' + type + '] ' + subject;
+    var body = 'From: ' + name + ' <' + email + '>\nInquiry type: ' + type + '\n\n' + message;
+    var mailto = 'mailto:ratthapong_c@hotmail.com?subject=' + encodeURIComponent(fullSubject) + '&body=' + encodeURIComponent(body);
+    submit.disabled = true;
+    status.textContent = 'Opening your email client... if nothing opens, email ratthapong_c@hotmail.com directly.';
     status.className = 'form-status success';
+    window.location.href = mailto;
+    setTimeout(function(){ submit.disabled = false; }, 3000);
   });
 })();
 </script>

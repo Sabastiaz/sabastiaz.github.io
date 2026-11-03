@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0b09">
+  <meta name="description" content="The Book of Light — คัมภีร์แห่งแสงดาว | Gentle messages of encouragement in Thai and English. เปิดหนังสือเพื่อรับกำลังใจทั้งภาษาไทยและอังกฤษ">
+  <meta property="og:title" content="The Book of Light | Sabastiaz">
+  <meta property="og:description" content="A little light for you · คำคมให้กำลังใจทั้งภาษาไทยและอังกฤษ">
+  <title>The Book of Light | คัมภีร์แห่งแสงดาว — Sabastiaz</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b0908; --gold:#d0a85b; --gold-bright:#f2d794; --muted:#b9a78b; --paper:#f6ead1; --ink:#4c3725; --line:#6c502d; --focus:#ffe6a1; }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -6%,#342316 0,transparent 46%),radial-gradient(ellipse at 20% 80%,#1b1420 0,transparent 43%),#0b0908;color:#eee3c9;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.63;background-image:radial-gradient(2px 2px at 8% 20%,#b59858 30%,transparent 70%),radial-gradient(2px 2px at 15% 72%,#ccb98b 30%,transparent 70%),radial-gradient(1px 1px at 66% 19%,#f5d998 40%,transparent 70%),radial-gradient(2px 2px at 87% 37%,#ddc59a 30%,transparent 70%),radial-gradient(1px 1px at 92% 86%,#c39d77 40%,transparent 70%);background-size:370px 290px,510px 410px,450px 350px,520px 460px,600px 530px}
+    a{color:inherit} button{font:inherit} button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+    .wrap{width:min(1120px,94vw);margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:25px 0;border-bottom:1px solid #55402b8f}
+    .brand{text-decoration:none;letter-spacing:.2em;text-transform:uppercase;color:#ecd1a1;font-family:Georgia,serif;font-size:.85rem;font-weight:bold}
+    .return{color:#cab38c;font-size:.86rem;text-decoration:none}.return:hover{color:#fff2d0}
+    main{text-align:center}
+    .kicker{color:#dfbb70;letter-spacing:.28em;text-transform:uppercase;font-family:Georgia,serif;font-size:.71rem;margin:48px 0 7px}
+    h1{font:clamp(2.25rem,5.5vw,4.35rem)/1.16 Georgia,'Times New Roman',serif;letter-spacing:.02em;color:#f1d99e;margin:0;text-shadow:0 0 35px #b8863d3b}
+    .subtitle{font-size:1.05rem;color:#d8c4a4;margin:7px 0 4px}
+    .intro{max-width:590px;margin:10px auto 16px;color:#bcae95;font-size:.93rem}
+    .ornament{margin:18px auto;color:#b48b49;letter-spacing:.55em}
+    .topic-area{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:9px;margin:2px auto 30px}
+    .topic-label{width:100%;font-size:.84rem;color:#cbb997;margin-bottom:1px}
+    .topic{border:1px solid #624c30;border-radius:28px;background:#1c1712;color:#d2bea0;padding:7px 16px;cursor:pointer;min-height:40px;transition:background .2s,border-color .2s,color .2s}
+    .topic[aria-pressed="true"]{background:#4b361f;border-color:#d2ac62;color:#ffe5b4}.topic:hover{border-color:#d0ae71}
+    .book-area{position:relative;margin:0 auto;max-width:930px;isolation:isolate}
+    .aura{position:absolute;top:18%;left:8%;right:8%;height:66%;border-radius:50%;background:radial-gradient(ellipse,#b18b4b25 0,transparent 68%);filter:blur(30px);pointer-events:none}
+    .book-scene{perspective:1700px;perspective-origin:center 45%;width:min(810px,100%);height:clamp(310px,43vw,465px);margin:0 auto;filter:drop-shadow(0 24px 21px #0009)}
+    .book{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.24,.65,.2,1);transform:translateX(-25%)}
+    .book.is-open{transform:translateX(0)}
+    .spread{position:absolute;inset:1% .5%;display:flex;border:1px solid #ad8251;border-radius:4px 12px 12px 4px;background:#382619;opacity:0;transform:scale(.96);transition:opacity .55s .19s,transform .7s .1s;box-shadow:inset 0 0 0 5px #62472c,0 8px 3px #1d120c,0 14px 0 -4px #bba47e}
+    .book.is-open .spread{opacity:1;transform:scale(1)}
+    .page{width:50%;height:100%;position:relative;background:repeating-linear-gradient(0deg,transparent 0 25px,#8c734e09 26px 27px),linear-gradient(110deg,#c6ae8c 0,#fff5de 10%,#f7ead2 88%,#cebb9e 100%);color:var(--ink);padding:clamp(19px,4.7vw,53px) clamp(19px,4vw,54px);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+    .page-left{border-radius:2px 0 0 4px;box-shadow:inset -15px 0 25px #7863442b}
+    .page-right{border-radius:0 9px 9px 0;box-shadow:inset 15px 0 23px #78502b37}
+    .page-left:after{content:"";position:absolute;right:0;top:0;height:100%;width:1px;background:#7c5b3680}
+    .page-mark{position:absolute;top:22px;font:italic .72rem Georgia,serif;letter-spacing:.15em;color:#8d7049}
+    .page-num{position:absolute;bottom:18px;font:.75rem Georgia,serif;color:#957c5f}
+    .left-owl{font-size:clamp(2rem,5vw,3.3rem);margin-bottom:12px;filter:sepia(.45)}
+    .left-title{font:clamp(1.05rem,2.5vw,1.7rem)/1.3 Georgia,serif;color:#71512c;margin:4px 0}
+    .left-copy{color:#846e56;font-size:clamp(.7rem,1.5vw,.87rem);max-width:205px}
+    .quote-symbol{font:clamp(2rem,5vw,4rem) Georgia,serif;color:#b48f59;height:35px;line-height:1}
+    .quote{font-size:clamp(.89rem,2vw,1.35rem);line-height:1.9;font-weight:500;color:#4a3526;max-width:340px;margin:10px auto 12px;text-wrap:balance}
+    .quote:focus{outline:none}
+    .quote-sub{font-size:clamp(.68rem,1.5vw,.84rem);line-height:1.65;max-width:290px;color:#836d57}
+    .thin-line{width:58px;height:1px;background:#ad8d59;margin:17px auto 10px}
+    .sign{font:italic .8rem Georgia,serif;color:#836441}
+    .cover{position:absolute;inset:0 0 0 50%;z-index:5;transform-origin:left center;transform-style:preserve-3d;transform:rotateY(0);transition:transform 1.1s cubic-bezier(.21,.64,.2,1),opacity .5s .55s;cursor:pointer}
+    .book.is-open .cover{transform:rotateY(-178deg);opacity:0;pointer-events:none}
+    .cover-face{position:absolute;inset:0;backface-visibility:hidden;border:3px solid #a37c41;border-left:11px solid #462612;border-radius:5px 13px 13px 5px;background:radial-gradient(ellipse at 50% 31%,#65472569,transparent 54%),repeating-linear-gradient(135deg,transparent 0 11px,#fff1b602 12px 13px),linear-gradient(145deg,#352318,#1b140f 75%);box-shadow:inset 0 0 0 6px #23180e,inset 0 0 0 8px #93713c,inset 0 0 0 12px #24180f,9px 16px 6px #0007;display:flex;align-items:center;justify-content:center;padding:24px}
+    .cover-content{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;border:1px solid #9f7839a3;border-radius:40% 40% 4px 4px / 7% 7% 4px 4px;gap:8px}
+    .cover-star{font-size:1.1rem;color:#e2be6d}
+    .cover-owl{font-size:clamp(2.9rem,6vw,5.1rem);filter:drop-shadow(0 0 20px #d0a55150);line-height:1.15;margin:5px}
+    .cover-title{font:clamp(1.2rem,3vw,2.45rem)/1.2 Georgia,serif;letter-spacing:.025em;color:#f2d896;text-shadow:0 0 25px #ddb36b4d}
+    .cover-th{color:#d9b974;font-size:clamp(.75rem,1.4vw,.96rem)}
+    .cover-instruction{font-size:clamp(.67rem,1.5vw,.84rem);color:#e8d7b4;margin-top:8px}
+    .book-actions{min-height:66px;display:flex;align-items:center;justify-content:center;gap:12px;margin:21px 0 0;flex-wrap:wrap}
+    .primary,.secondary{appearance:none;border-radius:7px;padding:12px 22px;min-height:46px;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+    .primary{border:1px solid #edcb8a;background:linear-gradient(#e9c788,#c59b4f);color:#2d2115;font-weight:700;box-shadow:0 5px 27px #d4a1582c}
+    .secondary{background:#211a13;border:1px solid #80633c;color:#e8d3ab}
+    .primary:hover,.secondary:hover{transform:translateY(-2px)}.secondary:hover{background:#332617;border-color:#c6a05a}
+    .primary:disabled,.secondary:disabled{opacity:.55;cursor:default;transform:none}
+    .notice{color:#ad9c83;font-size:.8rem;margin:12px 0 0;min-height:24px}
+    .footnote{border-top:1px solid #4d3824;margin:45px auto 0;padding:22px 0 35px;color:#a99a83;font-size:.82rem;max-width:670px}
+    footer{border-top:1px solid #3d2b1c;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:25px 0 35px;font-size:.76rem;color:#8f7e65;flex-wrap:wrap}
+    footer a{color:#c4a467;text-decoration:none}
+    .turn-sheet{position:absolute;z-index:4;right:.6%;top:1%;height:98%;width:49%;background:linear-gradient(90deg,#dfcfb3,#fff2d8 18%,#edd9b9 92%,#bca17d);border:1px solid #a48a67;border-radius:0 7px 7px 0;transform-origin:left center;transform:rotateY(0);opacity:0;pointer-events:none}
+    .turn-sheet.turning{opacity:1;animation:leaf 800ms cubic-bezier(.5,.1,.3,.98) both}
+    @keyframes leaf{0%{transform:rotateY(0);opacity:1}99%{opacity:1}100%{transform:rotateY(-180deg);opacity:0}}
+    .header-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+    .language-picker{display:inline-flex;gap:3px;padding:4px;border:1px solid #71542d;border-radius:999px;background:#21180f}
+    .language-btn{border:0;border-radius:999px;background:transparent;color:#c4b08d;font-size:.75rem;font-weight:650;cursor:pointer;padding:7px 12px;min-height:34px;white-space:nowrap}
+    .language-btn[aria-pressed="true"]{background:#d3ae67;color:#21160a;box-shadow:0 2px 12px #dcaf6026}
+    .language-btn:hover:not([aria-pressed="true"]){background:#382a19;color:#f7dfaf}
+    .intro,.footnote{white-space:pre-line}
+    .left-translation{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;max-height:100%;gap:0}
+    .left-decor[hidden],.left-translation[hidden]{display:none!important}
+    .book.mode-both .page{padding:clamp(16px,3vw,32px) clamp(14px,2.7vw,28px)}
+    .book.mode-both .quote{font-size:clamp(.86rem,1.6vw,1.14rem);line-height:1.6;margin:5px auto 7px;overflow-wrap:break-word}
+    .book.mode-both .quote-en{font-size:clamp(.82rem,1.45vw,1.05rem);line-height:1.58}
+    .book.mode-both .quote-sub{font-size:clamp(.7rem,1.12vw,.84rem);line-height:1.48}
+    .book.mode-both .quote-symbol{font-size:clamp(1.5rem,3vw,2.8rem);height:26px}
+    .book.mode-both .thin-line{margin:10px auto 7px}
+    .book.mode-both .page-mark{letter-spacing:.11em}
+    .book.mode-both .left-translation .quote{font-family:Georgia,serif;font-weight:400}
+    .book:not(.mode-both) .left-decor{display:block}
+    .book.mode-both .left-decor{display:none}
+    .book:not(.mode-both) .left-translation{display:none}
+    @media(max-width:860px){header{flex-wrap:wrap}.header-right{gap:10px}.return{font-size:.76rem}}
+    @media(max-width:680px){header{padding:17px 0}.kicker{margin-top:32px}.topic-area{margin-bottom:22px}.book-scene{height:330px}.book-area{width:100%;}.page{padding:36px 13px 24px}.page-mark{top:12px;font-size:.56rem}.page-num{bottom:9px;font-size:.62rem}.left-owl{margin-bottom:3px}.left-copy{max-width:145px}.quote{font-size:.87rem;line-height:1.65;margin:5px auto}.quote-sub{font-size:.7rem;line-height:1.4}.thin-line{margin:8px auto}.cover-face{padding:12px}.cover-content{gap:2px}.cover-owl{margin:0}.cover-title{font-size:clamp(1rem,4.5vw,1.5rem)}.cover-th{font-size:.72rem}.cover-instruction{font-size:.67rem}.page-left .left-title{font-size:.93rem} .page-left .left-copy{font-size:.64rem}}
+    @media(max-width:680px){.header-right{width:100%;justify-content:space-between;gap:8px}.language-btn{padding:7px 9px;font-size:.73rem}.book.mode-both .page{padding:26px 9px 18px}.book.mode-both .quote{font-size:.78rem;line-height:1.44;margin:3px auto 5px}.book.mode-both .quote-en{font-size:.75rem;line-height:1.45}.book.mode-both .quote-sub{font-size:.64rem;line-height:1.35}.book.mode-both .quote-symbol{font-size:1.5rem;height:20px}.book.mode-both .thin-line{margin:6px auto 5px;width:38px}.book.mode-both .page-mark{font-size:.5rem}.footnote{margin-top:28px}}
+    @media(max-width:410px){.book-scene{height:310px}.cover-face{padding:9px}.quote{font-size:.81rem}.page{padding-left:9px;padding-right:9px}.intro{font-size:.84rem}}
+    @media(max-width:410px){.book.mode-both .page{padding-left:6px;padding-right:6px}.book.mode-both .quote{font-size:.73rem;line-height:1.39}.book.mode-both .quote-en{font-size:.7rem;line-height:1.4}.book.mode-both .quote-sub{font-size:.6rem}.header-right{flex-direction:column;align-items:flex-start}.return{padding-left:4px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+    /* Enchanted multi-page sequence: separate leaf layers with a 3D spine. */
+    .book-scene{position:relative}
+    .book.is-flipping{filter:drop-shadow(0 0 32px #d5aa6380) drop-shadow(0 20px 25px #0009)}
+    .book.is-flipping .spread{filter:saturate(.65)}
+    .magic-leaf{position:absolute;z-index:11;top:1%;left:50%;width:49.4%;height:98%;pointer-events:none;transform-origin:left center;transform-style:preserve-3d;will-change:transform;backface-visibility:visible;}
+    .magic-leaf .leaf-front,.magic-leaf .leaf-back{position:absolute;inset:0;backface-visibility:hidden;border:1px solid #b29161;background:repeating-linear-gradient(0deg,transparent 0 25px,#8c734e0c 26px 27px),linear-gradient(95deg,#c2a781,#fff7e5 13%,#f4e5c9 85%,#baa07c);box-shadow:inset 9px 0 20px #7b553342,5px 5px 12px #21150942;display:flex;align-items:center;justify-content:center;color:#aa875b;font:italic clamp(.8rem,2.3vw,1.15rem) Georgia,serif}
+    .magic-leaf .leaf-front{border-radius:0 7px 7px 0}
+    .magic-leaf .leaf-back{transform:rotateY(180deg);background:linear-gradient(85deg,#d5c09d,#fff6dc 88%,#a78e70);border-radius:7px 0 0 7px;box-shadow:inset -9px 0 23px #7251323d}
+    .magic-leaf.animated{animation:magic-flip var(--flip-duration,300ms) cubic-bezier(.45,.07,.26,.98) forwards}
+    @keyframes magic-flip{0%{transform:rotateY(0deg) rotateZ(0);opacity:1}47%{transform:rotateY(-82deg) rotateZ(-1deg);opacity:1}95%{transform:rotateY(-170deg) rotateZ(0);opacity:1}100%{transform:rotateY(-180deg);opacity:0}}
+    .flipping-caption{position:absolute;z-index:30;bottom:7%;left:50%;transform:translateX(-50%);min-width:min(290px,80%);border:1px solid #c9a55a88;border-radius:25px;background:#17100de8;padding:9px 18px;letter-spacing:.1em;font-size:.77rem;color:#ffe4aa;pointer-events:none;box-shadow:0 0 28px #a87c4055}
+    .book-area.flipping .aura{background:radial-gradient(ellipse,#f3bc6745 0,transparent 68%)}
+    .reveal-overlay[hidden]{display:none!important}
+    .reveal-overlay{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:18px;isolation:isolate}
+    .reveal-shade{position:absolute;inset:0;background:#050402e8;backdrop-filter:blur(13px);animation:shade-in .36s ease both}
+    .reveal-dialog{position:relative;z-index:1;width:min(715px,100%);max-height:min(94dvh,870px);overflow-y:auto;overscroll-behavior:contain;background:linear-gradient(165deg,#2a1e13,#130f0b 78%);border:1px solid #ba9555;border-radius:16px;box-shadow:0 0 0 5px #100b08,0 0 95px #b98a4b47,0 32px 100px #000e;color:#efe0c3;animation:reveal-rise .62s cubic-bezier(.16,.8,.21,1) both;padding:clamp(17px,3vw,32px);outline:none}
+    @keyframes shade-in{from{opacity:0}to{opacity:1}}
+    @keyframes reveal-rise{from{opacity:0;transform:translateY(38px) scale(.88) rotateX(7deg)}to{opacity:1;transform:translateY(0) scale(1) rotateX(0deg)}}
+    .reveal-close{position:absolute;right:12px;top:11px;min-width:40px;min-height:40px;border:1px solid #6e5736;border-radius:50%;background:#25190e;color:#f1d7a5;cursor:pointer;font-size:1.2rem;display:grid;place-items:center;z-index:2}
+    .reveal-close:hover{background:#59401f}
+    .reveal-kicker{font:700 .72rem Georgia,serif;letter-spacing:.19em;color:#dcb56d;margin:4px 20px 7px}
+    .reveal-header{text-align:center;margin-bottom:15px}
+    .reveal-header h2{font:clamp(1.22rem,3.6vw,1.95rem)/1.3 Georgia,'Times New Roman',serif;color:#f3d696;margin:0 18px 4px}
+    .reveal-header p{color:#c4ac8a;margin:5px 0 0;font-size:.83rem}
+    .reveal-paper{position:relative;isolation:isolate;padding:clamp(19px,4vw,34px) clamp(17px,5vw,41px);border-radius:5px;background:radial-gradient(circle at 50% 5%,#fff9e9,#f4e3c1 62%,#ead4b0);border:1px solid #d9b37a;color:#483321;box-shadow:inset 0 0 0 6px #f4e2c6,inset 0 0 0 7px #b69662,0 15px 27px #0004;text-align:center}
+    .reveal-paper:before,.reveal-paper:after{content:'✦';position:absolute;top:10px;color:#b59262;font-size:1rem}.reveal-paper:before{left:17px}.reveal-paper:after{right:17px}
+    .reveal-paper-label{color:#927044;font:700 .65rem Georgia,serif;letter-spacing:.18em}
+    .reveal-quote{font-size:clamp(.99rem,2.6vw,1.35rem);line-height:1.75;font-weight:500;margin:12px auto 7px;max-width:570px;text-wrap:pretty;overflow-wrap:anywhere}
+    .reveal-en{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(.97rem,2.35vw,1.24rem);line-height:1.65}
+    .reveal-reflection{color:#826447;font-size:clamp(.76rem,1.8vw,.91rem);line-height:1.5;margin:7px auto 0}
+    .reveal-separator{color:#af8853;letter-spacing:.7em;margin:8px auto;font-size:.83rem}
+    .reveal-credits{font:italic .79rem Georgia,serif;color:#95744c;margin-top:13px}
+    .share-section{margin-top:17px}
+    .share-section h3{font-size:.83rem;font-weight:600;letter-spacing:.12em;text-align:center;color:#e7c37e;margin:4px 0 12px}
+    .share-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+    .share-action{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:0;padding:9px 6px;border:1px solid #75603d;border-radius:8px;background:#261b11;color:#f1dfbf;text-decoration:none;font-size:.84rem;cursor:pointer;transition:transform .18s,background .18s,border-color .18s}
+    .share-action:hover{transform:translateY(-2px);background:#3e2b17;border-color:#cba869}
+    .share-action strong{font-size:1rem;line-height:1;color:#f4d38d}
+    .share-hint{font-size:.72rem;color:#b5a083;text-align:center;margin:10px 0 1px;line-height:1.5}
+    .reveal-actions{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:17px}
+    .reveal-actions .primary,.reveal-actions .secondary{flex:1;min-width:180px}
+    body.modal-open{overflow:hidden}
+    @media(max-width:560px){.reveal-overlay{padding:10px}.reveal-dialog{max-height:95dvh;border-radius:12px;padding:16px 12px 18px}.reveal-kicker{font-size:.6rem}.reveal-paper{padding:23px 15px}.reveal-quote{font-size:1.01rem;line-height:1.65}.reveal-en{font-size:.96rem}.reveal-reflection{font-size:.75rem}.share-grid{gap:7px}.share-action{font-size:.78rem;gap:5px}.reveal-actions .primary,.reveal-actions .secondary{min-width:130px}.reveal-header{margin-bottom:12px}}
+    @media(max-width:355px){.share-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reveal-overlay{padding:7px}}
+    @media(prefers-reduced-motion:reduce){.magic-leaf.animated,.reveal-dialog,.reveal-shade{animation-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header><a class="brand" href="https://sabastiaz.lol/">✦ SABASTIAZ</a><div class="header-right"><div class="language-picker" role="group" aria-label="Language / ภาษา"><button type="button" class="language-btn" data-mode="th" aria-pressed="false">ไทย</button><button type="button" class="language-btn" data-mode="en" aria-pressed="false">EN</button><button type="button" class="language-btn" data-mode="both" aria-pressed="true">TH + EN</button></div><a class="return" id="return" href="https://sabastiaz.lol/">← Back to Sabastiaz</a></div></header>
+  <main>
+    <p class="kicker">✦ The Owlery Presents ✦</p>
+    <h1>The Book of Light</h1>
+    <p class="subtitle" id="subtitle">คัมภีร์แห่งแสงดาว · Pages of Kindness</p>
+    <p class="intro" id="intro">บางครั้ง เราแค่ต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้
+Sometimes a few gentle words are all we need to keep going.</p>
+    <div class="ornament" aria-hidden="true">✦ · ✧ · ✦</div>
+    <section class="topic-area" id="topic-area" aria-label="Choose a theme / เลือกเรื่องที่ต้องการกำลังใจ">
+      <div class="topic-label" id="topic-label">วันนี้อยากอ่านเรื่องไหน? / Choose a theme</div>
+      <button type="button" class="topic" data-topic="all" aria-pressed="true">✨ ทั้งหมด / All</button>
+      <button type="button" class="topic" data-topic="tired" aria-pressed="false">🌙 เหนื่อย / Tired</button>
+      <button type="button" class="topic" data-topic="doubt" aria-pressed="false">🌱 ไม่มั่นใจ / Doubt</button>
+      <button type="button" class="topic" data-topic="new" aria-pressed="false">🕊️ เริ่มใหม่ / New</button>
+      <button type="button" class="topic" data-topic="hurt" aria-pressed="false">💛 ผิดหวัง / Hurt</button>
+      <button type="button" class="topic" data-topic="hope" aria-pressed="false">⭐ หวัง / Hope</button>
+    </section>
+    <section class="book-area" aria-label="หนังสือแห่งกำลังใจแบบโต้ตอบ">
+      <div class="aura" aria-hidden="true"></div>
+      <div class="book-scene">
+        <div class="book mode-both" id="book">
+          <div class="spread" aria-hidden="true">
+            <div class="page page-left">
+              <div class="page-mark">THE BOOK OF LIGHT</div>
+              <div class="left-decor" id="left-decor"><div class="left-owl" aria-hidden="true">🦉</div><div class="left-title">A Little Light<br>For You</div><div class="thin-line"></div><p class="left-copy" id="left-copy">ไม่ว่าคุณจะมาจากวันแบบไหน<br>ขอให้หน้านี้เป็นมุมพักใจเล็ก ๆ</p></div><div class="left-translation" id="left-translation" lang="en"><div class="quote-symbol" aria-hidden="true">“</div><p class="quote quote-en" id="quote-en"></p><div class="thin-line"></div><p class="quote-sub quote-reflection" id="reflection-en"></p></div>
+              <div class="page-num">✦ SABASTIAZ ✦</div>
+            </div>
+            <div class="page page-right">
+              <div class="page-mark" id="page-heading">ภาษาไทย · THAI</div>
+              <div class="quote-symbol" aria-hidden="true">“</div>
+              <p class="quote" id="quote" tabindex="-1"></p>
+              <div class="thin-line"></div>
+              <p class="quote-sub" id="reflection"></p>
+              <div class="page-num" id="page-num">PAGE —</div>
+            </div>
+          </div>
+          <div class="turn-sheet" id="turn-sheet" aria-hidden="true"></div>
+          <div class="cover" id="cover" role="button" tabindex="0" aria-label="เปิดหนังสือ / Open the book">
+            <div class="cover-face">
+              <div class="cover-content">
+                <div class="cover-star" aria-hidden="true">✧ ✦ ✧</div>
+                <div class="cover-owl" aria-hidden="true">🦉</div>
+                <div class="cover-title">The Book<br>of Light</div>
+                <div class="cover-th">คัมภีร์แห่งแสงดาว</div>
+                <div class="cover-instruction" id="cover-instruction">✧ แตะเพื่อเปิด / Tap to open ✧</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flipping-caption" id="flipping-caption" role="status" aria-live="polite" hidden>✧ กำลังเปิดหน้าหนังสือ… / Turning pages… ✧</div>
+      <div class="book-actions" id="actions">
+        <button type="button" class="primary" id="open-btn">📖 เปิดหนังสือ / Open</button>
+        <button type="button" class="secondary" id="next-btn" hidden>✧ หน้าใหม่ / Next</button>
+        <button type="button" class="secondary" id="copy-btn" hidden>คัดลอก / Copy</button>
+        <button type="button" class="secondary" id="share-btn" hidden>แบ่งปัน / Share</button>
+      </div>
+      <p class="notice" id="feedback" role="status" aria-live="polite">ทุกหน้ามีถ้อยคำที่เขียนด้วยความปรารถนาดี · Every page is written with kindness</p>
+    </section>
+    <p class="footnote" id="footnote">ข้อความเหล่านี้มีไว้เพื่อให้กำลังใจ ไม่ใช่คำทำนายหรือคำแนะนำสำหรับการตัดสินใจสำคัญ หากวันนี้หนักเกินรับไหว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ
+These messages offer encouragement, not predictions or advice for major decisions. If things feel overwhelming, consider talking to someone you trust or a professional.</p>
+  </main>
+  <footer><span>Made with kindness · The Book of Light · Sabastiaz</span><a href="https://sabastiaz.lol/">กลับสู่ Sabastiaz.lol / Home ↗</a></footer>
+</div>
+
+<!-- The reveal is a real accessible modal. Social links are user-initiated only. -->
+<div class="reveal-overlay" id="reveal-overlay" hidden>
+  <div class="reveal-shade" id="reveal-shade"></div>
+  <section class="reveal-dialog" id="reveal-dialog" role="dialog" aria-modal="true" aria-labelledby="reveal-title" tabindex="-1">
+    <button type="button" class="reveal-close" id="reveal-close" aria-label="Close / ปิด">✕</button>
+    <div class="reveal-header">
+      <div class="reveal-kicker">✦ THE BOOK HAS CHOSEN A PAGE ✦</div>
+      <h2 id="reveal-title">ข้อความจากหนังสือถึงคุณ</h2>
+      <p id="reveal-intro">A little light to carry with you</p>
+    </div>
+    <div class="reveal-paper" id="reveal-paper">
+      <div class="reveal-paper-label" id="reveal-num">✧ PAGE 001 ✧</div>
+      <div id="reveal-block-th" lang="th">
+        <p class="reveal-quote" id="reveal-th"></p>
+        <p class="reveal-reflection" id="reveal-reflection-th"></p>
+      </div>
+      <div class="reveal-separator" id="reveal-separator">✦ · ✧ · ✦</div>
+      <div id="reveal-block-en" lang="en">
+        <p class="reveal-quote reveal-en" id="reveal-en"></p>
+        <p class="reveal-reflection" id="reveal-reflection-en"></p>
+      </div>
+      <div class="reveal-credits">— The Book of Light · Sabastiaz</div>
+    </div>
+    <div class="share-section">
+      <h3 id="share-heading">✧ ส่งต่อแสงเล็ก ๆ นี้ / SHARE THIS LIGHT ✧</h3>
+      <div class="share-grid">
+        <a id="fb-link" class="share-action" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share to Facebook"><strong>f</strong> Facebook</a>
+        <a id="x-link" class="share-action" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share to X"><strong>𝕏</strong> X</a>
+        <a id="line-link" class="share-action" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share to LINE"><strong>●</strong> LINE</a>
+        <a id="wa-link" class="share-action" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share to WhatsApp"><strong>◉</strong> WhatsApp</a>
+        <button type="button" class="share-action" id="ig-btn" aria-label="Save image to share on Instagram"><strong>▣</strong> Instagram</button>
+        <button type="button" class="share-action" id="native-share-btn"><strong>↗</strong> Share…</button>
+      </div>
+      <p class="share-hint" id="share-hint">Instagram: แชร์เป็นรูปภาพผ่านแอป หรือบันทึก PNG เพื่อโพสต์เอง</p>
+    </div>
+    <div class="reveal-actions">
+      <button type="button" class="secondary" id="reveal-copy">⧉ คัดลอก / Copy</button>
+      <button type="button" class="primary" id="reveal-again">✦ เปิดหน้าใหม่ / Try another</button>
+    </div>
+  </section>
+</div>
+<script>
+  'use strict';
+  // Original Thai messages created specifically for this project.
+  // Edit or add items in the QUOTES array; no API, database, or account required.
+  const QUOTES = [
+    {category:'tired',text:'คุณไม่จำเป็นต้องเก่งในทุกวัน แค่ยังให้โอกาสตัวเองได้พัก ก็ถือว่าใจดีกับตัวเองแล้ว',reflection:'การพักไม่ใช่การยอมแพ้',en:"You don't have to be at your best every day. Allowing yourself to rest is kindness, too.",reflectionEn:"Rest is not giving up."},
+    {category:'tired',text:'บางวัน การลุกจากเตียงและผ่านเวลาไปให้ได้ ก็เป็นความพยายามที่ยิ่งใหญ่แล้ว',reflection:'อย่าตัดสินตัวเองจากวันที่หนักที่สุด',en:"Some days, getting out of bed and making it through is a great effort in itself.",reflectionEn:"Don't measure yourself by your hardest day."},
+    {category:'tired',text:'คุณวางสิ่งที่แบกไว้สักครู่ได้ โลกไม่จำเป็นต้องอยู่บนไหล่คุณตลอดเวลา',reflection:'หายใจ แล้วค่อยเลือกว่าจะทำอะไรต่อ',en:"You can put down what you're carrying for a while. The world needn't rest on your shoulders all the time.",reflectionEn:"Breathe, then choose your next step."},
+    {category:'tired',text:'แม้วันนี้จะเดินได้เพียงก้าวเล็ก ๆ ก้าวนั้นก็ยังมีความหมาย',reflection:'ช้าลงได้ โดยไม่ต้องรู้สึกผิด',en:"Even if you take only one small step today, that step still matters.",reflectionEn:"You are allowed to slow down."},
+    {category:'tired',text:'ความเหนื่อยไม่ได้บอกว่าคุณอ่อนแอ มันกำลังบอกว่าคุณใช้พลังไปมากแล้ว',reflection:'ลองถามตัวเองว่า วันนี้ต้องการพักแบบไหน',en:"Feeling exhausted doesn't mean you're weak. It means you've spent a lot of energy.",reflectionEn:"Ask yourself what kind of rest you need."},
+    {category:'tired',text:'อย่าลืมอ่อนโยนกับคนที่พยายามมาตลอดทั้งวัน และคนนั้นก็คือตัวคุณเอง',reflection:'ให้ความเมตตากับตัวเองบ้าง',en:"Remember to be gentle with the person who kept trying all day. That person is you.",reflectionEn:"Offer yourself some compassion."},
+    {category:'tired',text:'ไม่มีอะไรผิดกับการหยุดดูท้องฟ้าระหว่างทาง',reflection:'บางช่วงเวลามีไว้ให้พัก ไม่ใช่เร่ง',en:"There's nothing wrong with stopping to look at the sky along the way.",reflectionEn:"Some moments are for resting, not rushing."},
+    {category:'tired',text:'งานที่ยังไม่เสร็จไม่ใช่ตัวตัดสินคุณค่าของคุณ',reflection:'คุณเป็นมากกว่ารายการสิ่งที่ต้องทำ',en:"Unfinished work does not determine your worth.",reflectionEn:"You are more than your to-do list."},
+    {category:'tired',text:'พักก่อนก็ได้ พรุ่งนี้ค่อยกลับมาจัดการทีละเรื่อง',reflection:'ไม่จำเป็นต้องแก้ทุกปัญหาในคืนนี้',en:"It's okay to rest now and deal with one thing at a time tomorrow.",reflectionEn:"Not every problem needs solving tonight."},
+    {category:'tired',text:'ชีวิตไม่ได้ต้องการให้คุณวิ่งตลอดเวลา บางครั้งการเดินช้าก็พาไปถึงได้',reflection:'จังหวะของคุณมีสิทธิ์แตกต่าง',en:"Life doesn't ask you to run nonstop. Sometimes a slower walk still gets you there.",reflectionEn:"Your pace can be different."},
+    {category:'tired',text:'ในวันที่พลังเหลือน้อย ให้เลือกสิ่งสำคัญที่สุดเพียงอย่างเดียวก็พอ',reflection:'คุณไม่ต้องทำทุกอย่างพร้อมกัน',en:"When you're low on energy, choosing just one important thing is enough.",reflectionEn:"You don't have to do everything at once."},
+    {category:'tired',text:'ความสงบเล็ก ๆ ระหว่างวันที่วุ่นวาย ก็นับเป็นของขวัญได้',reflection:'ลองมอบเวลาสั้น ๆ ให้ตัวเอง',en:"A small moment of calm in a busy day can be a gift.",reflectionEn:"Give yourself a little time."},
+    {category:'doubt',text:'คุณไม่จำเป็นต้องรู้ทุกอย่างก่อนเริ่มต้น บางคำตอบจะค่อย ๆ ปรากฏระหว่างทาง',reflection:'การเรียนรู้เริ่มได้จากคำถามแรก',en:"You don't have to know everything before you begin. Some answers appear along the way.",reflectionEn:"Learning can begin with one question."},
+    {category:'doubt',text:'คนที่คุณชื่นชมก็เคยเป็นมือใหม่ในบางเรื่องมาก่อน',reflection:'การยังไม่เก่ง ไม่ได้แปลว่าไปต่อไม่ได้',en:"The people you admire were beginners once, too.",reflectionEn:"Not being skilled yet doesn't mean you can't grow."},
+    {category:'doubt',text:'คุณมีสิทธิ์ภูมิใจในสิ่งเล็ก ๆ ที่ตัวเองทำสำเร็จ',reflection:'ความก้าวหน้าไม่จำเป็นต้องมีคนปรบมือ',en:"You are allowed to be proud of the small things you accomplish.",reflectionEn:"Progress needs no applause to matter."},
+    {category:'doubt',text:'อย่าให้การเปรียบเทียบลบเรื่องราวที่คุณพยายามเขียนด้วยตัวเอง',reflection:'เส้นทางของทุกคนใช้เวลาไม่เท่ากัน',en:"Don't let comparison erase the story you're writing for yourself.",reflectionEn:"Everyone's journey takes its own time."},
+    {category:'doubt',text:'การถามเพื่อขอความช่วยเหลือคือความกล้าอย่างหนึ่ง',reflection:'คุณไม่จำเป็นต้องเก่งคนเดียว',en:"Asking for help is a form of courage.",reflectionEn:"You don't have to know how to do it all alone."},
+    {category:'doubt',text:'ความไม่มั่นใจอาจนั่งอยู่ข้าง ๆ ได้ แต่ไม่จำเป็นต้องเป็นคนจับพวงมาลัย',reflection:'ค่อย ๆ เลือกก้าวต่อ แม้ยังกลัว',en:"Self-doubt may ride beside you, but it doesn't have to take the wheel.",reflectionEn:"Take the next step, even while afraid."},
+    {category:'doubt',text:'ไม่มีใครเห็นความพยายามทุกครั้งของคุณ แต่ความพยายามนั้นยังเกิดขึ้นจริง',reflection:'คุณไม่จำเป็นต้องพิสูจน์ทุกอย่างให้คนอื่นเห็น',en:"Not everyone sees your efforts, but those efforts are still real.",reflectionEn:"You needn't prove everything to others."},
+    {category:'doubt',text:'ความผิดพลาดหนึ่งครั้งไม่ใช่คำจำกัดความของความสามารถทั้งหมด',reflection:'คุณเรียนรู้และปรับวิธีใหม่ได้',en:"One mistake does not define all that you're capable of.",reflectionEn:"You can learn and try a new approach."},
+    {category:'doubt',text:'ถ้าใจคุณยังอยากลองอีกครั้ง นั่นก็เป็นเหตุผลที่ดีพอจะเริ่ม',reflection:'ไม่ต้องมีคำรับรองจากทั้งโลก',en:"If part of you still wants to try again, that's reason enough to begin.",reflectionEn:"You don't need the world's permission."},
+    {category:'doubt',text:'คุณไม่จำเป็นต้องเป็นเวอร์ชันสมบูรณ์แบบ เพื่อมีคุณค่าในวันนี้',reflection:'ความไม่สมบูรณ์เป็นส่วนหนึ่งของการเติบโต',en:"You don't have to be a perfect version of yourself to have worth today.",reflectionEn:"Imperfection is part of growing."},
+    {category:'doubt',text:'ความกล้าไม่ได้หมายถึงไม่มีความกลัว แต่รวมถึงการยอมรับว่ากลัวด้วย',reflection:'ใจสั่นก็ยังเป็นใจที่พยายาม',en:"Courage isn't the absence of fear. It can mean making room for fear.",reflectionEn:"A trembling heart can still be brave."},
+    {category:'doubt',text:'ให้โอกาสตัวเองได้เติบโต ในแบบที่ยังเป็นตัวเอง',reflection:'คุณไม่ต้องกลายเป็นคนอื่นเพื่อให้คู่ควร',en:"Give yourself room to grow while remaining who you are.",reflectionEn:"You needn't become someone else to belong."},
+    {category:'new',text:'การเริ่มใหม่ไม่ได้ลบเรื่องที่เคยเกิดขึ้น แต่มันเปิดพื้นที่ให้เรื่องต่อไป',reflection:'คุณเลือกบทถัดไปได้ทีละบรรทัด',en:"Starting over doesn't erase what happened. It makes room for what comes next.",reflectionEn:"Write the next chapter one line at a time."},
+    {category:'new',text:'ไม่เป็นไรถ้าต้องเริ่มจากศูนย์อีกครั้ง ตอนนี้คุณมีประสบการณ์ที่ครั้งก่อนยังไม่มี',reflection:'ศูนย์ครั้งนี้ไม่เหมือนศูนย์ครั้งก่อน',en:"It's okay to begin from zero again. This time, you carry lessons you didn't have before.",reflectionEn:"This starting point is not the old one."},
+    {category:'new',text:'วันนี้ยังไม่ต้องเห็นทั้งเส้นทางก็ได้ เพียงเลือกก้าวแรกที่เป็นไปได้',reflection:'เริ่มจากเรื่องเล็กและจับต้องได้',en:"You don't need to see the whole road today. Just choose a first step you can take.",reflectionEn:"Begin with something small and real."},
+    {category:'new',text:'การเปลี่ยนทิศทางไม่ใช่ความล้มเหลวเสมอไป บางครั้งมันคือการฟังตัวเอง',reflection:'อนุญาตให้แผนของคุณเปลี่ยนได้',en:"Changing direction isn't always failure. Sometimes it's listening to yourself.",reflectionEn:"You can let your plans change."},
+    {category:'new',text:'คุณมีสิทธิ์เริ่มเรียนรู้สิ่งที่รัก แม้จะเริ่มช้ากว่าคนอื่น',reflection:'ความสนใจของคุณไม่ต้องมีวันหมดอายุ',en:"You can begin learning what you love, even later than others.",reflectionEn:"Curiosity has no expiration date."},
+    {category:'new',text:'อย่าให้ความกลัวว่าวันพรุ่งนี้จะไม่ดี ขโมยโอกาสเล็ก ๆ ของวันนี้',reflection:'เลือกสิ่งที่ทำได้ในตอนนี้',en:"Don't let fear of tomorrow steal the small opportunities of today.",reflectionEn:"Choose what you can do right now."},
+    {category:'new',text:'การเปลี่ยนแปลงไม่จำเป็นต้องเกิดขึ้นอย่างยิ่งใหญ่ บางครั้งมันเริ่มจากคำว่า พอแล้ว',reflection:'ขอบเขตใหม่ก็เป็นการเริ่มใหม่ได้',en:"Change doesn't always arrive in a grand moment. Sometimes it begins with 'enough.'",reflectionEn:"A new boundary can be a fresh start."},
+    {category:'new',text:'บางบทจบลงเพื่อให้เราได้เขียนหน้าที่สอดคล้องกับตัวเองมากขึ้น',reflection:'เรื่องเก่าไม่จำเป็นต้องเป็นเรื่องสุดท้าย',en:"Some chapters end so we can write pages that feel more like ourselves.",reflectionEn:"Your old story needn't be the last one."},
+    {category:'new',text:'ถ้าคุณยังไม่รู้ว่าจะไปไหน ลองเริ่มจากรู้ว่าต้องการรู้สึกอย่างไร',reflection:'ค่อย ๆ สำรวจความต้องการของตัวเอง',en:"If you don't know where to go yet, begin by asking how you want to feel.",reflectionEn:"Gently explore what you need."},
+    {category:'new',text:'ก้าวเล็กที่ทำจริง อาจพาคุณไกลกว่าคำสัญญาใหญ่ที่ยังไม่ได้เริ่ม',reflection:'เลือกหนึ่งเรื่องที่ลงมือได้วันนี้',en:"One small action can take you farther than a grand promise left undone.",reflectionEn:"Choose one thing you can do today."},
+    {category:'new',text:'คุณเปลี่ยนใจได้เมื่อได้เรียนรู้สิ่งใหม่ นั่นไม่ได้ทำให้คุณไม่มั่นคง',reflection:'การเติบโตมักทำให้มุมมองเปลี่ยน',en:"You can change your mind as you learn more. That doesn't make you unreliable.",reflectionEn:"Growth often changes how we see things."},
+    {category:'new',text:'ไม่ต้องรอให้ทุกอย่างลงตัวก่อนเปิดประตูบานใหม่',reflection:'เตรียมเท่าที่ทำได้ แล้วก้าวอย่างระมัดระวัง',en:"You don't have to wait for everything to fall into place before opening a new door.",reflectionEn:"Prepare what you can, then step carefully."},
+    {category:'hurt',text:'ความเสียใจไม่จำเป็นต้องหายไปทันที คุณมีสิทธิ์ใช้เวลากับมัน',reflection:'ความรู้สึกไม่ใช่สิ่งที่ต้องรีบซ่อม',en:"Heartache doesn't have to disappear overnight. You are allowed to take your time.",reflectionEn:"Feelings aren't problems to fix in a hurry."},
+    {category:'hurt',text:'บางเรื่องจบลงโดยไม่มีคำอธิบายที่ดีพอ และคุณยังเลือกดูแลใจตัวเองได้',reflection:'การปิดบทหนึ่งไม่ต้องรอคำตอบทุกข้อ',en:"Some things end without the explanation we hoped for. You can still care for yourself.",reflectionEn:"Closure doesn't require every answer."},
+    {category:'hurt',text:'สิ่งที่ไม่เป็นอย่างหวังไม่ได้ลดทอนคุณค่าของความพยายามที่ใส่ลงไป',reflection:'ความตั้งใจของคุณมีความหมาย',en:"An outcome you didn't hope for can't erase the care you put into trying.",reflectionEn:"Your effort still means something."},
+    {category:'hurt',text:'ร้องไห้ได้ถ้าต้องการ ความเข้มแข็งไม่ใช่การเก็บทุกอย่างไว้เงียบ ๆ',reflection:'อนุญาตให้ใจได้รู้สึกจริง',en:"It's okay to cry if you need to. Strength doesn't mean keeping everything silent.",reflectionEn:"Let yourself feel what you feel."},
+    {category:'hurt',text:'แม้ใครบางคนไม่เห็นคุณค่าของคุณ ก็ไม่ได้หมายความว่าคุณไม่มีคุณค่า',reflection:'สายตาของคนเดียวไม่ใช่ความจริงทั้งหมด',en:"Someone failing to see your worth doesn't make you any less worthy.",reflectionEn:"One person's view isn't the whole truth."},
+    {category:'hurt',text:'การถอยออกมาจากสิ่งที่ทำให้เจ็บซ้ำ ๆ อาจเป็นความกล้าที่สำคัญ',reflection:'คุณมีสิทธิ์ตั้งขอบเขต',en:"Stepping away from what keeps hurting you can be an important kind of courage.",reflectionEn:"You are allowed to set boundaries."},
+    {category:'hurt',text:'ความผิดหวังครั้งนี้ไม่จำเป็นต้องกลายเป็นคำตัดสินของวันข้างหน้า',reflection:'อนาคตยังมีเรื่องที่คุณไม่เคยพบ',en:"This disappointment does not have to decide what tomorrow will be.",reflectionEn:"The future holds things you haven't met yet."},
+    {category:'hurt',text:'บางวันไม่ต้องหาความหมายจากทุกความเจ็บปวด แค่ดูแลตัวเองก็พอ',reflection:'คุณไม่จำเป็นต้องเปลี่ยนทุกบาดแผลเป็นบทเรียน',en:"Some days, you don't have to find meaning in every hurt. Caring for yourself is enough.",reflectionEn:"Not every wound must become a lesson."},
+    {category:'hurt',text:'ความทรงจำอาจยังอยู่ แต่ความสัมพันธ์ของคุณกับมันค่อย ๆ เปลี่ยนได้',reflection:'การเยียวยามีจังหวะของมันเอง',en:"The memory may remain, but your relationship with it can change over time.",reflectionEn:"Healing has its own rhythm."},
+    {category:'hurt',text:'คุณมีสิทธิ์บอกว่าเรื่องนี้ทำให้เสียใจ โดยไม่ต้องขอโทษที่รู้สึกแบบนั้น',reflection:'ความรู้สึกของคุณควรได้รับการรับฟัง',en:"You can say 'this hurt me' without apologizing for how you feel.",reflectionEn:"Your feelings deserve to be heard."},
+    {category:'hurt',text:'ในวันที่หัวใจหนัก ลองหาคนที่รับฟังโดยไม่เร่งให้คุณหายดี',reflection:'คุณไม่จำเป็นต้องผ่านเรื่องยากเพียงลำพัง',en:"When your heart feels heavy, seek someone who listens without rushing your healing.",reflectionEn:"You don't have to face hard things alone."},
+    {category:'hurt',text:'ความสัมพันธ์ที่ดีควรมีพื้นที่ให้คุณเป็นตัวเอง ไม่ใช่ต้องหายไปเพื่อรักษามัน',reflection:'ความรักและความเคารพควรเดินด้วยกัน',en:"A healthy relationship should have room for you to be yourself.",reflectionEn:"Love and respect belong together."},
+    {category:'hope',text:'ยังมีบทสนทนาที่อบอุ่น และเรื่องเล็ก ๆ ที่ทำให้ยิ้ม รออยู่ในวันข้างหน้า',reflection:'เปิดพื้นที่ให้ความเป็นไปได้ดี ๆ',en:"Warm conversations and small reasons to smile may still be waiting ahead.",reflectionEn:"Leave room for good possibilities."},
+    {category:'hope',text:'แม้แสงจะไม่สว่างพอให้เห็นทั้งทาง มันอาจพอให้เห็นก้าวต่อไป',reflection:'ก้าวต่อไปก็เพียงพอสำหรับตอนนี้',en:"Even if the light can't show the whole path, it may show your next step.",reflectionEn:"One next step is enough for now."},
+    {category:'hope',text:'คุณไม่ต้องรอวันที่ทุกอย่างดีพร้อม จึงจะอนุญาตให้ตัวเองมีความสุขเล็ก ๆ',reflection:'ความสุขเล็ก ๆ ไม่ได้ทรยศความยากลำบาก',en:"You don't have to wait for a perfect day to enjoy a small happy moment.",reflectionEn:"A little joy doesn't deny your struggles."},
+    {category:'hope',text:'มีคนอีกมากที่กำลังเรียนรู้วิธีใช้ชีวิตเช่นเดียวกับคุณ',reflection:'คุณไม่ได้แปลกที่ยังมีคำถาม',en:"Many others are learning how to live, just as you are.",reflectionEn:"Having questions doesn't make you strange."},
+    {category:'hope',text:'บางสิ่งที่สวยงามเกิดขึ้นอย่างเงียบ ๆ จนเราเกือบมองไม่เห็น',reflection:'ลองสังเกตสิ่งธรรมดาที่อ่อนโยนรอบตัว',en:"Some beautiful things happen so quietly that we almost miss them.",reflectionEn:"Notice the gentle, ordinary things around you."},
+    {category:'hope',text:'ความหวังไม่จำเป็นต้องเสียงดัง บางครั้งมันพูดแค่คำว่า ลองอีกครั้ง',reflection:'ฟังความตั้งใจเล็ก ๆ ของคุณ',en:"Hope needn't be loud. Sometimes it only whispers, 'try once more.'",reflectionEn:"Listen to your quiet determination."},
+    {category:'hope',text:'ขอบคุณตัวเองที่เดินมาได้ไกลเท่าที่ผ่านมา แม้เส้นทางจะไม่ง่าย',reflection:'อย่าลืมมองย้อนกลับอย่างอ่อนโยน',en:"Thank yourself for coming this far, even when the road wasn't easy.",reflectionEn:"Look back with kindness."},
+    {category:'hope',text:'ถ้าวันนี้ยังมองไม่เห็นทางออก คุณอาจเริ่มจากหาใครสักคนมาช่วยมอง',reflection:'การได้รับความช่วยเหลือก็เป็นความหวัง',en:"If you can't see a way through today, ask someone to help you look.",reflectionEn:"Receiving help can be a form of hope."},
+    {category:'hope',text:'คุณไม่จำเป็นต้องรู้ว่าทุกอย่างจะลงเอยอย่างไร เพื่อมีเหตุผลที่จะดูแลวันนี้',reflection:'ให้วันนี้มีความหมายในแบบของมัน',en:"You don't need to know how everything ends to have a reason to care for today.",reflectionEn:"Let today matter in its own way."},
+    {category:'hope',text:'บางครั้งวันธรรมดาที่สงบ ก็เป็นวันที่ดีได้โดยไม่ต้องมีเหตุการณ์พิเศษ',reflection:'ความสุขไม่ต้องยิ่งใหญ่เสมอ',en:"An ordinary, peaceful day can be a good day without anything extraordinary.",reflectionEn:"Happiness needn't always be grand."},
+    {category:'hope',text:'ขอให้คุณพบความสบายใจที่ไม่ต้องพิสูจน์อะไรกับใคร',reflection:'คุณสมควรมีพื้นที่ที่ปลอดภัยและเป็นตัวเอง',en:"May you find a place of ease where you don't have to prove yourself.",reflectionEn:"You deserve a space where you can be you."},
+    {category:'hope',text:'นี่ไม่ใช่คำสัญญาว่าทุกอย่างจะง่าย แต่เป็นคำชวนให้คุณไม่ทิ้งตัวเอง',reflection:'อยู่ข้างตัวเองด้วยความเมตตา',en:"This isn't a promise that life will be easy. It's an invitation not to abandon yourself.",reflectionEn:"Stay on your own side with kindness."}
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const book = $('book'), cover = $('cover'), spread = document.querySelector('.spread'), openBtn = $('open-btn'), nextBtn = $('next-btn');
+  const copyBtn = $('copy-btn'), shareBtn = $('share-btn'), feedback = $('feedback');
+  const quoteEl = $('quote'), reflectionEl = $('reflection'), turnSheet = $('turn-sheet');
+  let topic = 'all', opened = false, busy = false, lastIndex = -1, current = null, page = 0;
+  const recent = [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function drawIndex() {
+    const eligible = QUOTES.map((q,i)=>({q,i})).filter(({q,i}) => (topic === 'all' || q.category === topic) && i !== lastIndex && !recent.includes(i));
+    const fallback = QUOTES.map((q,i)=>({q,i})).filter(({q,i}) => (topic === 'all' || q.category === topic) && i !== lastIndex);
+    const pool = eligible.length ? eligible : (fallback.length ? fallback : QUOTES.map((q,i)=>({q,i})).filter(({q}) => topic === 'all' || q.category === topic));
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    lastIndex = picked.i;
+    recent.push(picked.i);
+    if (recent.length > 6) recent.shift();
+    return picked.q;
+  }
+  // All 60 Thai quotes have a paired English translation and reflection.
+  // Keep the selected quote when switching languages; language changes do not reshuffle.
+  const UI = {
+    th:{return:'← กลับหน้าเว็บไซต์',subtitle:'คัมภีร์แห่งแสงดาว',intro:'บางครั้ง เราไม่ได้ต้องการคำตอบสำหรับทุกเรื่อง\nเราเพียงต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้',label:'วันนี้อยากให้หนังสือพูดกับคุณเรื่องไหน?',topics:['✨ ทุกเรื่อง','🌙 วันที่เหนื่อย','🌱 ความไม่มั่นใจ','🕊️ เริ่มต้นใหม่','💛 วันที่ผิดหวัง','⭐ ความหวัง'],cover:'✧ แตะเพื่อเปิดหนังสือ ✧',open:'📖 เปิดหน้าหนังสือ',next:'✧ เปิดหน้าใหม่',copy:'คัดลอกข้อความ',share:'แบ่งปันกำลังใจ',note:'ทุกหน้ามีข้อความเล็ก ๆ ที่เขียนด้วยความปรารถนาดี',opened:'ขอให้คุณได้พบถ้อยคำที่อ่อนโยนกับวันนี้ ✦',turned:'คุณเปิดอีกหน้าหนึ่งของหนังสือแล้ว ✦',chosen:'เลือกเรื่องที่ต้องการแล้ว แตะที่หน้าปกเพื่อเปิด ✦',copied:'คัดลอกข้อความแล้ว ส่งต่อกำลังใจได้เลย ✦',failed:'คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความเพื่อคัดลอก',shared:'ขอบคุณที่ส่งต่อกำลังใจ ✦',heading:'ข้อความถึงคุณ',left:'ไม่ว่าคุณจะมาจากวันแบบไหน\nขอให้หน้านี้เป็นมุมพักใจเล็ก ๆ',footnote:'ข้อความเหล่านี้มีไว้เพื่อให้กำลังใจ ไม่ใช่คำทำนายหรือคำแนะนำสำหรับการตัดสินใจสำคัญ หากวันนี้หนักเกินรับไหว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ'},
+    en:{return:'← Back to Sabastiaz',subtitle:'Pages of gentle encouragement',intro:'Sometimes we do not need every answer.\nJust a few gentle words to help us get through today.',label:'What would you like encouragement for?',topics:['✨ Everything','🌙 Feeling tired','🌱 Self-doubt','🕊️ New beginnings','💛 Heartache','⭐ Hope'],cover:'✧ Tap to open the book ✧',open:'📖 Open the book',next:'✧ Turn the page',copy:'Copy quote',share:'Share kindness',note:'Every page is written with kindness',opened:'May you find a little kindness on this page ✦',turned:'Another gentle page, just for you ✦',chosen:'Theme selected. Tap the cover to open ✦',copied:'Copied! Share a little light with someone ✦',failed:'Automatic copy failed. Please select the text and copy it manually.',shared:'Thank you for sharing a little kindness ✦',heading:'A PAGE FOR YOU',left:'Whatever kind of day you have had,\nmay this page be a little place to rest.',footnote:'These messages offer encouragement, not predictions or advice for major decisions. If things feel overwhelming, consider talking to someone you trust or a professional.'},
+    both:{return:'← Back to Sabastiaz',subtitle:'คัมภีร์แห่งแสงดาว · Pages of Kindness',intro:'บางครั้ง เราแค่ต้องการถ้อยคำเล็ก ๆ ที่ช่วยให้ผ่านวันนี้ไปได้\nSometimes a few gentle words are all we need to keep going.',label:'วันนี้อยากอ่านเรื่องไหน? / Choose a theme',topics:['✨ ทั้งหมด / All','🌙 เหนื่อย / Tired','🌱 ไม่มั่นใจ / Doubt','🕊️ เริ่มใหม่ / New','💛 ผิดหวัง / Hurt','⭐ หวัง / Hope'],cover:'✧ แตะเพื่อเปิด / Tap to open ✧',open:'📖 เปิดหนังสือ / Open',next:'✧ หน้าใหม่ / Next',copy:'คัดลอก / Copy',share:'แบ่งปัน / Share',note:'ทุกหน้ามีถ้อยคำที่เขียนด้วยความปรารถนาดี · Every page is written with kindness',opened:'ขอให้หน้านี้มอบกำลังใจ · May this page bring a little light ✦',turned:'อีกหนึ่งหน้าแห่งกำลังใจ · Another page of kindness ✦',chosen:'เลือกหมวดแล้ว · Theme selected. Tap the cover ✦',copied:'คัดลอกแล้ว · Copied. Share a little light ✦',failed:'คัดลอกไม่ได้ · Copy failed. Please select the quote manually.',shared:'ขอบคุณที่แบ่งปัน · Thank you for sharing ✦',heading:'ภาษาไทย · THAI',left:'ไม่ว่าคุณจะมาจากวันแบบไหน\nขอให้หน้านี้เป็นมุมพักใจเล็ก ๆ',footnote:'ข้อความเหล่านี้มีไว้เพื่อให้กำลังใจ ไม่ใช่คำทำนายหรือคำแนะนำสำหรับการตัดสินใจสำคัญ หากวันนี้หนักเกินรับไหว ลองพูดคุยกับคนที่ไว้ใจหรือผู้เชี่ยวชาญ\nThese messages offer encouragement, not predictions or advice for major decisions. If things feel overwhelming, consider talking to someone you trust or a professional.'}
+  };
+  const topicNames=['all','tired','doubt','new','hurt','hope'];
+  let mode='both';
+  try{const saved=localStorage.getItem('book-of-light-language');if(['th','en','both'].includes(saved))mode=saved;}catch(e){}
+  function renderQuote(){
+    if(!current)return;
+    const isEnglish=mode==='en';
+    quoteEl.textContent=isEnglish ? current.en : current.text;
+    reflectionEl.textContent=isEnglish ? current.reflectionEn : current.reflection;
+    quoteEl.lang=isEnglish?'en':'th';
+    reflectionEl.lang=isEnglish?'en':'th';
+    $('quote-en').textContent=current.en;
+    $('reflection-en').textContent=current.reflectionEn;
+    $('page-num').textContent=`PAGE ${String(page).padStart(3,'0')}`;
+  }
+  function applyMode(nextMode,announce=false){
+    mode=nextMode;
+    const ui=UI[mode];
+    document.documentElement.lang=mode==='en'?'en':'th';
+    document.title=mode==='th'?'The Book of Light | คัมภีร์แห่งแสงดาว — Sabastiaz':'The Book of Light | Sabastiaz';
+    $('return').textContent=ui.return;
+    $('subtitle').textContent=ui.subtitle;
+    $('intro').textContent=ui.intro;
+    $('topic-label').textContent=ui.label;
+    $('topic-area').setAttribute('aria-label',ui.label);
+    document.querySelectorAll('.topic').forEach((b,i)=>{b.textContent=ui.topics[i];});
+    $('cover-instruction').textContent=ui.cover;
+    cover.setAttribute('aria-label',mode==='th'?'เปิดหนังสือแห่งกำลังใจ':mode==='en'?'Open the book of encouragement':'เปิดหนังสือ / Open the book');
+    openBtn.textContent=ui.open;nextBtn.textContent=ui.next;copyBtn.textContent=ui.copy;shareBtn.textContent=ui.share+' ✦';
+    $('footnote').textContent=ui.footnote;
+    $('left-copy').textContent=ui.left;
+    $('page-heading').textContent=ui.heading;
+    document.querySelectorAll('.language-btn').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
+    book.classList.toggle('mode-both',mode==='both');
+    $('left-translation').hidden=mode!=='both';
+    $('left-decor').hidden=mode==='both';
+    renderQuote();
+    if(modalOpen)renderReveal();
+    if(announce) setFeedback(ui.note);
+    try{localStorage.setItem('book-of-light-language',mode);}catch(e){}
+  }
+  let requestedIndex = -1;
+  try {
+    const qp = new URLSearchParams(location.search);
+    const num = Number(qp.get('quote'));
+    if (Number.isInteger(num) && num>=1 && num<=QUOTES.length) requestedIndex=num-1;
+    const requestedLang=qp.get('lang');
+    if (['th','en','both'].includes(requestedLang)) mode=requestedLang;
+  } catch(e) {}
+  const overlay=$('reveal-overlay'), dialog=$('reveal-dialog'), flipCaption=$('flipping-caption');
+  let lastFocus=null, animationToken=0, modalOpen=false;
+  function showNewQuote(){
+    if(requestedIndex>=0){lastIndex=requestedIndex;current=QUOTES[requestedIndex];requestedIndex=-1;recent.push(lastIndex);}
+    else current=drawIndex();
+    page=lastIndex+1;renderQuote();
+  }
+  function setFeedback(msg){feedback.textContent=msg;}
+  function focusQuote(){quoteEl.focus({preventScroll:true});}
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  function getShareUrl(){
+    // Change to the deployed canonical URL if this page is renamed.
+    const u=new URL('https://sabastiaz.lol/book-of-light.html');
+    u.searchParams.set('quote',String(lastIndex+1));
+    u.searchParams.set('lang',mode);
+    return u.href;
+  }
+  function sharePreview(){
+    if(!current)return '';
+    const text=mode==='en'?current.en:current.text;
+    return '“'+text+'” — The Book of Light';
+  }
+  function updateShareLinks(){
+    const url=getShareUrl(),preview=sharePreview();
+    $('fb-link').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+    $('x-link').href='https://twitter.com/intent/tweet?text='+encodeURIComponent(preview)+'&url='+encodeURIComponent(url);
+    $('line-link').href='https://social-plugins.line.me/lineit/share?url='+encodeURIComponent(url);
+    $('wa-link').href='https://api.whatsapp.com/send?text='+encodeURIComponent(preview+'\n'+url);
+  }
+  function renderReveal(){
+    if(!current)return;
+    $('reveal-title').textContent=mode==='en'?'A Page Just for You':mode==='th'?'หนังสือเปิดมาที่หน้านี้':'ข้อความจากหนังสือถึงคุณ · A Page for You';
+    $('reveal-intro').textContent=mode==='en'?'A little light to carry with you':mode==='th'?'บางที หน้านี้อาจเป็นข้อความที่คุณอยากได้ยิน':'ข้อความเล็ก ๆ ที่อยากส่งถึงคุณ · A little light for you';
+    $('reveal-num').textContent='✧ PAGE '+String(lastIndex+1).padStart(3,'0')+' ✧';
+    $('reveal-th').textContent='“'+current.text+'”';
+    $('reveal-en').textContent='“'+current.en+'”';
+    $('reveal-reflection-th').textContent=current.reflection;
+    $('reveal-reflection-en').textContent=current.reflectionEn;
+    $('reveal-block-th').hidden=mode==='en';
+    $('reveal-block-en').hidden=mode==='th';
+    $('reveal-separator').hidden=mode!=='both';
+    $('share-heading').textContent=mode==='th'?'✧ ส่งต่อกำลังใจนี้ ✧':mode==='en'?'✧ SHARE THIS LITTLE LIGHT ✧':'✧ ส่งต่อแสงเล็ก ๆ นี้ / SHARE THIS LIGHT ✧';
+    $('share-hint').textContent=mode==='th'?'Instagram: แชร์เป็นรูปภาพผ่านแอป หรือบันทึก PNG เพื่อโพสต์เอง':mode==='en'?'Instagram: share the generated image using your device, or save the PNG to post manually.':'Instagram: แชร์รูปผ่านแอป หรือบันทึก PNG / Save the quote image to post';
+    $('reveal-copy').textContent=mode==='th'?'⧉ คัดลอกข้อความ':mode==='en'?'⧉ Copy quote':'⧉ คัดลอก / Copy';
+    $('reveal-again').textContent=mode==='th'?'✦ เปิดหน้าใหม่':mode==='en'?'✦ Another page':'✦ เปิดหน้าใหม่ / Try another';
+    updateShareLinks();
+  }
+  function showModal(){
+    renderReveal();
+    lastFocus=document.activeElement;
+    overlay.hidden=false;document.body.classList.add('modal-open');modalOpen=true;
+    dialog.scrollTop=0;
+    $('reveal-close').focus({preventScroll:true});
+  }
+  function closeModal(){
+    if(!modalOpen)return;
+    overlay.hidden=true;document.body.classList.remove('modal-open');modalOpen=false;
+    if(lastFocus&&lastFocus.isConnected&&!lastFocus.hidden)lastFocus.focus({preventScroll:true});
+    else nextBtn.focus({preventScroll:true});
+  }
+  function createLeaf(index,total,duration){
+    const leaf=document.createElement('div');leaf.className='magic-leaf';leaf.setAttribute('aria-hidden','true');
+    leaf.style.setProperty('--flip-duration',duration+'ms');
+    leaf.style.zIndex=String(15+total-index);
+    const front=document.createElement('div');front.className='leaf-front';front.textContent='✦';
+    const back=document.createElement('div');back.className='leaf-back';back.textContent='✧';
+    leaf.append(front,back);book.appendChild(leaf);
+    void leaf.offsetWidth;leaf.classList.add('animated');
+    return leaf;
+  }
+  async function enchantedFlip(first=false){
+    if(busy)return;
+    busy=true;const token=++animationToken;
+    closeModal();
+    [nextBtn,copyBtn,shareBtn,openBtn].forEach(btn=>btn.disabled=true);
+    if(!opened){
+      opened=true;book.classList.add('is-open');
+      cover.setAttribute('tabindex','-1');cover.setAttribute('aria-hidden','true');
+      spread.setAttribute('aria-hidden','false');
+      openBtn.hidden=true;nextBtn.hidden=false;copyBtn.hidden=false;shareBtn.hidden=false;
+    }
+    flipCaption.hidden=false;
+    flipCaption.textContent=mode==='th'?'✧ กำลังเปิดหน้าคัมภีร์… ✧':mode==='en'?'✧ Turning the pages of light… ✧':'✧ กำลังเปิดหน้าคัมภีร์ / Turning pages… ✧';
+    document.querySelector('.book-area').classList.add('flipping');book.classList.add('is-flipping');
+    if(reduceMotion.matches){
+      showNewQuote();await sleep(60);
+    } else {
+      if(first)await sleep(780); // Cover opens before the rapid sequence.
+      const count=7,duration=320,spacing=205;
+      const leaves=[];
+      for(let i=0;i<count;i++){
+        leaves.push(createLeaf(i,count,duration));
+        flipCaption.textContent=mode==='th'?`✧ กำลังพลิกหน้า ${i+1} จาก ${count} ✧`:mode==='en'?`✧ Turning page ${i+1} of ${count} ✧`:`✧ พลิกหน้า ${i+1}/${count} · Turning pages ✧`;
+        await sleep(spacing);
+      }
+      await sleep(duration-spacing+110);
+      leaves.forEach(n=>n.remove());
+      showNewQuote();
+      await sleep(180);
+    }
+    if(token!==animationToken)return;
+    book.classList.remove('is-flipping');document.querySelector('.book-area').classList.remove('flipping');flipCaption.hidden=true;
+    [nextBtn,copyBtn,shareBtn,openBtn].forEach(btn=>btn.disabled=false);
+    busy=false;setFeedback(UI[mode].opened);showModal();
+  }
+  function openBook(){if(opened||busy)return;enchantedFlip(true);}
+  function nextPage(){if(!opened)return openBook();if(busy)return;enchantedFlip(false);}
+  function formatQuote(){
+    if(!current)return '';
+    const credit='— The Book of Light | Sabastiaz\nhttps://sabastiaz.lol/book-of-light.html';
+    if(mode==='both')return `“${current.text}”\n${current.reflection}\n\n“${current.en}”\n${current.reflectionEn}\n\n${credit}`;
+    if(mode==='en')return `“${current.en}”\n\n${current.reflectionEn}\n${credit}`;
+    return `“${current.text}”\n\n${current.reflection}\n${credit}`;
+  }
+  async function copyQuote(){
+    if(!current)return;
+    const text=formatQuote();
+    try{
+      if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}
+      else{const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0;';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)throw Error('Unable to copy');}
+      setFeedback(UI[mode].copied);
+    }catch(e){setFeedback(UI[mode].failed);}
+  }
+  async function shareQuote(){
+    if(!current)return;
+    if(navigator.share){try{await navigator.share({title:'The Book of Light',text:formatQuote(),url:getShareUrl()});setFeedback(UI[mode].shared);return;}catch(e){if(e.name==='AbortError')return;}}
+    await copyQuote();
+  }
+  function wrapCanvasText(ctx,str,width,lang='en'){
+    // Wrap English on word boundaries; Thai uses locale-aware word segmentation.
+    // If a segment itself exceeds the width, split that segment into characters.
+    const pieces=lang==='th'&&typeof Intl.Segmenter==='function'
+      ? [...new Intl.Segmenter('th',{granularity:'word'}).segment(str)].map(v=>v.segment)
+      : (str.match(/\S+\s*|\s+/g)||[str]);
+    const lines=[];let line='';
+    for(let piece of pieces){
+      if(!line&&piece.trim()==='')continue;
+      if(ctx.measureText(line+piece).width<=width){line+=piece;continue;}
+      if(line.trim()){lines.push(line.trim());line='';}
+      if(ctx.measureText(piece).width<=width){line=piece.trimStart();continue;}
+      for(const char of Array.from(piece)){
+        if(ctx.measureText(line+char).width>width&&line){lines.push(line.trim());line='';}
+        line+=char;
+      }
+    }
+    if(line.trim())lines.push(line.trim());
+    return lines;
+  }
+  function drawQuoteImage(){
+    const cv=document.createElement('canvas');cv.width=1080;cv.height=1920;
+    const ctx=cv.getContext('2d');
+    const bg=ctx.createLinearGradient(0,0,1080,1920);bg.addColorStop(0,'#24190e');bg.addColorStop(.55,'#0d0b09');bg.addColorStop(1,'#2c1d11');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);
+    ctx.strokeStyle='#bd9652';ctx.lineWidth=5;ctx.strokeRect(64,63,952,1794);ctx.lineWidth=1.5;ctx.strokeRect(82,81,916,1758);
+    ctx.fillStyle='#c9a352';ctx.textAlign='center';ctx.font='36px Georgia,serif';ctx.fillText('✦ THE BOOK OF LIGHT ✦',540,198);
+    ctx.fillStyle='#e6cc92';ctx.font='bold 54px Georgia,serif';ctx.fillText('A Little Light For You',540,294);
+    ctx.font='34px sans-serif';ctx.fillText('คัมภีร์แห่งแสงดาว',540,362);
+    ctx.strokeStyle='#a78a5b';ctx.beginPath();ctx.moveTo(280,407);ctx.lineTo(800,407);ctx.stroke();
+    const blocks=[];
+    if(mode!=='en')blocks.push({lang:'th',quote:current.text,reflection:current.reflection});
+    if(mode!=='th')blocks.push({lang:'en',quote:current.en,reflection:current.reflectionEn});
+    const segments=[];
+    for(const b of blocks){
+      ctx.font=b.lang==='th'?'48px sans-serif':'44px Georgia,serif';
+      let lines=wrapCanvasText(ctx,'“'+b.quote+'”',830,b.lang);
+      ctx.font=b.lang==='th'?'32px sans-serif':'31px Georgia,serif';
+      let refl=wrapCanvasText(ctx,b.reflection,800,b.lang);
+      segments.push({b,lines,refl});
+    }
+    let total=segments.reduce((a,b)=>a+b.lines.length*69+b.refl.length*48+80,0)+(segments.length-1)*84;
+    const available=1190,scale=Math.min(1,available/total);ctx.save();
+    ctx.translate(540,480+(available-total*scale)/2);ctx.scale(scale,scale);ctx.translate(-540,0);
+    let y=0;
+    for(const [i,s] of segments.entries()){
+      ctx.fillStyle='#f5e5c2';ctx.font=s.b.lang==='th'?'48px sans-serif':'44px Georgia,serif';
+      s.lines.forEach(line=>{ctx.fillText(line.trim(),540,y+62);y+=69});
+      y+=28;ctx.fillStyle='#cbb388';ctx.font=s.b.lang==='th'?'32px sans-serif':'31px Georgia,serif';
+      s.refl.forEach(line=>{ctx.fillText(line.trim(),540,y+38);y+=48});
+      y+=52;
+      if(i!==segments.length-1){ctx.fillStyle='#b99a5e';ctx.font='33px Georgia,serif';ctx.fillText('✦   ✧   ✦',540,y);y+=84;}
+    }
+    ctx.restore();
+    ctx.fillStyle='#d8b978';ctx.font='italic 31px Georgia,serif';ctx.fillText('— Sabastiaz · Page '+String(lastIndex+1).padStart(3,'0')+' —',540,1774);
+    ctx.fillStyle='#9c865f';ctx.font='27px Georgia,serif';ctx.fillText('sabastiaz.lol',540,1817);
+    return cv;
+  }
+  async function shareInstagramImage(){
+    if(!current)return;
+    const canvas=drawQuoteImage();
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+    if(!blob){setFeedback('Unable to create PNG');return;}
+    const filename='book-of-light-'+String(lastIndex+1).padStart(3,'0')+'.png';
+    const file=new File([blob],filename,{type:'image/png'});
+    // A browser cannot directly post to Instagram; share the image via OS share sheet when possible.
+    if(navigator.share&&navigator.canShare?.({files:[file]})){
+      try{await navigator.share({files:[file],title:'The Book of Light'});return;}
+      catch(err){if(err.name==='AbortError')return;}
+    }
+    const src=URL.createObjectURL(blob),link=document.createElement('a');
+    link.href=src;link.download=filename;document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(src),1500);
+    setFeedback(mode==='en'?'Instagram-ready image saved. Upload it via the Instagram app.':'บันทึกรูปสำหรับ Instagram แล้ว นำไปโพสต์ในแอปได้เลย ✦');
+  }
+  // Close with ESC and keep keyboard focus inside the visible dialog.
+  document.addEventListener('keydown',e=>{
+    if(!modalOpen)return;
+    if(e.key==='Escape'){e.preventDefault();closeModal();return;}
+    if(e.key!=='Tab')return;
+    const nodes=[...dialog.querySelectorAll('button:not([disabled]),a[href]')].filter(el=>el.getClientRects().length);
+    if(!nodes.length)return;
+    if(e.shiftKey&&document.activeElement===nodes[0]){e.preventDefault();nodes[nodes.length-1].focus();}
+    else if(!e.shiftKey&&document.activeElement===nodes[nodes.length-1]){e.preventDefault();nodes[0].focus();}
+  });
+  $('reveal-close').addEventListener('click',closeModal);
+  $('reveal-shade').addEventListener('click',closeModal);
+  $('reveal-again').addEventListener('click',()=>{closeModal();nextPage();});
+  $('reveal-copy').addEventListener('click',copyQuote);
+  $('native-share-btn').addEventListener('click',shareQuote);
+  $('ig-btn').addEventListener('click',shareInstagramImage);
+  document.querySelectorAll('.language-btn').forEach(b=>b.addEventListener('click',()=>applyMode(b.dataset.mode,true)));
+  document.querySelectorAll('.topic').forEach(b=>b.addEventListener('click',()=>{
+    if(busy)return;
+    topic=b.dataset.topic;
+    document.querySelectorAll('.topic').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));
+    if(opened)nextPage();else setFeedback(UI[mode].chosen);
+  }));
+  cover.addEventListener('click',openBook);
+  cover.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openBook();}});
+  openBtn.addEventListener('click',openBook);
+  nextBtn.addEventListener('click',nextPage);
+  copyBtn.addEventListener('click',copyQuote);
+  shareBtn.addEventListener('click',shareQuote);
+  applyMode(mode);
+</script>
+</body>
+</html>

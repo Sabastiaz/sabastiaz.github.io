@@ -174,6 +174,20 @@
       transform: translateX(4px);
       box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
+    .cl-card-deferred {
+      cursor: default;
+      opacity: 0.75;
+      border-style: dashed;
+    }
+    .cl-card-deferred:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(201,168,76,0.25);
+    }
+    .cl-card-deferred .cl-card-link-hint {
+      color: var(--text-muted);
+      font-style: italic;
+    }
     a.cl-card-nolink {
       pointer-events: none;
       cursor: default;
@@ -380,15 +394,15 @@
 <!-- ════════════════════════ Coming Soon ════════════════════════ -->
 <div class="cl-entry" data-date="2026-05-01" data-type="update">
 <span class="cl-dot"></span>
-<a class="cl-card" href="">
+<span class="cl-card cl-card-deferred" aria-disabled="true" title="Draft started May 2026 - still being written up">
 <div class="cl-card-top">
-<span class="cl-badge badge-update">Coming Soon</span>
-<span class="cl-date">May 2026</span>
+<span class="cl-badge badge-update">Draft in Progress</span>
+<span class="cl-date">Started May 2026</span>
 </div>
 <div class="cl-card-title">Singapore Seven Days (ฉบับโม้ไปเรื่อย)</div>
 <div class="cl-card-desc">สวัสดีทุกท่านแขกไปใครมา กลับมาพบกันอีกแล้วครับ รอบนี้ไม่ได้มาแบบวิชาการนะครับผมอยากมาเล่า (มาโม้) ประสบการณ์ไป Singapore เป็นเวลา 7 วัน สปอยมีไปงาน Black Hat Asia and DefCon SG1 ด้วยนะ ยาวนิดนึงนะ</div>
-<div class="cl-card-link-hint">Coming Soon →</div>
-</a>
+<div class="cl-card-link-hint">Pending publication</div>
+</span>
 </div>
 <!-- ════════════════════════ Coming Soon ════════════════════════ -->
 <div class="cl-entry" data-date="2026-05-01" data-type="tome">

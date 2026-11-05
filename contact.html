@@ -204,29 +204,6 @@
     .link-facebook:hover { color: #7aadff; }
     .link-facebook::before { background: #1877f2; }
 
-    .link-subscribe:hover { color: #ffb37a; }
-    .link-subscribe::before { background: #e67a1a; }
-    .link-subscribe .owl-link-name { color: #ffb37a; }
-    .link-subscribe .owl-link-icon {
-      background: rgba(230,122,26,0.1);
-      border-color: rgba(230,122,26,0.3);
-    }
-    .link-subscribe .owl-link-icon {
-      animation: bell-ring 5s ease-in-out infinite;
-      transform-origin: 50% 20%;
-    }
-    .link-subscribe:hover .owl-link-icon { animation-play-state: paused; }
-    @keyframes bell-ring {
-      0%, 92%, 100% { transform: rotate(0); }
-      93% { transform: rotate(-14deg); }
-      95% { transform: rotate(12deg); }
-      97% { transform: rotate(-8deg); }
-      99% { transform: rotate(5deg); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .link-subscribe .owl-link-icon { animation: none; }
-    }
-
     .owl-link-icon {
       font-size: 1.3rem;
       width: 40px; height: 40px;
@@ -514,14 +491,6 @@
           <div class="owl-link-info">
             <div class="owl-link-name">Facebook</div>
             <div class="owl-link-handle">sabastian.fhantomhive</div>
-          </div>
-          <span class="owl-link-arrow">→</span>
-        </a>
-
-        <a href="subscribe.html" class="owl-link link-subscribe">
-          <div class="owl-link-icon">🔔</div>
-          <div class="owl-link-info">
-            <div class="owl-link-name">Follow My Research & Blog</div>
           </div>
           <span class="owl-link-arrow">→</span>
         </a>
